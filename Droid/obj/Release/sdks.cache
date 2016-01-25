@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Sdk>
+  <AndroidApiLevel>23</AndroidApiLevel>
+  <AndroidApiLevelName>23</AndroidApiLevelName>
+  <AndroidNdkPath>/Users/alexrainman1975/Library/Developer/Xamarin/android-ndk/android-ndk-r8d</AndroidNdkPath>
+  <AndroidSdkBuildToolsPath>/Users/alexrainman1975/Library/Developer/Xamarin/android-sdk-macosx/build-tools/23.0.2</AndroidSdkBuildToolsPath>
+  <AndroidSdkBuildToolsBinPath>/Users/alexrainman1975/Library/Developer/Xamarin/android-sdk-macosx/build-tools/23.0.2</AndroidSdkBuildToolsBinPath>
+  <AndroidSdkPath>/Users/alexrainman1975/Library/Developer/Xamarin/android-sdk-macosx</AndroidSdkPath>
+  <JavaSdkPath>/usr</JavaSdkPath>
+  <MonoAndroidBinPath>/Library/Frameworks/Xamarin.Android.framework/Versions/Current/bin</MonoAndroidBinPath>
+  <MonoAndroidToolsPath>/Library/Frameworks/Xamarin.Android.framework/Versions/Current/lib/mandroid</MonoAndroidToolsPath>
+  <ReferenceAssemblyPaths>
+    <ReferenceAssemblyPath>/Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v1.0</ReferenceAssemblyPath>
+  </ReferenceAssemblyPaths>
+  <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+  <ZipAlignPath>/Users/alexrainman1975/Library/Developer/Xamarin/android-sdk-macosx/build-tools/23.0.2</ZipAlignPath>
+  <MonoAndroidIncludePath />
+  <SupportedApiLevel>23</SupportedApiLevel>
+  <AndroidSequencePointsMode>None</AndroidSequencePointsMode>
+</Sdk>

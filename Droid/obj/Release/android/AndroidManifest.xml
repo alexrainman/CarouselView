@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.slbdev.xfviewpager">
+  <!--suppress UsesMinSdkAttributes-->
+  <uses-sdk android:minSdkVersion="15" />
+  <application android:label="XFViewPager" android:name="md5cfe86eab3a8938ff47f379cf1a7f3b30.MainApplication" android:allowBackup="true" android:icon="@drawable/icon">
+    <activity android:configChanges="orientation|screenSize" android:icon="@drawable/icon" android:label="XFViewPager.Droid" android:name="md5cfe86eab3a8938ff47f379cf1a7f3b30.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="2147483647" android:authorities="com.slbdev.xfviewpager.mono.MonoRuntimeProvider.__mono_init__" />
+  </application>
+</manifest>

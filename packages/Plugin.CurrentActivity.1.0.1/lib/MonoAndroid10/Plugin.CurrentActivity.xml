@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Plugin.CurrentActivity</name>
+    </assembly>
+    <members>
+        <member name="T:Plugin.CurrentActivity.CrossCurrentActivity">
+            <summary>
+            Cross platform CurrentActivity implemenations
+            </summary>
+        </member>
+        <member name="P:Plugin.CurrentActivity.CrossCurrentActivity.Current">
+            <summary>
+            Current settings to use
+            </summary>
+        </member>
+        <member name="T:Plugin.CurrentActivity.CurrentActivityImplementation">
+            <summary>
+            Implementation for Feature
+            </summary>
+        </member>
+        <member name="P:Plugin.CurrentActivity.CurrentActivityImplementation.Activity">
+            <summary>
+            Gets or sets the activity.
+            </summary>
+            <value>The activity.</value>
+        </member>
+        <member name="T:Plugin.CurrentActivity.ICurrentActivity">
+            <summary>
+            Current Activity Interface
+            </summary>
+        </member>
+        <member name="P:Plugin.CurrentActivity.ICurrentActivity.Activity">
+            <summary>
+            Gets or sets the activity.
+            </summary>
+            <value>The activity.</value>
+        </member>
+    </members>
+</doc>

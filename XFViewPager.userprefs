@@ -1,0 +1,14 @@
+﻿<Properties StartupItem="Droid/XFViewPager.Droid.csproj" RefactoringSettings.EnableRefactorings="True">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.SelectDevice" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Droid/Implementation/CarouselViewRenderer.cs">
+    <Files>
+      <File FileName="Droid/Implementation/CarouselViewRenderer.cs" Line="52" Column="32" />
+      <File FileName="Droid/Implementation/ViewExtensions.cs" Line="75" Column="4" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.XFViewPager.Droid AndroidDesignerPreferredDevice="Nexus 4" />
+</Properties>

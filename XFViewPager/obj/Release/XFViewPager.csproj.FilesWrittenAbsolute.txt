@@ -1,0 +1,16 @@
+/Users/alexrainman1975/Projects/XFViewPager/XFViewPager/obj/Release/.NETPortable,Version=v4.5,Profile=Profile78.AssemblyAttribute.cs
+/Users/alexrainman1975/Projects/XFViewPager/XFViewPager/obj/Release/XFViewPager.Views.MainPage.xaml.g.cs
+/Users/alexrainman1975/Projects/XFViewPager/XFViewPager/obj/Release/XFViewPager.Views.RiskPage.xaml.g.cs
+/Users/alexrainman1975/Projects/XFViewPager/XFViewPager/obj/Release/XFViewPager.RiskControls.StepSelector.xaml.g.cs
+/Users/alexrainman1975/Projects/XFViewPager/XFViewPager/obj/Release/XFViewPager.RiskControls.StepSlider.xaml.g.cs
+/Users/alexrainman1975/Projects/XFViewPager/XFViewPager/obj/Release/XFViewPager.Views.MainPage.xaml
+/Users/alexrainman1975/Projects/XFViewPager/XFViewPager/obj/Release/XFViewPager.Views.RiskPage.xaml
+/Users/alexrainman1975/Projects/XFViewPager/XFViewPager/obj/Release/XFViewPager.RiskControls.StepSelector.xaml
+/Users/alexrainman1975/Projects/XFViewPager/XFViewPager/obj/Release/XFViewPager.RiskControls.StepSlider.xaml
+/Users/alexrainman1975/Projects/XFViewPager/XFViewPager/bin/Release/XFViewPager.dll.mdb
+/Users/alexrainman1975/Projects/XFViewPager/XFViewPager/bin/Release/XFViewPager.dll
+/Users/alexrainman1975/Projects/XFViewPager/XFViewPager/obj/Release/XFViewPager.dll
+/Users/alexrainman1975/Projects/XFViewPager/XFViewPager/obj/Release/XFViewPager.dll.mdb
+/Users/alexrainman1975/Projects/XFViewPager/XFViewPager/bin/Release/Xamarin.Forms.Core.dll
+/Users/alexrainman1975/Projects/XFViewPager/XFViewPager/bin/Release/Xamarin.Forms.Xaml.dll
+/Users/alexrainman1975/Projects/XFViewPager/XFViewPager/bin/Release/Xamarin.Forms.Platform.dll

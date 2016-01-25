@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="XFViewPager.RiskPage"
+    xmlns:local="clr-namespace:XFViewPager;assembly=XFViewPager">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="headerTitle" TargetType="Label">                
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="TextColor" Value="#2583D2" />
+                <Setter Property="FontFamily" Value="Interstate-Bold" />
+            </Style>
+
+            <Style x:Key="headerSubtitle" TargetType="Label">                
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="LineBreakMode" Value="TailTruncation" />
+                <Setter Property="TextColor" Value="#898989" />
+                <Setter Property="FontFamily" Value="Interstate-Light" />
+            </Style>
+
+            <Style x:Key="cellTitle" TargetType="Label">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontFamily" Value="Interstate-Light" />
+            </Style>
+
+            <Style x:Key="EnabledButton" TargetType="Button">
+                <Setter Property="HeightRequest" Value="42"/>
+	            <Setter Property="BorderWidth" Value="1" />
+	            <Setter Property="BorderRadius" Value="0" />
+	            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+	            <Setter Property="BackgroundColor" Value="#2C97DA"/>
+	            <Setter Property="BorderColor" Value="#2C97DA"/>
+	            <Setter Property="TextColor" Value="White"/>
+	        </Style>
+
+	        <Style x:Key="riskType" TargetType="Label">                
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontFamily" Value="Interstate-Bold" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+	<StackLayout Padding="10" BackgroundColor="#E6E8EC">
+	    <local:CustomScrollView Orientation="Vertical" VerticalOptions="FillAndExpand" ShowVerticalScrollbar="false">
+		    <StackLayout VerticalOptions="FillAndExpand" BackgroundColor="White" Spacing="12" Padding="12">
+
+		        <Grid RowSpacing="0" BackgroundColor="White">
+				    <Grid.RowDefinitions>
+				      <RowDefinition Height="*" />
+				    </Grid.RowDefinitions>
+				    <Grid.ColumnDefinitions>
+				      <ColumnDefinition Width="*" />
+				      <ColumnDefinition Width="35" />
+				    </Grid.ColumnDefinitions>
+				    <Label Grid.Row="0" Grid.Column="0" Text="REPORT #" Style="{StaticResource headerTitle}"/>
+			        <Label Grid.Row="0" Grid.Column="1" Text="View" Style="{StaticResource headerSubtitle}"/>
+				</Grid>
+
+				<BoxView HeightRequest="0.5" BackgroundColor="#E6E8EC"/>
+
+				<Label Text="Residual risk, the outcome of mitigating the potential risk. Ideally the risk should be lower than the potential risk." Style="{StaticResource cellTitle}"/>
+
+				<BoxView HeightRequest="0.5" BackgroundColor="#E6E8EC"/>
+
+				<Label Text="How many people would this activity regularly impact?" Style="{StaticResource cellTitle}"/>
+
+				<local:StepSelector />
+
+				<BoxView HeightRequest="0.5" BackgroundColor="#E6E8EC"/>
+
+				<Label Text="How often do people perform this activity?" Style="{StaticResource cellTitle}"/>
+
+				<local:StepSlider TextSource="Daily,Weekly,Monthly,6 Months,+6 Months" />
+
+				<BoxView HeightRequest="0.5" BackgroundColor="#E6E8EC"/>
+
+				<Label Text="What is the probability of this event happening again?" Style="{StaticResource cellTitle}"/>
+
+				<local:StepSlider TextSource="Very low,Low,Medium,High,Very high"/>
+
+				<BoxView HeightRequest="0.5" BackgroundColor="#E6E8EC"/>
+
+				<Label Text="What is the potential severity of the loss if it happened?" Style="{StaticResource cellTitle}"/>
+
+				<BoxView HeightRequest="0.5" BackgroundColor="#E6E8EC"/>
+
+				<Label Text="RESIDUAL RISK" Style="{StaticResource riskType}"/>
+
+				<Label Text="(Potential Risk Score: Extreme)" HorizontalOptions="Center" Style="{StaticResource headerSubtitle}"/>
+
+				<Label Text="High" HorizontalOptions="Center" TextColor="Black"/>
+
+				<BoxView HeightRequest="0.5" BackgroundColor="#E6E8EC"/>
+
+				<local:CustomButton Text="Submit" Style="{StaticResource EnabledButton}"/>
+
+		    </StackLayout>
+	    </local:CustomScrollView>
+	</StackLayout>
+
+</ContentPage>

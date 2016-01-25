@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="XFViewPager.StepSlider">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BoxStyle" TargetType="BoxView">
+                <Setter Property="BackgroundColor" Value="#E6E8EC"/>
+            </Style>
+            <Style x:Key="TextStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="TextColor" Value="#9AACC0"/>
+                <Setter Property="FontFamily" Value="Interstate-Light"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <Grid>
+         <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+	      <RowDefinition Height="13" />
+	      <RowDefinition Height="*" />
+	    </Grid.RowDefinitions>
+	    <Grid.ColumnDefinitions>
+	      <ColumnDefinition Width="*" />
+	      <ColumnDefinition Width="*" />
+	      <ColumnDefinition Width="*" />
+	      <ColumnDefinition Width="*" />
+	      <ColumnDefinition Width="*" />
+	    </Grid.ColumnDefinitions>
+
+	    <BoxView x:Name="backLine" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" HeightRequest="5" VerticalOptions="Center" Style="{StaticResource BoxStyle}"/>
+	     
+	    <Image Grid.Row="1" Grid.Column="0" Source="Gray_Circle" HorizontalOptions="Start" />
+	    <Image Grid.Row="1" Grid.Column="1" Source="Gray_Circle" HorizontalOptions="Center"/>
+	    <Image Grid.Row="1" Grid.Column="2" Source="Gray_Circle" HorizontalOptions="Center" />
+	    <Image Grid.Row="1" Grid.Column="3" Source="Gray_Circle" HorizontalOptions="Center"/>
+	    <Image Grid.Row="1" Grid.Column="4" Source="Gray_Circle" HorizontalOptions="End" />
+
+	    <Label Grid.Row="2" Grid.Column="0" x:Name="Step0" Text="Daily" HorizontalOptions="Start" Grid.ColumnSpan="2" Style="{StaticResource TextStyle}" />
+	    <Label Grid.Row="0" Grid.Column="1" x:Name="Step1" Text="Weekly" HorizontalOptions="Center" Style="{StaticResource TextStyle}" />
+	    <Label Grid.Row="2" Grid.Column="2" x:Name="Step2" Text="Monthly" HorizontalOptions="Center" Style="{StaticResource TextStyle}" />
+	    <Label Grid.Row="0" Grid.Column="3" x:Name="Step3" Text="6 Months" HorizontalOptions="Center" Style="{StaticResource TextStyle}" />
+	    <Label Grid.Row="2" Grid.Column="3" x:Name="Step4" Text="+ 6 Months" HorizontalOptions="End" Grid.ColumnSpan="2" Style="{StaticResource TextStyle}" />
+
+    </Grid>
+
+<!--    <RelativeLayout x:Name="relativeLayout" HeightRequest="50">
+
+        <BoxView x:Name="backLine" HeightRequest="5" Style="{StaticResource BoxStyle}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+            RelativeLayout.YConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.4}"/>
+
+    </RelativeLayout>-->
+
+</ContentView>
