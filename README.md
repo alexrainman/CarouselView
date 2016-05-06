@@ -25,6 +25,17 @@ You must do this AFTER you call Xamarin.Forms.Init();
 
 As only requirement you **MUST** set the height requests to all elements used in the view (working on a fix to request layout in all children). I advice to use HorizontalOptions="FillAndExpand" and VerticalOptions="FillAndExpand" as needed:
 
+```xml
+<StackLayout Padding="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+	<Label TextColor="Black" Text="{Binding .}" HorizontalOptions="FillAndExpand" HeightRequest="40" />
+	<Entry Placeholder="Name" HorizontalOptions="FillAndExpand" HeightRequest="40" />
+	<Entry Placeholder="Age" HorizontalOptions="FillAndExpand" HeightRequest="40" />
+	<Button Text="Click me!" HeightRequest="40"/>
+</StackLayout>
+```
+
+**C#:**
+
 ```
 var myCarousel = new CarouselViewControl();
 myCarousel.ItemsSource = new List<int> { 1, 2, 3, 4, 5 };
