@@ -81,7 +81,7 @@ Then the xaml:
 
 **Bindable Properties**
 
-```ItemsSource```: IEnumerable, the list of objects used as BindingContext for each view.
+```ItemsSource```: IEnumerable, the list of objects used as BindingContext of each view.
 
 ```ItemTemplate```: supports DataTemplate and DataTemplateSelector.
 
