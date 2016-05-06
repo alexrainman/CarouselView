@@ -55,11 +55,11 @@ Then add the xaml:
 
 ```xml
 <controls:CarouselViewControl Position="0" ItemsSource="{Binding Pages}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-<controls:CarouselViewControl.ItemTemplate>
-  <DataTemplate>
-		 <local:MyView />
+    <controls:CarouselViewControl.ItemTemplate>
+        <DataTemplate>
+            <local:MyView />
 	</DataTemplate>
-</controls:CarouselViewControl.ItemTemplate>
+    </controls:CarouselViewControl.ItemTemplate>
 </controls:CarouselViewControl>
 ```
 
