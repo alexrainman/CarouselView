@@ -1,2 +1,2 @@
 # CarouselView
-Xamarin Forms CarouselView control based on iOS UIPageViewController and Android ViewPager
+CarouselView control for Xamarin Forms based on Android ViewPager and iOS UIPageViewController.
