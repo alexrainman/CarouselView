@@ -81,19 +81,19 @@ Then the xaml:
 
 **Bindable Properties**
 
-IEnumerable ```ItemsSource```: the list of objects used as BindingContext for each view.
+```ItemsSource```: IEnumerable, the list of objects used as BindingContext for each view.
 
-ItemTemplate ```ItemTemplate```: it supports DataTemplate and DataTemplateSelector.
+```ItemTemplate```: supports DataTemplate and DataTemplateSelector.
 
-Position ```Position```: the desired selected view when Carousel starts.
+```Position```: the desired selected view when Carousel starts.
 
 **Methods**
 
-RemovePage ```RemovePage```: remove a view at given position and slide to previous/next one.
+```RemovePage```: remove a view at given position and slide to previous/next one.
 
-AddPage ```AddPage```: insert a view at a given position and slide to it.
+```AddPage```: insert a view at a given position and slide to it.
 
-SetCurrentPage ```SetCurrentPage```: slide programmatically to a given position.
+```SetCurrentPage```: slide programmatically to a given position.
 
 #### Contributors
 * [alexrainman](https://github.com/alexrainman)
@@ -101,4 +101,4 @@ SetCurrentPage ```SetCurrentPage```: slide programmatically to a given position.
 Thanks!
 
 #### License
-Licensed under main repo license
+Licensed under repo license
