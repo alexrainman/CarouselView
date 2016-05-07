@@ -42,22 +42,23 @@ namespace CarouselView.FormsPlugin.iOS
 				UIPageViewControllerNavigationOrientation.Horizontal,
 				UIPageViewControllerSpineLocation.None);
 
-			//var firstViewController = CreateViewController(Element.Position);
-			//pageController.SetViewControllers(new UIViewController[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {});
-
 			pageController.DidFinishAnimating += (sender, args) => {
 				if (args.Completed) {
 					var controller = (ViewContainer)pageController.ViewControllers[0];
-					var position = GetPosition(controller.Tag);
+					var position = controller.Tag;
 					Element.Position = position;
-					Console.WriteLine("Position = " + Element.Position);
+
+					if (Element.PositionSelected != null)
+						Element.PositionSelected(Element, EventArgs.Empty);
+
+					Console.WriteLine("Position selected");
 				}
 			};
 
 			pageController.GetPreviousViewController = (pageViewController, referenceViewController) => {
 
 				var controller = (ViewContainer)referenceViewController;
-				var position = GetPosition(controller.Tag);
+				var position = controller.Tag;
 
 				// Determine if we are on the first page
 				if (position == 0) {
@@ -72,7 +73,7 @@ namespace CarouselView.FormsPlugin.iOS
 			pageController.GetNextViewController = (pageViewController, referenceViewController) => {
 
 				var controller = (ViewContainer)referenceViewController;
-				var position = GetPosition(controller.Tag);
+				var position = controller.Tag;
 
 				// Determine if we are on the last page
 				if (position == Count - 1) {
@@ -93,10 +94,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 		public async void RemoveController(int position)
 		{
-			var direction = position == 0 ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
-			var list = Element.ItemsSource.Cast<object>().ToList();
-			list.RemoveAt(position);
-			Element.ItemsSource = list;
+			Element.ItemsSource.RemoveAt (position);
 
 			var newPos = Element.Position - 1;
 			if (newPos == -1)
@@ -104,22 +102,26 @@ namespace CarouselView.FormsPlugin.iOS
 
 			await Task.Delay (100);
 
+			var direction = position == 0 ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
 			var firstViewController = CreateViewController(newPos);
 			pageController.SetViewControllers(new UIViewController[] { firstViewController }, direction, true, s => {});
 			Element.Position = newPos;
+
+			if (Element.PositionSelected != null)
+				Element.PositionSelected(Element, EventArgs.Empty);
 		}
 
 		public async void AddController(object item)
 		{
-			var list = Element.ItemsSource.Cast<object>().ToList();
-			list.Add(item);
-			Element.ItemsSource = list;
-			//var firstViewController = CreateViewController(Element.Position);
-			//pageController.SetViewControllers(new UIViewController[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {});
+			Element.ItemsSource.Add (item);
+
 			await Task.Delay (100);
 			Element.Position = Element.Position + 1;
 			var firstViewController = CreateViewController(Element.Position);
 			pageController.SetViewControllers(new UIViewController[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, true, s => {});
+		    
+			if (Element.PositionSelected != null)
+				Element.PositionSelected(Element, EventArgs.Empty);
 		}
 
 		public void SetCurrentController(int position)
@@ -128,6 +130,9 @@ namespace CarouselView.FormsPlugin.iOS
 			var firstViewController = CreateViewController(position);
 			pageController.SetViewControllers(new UIViewController[] { firstViewController }, direction, true, s => {});
 			Element.Position = position;
+
+			if (Element.PositionSelected != null)
+				Element.PositionSelected(Element, EventArgs.Empty);
 		}
 
 		protected override void OnElementPropertyChanged (object sender, PropertyChangedEventArgs e)
@@ -165,21 +170,11 @@ namespace CarouselView.FormsPlugin.iOS
 			var nativeConverted = FormsViewToNativeiOS.ConvertFormsToNative (formsView, rect);
 
 			var viewController = new ViewContainer();
-			viewController.Tag = bindingContext.ToString();
+			viewController.Tag = index;
 			viewController.Add(nativeConverted);
 			viewController.View.Frame = rect;
 
 			return viewController;
-		}
-
-		public int GetPosition(string tag) {
-			var position = 0;
-			foreach (var obj in Element.ItemsSource) {				
-				if (obj.ToString () == tag)
-					return position;
-				position++;
-			}
-			return position;
 		}
 
         /// <summary>

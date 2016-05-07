@@ -32,7 +32,11 @@ namespace CarouselView.FormsPlugin.Android
 
 			viewPager.PageSelected += (sender, args) => {
 				Element.Position = args.Position;
-				//Console.WriteLine("Position = " + Element.Position);
+
+				if (Element.PositionSelected != null)
+					Element.PositionSelected(Element, EventArgs.Empty);
+
+				Console.WriteLine("Position selected");
 			};
 
 			Element.RemoveAction = new Action<int> (RemoveItem);
@@ -68,19 +72,15 @@ namespace CarouselView.FormsPlugin.Android
 				var objectValue = viewPager.GetChildAt (position);
 				viewPager.Adapter.DestroyItem (viewPager, position, objectValue);
 			}
-
-			var list = Element.ItemsSource.Cast<object>().ToList();
-			list.RemoveAt(position);
-			Element.ItemsSource = list;
+				
+			Element.ItemsSource.RemoveAt (position);
 
 			viewPager.Adapter.NotifyDataSetChanged();
 		}
 
 		public async void AddItem(object item)
 		{
-			var list = Element.ItemsSource.Cast<object>().ToList();
-			list.Add(item);
-			Element.ItemsSource = list;
+			Element.ItemsSource.Add (item);
 
 			viewPager.Adapter.NotifyDataSetChanged();
 
