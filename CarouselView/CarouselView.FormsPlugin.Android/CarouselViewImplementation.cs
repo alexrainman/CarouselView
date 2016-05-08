@@ -18,6 +18,7 @@ namespace CarouselView.FormsPlugin.Android
 	public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, AViews.View>
 	{
 		ViewPager viewPager;
+		bool IsRemoving;
 
 		protected override void OnElementChanged (ElementChangedEventArgs<CarouselViewControl> e)
 		{
@@ -33,10 +34,10 @@ namespace CarouselView.FormsPlugin.Android
 			viewPager.PageSelected += (sender, args) => {
 				Element.Position = args.Position;
 
-				if (Element.PositionSelected != null)
+				if (!IsRemoving && Element.PositionSelected != null)
 					Element.PositionSelected(Element, EventArgs.Empty);
 
-				Console.WriteLine("Position selected");
+				Console.WriteLine("Page selected");
 			};
 
 			Element.RemoveAction = new Action<int> (RemoveItem);
@@ -47,7 +48,9 @@ namespace CarouselView.FormsPlugin.Android
 		}
 
 		public async void RemoveItem(int position)
-		{
+		{		
+			IsRemoving = true;
+
 			var newPos = position - 1;
 			if (newPos == -1)
 				newPos = 0;
@@ -64,7 +67,7 @@ namespace CarouselView.FormsPlugin.Android
 				Element.Position = newPos;
 
 			} else {
-
+				
 				viewPager.SetCurrentItem (newPos, true);
 				Element.Position = newPos;
 
@@ -72,10 +75,14 @@ namespace CarouselView.FormsPlugin.Android
 				var objectValue = viewPager.GetChildAt (position);
 				viewPager.Adapter.DestroyItem (viewPager, position, objectValue);
 			}
-				
-			Element.ItemsSource.RemoveAt (position);
 
+			Element.ItemsSource.RemoveAt (position);
 			viewPager.Adapter.NotifyDataSetChanged();
+
+			if (Element.PositionSelected != null)
+				Element.PositionSelected(Element, EventArgs.Empty);
+
+			IsRemoving = false;
 		}
 
 		public async void AddItem(object item)

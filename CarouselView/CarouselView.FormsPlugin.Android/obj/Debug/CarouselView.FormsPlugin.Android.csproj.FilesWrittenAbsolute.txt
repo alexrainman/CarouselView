@@ -1,5 +1,14 @@
 /Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/obj/Debug/MonoAndroid,Version=v6.0.AssemblyAttribute.cs
 /Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/obj/Debug/CarouselView.FormsPlugin.Android.obj.Debug.__AndroidLibraryProjects__.zip
+/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/bin/Debug/CarouselView.FormsPlugin.Android.dll.mdb
+/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/bin/Debug/CarouselView.FormsPlugin.Android.dll
+/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/bin/Debug/CarouselView.FormsPlugin.Android.apk
+/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/obj/Debug/android/bin/CarouselView.FormsPlugin.Android.apk
+/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/obj/Debug/R.cs.flag
+/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/bin/Debug/CarouselView.FormsPlugin.Android-Signed.apk
+/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/obj/Debug/uploadflags.txt
+/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/obj/Debug/CarouselView.FormsPlugin.Android.dll
+/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/obj/Debug/CarouselView.FormsPlugin.Android.dll.mdb
 /Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/bin/Debug/Xamarin.Android.Support.v4.dll
 /Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/bin/Debug/Xamarin.Android.Support.Vector.Drawable.dll
 /Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/bin/Debug/Xamarin.Android.Support.Animated.Vector.Drawable.dll
@@ -15,12 +24,3 @@
 /Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/bin/Debug/Xamarin.Forms.Platform.dll
 /Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/bin/Debug/CarouselView.FormsPlugin.Abstractions.dll
 /Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/bin/Debug/CarouselView.FormsPlugin.Abstractions.dll.mdb
-/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/bin/Debug/CarouselView.FormsPlugin.Android.dll.mdb
-/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/bin/Debug/CarouselView.FormsPlugin.Android.dll
-/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/bin/Debug/CarouselView.FormsPlugin.Android.apk
-/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/obj/Debug/android/bin/CarouselView.FormsPlugin.Android.apk
-/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/obj/Debug/R.cs.flag
-/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/bin/Debug/CarouselView.FormsPlugin.Android-Signed.apk
-/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/obj/Debug/uploadflags.txt
-/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/obj/Debug/CarouselView.FormsPlugin.Android.dll
-/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Android/obj/Debug/CarouselView.FormsPlugin.Android.dll.mdb

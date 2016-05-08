@@ -1,12 +1,12 @@
 /Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.iOS/obj/Debug/Xamarin.iOS,Version=v1.0.AssemblyAttribute.cs
 /Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.iOS/obj/Debug/optimized/
+/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.iOS/bin/iPhone/Debug/CarouselView.FormsPlugin.iOS.dll.mdb
+/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.iOS/bin/iPhone/Debug/CarouselView.FormsPlugin.iOS.dll
+/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.iOS/obj/Debug/CarouselView.FormsPlugin.iOS.dll
+/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.iOS/obj/Debug/CarouselView.FormsPlugin.iOS.dll.mdb
 /Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.iOS/bin/iPhone/Debug/Xamarin.Forms.Platform.iOS.dll
 /Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.iOS/bin/iPhone/Debug/Xamarin.Forms.Core.dll
 /Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.iOS/bin/iPhone/Debug/Xamarin.Forms.Xaml.dll
 /Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.iOS/bin/iPhone/Debug/Xamarin.Forms.Platform.dll
 /Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.iOS/bin/iPhone/Debug/CarouselView.FormsPlugin.Abstractions.dll
 /Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.iOS/bin/iPhone/Debug/CarouselView.FormsPlugin.Abstractions.dll.mdb
-/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.iOS/bin/iPhone/Debug/CarouselView.FormsPlugin.iOS.dll.mdb
-/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.iOS/bin/iPhone/Debug/CarouselView.FormsPlugin.iOS.dll
-/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.iOS/obj/Debug/CarouselView.FormsPlugin.iOS.dll
-/Users/alexrainman1975/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.iOS/obj/Debug/CarouselView.FormsPlugin.iOS.dll.mdb

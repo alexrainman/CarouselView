@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Demo.MyFirstView">
+
+    <StackLayout Padding="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+		<Label TextColor="Black" Text="{Binding .}" HorizontalOptions="FillAndExpand" HeightRequest="40" />
+		<Entry Placeholder="Name" HorizontalOptions="FillAndExpand" HeightRequest="40" />
+		<Entry Placeholder="Age" HorizontalOptions="FillAndExpand" HeightRequest="40" />
+		<Button Text="Remove me!" HeightRequest="40" Clicked="RemoveView"/>
+	</StackLayout>
+
+</ContentView>
