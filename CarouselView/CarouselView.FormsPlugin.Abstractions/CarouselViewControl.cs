@@ -9,24 +9,21 @@ namespace CarouselView.FormsPlugin.Abstractions
     /// </summary>
 	public class CarouselViewControl : View
 	{
-		public static readonly BindableProperty ItemsSourceProperty =
-			BindableProperty.Create<CarouselViewControl, IList> (c => c.ItemsSource, null);
+		public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create("ItemsSource", typeof(IList), typeof(CarouselViewControl), null);
 
 		public IList ItemsSource{
 			get { return (IList)GetValue (ItemsSourceProperty); }
 			set { SetValue (ItemsSourceProperty, value); }
 		}
 
-		public static readonly BindableProperty ItemTemplateProperty =
-			BindableProperty.Create<CarouselViewControl, DataTemplate> (c => c.ItemTemplate, null);
+		public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create("ItemTemplate", typeof(DataTemplate), typeof(CarouselViewControl), null);
 
-		public DataTemplate ItemTemplate{
+		public DataTemplate ItemTemplate {
 			get { return (DataTemplate)GetValue (ItemTemplateProperty); }
 			set { SetValue (ItemTemplateProperty, value); }
 		}
 
-		public static readonly BindableProperty PositionProperty =
-			BindableProperty.Create<CarouselViewControl, int> (c => c.Position, 0);
+		public static readonly BindableProperty PositionProperty = BindableProperty.Create("Position", typeof(int), typeof(CarouselViewControl), 0);
 
 		public int Position {
 			get { return (int)GetValue (PositionProperty); }

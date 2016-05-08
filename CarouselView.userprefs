@@ -1,5 +1,5 @@
-﻿<Properties RefactoringSettings.EnableRefactorings="True" StartupItem="CarouselView/CarouselView.FormsPlugin.Abstractions/CarouselView.FormsPlugin.Abstractions.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+﻿<Properties RefactoringSettings.EnableRefactorings="True" StartupItem="iOS/Demo.iOS.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone6s.9.3" />
   <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

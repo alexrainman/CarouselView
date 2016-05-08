@@ -113,11 +113,7 @@ namespace CarouselView.FormsPlugin.Android
 
 			public override int Count {
 				get {
-					var _count = 0;
-					foreach (var item in Element.ItemsSource) {
-						_count++;
-					}
-					return _count;
+					return Element.ItemsSource.Count;
 				}
 			}
 
