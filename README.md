@@ -81,11 +81,15 @@ Then the xaml:
 
 **Bindable Properties**
 
-```ItemsSource```: IEnumerable, the list of objects used as BindingContext of each view.
+```ItemsSource```: IList, List or ObservableCollection used as BindingContext of each view.
 
 ```ItemTemplate```: supports DataTemplate and DataTemplateSelector.
 
 ```Position```: the desired selected view when Carousel starts.
+
+**Event Handlers**
+
+```Position Selected```: called when position changes.
 
 **Methods**
 
