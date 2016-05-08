@@ -89,7 +89,7 @@ Then the xaml:
 
 **Event Handlers**
 
-```Position Selected```: called when position changes.
+```PositionSelected```: called when position changes.
 
 **Methods**
 
