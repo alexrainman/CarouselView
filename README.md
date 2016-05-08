@@ -23,14 +23,14 @@ You must do this AFTER you call Xamarin.Forms.Init();
 
 #### Usage
 
-As only requirement you **MUST** set the height requests to all elements used in the view (working on a fix to request layout in all children). I advice to use HorizontalOptions="FillAndExpand" and VerticalOptions="FillAndExpand" as needed:
+Provide HeighRequest for elements like Label, Entry ...
 
 ```xml
-<StackLayout Padding="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-	<Label TextColor="Black" Text="{Binding .}" HorizontalOptions="FillAndExpand" HeightRequest="40" />
-	<Entry Placeholder="Name" HorizontalOptions="FillAndExpand" HeightRequest="40" />
-	<Entry Placeholder="Age" HorizontalOptions="FillAndExpand" HeightRequest="40" />
-	<Button Text="Click me!" HeightRequest="40"/>
+<StackLayout Padding="10">
+	<Label TextColor="Black" Text="{Binding .}" HeightRequest="40" />
+	<Entry Placeholder="Name" HeightRequest="40" />
+	<Entry Placeholder="Age" HeightRequest="40" />
+	<Button Text="Remove me!" HeightRequest="40" Clicked="CLick me!"/>
 </StackLayout>
 ```
 
