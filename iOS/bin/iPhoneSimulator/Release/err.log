@@ -1,118 +1,13 @@
-2016-05-07 17:51:30.286 Demo.iOS[17224:1250348] 
-Unhandled Exception:
-Xamarin.Forms.Xaml.XamlParseException: Position 27:42. Method OnPrev does not have the correct signature
-  at Xamarin.Forms.Xaml.ApplyPropertiesVisitor.SetPropertyValue (System.Object xamlelement, XmlName propertyName, System.Object value, Xamarin.Forms.BindableObject rootElement, INode node, Xamarin.Forms.Xaml.HydratationContext context, IXmlLineInfo lineInfo) <0x1a2da1d0 + 0x0048f> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.ApplyPropertiesVisitor.Visit (Xamarin.Forms.Xaml.ValueNode node, INode parentNode) <0x1a2d9ac8 + 0x002f3> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.ValueNode.Accept (IXamlNodeVisitor visitor, INode parentNode) <0x1a2ce528 + 0x00023> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.ElementNode.Accept (IXamlNodeVisitor visitor, INode parentNode) <0x1a2ce078 + 0x000f7> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.ElementNode.Accept (IXamlNodeVisitor visitor, INode parentNode) <0x1a2ce078 + 0x000f7> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.ElementNode.Accept (IXamlNodeVisitor visitor, INode parentNode) <0x1a2ce078 + 0x0015f> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.ElementNode.Accept (IXamlNodeVisitor visitor, INode parentNode) <0x1a2ce078 + 0x0015f> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.RootNode.Accept (IXamlNodeVisitor visitor, INode parentNode) <0x1a2cdd20 + 0x0010f> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.XamlLoader.Visit (Xamarin.Forms.Xaml.RootNode rootnode, Xamarin.Forms.Xaml.HydratationContext visitorContext) <0x1a2cd9f0 + 0x002aa> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.XamlLoader.Load (Xamarin.Forms.BindableObject view, System.String xaml) <0x1a297328 + 0x001bf> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.XamlLoader.Load (Xamarin.Forms.BindableObject view, System.Type callingType) <0x1a280430 + 0x00043> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.Extensions.LoadFromXaml[TView] (Xamarin.Forms.Xaml.TView view, System.Type callingType) <0x1a2802b8 + 0x0001b> in <filename unknown>:0 
-  at Demo.MainPage.InitializeComponent () <0x1a280200 + 0x0001f> in <filename unknown>:0 
-  at Demo.MainPage..ctor () <0x1a278438 + 0x0001b> in <filename unknown>:0 
-  at Demo.App..ctor () <0x1a23d488 + 0x00033> in <filename unknown>:0 
-  at Demo.iOS.AppDelegate.FinishedLaunching (UIKit.UIApplication app, Foundation.NSDictionary options) <0x18574228 + 0x0002b> in <filename unknown>:0 
-  at (wrapper managed-to-native) UIKit.UIApplication:UIApplicationMain (int,string[],intptr,intptr)
-  at UIKit.UIApplication.Main (System.String[] args, IntPtr principal, IntPtr delegate) <0x185704c8 + 0x0002b> in <filename unknown>:0 
-  at UIKit.UIApplication.Main (System.String[] args, System.String principalClassName, System.String delegateClassName) <0x1856f280 + 0x00087> in <filename unknown>:0 
-  at Demo.iOS.Application.Main (System.String[] args) <0x1856f180 + 0x00023> in <filename unknown>:0 
-2016-05-07 17:51:30.288 Demo.iOS[17224:1250348] Unhandled managed exception:
-Position 27:42. Method OnPrev does not have the correct signature (Xamarin.Forms.Xaml.XamlParseException)
-  at Xamarin.Forms.Xaml.ApplyPropertiesVisitor.SetPropertyValue (System.Object xamlelement, XmlName propertyName, System.Object value, Xamarin.Forms.BindableObject rootElement, INode node, Xamarin.Forms.Xaml.HydratationContext context, IXmlLineInfo lineInfo) <0x1a2da1d0 + 0x0048f> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.ApplyPropertiesVisitor.Visit (Xamarin.Forms.Xaml.ValueNode node, INode parentNode) <0x1a2d9ac8 + 0x002f3> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.ValueNode.Accept (IXamlNodeVisitor visitor, INode parentNode) <0x1a2ce528 + 0x00023> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.ElementNode.Accept (IXamlNodeVisitor visitor, INode parentNode) <0x1a2ce078 + 0x000f7> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.ElementNode.Accept (IXamlNodeVisitor visitor, INode parentNode) <0x1a2ce078 + 0x000f7> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.ElementNode.Accept (IXamlNodeVisitor visitor, INode parentNode) <0x1a2ce078 + 0x0015f> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.ElementNode.Accept (IXamlNodeVisitor visitor, INode parentNode) <0x1a2ce078 + 0x0015f> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.RootNode.Accept (IXamlNodeVisitor visitor, INode parentNode) <0x1a2cdd20 + 0x0010f> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.XamlLoader.Visit (Xamarin.Forms.Xaml.RootNode rootnode, Xamarin.Forms.Xaml.HydratationContext visitorContext) <0x1a2cd9f0 + 0x002aa> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.XamlLoader.Load (Xamarin.Forms.BindableObject view, System.String xaml) <0x1a297328 + 0x001bf> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.XamlLoader.Load (Xamarin.Forms.BindableObject view, System.Type callingType) <0x1a280430 + 0x00043> in <filename unknown>:0 
-  at Xamarin.Forms.Xaml.Extensions.LoadFromXaml[TView] (Xamarin.Forms.Xaml.TView view, System.Type callingType) <0x1a2802b8 + 0x0001b> in <filename unknown>:0 
-  at Demo.MainPage.InitializeComponent () <0x1a280200 + 0x0001f> in <filename unknown>:0 
-  at Demo.MainPage..ctor () <0x1a278438 + 0x0001b> in <filename unknown>:0 
-  at Demo.App..ctor () <0x1a23d488 + 0x00033> in <filename unknown>:0 
-  at Demo.iOS.AppDelegate.FinishedLaunching (UIKit.UIApplication app, Foundation.NSDictionary options) <0x18574228 + 0x0002b> in <filename unknown>:0 
-  at (wrapper managed-to-native) UIKit.UIApplication:UIApplicationMain (int,string[],intptr,intptr)
-  at UIKit.UIApplication.Main (System.String[] args, IntPtr principal, IntPtr delegate) <0x185704c8 + 0x0002b> in <filename unknown>:0 
-  at UIKit.UIApplication.Main (System.String[] args, System.String principalClassName, System.String delegateClassName) <0x1856f280 + 0x00087> in <filename unknown>:0 
-  at Demo.iOS.Application.Main (System.String[] args) <0x1856f180 + 0x00023> in <filename unknown>:0 
-2016-05-07 17:51:30.288 Demo.iOS[17224:1250348] critical: Stacktrace:
-
-2016-05-07 17:51:30.288 Demo.iOS[17224:1250348] critical: 
-Native stacktrace:
-
-2016-05-07 17:51:30.298 Demo.iOS[17224:1250348] critical: 	0   Demo.iOS                            0x002016dd mono_handle_native_sigsegv + 317
-2016-05-07 17:51:30.298 Demo.iOS[17224:1250348] critical: 	1   Demo.iOS                            0x002093a1 sigabrt_signal_handler + 145
-2016-05-07 17:51:30.298 Demo.iOS[17224:1250348] critical: 	2   libsystem_platform.dylib            0x097e879b _sigtramp + 43
-2016-05-07 17:51:30.298 Demo.iOS[17224:1250348] critical: 	3   ???                                 0xffffffff 0x0 + 4294967295
-2016-05-07 17:51:30.298 Demo.iOS[17224:1250348] critical: 	4   libsystem_c.dylib                   0x0957865d abort + 156
-2016-05-07 17:51:30.298 Demo.iOS[17224:1250348] critical: 	5   Demo.iOS                            0x00395195 xamarin_unhandled_exception_handler + 325
-2016-05-07 17:51:30.299 Demo.iOS[17224:1250348] critical: 	6   Demo.iOS                            0x00201f6b mono_invoke_unhandled_exception_hook + 91
-2016-05-07 17:51:30.299 Demo.iOS[17224:1250348] critical: 	7   Demo.iOS                            0x00200dbd mono_handle_exception_internal + 6029
-2016-05-07 17:51:30.299 Demo.iOS[17224:1250348] critical: 	8   Demo.iOS                            0x001ff629 mono_handle_exception + 41
-2016-05-07 17:51:30.299 Demo.iOS[17224:1250348] critical: 	9   Demo.iOS                            0x0019b0ce mono_x86_throw_exception + 142
-2016-05-07 17:51:30.299 Demo.iOS[17224:1250348] critical: 	10  ???                                 0x16af4f57 0x0 + 380587863
-2016-05-07 17:51:30.299 Demo.iOS[17224:1250348] critical: 	11  ???                                 0x1a2d9dbc 0x0 + 439197116
-2016-05-07 17:51:30.299 Demo.iOS[17224:1250348] critical: 	12  ???                                 0x1a2ce54c 0x0 + 439149900
-2016-05-07 17:51:30.299 Demo.iOS[17224:1250348] critical: 	13  ???                                 0x1a2ce170 0x0 + 439148912
-2016-05-07 17:51:30.300 Demo.iOS[17224:1250348] critical: 	14  ???                                 0x1a2ce170 0x0 + 439148912
-2016-05-07 17:51:30.300 Demo.iOS[17224:1250348] critical: 	15  ???                                 0x1a2ce1d8 0x0 + 439149016
-2016-05-07 17:51:30.300 Demo.iOS[17224:1250348] critical: 	16  ???                                 0x1a2ce1d8 0x0 + 439149016
-2016-05-07 17:51:30.300 Demo.iOS[17224:1250348] critical: 	17  ???                                 0x1a2cde30 0x0 + 439148080
-2016-05-07 17:51:30.300 Demo.iOS[17224:1250348] critical: 	18  ???                                 0x1a2cdc9b 0x0 + 439147675
-2016-05-07 17:51:30.300 Demo.iOS[17224:1250348] critical: 	19  ???                                 0x1a2974e8 0x0 + 438924520
-2016-05-07 17:51:30.300 Demo.iOS[17224:1250348] critical: 	20  ???                                 0x1a280474 0x0 + 438830196
-2016-05-07 17:51:30.300 Demo.iOS[17224:1250348] critical: 	21  ???                                 0x1a2802d4 0x0 + 438829780
-2016-05-07 17:51:30.300 Demo.iOS[17224:1250348] critical: 	22  ???                                 0x1a280220 0x0 + 438829600
-2016-05-07 17:51:30.301 Demo.iOS[17224:1250348] critical: 	23  ???                                 0x1a278454 0x0 + 438797396
-2016-05-07 17:51:30.301 Demo.iOS[17224:1250348] critical: 	24  ???                                 0x1a23d4bc 0x0 + 438555836
-2016-05-07 17:51:30.301 Demo.iOS[17224:1250348] critical: 	25  ???                                 0x18574254 0x0 + 408371796
-2016-05-07 17:51:30.301 Demo.iOS[17224:1250348] critical: 	26  ???                                 0x185743a1 0x0 + 408372129
-2016-05-07 17:51:30.301 Demo.iOS[17224:1250348] critical: 	27  Demo.iOS                            0x0020f2d1 mono_jit_runtime_invoke + 705
-2016-05-07 17:51:30.301 Demo.iOS[17224:1250348] critical: 	28  Demo.iOS                            0x002cb00f mono_runtime_invoke + 127
-2016-05-07 17:51:30.301 Demo.iOS[17224:1250348] critical: 	29  Demo.iOS                            0x0039fb97 xamarin_trampoline + 5559
-2016-05-07 17:51:30.301 Demo.iOS[17224:1250348] critical: 	30  UIKit                               0x037cd18c -[UIApplication _handleDelegateCallbacksWithOptions:isSuspended:restoreState:] + 337
-2016-05-07 17:51:30.301 Demo.iOS[17224:1250348] critical: 	31  UIKit                               0x037ce6a8 -[UIApplication _callInitializationDelegatesForMainScene:transitionContext:] + 3863
-2016-05-07 17:51:30.301 Demo.iOS[17224:1250348] critical: 	32  UIKit                               0x037d5f0f -[UIApplication _runWithMainScene:transitionContext:completion:] + 2010
-2016-05-07 17:51:30.302 Demo.iOS[17224:1250348] critical: 	33  UIKit                               0x037fbb2c __84-[UIApplication _handleApplicationActivationWithScene:transitionContext:completion:]_block_invoke3246 + 68
-2016-05-07 17:51:30.302 Demo.iOS[17224:1250348] critical: 	34  UIKit                               0x037d2b8a -[UIApplication workspaceDidEndTransaction:] + 163
-2016-05-07 17:51:30.302 Demo.iOS[17224:1250348] critical: 	35  FrontBoardServices                  0x0b88e110 __37-[FBSWorkspace clientEndTransaction:]_block_invoke_2 + 71
-2016-05-07 17:51:30.302 Demo.iOS[17224:1250348] critical: 	36  FrontBoardServices                  0x0b88dbe7 __40-[FBSWorkspace _performDelegateCallOut:]_block_invoke + 54
-2016-05-07 17:51:30.302 Demo.iOS[17224:1250348] critical: 	37  FrontBoardServices                  0x0b8ab27f __FBSSERIALQUEUE_IS_CALLING_OUT_TO_A_BLOCK__ + 23
-2016-05-07 17:51:30.302 Demo.iOS[17224:1250348] critical: 	38  FrontBoardServices                  0x0b8ab0ab -[FBSSerialQueue _performNext] + 174
-2016-05-07 17:51:30.302 Demo.iOS[17224:1250348] critical: 	39  FrontBoardServices                  0x0b8ab4fa -[FBSSerialQueue _performNextFromRunLoopSource] + 52
-2016-05-07 17:51:30.302 Demo.iOS[17224:1250348] critical: 	40  FrontBoardServices                  0x0b8aa7e8 FBSSerialQueueRunLoopSourceHandler + 33
-2016-05-07 17:51:30.302 Demo.iOS[17224:1250348] critical: 	41  CoreFoundation                      0x0088ee5f __CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE0_PERFORM_FUNCTION__ + 15
-2016-05-07 17:51:30.302 Demo.iOS[17224:1250348] critical: 	42  CoreFoundation                      0x00884aeb __CFRunLoopDoSources0 + 523
-2016-05-07 17:51:30.302 Demo.iOS[17224:1250348] critical: 	43  CoreFoundation                      0x00883f08 __CFRunLoopRun + 1032
-2016-05-07 17:51:30.303 Demo.iOS[17224:1250348] critical: 	44  CoreFoundation                      0x00883846 CFRunLoopRunSpecific + 470
-2016-05-07 17:51:30.303 Demo.iOS[17224:1250348] critical: 	45  CoreFoundation                      0x0088365b CFRunLoopRunInMode + 123
-2016-05-07 17:51:30.303 Demo.iOS[17224:1250348] critical: 	46  UIKit                               0x037d22da -[UIApplication _run] + 540
-2016-05-07 17:51:30.303 Demo.iOS[17224:1250348] critical: 	47  UIKit                               0x037d7eb9 UIApplicationMain + 160
-2016-05-07 17:51:30.303 Demo.iOS[17224:1250348] critical: 	48  ???                                 0x18570608 0x0 + 408356360
-2016-05-07 17:51:30.303 Demo.iOS[17224:1250348] critical: 	49  ???                                 0x185704f4 0x0 + 408356084
-2016-05-07 17:51:30.303 Demo.iOS[17224:1250348] critical: 	50  ???                                 0x1856f308 0x0 + 408351496
-2016-05-07 17:51:30.303 Demo.iOS[17224:1250348] critical: 	51  ???                                 0x1856f1a4 0x0 + 408351140
-2016-05-07 17:51:30.303 Demo.iOS[17224:1250348] critical: 	52  ???                                 0x1856f259 0x0 + 408351321
-2016-05-07 17:51:30.303 Demo.iOS[17224:1250348] critical: 	53  Demo.iOS                            0x0020f2d1 mono_jit_runtime_invoke + 705
-2016-05-07 17:51:30.303 Demo.iOS[17224:1250348] critical: 	54  Demo.iOS                            0x002cb00f mono_runtime_invoke + 127
-2016-05-07 17:51:30.304 Demo.iOS[17224:1250348] critical: 	55  Demo.iOS                            0x002cfed1 mono_runtime_exec_main + 401
-2016-05-07 17:51:30.304 Demo.iOS[17224:1250348] critical: 	56  Demo.iOS                            0x002cfc95 mono_runtime_run_main + 629
-2016-05-07 17:51:30.304 Demo.iOS[17224:1250348] critical: 	57  Demo.iOS                            0x00192b5d mono_jit_exec + 93
-2016-05-07 17:51:30.304 Demo.iOS[17224:1250348] critical: 	58  Demo.iOS                            0x003af0a0 xamarin_main + 2384
-2016-05-07 17:51:30.304 Demo.iOS[17224:1250348] critical: 	59  Demo.iOS                            0x003af981 main + 65
-2016-05-07 17:51:30.304 Demo.iOS[17224:1250348] critical: 	60  libdyld.dylib                       0x094d1a25 start + 1
-2016-05-07 17:51:30.304 Demo.iOS[17224:1250348] critical: 
-=================================================================
-Got a SIGABRT while executing native code. This usually indicates
-a fatal error in the mono runtime or one of the native libraries 
-used by your application.
-=================================================================
-
+2016-05-08 15:56:21.212 Demo.iOS[20819:1481375] Error loading /System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin/Contents/MacOS/IOHIDLib:  dlopen(/System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin/Contents/MacOS/IOHIDLib, 262): no suitable image found.  Did find:
+	/System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin/Contents/MacOS/IOHIDLib: mach-o, but not built for iOS simulator
+2016-05-08 15:56:21.212 Demo.iOS[20819:1481375] Cannot find function pointer IOHIDLibFactory for factory 13AA9C44-6F1B-11D4-907C-0005028F18D5 in CFBundle/CFPlugIn 0x7fb35f00 </System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin> (bundle, not loaded)
+2016-05-08 15:56:21.213 Demo.iOS[20819:1481375] Error loading /System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin/Contents/MacOS/IOHIDLib:  dlopen(/System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin/Contents/MacOS/IOHIDLib, 262): no suitable image found.  Did find:
+	/System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin/Contents/MacOS/IOHIDLib: mach-o, but not built for iOS simulator
+2016-05-08 15:56:21.213 Demo.iOS[20819:1481375] Cannot find function pointer IOHIDLibFactory for factory 13AA9C44-6F1B-11D4-907C-0005028F18D5 in CFBundle/CFPlugIn 0x7fb35f00 </System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin> (bundle, not loaded)
+2016-05-08 15:56:21.213 Demo.iOS[20819:1481375] Error loading /System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin/Contents/MacOS/IOHIDLib:  dlopen(/System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin/Contents/MacOS/IOHIDLib, 262): no suitable image found.  Did find:
+	/System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin/Contents/MacOS/IOHIDLib: mach-o, but not built for iOS simulator
+2016-05-08 15:56:21.213 Demo.iOS[20819:1481375] Cannot find function pointer IOHIDLibFactory for factory 13AA9C44-6F1B-11D4-907C-0005028F18D5 in CFBundle/CFPlugIn 0x7fb35f00 </System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin> (bundle, not loaded)
+2016-05-08 15:56:21.213 Demo.iOS[20819:1481375] Error loading /System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin/Contents/MacOS/IOHIDLib:  dlopen(/System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin/Contents/MacOS/IOHIDLib, 262): no suitable image found.  Did find:
+	/System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin/Contents/MacOS/IOHIDLib: mach-o, but not built for iOS simulator
+2016-05-08 15:56:21.214 Demo.iOS[20819:1481375] Cannot find function pointer IOHIDLibFactory for factory 13AA9C44-6F1B-11D4-907C-0005028F18D5 in CFBundle/CFPlugIn 0x7fb35f00 </System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDLib.plugin> (bundle, not loaded)
+2016-05-08 15:56:26.320 Demo.iOS[20819:1481375] Position selected

@@ -161,6 +161,8 @@ namespace CarouselView.FormsPlugin.Android
         /// <summary>
         /// Used for registration with dependency service
         /// </summary>
-        public static void Init() { }
+        public static void Init() {
+			var temp = DateTime.Now;
+		}
     }
 }

@@ -4,7 +4,7 @@
     x:Class="Demo.MainPage"
     xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
 
-    <Grid>
+    <Grid RowSpacing="0">
         <Grid.RowDefinitions>
 	        <RowDefinition Height="*" />
 	        <RowDefinition Height="56" />

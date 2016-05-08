@@ -11,7 +11,7 @@
     <AssemblyName>CarouselView.FormsPlugin.iOS</AssemblyName>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <ReleaseVersion>1.0.4</ReleaseVersion>
+    <ReleaseVersion>1.0.5</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,12 +42,6 @@
     <Compile Include="ViewContainer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CarouselView.FormsPlugin.Abstractions\CarouselView.FormsPlugin.Abstractions.csproj">
-      <Project>{14C534B6-1984-41A9-A384-D3A5508588E3}</Project>
-      <Name>CarouselView.FormsPlugin.Abstractions</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -69,5 +63,11 @@
   <Import Project="..\..\packages\Xamarin.Forms.2.2.0.31\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.2.0.31\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CarouselView.FormsPlugin.Abstractions\CarouselView.FormsPlugin.Abstractions.csproj">
+      <Project>{14C534B6-1984-41A9-A384-D3A5508588E3}</Project>
+      <Name>CarouselView.FormsPlugin.Abstractions</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

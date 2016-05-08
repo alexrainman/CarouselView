@@ -162,13 +162,12 @@ namespace CarouselView.FormsPlugin.iOS
 			formsView.BindingContext = bindingContext;
 
 			// UIScreen.MainScreen.Bounds.Width, UIScreen.MainScreen.Bounds.Height
-			var rect = new CGRect (0, 0, ElementWidth, ElementHeight);
+			var rect = new CGRect (Element.X, Element.Y, ElementWidth, ElementHeight);
 			var nativeConverted = FormsViewToNativeiOS.ConvertFormsToNative (formsView, rect);
 
 			var viewController = new ViewContainer();
 			viewController.Tag = index;
-			viewController.Add(nativeConverted);
-			viewController.View.Frame = rect;
+			viewController.View = nativeConverted;
 
 			return viewController;
 		}
@@ -176,6 +175,8 @@ namespace CarouselView.FormsPlugin.iOS
         /// <summary>
         /// Used for registration with dependency service
         /// </summary>
-        public static void Init() { }
+        public static void Init() {
+			var temp = DateTime.Now;
+		}
     }
 }

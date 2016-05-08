@@ -112,7 +112,7 @@ Global
 		{D525F236-6A2D-4010-B1CC-4A4B8581C90B}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		version = 1.0.4
+		version = 1.0.5
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
