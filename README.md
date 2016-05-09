@@ -90,7 +90,7 @@ Then the xaml:
 
 #### Known issues
 
-- You have to provide HeighRequest for elements like Label, Entry ...
+- You have to provide HeighRequest for elements like Label, Entry ... I still need to figure it out how to propagate request layout down to each children.
 
 ```xml
 <StackLayout Padding="10">
