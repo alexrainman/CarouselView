@@ -23,17 +23,6 @@ You must do this AFTER you call Xamarin.Forms.Init();
 
 #### Usage
 
-Provide HeighRequest for elements like Label, Entry ...
-
-```xml
-<StackLayout Padding="10">
-	<Label TextColor="Black" Text="{Binding .}" HeightRequest="40" />
-	<Entry Placeholder="Name" HeightRequest="40" />
-	<Entry Placeholder="Age" HeightRequest="40" />
-	<Button Text="Remove me!" HeightRequest="40" Clicked="CLick me!"/>
-</StackLayout>
-```
-
 **C#:**
 
 ```
@@ -98,6 +87,21 @@ Then the xaml:
 ```AddPage```: insert a view at a given position and slide to it.
 
 ```SetCurrentPage```: slide programmatically to a given position.
+
+#### Known issues
+
+- You have to provide HeighRequest for elements like Label, Entry ...
+
+```xml
+<StackLayout Padding="10">
+	<Label TextColor="Black" Text="{Binding .}" HeightRequest="40" />
+	<Entry Placeholder="Name" HeightRequest="40" />
+	<Entry Placeholder="Age" HeightRequest="40" />
+	<Button Text="Remove me!" HeightRequest="40" Clicked="CLick me!"/>
+</StackLayout>
+```
+
+- Horizontal StackLayout doesn't works. Why? No idea :) You may use a multi-column Grid instead.
 
 #### Contributors
 * [alexrainman](https://github.com/alexrainman)
