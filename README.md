@@ -47,7 +47,7 @@ Then add the xaml:
     <controls:CarouselViewControl.ItemTemplate>
         <DataTemplate>
             <local:MyView />
-	</DataTemplate>
+	  </DataTemplate>
     </controls:CarouselViewControl.ItemTemplate>
 </controls:CarouselViewControl>
 ```
