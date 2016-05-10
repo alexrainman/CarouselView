@@ -101,9 +101,15 @@ Then the xaml:
 </StackLayout>
 ```
 
-If you are worried about label height you can use this gist: [ITextMeter](https://gist.github.com/alexrainman/82b00160ab32bef9e69dee6d460f44fa)
+- If you are worried about label height you can use this gist: [ITextMeter](https://gist.github.com/alexrainman/82b00160ab32bef9e69dee6d460f44fa)
 
 - Horizontal StackLayout doesn't works. Why? No idea :) You may use a multi-column Grid instead.
+
+- If you have memory leaks in Android when using the Carousel with images, it's not the control itself. It's Xamarin.Forms Android not handling images correctly. To solve the problem you can use [FFImageLoading](https://github.com/luberda-molinet/FFImageLoading) making sure that you set this properties:
+
+```
+DownsampleToViewSize="true" DownsampleWidth="WIDTH"
+```
 
 #### Contributors
 * [alexrainman](https://github.com/alexrainman)
