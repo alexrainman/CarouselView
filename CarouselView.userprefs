@@ -1,5 +1,5 @@
-﻿<Properties RefactoringSettings.EnableRefactorings="True" StartupItem="Droid/Demo.Droid.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.192.168.59.101:5555" />
+﻿<Properties RefactoringSettings.EnableRefactorings="True" StartupItem="iOS/Demo.iOS.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone6s.9.3" />
   <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

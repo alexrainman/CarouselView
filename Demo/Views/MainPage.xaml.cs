@@ -46,7 +46,8 @@ namespace Demo
 
 		public void OnAdd (object sender, TappedEventArgs e)
 		{
-			myCarousel.AddPage (myCarousel.ItemsSource.Count + 1);
+			myCarousel.InsertPage (myCarousel.ItemsSource.Count + 1);
+			myCarousel.SetCurrentPage (myCarousel.Position + 1);
 		}
 
 		public void OnNext (object sender, TappedEventArgs e)

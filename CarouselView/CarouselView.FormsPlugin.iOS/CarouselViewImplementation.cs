@@ -82,7 +82,7 @@ namespace CarouselView.FormsPlugin.iOS
 			};
 
 			Element.RemoveAction = new Action<int> (RemoveController);
-			Element.AddAction = new Action<object> (AddController);
+			Element.InsertAction = new Action<object> (InsertController);
 			Element.SetCurrentAction = new Action<int> (SetCurrentController);
 
 			SetNativeControl (pageController.View);
@@ -124,17 +124,17 @@ namespace CarouselView.FormsPlugin.iOS
 				Element.PositionSelected(Element, EventArgs.Empty);
 		}
 
-		public async void AddController(object item)
+		public async void InsertController(object item)
 		{
 			Element.ItemsSource.Add (item);
 
-			await Task.Delay (100);
+			/*await Task.Delay (100);
 			Element.Position = Element.Position + 1;
 			var firstViewController = CreateViewController(Element.Position);
 			pageController.SetViewControllers(new UIViewController[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, true, s => {});
 		    
 			if (Element.PositionSelected != null)
-				Element.PositionSelected(Element, EventArgs.Empty);
+				Element.PositionSelected(Element, EventArgs.Empty);*/
 		}
 
 		public void SetCurrentController(int position)

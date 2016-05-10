@@ -39,11 +39,11 @@ namespace CarouselView.FormsPlugin.Abstractions
 				RemoveAction (position);
 		}
 
-		public Action<object> AddAction;
+		public Action<object> InsertAction;
 
-		public void AddPage(object item){
-			if(AddAction != null)
-				AddAction (item);
+		public void InsertPage(object item){
+			if(InsertAction != null)
+				InsertAction (item);
 		}
 
 		public Action<int> SetCurrentAction;

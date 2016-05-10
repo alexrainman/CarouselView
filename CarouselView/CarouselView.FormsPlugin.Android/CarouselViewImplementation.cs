@@ -42,7 +42,7 @@ namespace CarouselView.FormsPlugin.Android
 			};
 
 			Element.RemoveAction = new Action<int> (RemoveItem);
-			Element.AddAction = new Action<object> (AddItem);
+			Element.InsertAction = new Action<object> (InsertItem);
 			Element.SetCurrentAction = new Action<int> (SetCurrentItem);
 
 			SetNativeControl (viewPager);
@@ -101,15 +101,15 @@ namespace CarouselView.FormsPlugin.Android
 			IsRemoving = false;
 		}
 
-		public async void AddItem(object item)
+		public async void InsertItem(object item)
 		{
 			Element.ItemsSource.Add (item);
 
 			viewPager.Adapter.NotifyDataSetChanged();
 
-			await Task.Delay (100);
+			/*await Task.Delay (100);
 			Element.Position = Element.Position + 1;
-			viewPager.SetCurrentItem (Element.Position, true);
+			viewPager.SetCurrentItem (Element.Position, true);*/
 		}
 
 		public void SetCurrentItem(int position)
