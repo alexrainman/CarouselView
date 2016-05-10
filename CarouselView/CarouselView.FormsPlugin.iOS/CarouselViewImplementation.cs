@@ -47,7 +47,7 @@ namespace CarouselView.FormsPlugin.iOS
 					if (Element.PositionSelected != null)
 						Element.PositionSelected(Element, EventArgs.Empty);
 
-					Console.WriteLine("Position selected");
+					//Console.WriteLine("Position selected");
 				}
 			};
 
@@ -86,6 +86,23 @@ namespace CarouselView.FormsPlugin.iOS
 			Element.SetCurrentAction = new Action<int> (SetCurrentController);
 
 			SetNativeControl (pageController.View);
+		}
+
+		protected override void OnElementPropertyChanged (object sender, PropertyChangedEventArgs e)
+		{
+			base.OnElementPropertyChanged (sender, e);
+
+			if (e.PropertyName == "Width") {
+				var rect = this.Element.Bounds;
+				ElementWidth = rect.Width;
+			}
+
+			if (e.PropertyName == "Height") {
+				var rect = this.Element.Bounds;
+				ElementHeight = rect.Height;
+				var firstViewController = CreateViewController(Element.Position);
+				pageController.SetViewControllers(new UIViewController[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {});
+			}
 		}
 
 		public async void RemoveController(int position)
@@ -130,24 +147,7 @@ namespace CarouselView.FormsPlugin.iOS
 			if (Element.PositionSelected != null)
 				Element.PositionSelected(Element, EventArgs.Empty);
 		}
-
-		protected override void OnElementPropertyChanged (object sender, PropertyChangedEventArgs e)
-		{
-			base.OnElementPropertyChanged (sender, e);
-
-			if (e.PropertyName == "Width") {
-				var rect = this.Element.Bounds;
-				ElementWidth = rect.Width;
-			}
-
-			if (e.PropertyName == "Height") {
-				var rect = this.Element.Bounds;
-				ElementHeight = rect.Height;
-				var firstViewController = CreateViewController(Element.Position);
-				pageController.SetViewControllers(new UIViewController[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {});
-			}
-		}
-
+			
 		UIViewController CreateViewController(int index){
 
 			Xamarin.Forms.View formsView = null;

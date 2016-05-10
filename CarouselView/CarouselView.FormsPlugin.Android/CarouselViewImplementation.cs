@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 using AViews = Android.Views;
+using System.ComponentModel;
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.Android
@@ -29,7 +30,7 @@ namespace CarouselView.FormsPlugin.Android
 			viewPager = new ViewPager (Forms.Context); 
 
 			viewPager.Adapter = new PageAdapter (Element);
-			viewPager.SetCurrentItem (Element.Position, false);
+			//viewPager.SetCurrentItem (Element.Position, false);
 
 			viewPager.PageSelected += (sender, args) => {
 				Element.Position = args.Position;
@@ -37,7 +38,7 @@ namespace CarouselView.FormsPlugin.Android
 				if (!IsRemoving && Element.PositionSelected != null)
 					Element.PositionSelected(Element, EventArgs.Empty);
 
-				Console.WriteLine("Page selected");
+				//Console.WriteLine("Page selected");
 			};
 
 			Element.RemoveAction = new Action<int> (RemoveItem);
@@ -45,6 +46,21 @@ namespace CarouselView.FormsPlugin.Android
 			Element.SetCurrentAction = new Action<int> (SetCurrentItem);
 
 			SetNativeControl (viewPager);
+		}
+
+		protected override void OnElementPropertyChanged (object sender, PropertyChangedEventArgs e)
+		{
+			base.OnElementPropertyChanged (sender, e);
+
+			if (e.PropertyName == "Width") {
+				//var rect = this.Element.Bounds;
+			}
+
+			if (e.PropertyName == "Height") {
+				//var rect = this.Element.Bounds;
+				viewPager.Adapter.NotifyDataSetChanged();
+				viewPager.SetCurrentItem (Element.Position, false);
+			}
 		}
 
 		public async void RemoveItem(int position)
