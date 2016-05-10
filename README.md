@@ -84,7 +84,7 @@ Then the xaml:
 
 ```RemovePage```: remove a view at given position and slide to previous/next one.
 
-```AddPage```: insert a view at a given position and slide to it.
+```InsertPage```: insert a view at a given position.
 
 ```SetCurrentPage```: slide programmatically to a given position.
 
@@ -100,6 +100,8 @@ Then the xaml:
 	<Button Text="Remove me!" HeightRequest="40" Clicked="CLick me!"/>
 </StackLayout>
 ```
+
+If you are worried about label height you can use this gist:  
 
 - Horizontal StackLayout doesn't works. Why? No idea :) You may use a multi-column Grid instead.
 
