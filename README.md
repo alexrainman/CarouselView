@@ -101,7 +101,7 @@ Then the xaml:
 </StackLayout>
 ```
 
-If you are worried about label height you can use this gist:  
+If you are worried about label height you can use this gist: [ITextMeter](https://gist.github.com/alexrainman/82b00160ab32bef9e69dee6d460f44fa)
 
 - Horizontal StackLayout doesn't works. Why? No idea :) You may use a multi-column Grid instead.
 
