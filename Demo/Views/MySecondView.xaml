@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Demo.MySecondView">
 
-<!--    <Grid Padding="12" ColumnSpacing="12">
+    <Grid Padding="12" ColumnSpacing="12">
         <Grid.RowDefinitions>
 	      <RowDefinition Height="*" />
 	    </Grid.RowDefinitions>
@@ -12,12 +12,12 @@
 	      <ColumnDefinition Width="*" />
 	    </Grid.ColumnDefinitions>
 
-	    <Label Grid.Column="0" Grid.Row="0" Text="Label 1" HeightRequest="14"/>
-        <Label Grid.Column="1" Grid.Row="0" Text="Label 2" HeightRequest="14"/>
+	    <Label Grid.Column="0" Grid.Row="0" Text="Template 2" HeightRequest="14"/>
+        <Label Grid.Column="1" Grid.Row="0" Text="{Binding .}" HeightRequest="14"/>
 
-    </Grid>-->
+    </Grid>
 
-    <AbsoluteLayout BackgroundColor="#FF8080">
+<!--    <AbsoluteLayout BackgroundColor="#FF8080">
 	    <BoxView Color="#8080FF"
 	             AbsoluteLayout.LayoutBounds="0.33, 0, 0.25, 0.25"
 	             AbsoluteLayout.LayoutFlags="All" />
@@ -50,7 +50,7 @@
 	             AbsoluteLayout.LayoutBounds="0.67, 1, 0.25, 0.25"
 	             AbsoluteLayout.LayoutFlags="All" />
 
-	</AbsoluteLayout>
+	</AbsoluteLayout>-->
 
 
 	<!-- requires x:Name so we can reference in RelativeToView on Green box -->

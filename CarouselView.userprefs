@@ -1,8 +1,9 @@
-﻿<Properties RefactoringSettings.EnableRefactorings="True" StartupItem="iOS/Demo.iOS.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone6s.9.3" />
+﻿<Properties RefactoringSettings.EnableRefactorings="True" StartupItem="Droid/Demo.Droid.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.192.168.59.101:5555" />
   <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.CarouselView.FormsPlugin.Android AndroidDesignerPreferredDevice="Nexus 4" />
 </Properties>

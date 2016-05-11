@@ -109,19 +109,30 @@ namespace CarouselView.FormsPlugin.iOS
 		{
 			Element.ItemsSource.RemoveAt (position);
 
-			var newPos = Element.Position - 1;
-			if (newPos == -1)
-				newPos = 0;
+			if (position == Element.Position) {
+				
+				var newPos = position - 1;
+				if (newPos == -1)
+					newPos = 0;
 
-			await Task.Delay (100);
+				await Task.Delay (100);
+				var direction = position == 0 ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
+				var firstViewController = CreateViewController (newPos);
+				pageController.SetViewControllers (new UIViewController[] { firstViewController }, direction, true, s => {
+				});
 
-			var direction = position == 0 ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
-			var firstViewController = CreateViewController(newPos);
-			pageController.SetViewControllers(new UIViewController[] { firstViewController }, direction, true, s => {});
-			Element.Position = newPos;
+				Element.Position = newPos;
+
+			} else {
+
+				var firstViewController = pageController.ViewControllers[0];
+				pageController.SetViewControllers (new UIViewController[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {
+				});
+
+			}
 
 			if (Element.PositionSelected != null)
-				Element.PositionSelected(Element, EventArgs.Empty);
+				Element.PositionSelected (Element, EventArgs.Empty);
 		}
 
 		public async void InsertController(object item)

@@ -11,9 +11,14 @@ namespace Demo
 			InitializeComponent ();
 		}
 
-		public async void RemoveView (object sender, TappedEventArgs e)
+		public async void RemoveMe (object sender, TappedEventArgs e)
 		{
-			MessagingCenter.Send<string> ("Carousel", "RemoveView");
+			MessagingCenter.Send<MyFirstView> (this, "RemoveMe");
+		}
+
+		public async void RemoveNext (object sender, TappedEventArgs e)
+		{
+			MessagingCenter.Send<MyFirstView> (this, "RemoveNext");
 		}
 	}
 }

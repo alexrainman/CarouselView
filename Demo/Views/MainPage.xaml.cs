@@ -19,12 +19,20 @@ namespace Demo
 			myCarousel.Position = 1;
 			myCarousel.PositionSelected += PositionSelected;
 
-			MessagingCenter.Subscribe<string> ("Carousel", "RemoveView", (sender) => {
+			MessagingCenter.Subscribe<MyFirstView> (this, "RemoveMe", (sender) => {
 
-				myCarousel.RemovePage(myCarousel.Position);
+				if (myCarousel.ItemsSource.Count > 1)
+				    myCarousel.RemovePage(myCarousel.Position);
 
 			});
 
+			MessagingCenter.Subscribe<MyFirstView> (this, "RemoveNext", (sender) => {
+
+				if (myCarousel.Position < myCarousel.ItemsSource.Count - 1)
+					myCarousel.RemovePage(myCarousel.Position + 1);
+
+			});
+				
 			prevBtn.IsVisible = myCarousel.Position > 0;
 			addPageBtn.IsVisible = myCarousel.Position == myCarousel.ItemsSource.Count - 1;
 			nextBtn.IsVisible = myCarousel.Position < myCarousel.ItemsSource.Count - 1;

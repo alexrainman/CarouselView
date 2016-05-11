@@ -7,7 +7,8 @@
 		<Label TextColor="Black" Text="{Binding .}" HeightRequest="40" />
 		<Entry Placeholder="Name" HeightRequest="40" />
 		<Entry Placeholder="Age" HeightRequest="40" />
-		<Button Text="Remove me!" HeightRequest="40" Clicked="RemoveView"/>
+		<Button Text="Remove me!" HeightRequest="40" Clicked="RemoveMe"/>
+		<Button Text="Remove next!" HeightRequest="40" Clicked="RemoveNext"/>
 	</StackLayout>
 
 </ContentView>
