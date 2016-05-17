@@ -7,11 +7,9 @@
 In your iOS and Android projects call:
 
 ```
-Xamarin.Forms.Init();//platform specific init
+Xamarin.Forms.Init();
 CarouselViewRenderer.Init();
 ```
-
-You must do this AFTER you call Xamarin.Forms.Init();
 
 **Platform Support**
 
