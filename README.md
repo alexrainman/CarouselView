@@ -4,13 +4,6 @@
 * Available on NuGet: https://www.nuget.org/packages/CarouselView.FormsPlugin/ [![NuGet](https://img.shields.io/nuget/v/CarouselView.FormsPlugin.svg?label=NuGet)](https://www.nuget.org/packages/CarouselView.FormsPlugin/)
 * Install in your PCL project and Client projects.
 
-In your iOS and Android projects call:
-
-```
-Xamarin.Forms.Init();
-CarouselViewRenderer.Init();
-```
-
 **Platform Support**
 
 |Platform|Supported|Version|Renderer|
@@ -19,6 +12,13 @@ CarouselViewRenderer.Init();
 |Xamarin.Android|Yes|API 15+|ViewPager|
 
 #### Usage
+
+In your iOS and Android projects call:
+
+```
+Xamarin.Forms.Init();
+CarouselViewRenderer.Init();
+```
 
 **C#:**
 
