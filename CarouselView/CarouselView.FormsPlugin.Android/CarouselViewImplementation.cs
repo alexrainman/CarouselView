@@ -11,7 +11,6 @@ using System.ComponentModel;
 using AViews = Android.Views;
 using Droid = Android.OS;
 using App = Android.App;
-using Android.Support.V4.App;
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.Android
@@ -22,7 +21,11 @@ namespace CarouselView.FormsPlugin.Android
 	public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, AViews.View>
 	{
 		ViewPager viewPager;
+
 		bool IsRemoving;
+		bool IsPrevious;
+		int _removeAt;
+		bool _disposed;
 
 		protected override void OnElementChanged (ElementChangedEventArgs<CarouselViewControl> e)
 		{
@@ -32,20 +35,33 @@ namespace CarouselView.FormsPlugin.Android
 
 			viewPager = new ViewPager (Forms.Context);
 
-			//viewPager.Adapter = new PageAdapter (Element);
-
-			viewPager.PageSelected += (sender, args) => {
-				Element.Position = args.Position;
-
-				if (!IsRemoving && Element.PositionSelected != null)
-					Element.PositionSelected(Element, EventArgs.Empty);
-			};
+			viewPager.PageSelected += ViewPager_PageSelected;
+			viewPager.PageScrollStateChanged += ViewPager_PageScrollStateChanged;
 
 			Element.RemoveAction = new Action<int> (RemoveItem);
 			Element.InsertAction = new Action<object> (InsertItem);
 			Element.SetCurrentAction = new Action<int> (SetCurrentItem);
 
 			SetNativeControl (viewPager);
+		}
+
+		void ViewPager_PageSelected (object sender, ViewPager.PageSelectedEventArgs e)
+		{
+			Element.Position = e.Position;
+
+			if (!IsRemoving && Element.PositionSelected != null)
+				Element.PositionSelected(Element, EventArgs.Empty);
+		}
+
+		void ViewPager_PageScrollStateChanged (object sender, ViewPager.PageScrollStateChangedEventArgs e)
+		{
+			if (e.State == 0) {
+				if (IsPrevious) {
+					Element.ItemsSource.RemoveAt (_removeAt);
+					viewPager.Adapter.NotifyDataSetChanged ();
+					IsPrevious = false;
+				}
+			}
 		}
 
 		protected override void OnElementPropertyChanged (object sender, PropertyChangedEventArgs e)
@@ -58,43 +74,48 @@ namespace CarouselView.FormsPlugin.Android
 
 			if (e.PropertyName == "Height") {
 				//var rect = this.Element.Bounds;
-				//viewPager.Adapter.NotifyDataSetChanged();
 				viewPager.Adapter = new PageAdapter (Element);
 				viewPager.SetCurrentItem (Element.Position, false);
 			}
 		}
 
+		// Android ViewPager is the most complicated piece of code ever :)
 		public async void RemoveItem(int position)
 		{	
-			if (position == Element.Position) {
+			IsRemoving = true;
 
-				IsRemoving = true;
+			if (position == Element.Position) {
 
 				var newPos = position - 1;
 				if (newPos == -1)
 					newPos = 0;
 
-				if (position == 0)
+				if (position == 0) {
+
 					viewPager.SetCurrentItem (1, true);
-				else
+
+					await Task.Delay (100);
+
+					Element.ItemsSource.RemoveAt (position);
+					viewPager.Adapter = new PageAdapter (Element);
+
+				} else {
+
+					IsPrevious = true;
+					_removeAt = position;
+
 					viewPager.SetCurrentItem (newPos, true);
-
-				await Task.Delay (100);
-
-				Element.ItemsSource.RemoveAt (position);
-				viewPager.Adapter = new PageAdapter (Element);
-
-				IsRemoving = false;
-
-				viewPager.SetCurrentItem (newPos, true);
+				}
 
 			} else {
-				
+
 				Element.ItemsSource.RemoveAt (position);
 				viewPager.Adapter.NotifyDataSetChanged ();
 
 			}
-				
+
+			IsRemoving = false;
+
 			if (Element.PositionSelected != null)
 				Element.PositionSelected (Element, EventArgs.Empty);
 		}
@@ -102,7 +123,6 @@ namespace CarouselView.FormsPlugin.Android
 		public async void InsertItem(object item)
 		{
 			Element.ItemsSource.Add (item);
-
 			viewPager.Adapter.NotifyDataSetChanged();
 
 			/*await Task.Delay (100);
@@ -136,7 +156,7 @@ namespace CarouselView.FormsPlugin.Android
 				return view == objectValue;
 			} 
 
-			public override Java.Lang.Object InstantiateItem (AViews.View container, int position)
+			public override Java.Lang.Object InstantiateItem (AViews.ViewGroup container, int position)
 			{
 				Xamarin.Forms.View formsView = null;
 				var bindingContext = Element.ItemsSource.Cast<object> ().ElementAt (position);
@@ -161,10 +181,10 @@ namespace CarouselView.FormsPlugin.Android
 				return nativeConverted;
 			}
 
-			public override void DestroyItem (AViews.View container, int position, Java.Lang.Object objectValue)
+			public override void DestroyItem (AViews.ViewGroup container, int position, Java.Lang.Object objectValue)
 			{
 				var pager = (ViewPager)container;
-				pager.RemoveView ((AViews.View)objectValue);
+				pager.RemoveView ((AViews.ViewGroup)objectValue);
 			}
 
 			public override int GetItemPosition (Java.Lang.Object objectValue)
@@ -176,9 +196,36 @@ namespace CarouselView.FormsPlugin.Android
 			}
 		}
 
-        /// <summary>
-        /// Used for registration with dependency service
-        /// </summary>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && !_disposed)
+			{
+				if (viewPager != null) {
+
+					viewPager.PageSelected -= ViewPager_PageSelected;
+
+					if (viewPager.Adapter != null)
+						viewPager.Adapter.Dispose ();
+					viewPager.Dispose ();
+					viewPager = null;
+				}
+
+				_disposed = true;
+			}
+
+			try
+			{
+				base.Dispose(disposing);
+			}
+			catch(Exception ex)
+			{
+				return;
+			}
+		}
+
+		/// <summary>
+		/// Used for registration with dependency service
+		/// </summary>
 		public static void Init() {
 			var temp = DateTime.Now;
 		}

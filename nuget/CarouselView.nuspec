@@ -2,14 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>1.0.9</version>
+        <version>1.0.13</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
         <licenseUrl>https://github.com/alexrainman/CarouselView/blob/master/README.md</licenseUrl>
         <projectUrl>https://github.com/alexrainman/CarouselView</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>CarouselView Control for Xamarin Forms based on Android ViewPager and iOS UIPageViewController</description>
+        <description>CarouselView Control for Xamarin Forms</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>https://github.com/alexrainman/CarouselView/commits</releaseNotes>
         <tags>carouselview carousel pageslider slider viewpager uipageviewcontroller ios android xamarin forms monotouch monodroid</tags>

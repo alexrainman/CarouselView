@@ -18,6 +18,7 @@ namespace CarouselView.FormsPlugin.iOS
 	public class CarouselViewRenderer  : ViewRenderer<CarouselViewControl, UIView>
 	{
 		UIPageViewController pageController;
+		bool _disposed;
 
 		int Count {
 			get {
@@ -38,18 +39,7 @@ namespace CarouselView.FormsPlugin.iOS
 				UIPageViewControllerNavigationOrientation.Horizontal,
 				UIPageViewControllerSpineLocation.None);
 
-			pageController.DidFinishAnimating += (sender, args) => {
-				if (args.Completed) {
-					var controller = (ViewContainer)pageController.ViewControllers[0];
-					var position = controller.Tag;
-					Element.Position = position;
-
-					if (Element.PositionSelected != null)
-						Element.PositionSelected(Element, EventArgs.Empty);
-
-					//Console.WriteLine("Position selected");
-				}
-			};
+			pageController.DidFinishAnimating += PageController_DidFinishAnimating;
 
 			pageController.GetPreviousViewController = (pageViewController, referenceViewController) => {
 
@@ -65,7 +55,7 @@ namespace CarouselView.FormsPlugin.iOS
 					return CreateViewController(previousPageIndex);
 				}
 			};
-
+			
 			pageController.GetNextViewController = (pageViewController, referenceViewController) => {
 
 				var controller = (ViewContainer)referenceViewController;
@@ -86,6 +76,20 @@ namespace CarouselView.FormsPlugin.iOS
 			Element.SetCurrentAction = new Action<int> (SetCurrentController);
 
 			SetNativeControl (pageController.View);
+		}
+
+		void PageController_DidFinishAnimating (object sender, UIPageViewFinishedAnimationEventArgs e)
+		{
+			if (e.Completed) {
+				var controller = (ViewContainer)pageController.ViewControllers[0];
+				var position = controller.Tag;
+				Element.Position = position;
+
+				if (Element.PositionSelected != null)
+					Element.PositionSelected(Element, EventArgs.Empty);
+
+				//Console.WriteLine("Position selected");
+			}
 		}
 
 		protected override void OnElementPropertyChanged (object sender, PropertyChangedEventArgs e)
@@ -135,17 +139,16 @@ namespace CarouselView.FormsPlugin.iOS
 				Element.PositionSelected (Element, EventArgs.Empty);
 		}
 
-		public async void InsertController(object item)
+		public void InsertController(object item)
 		{
 			Element.ItemsSource.Add (item);
 
-			/*await Task.Delay (100);
-			Element.Position = Element.Position + 1;
-			var firstViewController = CreateViewController(Element.Position);
-			pageController.SetViewControllers(new UIViewController[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, true, s => {});
-		    
+			var firstViewController = pageController.ViewControllers[0];
+			pageController.SetViewControllers (new UIViewController[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {
+			});
+
 			if (Element.PositionSelected != null)
-				Element.PositionSelected(Element, EventArgs.Empty);*/
+				Element.PositionSelected(Element, EventArgs.Empty);
 		}
 
 		public void SetCurrentController(int position)
@@ -181,6 +184,36 @@ namespace CarouselView.FormsPlugin.iOS
 			viewController.View = nativeConverted;
 
 			return viewController;
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && !_disposed)
+			{
+				if (pageController != null)
+				{
+					pageController.DidFinishAnimating -= PageController_DidFinishAnimating;
+					pageController.GetPreviousViewController = null;
+					pageController.GetNextViewController = null;
+
+					foreach (var child in pageController.ViewControllers)
+						child.Dispose ();
+
+					pageController.Dispose ();
+					pageController = null;
+				}
+
+				_disposed = true;
+			}
+
+			try
+			{
+				base.Dispose(disposing);
+			}
+			catch(Exception ex)
+			{
+				return;
+			}
 		}
 
         /// <summary>

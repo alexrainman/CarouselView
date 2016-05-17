@@ -4,6 +4,7 @@
     x:Class="Demo.MyFirstView">
 
     <StackLayout Padding="10">
+        <Image Source="icon"/>
 		<Label TextColor="Black" Text="{Binding .}" HeightRequest="40" />
 		<Entry Placeholder="Name" HeightRequest="40" />
 		<Entry Placeholder="Age" HeightRequest="40" />

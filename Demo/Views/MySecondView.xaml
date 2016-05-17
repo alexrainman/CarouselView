@@ -12,7 +12,7 @@
 	      <ColumnDefinition Width="*" />
 	    </Grid.ColumnDefinitions>
 
-	    <Label Grid.Column="0" Grid.Row="0" Text="Template 2" HeightRequest="14"/>
+	    <Image Grid.Column="0" Grid.Row="0" Source="icon"/>
         <Label Grid.Column="1" Grid.Row="0" Text="{Binding .}" HeightRequest="14"/>
 
     </Grid>
