@@ -1,5 +1,9 @@
-# CarouselView
-CarouselView control for Xamarin Forms based on Android ViewPager and iOS UIPageViewController.
+# CarouselView control for Xamarin Forms
+
+|Platform|Renderer|
+| ------------------- | :-----------: | :------------------: |
+|Xamarin.iOS|UIPageViewController|
+|Xamarin.Android|ViewPager|
 
 #### Setup
 * Available on NuGet: https://www.nuget.org/packages/CarouselView.FormsPlugin/ [![NuGet](https://img.shields.io/nuget/v/CarouselView.FormsPlugin.svg?label=NuGet)](https://www.nuget.org/packages/CarouselView.FormsPlugin/)
