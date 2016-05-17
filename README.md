@@ -14,7 +14,7 @@ CarouselViewRenderer.Init();
 **Platform Support**
 
 |Platform|Supported|Version|Renderer|
-| ------------------- | :-----------: | :------------------: |
+| ------------------- | :-----------: | :-----------: | :------------------: |
 |Xamarin.iOS Unified|Yes|iOS 8.1+|UIPageViewController|
 |Xamarin.Android|Yes|API 15+|ViewPager|
 
