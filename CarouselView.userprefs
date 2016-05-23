@@ -1,6 +1,10 @@
 ﻿<Properties RefactoringSettings.EnableRefactorings="True" StartupItem="Droid/Demo.Droid.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.192.168.59.101:5555" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="CarouselView/CarouselView.FormsPlugin.Android/CarouselViewImplementation.cs">
+    <Files>
+      <File FileName="CarouselView/CarouselView.FormsPlugin.Android/CarouselViewImplementation.cs" Line="29" Column="17" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

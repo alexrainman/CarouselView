@@ -3,20 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Demo.MySecondView">
 
-    <Grid Padding="12" ColumnSpacing="12">
-        <Grid.RowDefinitions>
-	      <RowDefinition Height="*" />
-	    </Grid.RowDefinitions>
-	    <Grid.ColumnDefinitions>
-	      <ColumnDefinition Width="*" />
-	      <ColumnDefinition Width="*" />
-	    </Grid.ColumnDefinitions>
-
-	    <Image Grid.Column="0" Grid.Row="0" Source="icon"/>
-        <Label Grid.Column="1" Grid.Row="0" Text="{Binding .}" HeightRequest="14"/>
-
-    </Grid>
-
 <!--    <AbsoluteLayout BackgroundColor="#FF8080">
 	    <BoxView Color="#8080FF"
 	             AbsoluteLayout.LayoutBounds="0.33, 0, 0.25, 0.25"
@@ -54,7 +40,7 @@
 
 
 	<!-- requires x:Name so we can reference in RelativeToView on Green box -->
-<!--	<RelativeLayout>
+	<RelativeLayout>
     
 	    <BoxView Color="Red" x:Name="Red"
 	            WidthRequest="200" 
@@ -88,6 +74,6 @@
 	                 "{ConstraintExpression Type=RelativeToParent, 
 	                                        Property=Height,
 	                                        Factor=0.3}" />
-	</RelativeLayout>-->
+	</RelativeLayout>
 
 </ContentView>

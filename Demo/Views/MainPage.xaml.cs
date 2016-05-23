@@ -16,7 +16,7 @@ namespace Demo
 
 			myCarousel.ItemsSource = new List<int> { 1, 2, 3, 4, 5 };
 			myCarousel.ItemTemplate = new MyTemplateSelector (); //new DataTemplate (typeof(MyView));
-			myCarousel.Position = 1;
+			myCarousel.Position = 0;
 			myCarousel.PositionSelected += PositionSelected;
 
 			MessagingCenter.Subscribe<MyFirstView> (this, "RemoveMe", (sender) => {

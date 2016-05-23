@@ -26,8 +26,8 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 		}
 
-		double ElementWidth { get; set; }
-		double ElementHeight { get; set; }
+		double ElementWidth;
+		double ElementHeight;
 
 		protected override void OnElementChanged (ElementChangedEventArgs<CarouselViewControl> e)
 		{
@@ -105,7 +105,7 @@ namespace CarouselView.FormsPlugin.iOS
 				var rect = this.Element.Bounds;
 				ElementHeight = rect.Height;
 				var firstViewController = CreateViewController(Element.Position);
-				pageController.SetViewControllers(new UIViewController[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {});
+				pageController.SetViewControllers(new [] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {});
 			}
 		}
 
@@ -122,7 +122,7 @@ namespace CarouselView.FormsPlugin.iOS
 				await Task.Delay (100);
 				var direction = position == 0 ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
 				var firstViewController = CreateViewController (newPos);
-				pageController.SetViewControllers (new UIViewController[] { firstViewController }, direction, true, s => {
+				pageController.SetViewControllers (new [] { firstViewController }, direction, true, s => {
 				});
 
 				Element.Position = newPos;
@@ -130,7 +130,7 @@ namespace CarouselView.FormsPlugin.iOS
 			} else {
 
 				var firstViewController = pageController.ViewControllers[0];
-				pageController.SetViewControllers (new UIViewController[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {
+				pageController.SetViewControllers (new [] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {
 				});
 
 			}
@@ -144,7 +144,7 @@ namespace CarouselView.FormsPlugin.iOS
 			Element.ItemsSource.Add (item);
 
 			var firstViewController = pageController.ViewControllers[0];
-			pageController.SetViewControllers (new UIViewController[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {
+			pageController.SetViewControllers (new [] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {
 			});
 
 			if (Element.PositionSelected != null)
@@ -155,7 +155,7 @@ namespace CarouselView.FormsPlugin.iOS
 		{
 			var direction = position > Element.Position ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
 			var firstViewController = CreateViewController(position);
-			pageController.SetViewControllers(new UIViewController[] { firstViewController }, direction, true, s => {});
+			pageController.SetViewControllers(new [] { firstViewController }, direction, true, s => {});
 			Element.Position = position;
 
 			if (Element.PositionSelected != null)

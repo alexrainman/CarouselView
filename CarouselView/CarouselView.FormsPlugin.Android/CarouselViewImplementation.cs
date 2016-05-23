@@ -11,6 +11,8 @@ using System.ComponentModel;
 using AViews = Android.Views;
 using Droid = Android.OS;
 using App = Android.App;
+using Android.Views;
+using Android.Runtime;
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.Android
@@ -26,6 +28,8 @@ namespace CarouselView.FormsPlugin.Android
 		bool IsPrevious;
 		int _removeAt;
 		bool _disposed;
+
+		//int HeightChangedCount;
 
 		protected override void OnElementChanged (ElementChangedEventArgs<CarouselViewControl> e)
 		{
@@ -74,8 +78,12 @@ namespace CarouselView.FormsPlugin.Android
 
 			if (e.PropertyName == "Height") {
 				//var rect = this.Element.Bounds;
-				viewPager.Adapter = new PageAdapter (Element);
-				viewPager.SetCurrentItem (Element.Position, false);
+				//HeightChangedCount++;
+				//if (HeightChangedCount > 1) {					
+					viewPager.Adapter = new PageAdapter (Element);
+					viewPager.SetCurrentItem (Element.Position, false);
+					//HeightChangedCount = 0;
+				//}
 			}
 		}
 
