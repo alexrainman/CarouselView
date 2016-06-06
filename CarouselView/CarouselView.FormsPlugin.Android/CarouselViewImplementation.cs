@@ -29,8 +29,6 @@ namespace CarouselView.FormsPlugin.Android
 		int _removeAt;
 		bool _disposed;
 
-		//int HeightChangedCount;
-
 		protected override void OnElementChanged (ElementChangedEventArgs<CarouselViewControl> e)
 		{
 			base.OnElementChanged (e);
@@ -42,6 +40,7 @@ namespace CarouselView.FormsPlugin.Android
 			viewPager.PageSelected += ViewPager_PageSelected;
 			viewPager.PageScrollStateChanged += ViewPager_PageScrollStateChanged;
 
+			Element.ItemsSourceChanged = new Action (ItemsSourceChanged);
 			Element.RemoveAction = new Action<int> (RemoveItem);
 			Element.InsertAction = new Action<object> (InsertItem);
 			Element.SetCurrentAction = new Action<int> (SetCurrentItem);
@@ -54,7 +53,7 @@ namespace CarouselView.FormsPlugin.Android
 			Element.Position = e.Position;
 
 			if (!IsRemoving && Element.PositionSelected != null)
-				Element.PositionSelected(Element, EventArgs.Empty);
+				Element.PositionSelected (Element, EventArgs.Empty);
 		}
 
 		void ViewPager_PageScrollStateChanged (object sender, ViewPager.PageScrollStateChangedEventArgs e)
@@ -64,6 +63,9 @@ namespace CarouselView.FormsPlugin.Android
 					Element.ItemsSource.RemoveAt (_removeAt);
 					viewPager.Adapter.NotifyDataSetChanged ();
 					IsPrevious = false;
+
+					if (Element.PositionSelected != null)
+						Element.PositionSelected (Element, EventArgs.Empty);
 				}
 			}
 		}
@@ -78,70 +80,81 @@ namespace CarouselView.FormsPlugin.Android
 
 			if (e.PropertyName == "Height") {
 				//var rect = this.Element.Bounds;
-				//HeightChangedCount++;
-				//if (HeightChangedCount > 1) {					
-					viewPager.Adapter = new PageAdapter (Element);
-					viewPager.SetCurrentItem (Element.Position, false);
-					//HeightChangedCount = 0;
-				//}
+				viewPager.Adapter = new PageAdapter (Element);
+				viewPager.SetCurrentItem (Element.Position, false);
 			}
 		}
 
-		// Android ViewPager is the most complicated piece of code ever :)
-		public async void RemoveItem(int position)
-		{	
-			IsRemoving = true;
-
-			if (position == Element.Position) {
-
-				var newPos = position - 1;
-				if (newPos == -1)
-					newPos = 0;
-
-				if (position == 0) {
-
-					viewPager.SetCurrentItem (1, true);
-
-					await Task.Delay (100);
-
-					Element.ItemsSource.RemoveAt (position);
-					viewPager.Adapter = new PageAdapter (Element);
-
-				} else {
-
-					IsPrevious = true;
-					_removeAt = position;
-
-					viewPager.SetCurrentItem (newPos, true);
-				}
-
-			} else {
-
-				Element.ItemsSource.RemoveAt (position);
-				viewPager.Adapter.NotifyDataSetChanged ();
-
-			}
-
-			IsRemoving = false;
+		public void ItemsSourceChanged() {
+			
+			viewPager.Adapter = new PageAdapter (Element);
+			viewPager.SetCurrentItem (Element.Position, false);
 
 			if (Element.PositionSelected != null)
 				Element.PositionSelected (Element, EventArgs.Empty);
 		}
 
+		// Android ViewPager is the most complicated piece of code ever :)
+		public async void RemoveItem(int position)
+		{	
+			if (Element != null && viewPager != null) {
+				
+				IsRemoving = true;
+
+				if (position == Element.Position) {
+
+					var newPos = position - 1;
+					if (newPos == -1)
+						newPos = 0;
+
+					if (position == 0) {
+
+						viewPager.SetCurrentItem (1, true);
+
+						await Task.Delay (100);
+
+						Element.ItemsSource.RemoveAt (position);
+						viewPager.Adapter = new PageAdapter (Element);
+						Element.Position = 0;
+
+					} else {
+
+						IsPrevious = true;
+						_removeAt = position;
+
+						viewPager.SetCurrentItem (newPos, true);
+					}
+
+				} else {
+
+					Element.ItemsSource.RemoveAt (position);
+					viewPager.Adapter.NotifyDataSetChanged ();
+
+				}
+
+				IsRemoving = false;
+
+				if (!IsPrevious) {
+					if (Element.PositionSelected != null)
+						Element.PositionSelected (Element, EventArgs.Empty);
+				}
+			}
+		}
+
 		public async void InsertItem(object item)
 		{
-			Element.ItemsSource.Add (item);
-			viewPager.Adapter.NotifyDataSetChanged();
-
-			/*await Task.Delay (100);
-			Element.Position = Element.Position + 1;
-			viewPager.SetCurrentItem (Element.Position, true);*/
+			if (Element != null && viewPager != null) {
+				Element.ItemsSource.Add (item);
+				viewPager.Adapter.NotifyDataSetChanged ();
+			}
 		}
 
 		public void SetCurrentItem(int position)
 		{	
-			Element.Position = position;
-			viewPager.SetCurrentItem (Element.Position, true);
+			if (Element != null && viewPager != null) {
+				Element.Position = position;
+				viewPager.SetCurrentItem (Element.Position, true);
+			}
 		}
 
 		class PageAdapter : PagerAdapter

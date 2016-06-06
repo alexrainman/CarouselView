@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string msgid="3698378085901466129" name="mr_button_content_description">"دکمه ارسال محتوا"</string>
+    <string msgid="6349900579507521956" name="mr_chooser_searching">"پیدا کردن دستگاه‌ها"</string>
+    <string msgid="414301941546135990" name="mr_chooser_title">"ارسال محتوا به"</string>
+    <string msgid="4868457957151124867" name="mr_controller_casting_screen">"درحال فرستادن صفحه"</string>
+    <string msgid="7333862312480583260" name="mr_controller_close_description">"بستن"</string>
+    <string msgid="7924809056904240926" name="mr_controller_collapse_group">"کوچک کردن"</string>
+    <string msgid="1227264889412989580" name="mr_controller_disconnect">"قطع ارتباط"</string>
+    <string msgid="8062427022744266907" name="mr_controller_expand_group">"بزرگ کردن"</string>
+    <string msgid="5585418471741142924" name="mr_controller_no_info_available">"اطلاعات دردسترس نیست"</string>
+    <string msgid="6547130360349182381" name="mr_controller_no_media_selected">"رسانه انتخاب نشده است"</string>
+    <string msgid="5451884435510905406" name="mr_controller_pause">"توقف موقت"</string>
+    <string msgid="683634565969987458" name="mr_controller_play">"پخش"</string>
+    <string msgid="4570331844078181931" name="mr_controller_stop">"توقف ارسال محتوا"</string>
+    <string msgid="5441529851481176817" name="mr_system_route_name">"سیستم"</string>
+    <string msgid="7498112907524977311" name="mr_user_route_category_name">"دستگاه‌ها"</string>
+</resources>

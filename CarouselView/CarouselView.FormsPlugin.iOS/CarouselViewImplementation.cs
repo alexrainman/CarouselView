@@ -71,6 +71,7 @@ namespace CarouselView.FormsPlugin.iOS
 				}
 			};
 
+			Element.ItemsSourceChanged = new Action (ItemsSourceChanged);
 			Element.RemoveAction = new Action<int> (RemoveController);
 			Element.InsertAction = new Action<object> (InsertController);
 			Element.SetCurrentAction = new Action<int> (SetCurrentController);
@@ -109,57 +110,67 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 		}
 
-		public async void RemoveController(int position)
-		{
-			Element.ItemsSource.RemoveAt (position);
-
-			if (position == Element.Position) {
-				
-				var newPos = position - 1;
-				if (newPos == -1)
-					newPos = 0;
-
-				await Task.Delay (100);
-				var direction = position == 0 ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
-				var firstViewController = CreateViewController (newPos);
-				pageController.SetViewControllers (new [] { firstViewController }, direction, true, s => {
-				});
-
-				Element.Position = newPos;
-
-			} else {
-
-				var firstViewController = pageController.ViewControllers[0];
-				pageController.SetViewControllers (new [] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {
-				});
-
-			}
+		public void ItemsSourceChanged() {
+			
+			var firstViewController = CreateViewController(Element.Position);
+			pageController.SetViewControllers(new [] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {});
 
 			if (Element.PositionSelected != null)
 				Element.PositionSelected (Element, EventArgs.Empty);
 		}
 
+		public async void RemoveController(int position)
+		{
+			if (Element != null && pageController != null) {
+				Element.ItemsSource.RemoveAt (position);
+
+				if (position == Element.Position) {
+				
+					var newPos = position - 1;
+					if (newPos == -1)
+						newPos = 0;
+
+					await Task.Delay (100);
+					var direction = position == 0 ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
+					var firstViewController = CreateViewController (newPos);
+					pageController.SetViewControllers (new [] { firstViewController }, direction, true, s => {
+					});
+
+					Element.Position = newPos;
+
+				} else {
+
+					var firstViewController = pageController.ViewControllers [0];
+					pageController.SetViewControllers (new [] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {
+					});
+
+				}
+
+				if (Element.PositionSelected != null)
+					Element.PositionSelected (Element, EventArgs.Empty);
+			}
+		}
+
 		public void InsertController(object item)
 		{
-			Element.ItemsSource.Add (item);
+			if (Element != null && pageController != null) {
+				Element.ItemsSource.Add (item);
 
-			var firstViewController = pageController.ViewControllers[0];
-			pageController.SetViewControllers (new [] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {
-			});
-
-			if (Element.PositionSelected != null)
-				Element.PositionSelected(Element, EventArgs.Empty);
+				var firstViewController = pageController.ViewControllers [0];
+				pageController.SetViewControllers (new [] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {
+				});
+			}
 		}
 
 		public void SetCurrentController(int position)
 		{
-			var direction = position > Element.Position ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
-			var firstViewController = CreateViewController(position);
-			pageController.SetViewControllers(new [] { firstViewController }, direction, true, s => {});
-			Element.Position = position;
-
-			if (Element.PositionSelected != null)
-				Element.PositionSelected(Element, EventArgs.Empty);
+			if (Element != null && pageController != null) {
+				var direction = position > Element.Position ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
+				var firstViewController = CreateViewController (position);
+				pageController.SetViewControllers (new [] { firstViewController }, direction, true, s => {
+				});
+				Element.Position = position;
+			}
 		}
 			
 		UIViewController CreateViewController(int index){

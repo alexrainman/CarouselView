@@ -36,6 +36,12 @@ namespace Demo
 			prevBtn.IsVisible = myCarousel.Position > 0;
 			addPageBtn.IsVisible = myCarousel.Position == myCarousel.ItemsSource.Count - 1;
 			nextBtn.IsVisible = myCarousel.Position < myCarousel.ItemsSource.Count - 1;
+
+			ToolbarItems.Add(new ToolbarItem {
+				Name = "Reset",
+				Order = ToolbarItemOrder.Primary,
+				Command = new Command(() => myCarousel.ItemsSource = new List<int> { 1, 2, 3, 4, 5 })
+			});
 		}
 
 		public void PositionSelected (object sender, EventArgs e)

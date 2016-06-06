@@ -9,7 +9,12 @@ namespace CarouselView.FormsPlugin.Abstractions
     /// </summary>
 	public class CarouselViewControl : View
 	{
-		public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create("ItemsSource", typeof(IList), typeof(CarouselViewControl), null);
+		public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create("ItemsSource", typeof(IList), typeof(CarouselViewControl), null,
+			propertyChanged: (bindableObject, oldValue, newValue) => {
+				var carousel = (CarouselViewControl)bindableObject;
+				if(carousel.ItemsSourceChanged != null)
+					carousel.ItemsSourceChanged();
+			});
 
 		public IList ItemsSource{
 			get { return (IList)GetValue (ItemsSourceProperty); }
@@ -29,6 +34,8 @@ namespace CarouselView.FormsPlugin.Abstractions
 			get { return (int)GetValue (PositionProperty); }
 			set { SetValue (PositionProperty, value); }
 		}
+
+		public Action ItemsSourceChanged;
 
 		public EventHandler PositionSelected;
 
