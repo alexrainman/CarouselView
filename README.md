@@ -73,6 +73,8 @@ Then the xaml:
 
 ```Position```: the desired selected view when Carousel starts.
 
+```Bounces```: disable bounces in iOS (use this property when you will render one page at a time and move back and fort programmatically).
+
 **Event Handlers**
 
 ```PositionSelected```: called when position changes.
@@ -81,7 +83,7 @@ Then the xaml:
 
 ```RemovePage```: remove a view at given position and slide to previous/next one.
 
-```InsertPage```: insert a view at a given position.
+```InsertPage```: insert a view at a given position (if position parameter is not provided, item will be inserted at the end).
 
 ```SetCurrentPage```: slide programmatically to a given position.
 
