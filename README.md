@@ -74,7 +74,7 @@ Then the xaml:
 
 ```Position```: the desired selected view when Carousel starts.
 
-```Bounces```: disable bounces in iOS (use this property when you will render one page at a time and move back and fort programmatically).
+```Bounces```: use this property to disable bounces when you will render one page at a time and move back and fort programmatically (iOS only).
 
 ```Arrows```: disable arrows navigation (UWP only).
 
