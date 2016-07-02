@@ -10,6 +10,7 @@
 | ------------------- | :-----------: | :-----------: | :------------------: |
 |Xamarin.iOS Unified|Yes|iOS 8.1+|UIPageViewController|
 |Xamarin.Android|Yes|API 15+|ViewPager|
+|UWP|Yes|10+|FlipView|
 
 #### Usage
 
@@ -75,6 +76,8 @@ Then the xaml:
 
 ```Bounces```: disable bounces in iOS (use this property when you will render one page at a time and move back and fort programmatically).
 
+```Arrows```: disable arrows navigation (UWP only).
+
 **Event Handlers**
 
 ```PositionSelected```: called when position changes.
@@ -83,7 +86,7 @@ Then the xaml:
 
 ```RemovePage```: remove a view at given position and slide to previous/next one.
 
-```InsertPage```: insert a view at a given position (if position parameter is not provided, item will be inserted at the end).
+```InsertPage```: insert a view at a given position (if position parameter is not provided, item will be added at the end).
 
 ```SetCurrentPage```: slide programmatically to a given position.
 
