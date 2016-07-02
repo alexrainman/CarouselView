@@ -7,7 +7,7 @@ namespace CarouselView.FormsPlugin.Abstractions
     /// <summary>
     /// CarouselView Interface
     /// </summary>
-	public class CarouselViewControl : View
+	public class CarouselViewControl : View //Layout<View>
 	{
 		public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create("ItemsSource", typeof(IList), typeof(CarouselViewControl), null,
 			propertyChanged: (bindableObject, oldValue, newValue) => {
@@ -35,6 +35,24 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue (PositionProperty, value); }
 		}
 
+		// iOS only
+		public static readonly BindableProperty BouncesProperty = BindableProperty.Create("Bounces", typeof(bool), typeof(CarouselViewControl), true);
+
+		public bool Bounces
+		{
+			get { return (bool)GetValue(BouncesProperty); }
+			set { SetValue(BouncesProperty, value); }
+		}
+
+		// UWP only
+		public static readonly BindableProperty ArrowsProperty = BindableProperty.Create("Arrows", typeof(bool), typeof(CarouselViewControl), true);
+
+		public bool Arrows
+		{
+			get { return (bool)GetValue(ArrowsProperty); }
+			set { SetValue(ArrowsProperty, value); }
+		}
+
 		public Action ItemsSourceChanged;
 
 		public EventHandler PositionSelected;
@@ -46,11 +64,11 @@ namespace CarouselView.FormsPlugin.Abstractions
 				RemoveAction (position);
 		}
 
-		public Action<object> InsertAction;
+		public Action<object, int> InsertAction;
 
-		public void InsertPage(object item){
+		public void InsertPage(object item, int position = -1){
 			if(InsertAction != null)
-				InsertAction (item);
+				InsertAction (item, position);
 		}
 
 		public Action<int> SetCurrentAction;
@@ -59,5 +77,45 @@ namespace CarouselView.FormsPlugin.Abstractions
 			if(SetCurrentAction != null)
 				SetCurrentAction (position);
 		}
-    }
+
+		/*protected override void LayoutChildren(double x, double y, double width, double height)
+		{
+			for (int i = 0; i < Children.Count; i++)
+			{
+				var child = (View)Children[i];
+				// skip invisible children
+
+				if (!child.IsVisible)
+					continue;
+				var childSizeRequest = child.GetSizeRequest(double.PositiveInfinity, height);
+				var childWidth = childSizeRequest.Request.Width;
+				LayoutChildIntoBoundingRegion(child, new Rectangle(x, y, childWidth, height));
+				x += childWidth;
+			}
+		}
+
+		protected override SizeRequest OnSizeRequest(double widthConstraint, double heightConstraint)
+		{
+			double height = 0;
+			double minHeight = 0;
+			double width = 0;
+			double minWidth = 0;
+
+			for (int i = 0; i < Children.Count; i++)
+			{
+				var child = (View)Children[i];
+				// skip invisible children
+
+				if (!child.IsVisible)
+					continue;
+				var childSizeRequest = child.GetSizeRequest(double.PositiveInfinity, height);
+				height = Math.Max(height, childSizeRequest.Minimum.Height);
+				minHeight = Math.Max(minHeight, childSizeRequest.Minimum.Height);
+				width += childSizeRequest.Request.Width;
+				minWidth += childSizeRequest.Minimum.Width;
+			}
+
+			return new SizeRequest(new Size(width, height), new Size(minWidth, minHeight));
+		}*/
+	}
 }

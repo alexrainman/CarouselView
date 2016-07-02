@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string msgid="3698378085901466129" name="mr_button_content_description">"የCast አዝራር"</string>
+    <string msgid="6349900579507521956" name="mr_chooser_searching">"መሣሪያዎችን በማግኘት ላይ"</string>
+    <string msgid="414301941546135990" name="mr_chooser_title">"Cast አድርግ ወደ"</string>
+    <string msgid="4868457957151124867" name="mr_controller_casting_screen">"ማያ ገጽን በመውሰድ ላይ"</string>
+    <string msgid="7333862312480583260" name="mr_controller_close_description">"ዝጋ"</string>
+    <string msgid="7924809056904240926" name="mr_controller_collapse_group">"ሰብስብ"</string>
+    <string msgid="1227264889412989580" name="mr_controller_disconnect">"ግንኙነት አቋርጥ"</string>
+    <string msgid="8062427022744266907" name="mr_controller_expand_group">"አስፋ"</string>
+    <string msgid="5585418471741142924" name="mr_controller_no_info_available">"ምንም መረጃ አይገኝም"</string>
+    <string msgid="6547130360349182381" name="mr_controller_no_media_selected">"ምንም ማህደረመረጃ አልተመረጠም"</string>
+    <string msgid="5451884435510905406" name="mr_controller_pause">"ለአፍታ አቁም"</string>
+    <string msgid="683634565969987458" name="mr_controller_play">"አጫውት"</string>
+    <string msgid="4570331844078181931" name="mr_controller_stop">"Cast ማድረግ አቁም"</string>
+    <string msgid="5441529851481176817" name="mr_system_route_name">"ስርዓት"</string>
+    <string msgid="7498112907524977311" name="mr_user_route_category_name">"መሣሪያዎች"</string>
+</resources>

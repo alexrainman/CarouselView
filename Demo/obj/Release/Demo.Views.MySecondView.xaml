@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Demo.MySecondView">
+
+<!--    <AbsoluteLayout BackgroundColor="#FF8080">
+	    <BoxView Color="#8080FF"
+	             AbsoluteLayout.LayoutBounds="0.33, 0, 0.25, 0.25"
+	             AbsoluteLayout.LayoutFlags="All" />
+
+	    <BoxView Color="#8080FF"
+	             AbsoluteLayout.LayoutBounds="1, 0, 0.25, 0.25"
+	             AbsoluteLayout.LayoutFlags="All" />
+
+	    <BoxView Color="#8080FF"
+	             AbsoluteLayout.LayoutBounds="0, 0.33, 0.25, 0.25"
+	             AbsoluteLayout.LayoutFlags="All" />
+
+	    <BoxView Color="#8080FF"
+	             AbsoluteLayout.LayoutBounds="0.67, 0.33, 0.25, 0.25"
+	             AbsoluteLayout.LayoutFlags="All" />
+
+	    <BoxView Color="#8080FF"
+	             AbsoluteLayout.LayoutBounds="0.33, 0.67, 0.25, 0.25"
+	             AbsoluteLayout.LayoutFlags="All" />
+
+	    <BoxView Color="#8080FF"
+	             AbsoluteLayout.LayoutBounds="1, 0.67, 0.25, 0.25"
+	             AbsoluteLayout.LayoutFlags="All" />
+
+	    <BoxView Color="#8080FF"
+	             AbsoluteLayout.LayoutBounds="0, 1, 0.25, 0.25"
+	             AbsoluteLayout.LayoutFlags="All" />
+
+	    <BoxView Color="#8080FF"
+	             AbsoluteLayout.LayoutBounds="0.67, 1, 0.25, 0.25"
+	             AbsoluteLayout.LayoutFlags="All" />
+
+	</AbsoluteLayout>-->
+
+
+	<!-- requires x:Name so we can reference in RelativeToView on Green box -->
+	<RelativeLayout>
+    
+	    <BoxView Color="Red" x:Name="Red"
+	            WidthRequest="200" 
+	            HeightRequest="200"
+	             RelativeLayout.XConstraint=
+	                 "{ConstraintExpression Type=Constant, 
+	                                        Constant=10}"
+	             RelativeLayout.YConstraint=
+	                 "{ConstraintExpression Type=Constant, 
+	                                        Constant=20}" />
+	    <BoxView Color="Green"
+	             RelativeLayout.XConstraint=
+	                 "{ConstraintExpression Type=RelativeToParent, 
+	                                        Property=Width,
+	                                        Factor=0.5}"
+
+	             RelativeLayout.YConstraint=
+	                 "{ConstraintExpression Type=RelativeToView,
+	                                        Property=Y, 
+	                                        ElementName=Red,
+	                                        Constant=-5}" />
+	    <BoxView Color="Yellow"
+	            WidthRequest="100" 
+	            HeightRequest="100"
+	             RelativeLayout.XConstraint=
+	                 "{ConstraintExpression Type=RelativeToParent, 
+	                                        Property=Width,
+	                                        Factor=0.4}"
+
+	             RelativeLayout.YConstraint=
+	                 "{ConstraintExpression Type=RelativeToParent, 
+	                                        Property=Height,
+	                                        Factor=0.3}" />
+	</RelativeLayout>
+
+</ContentView>

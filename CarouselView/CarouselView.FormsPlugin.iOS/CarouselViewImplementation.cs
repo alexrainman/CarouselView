@@ -73,8 +73,15 @@ namespace CarouselView.FormsPlugin.iOS
 
 			Element.ItemsSourceChanged = new Action (ItemsSourceChanged);
 			Element.RemoveAction = new Action<int> (RemoveController);
-			Element.InsertAction = new Action<object> (InsertController);
+			Element.InsertAction = new Action<object, int> (InsertController);
 			Element.SetCurrentAction = new Action<int> (SetCurrentController);
+
+			foreach (var view in pageController.View.Subviews)
+			{
+				var scroller = view as UIScrollView;
+				if (scroller != null)
+					scroller.Bounces = Element.Bounces;
+			}
 
 			SetNativeControl (pageController.View);
 		}
@@ -97,12 +104,14 @@ namespace CarouselView.FormsPlugin.iOS
 		{
 			base.OnElementPropertyChanged (sender, e);
 
-			if (e.PropertyName == "Width") {
+			if (e.PropertyName == "Width")
+			{
 				var rect = this.Element.Bounds;
 				ElementWidth = rect.Width;
 			}
 
-			if (e.PropertyName == "Height") {
+			if (e.PropertyName == "Height")
+			{
 				var rect = this.Element.Bounds;
 				ElementHeight = rect.Height;
 				var firstViewController = CreateViewController(Element.Position);
@@ -111,6 +120,9 @@ namespace CarouselView.FormsPlugin.iOS
 		}
 
 		public void ItemsSourceChanged() {
+
+			if (Element.Position > Element.ItemsSource.Count - 1)
+				Element.Position = Element.ItemsSource.Count - 1;
 			
 			var firstViewController = CreateViewController(Element.Position);
 			pageController.SetViewControllers(new [] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {});
@@ -151,10 +163,14 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 		}
 
-		public void InsertController(object item)
+		public void InsertController(object item, int position)
 		{
 			if (Element != null && pageController != null) {
-				Element.ItemsSource.Add (item);
+				
+				if (position == -1)
+					Element.ItemsSource.Add(item);
+				else
+					Element.ItemsSource.Insert(position, item);
 
 				var firstViewController = pageController.ViewControllers [0];
 				pageController.SetViewControllers (new [] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {
@@ -170,6 +186,9 @@ namespace CarouselView.FormsPlugin.iOS
 				pageController.SetViewControllers (new [] { firstViewController }, direction, true, s => {
 				});
 				Element.Position = position;
+
+				if (Element.PositionSelected != null)
+					Element.PositionSelected(Element, EventArgs.Empty);
 			}
 		}
 			

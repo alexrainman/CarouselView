@@ -1,0 +1,13 @@
+CreateZStream
+CloseZStream
+Flush
+ReadZStream
+WriteZStream
+xamarin_start_wwan
+UIApplicationMain
+xamarin_release_managed_ref
+xamarin_create_managed_ref
+xamarin_get_block_descriptor
+xamarin_GetFolderPath
+xamarin_timezone_get_data
+xamarin_log

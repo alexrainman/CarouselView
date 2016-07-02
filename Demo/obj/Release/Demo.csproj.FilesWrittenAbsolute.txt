@@ -1,0 +1,17 @@
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/obj/Release/.NETPortable,Version=v4.5,Profile=Profile78.AssemblyAttribute.cs
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/obj/Release/Demo.Views.MainPage.xaml
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/obj/Release/Demo.Views.MyFirstView.xaml
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/obj/Release/Demo.Views.MySecondView.xaml
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/obj/Release/Demo.Views.MainPage.xaml.g.cs
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/obj/Release/Demo.Views.MyFirstView.xaml.g.cs
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/obj/Release/Demo.Views.MySecondView.xaml.g.cs
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/bin/Release/Demo.dll.mdb
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/bin/Release/Demo.dll
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/obj/Release/Demo.dll
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/obj/Release/Demo.dll.mdb
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/bin/Release/Xamarin.Forms.Core.dll
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/bin/Release/Xamarin.Forms.Xaml.dll
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/bin/Release/Xamarin.Forms.Platform.dll
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/bin/Release/CarouselView.FormsPlugin.Abstractions.dll
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/bin/Release/CarouselView.FormsPlugin.Abstractions.dll.mdb
+/Users/alexrainman/Documents/Projects/XamPlugins/CarouselView/Demo/bin/Release/CarouselView.FormsPlugin.Abstractions.xml

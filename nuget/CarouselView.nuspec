@@ -2,14 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>1.0.17</version>
+        <version>1.2</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
         <licenseUrl>https://github.com/alexrainman/CarouselView/blob/master/README.md</licenseUrl>
         <projectUrl>https://github.com/alexrainman/CarouselView</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>CarouselView Control for Xamarin Forms</description>
+        <description>What's new in this release? UWP support using FlipView. Page Indicators under development.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>https://github.com/alexrainman/CarouselView/commits</releaseNotes>
         <tags>carouselview carousel pageslider slider viewpager uipageviewcontroller ios android xamarin forms monotouch monodroid</tags>
@@ -30,5 +30,9 @@
         <!-- Xamarin.Android -->
         <file src="lib/CarouselView.FormsPlugin.Android.dll" target="lib\MonoAndroid\CarouselView.FormsPlugin.Android.dll" />
         <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib\MonoAndroid\CarouselView.FormsPlugin.Abstractions.dll" />
+
+        <!-- UWP -->
+        <file src="lib/CarouselView.FormsPlugin.UWP.dll" target="lib\UAP10\CarouselView.FormsPlugin.UWP.dll" />
+        <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib\UAP10\CarouselView.FormsPlugin.Abstractions.dll" />
     </files>
 </package>

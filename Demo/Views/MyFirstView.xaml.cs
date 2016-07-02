@@ -12,14 +12,19 @@ namespace Demo
 			InitializeComponent ();
 		}
 
-		public async void RemoveMe (object sender, TappedEventArgs e)
+		public void RemoveMe (object sender, TappedEventArgs e)
 		{
 			MessagingCenter.Send<MyFirstView> (this, "RemoveMe");
 		}
 
-		public async void RemoveNext (object sender, TappedEventArgs e)
+		public void RemoveNext (object sender, TappedEventArgs e)
 		{
 			MessagingCenter.Send<MyFirstView> (this, "RemoveNext");
+		}
+
+		public void InsertNext(object sender, TappedEventArgs e)
+		{
+			MessagingCenter.Send<MyFirstView>(this, "InsertNext");
 		}
 	}
 }

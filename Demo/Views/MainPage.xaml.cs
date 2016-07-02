@@ -32,6 +32,12 @@ namespace Demo
 					myCarousel.RemovePage(myCarousel.Position + 1);
 
 			});
+
+			MessagingCenter.Subscribe<MyFirstView>(this, "InsertNext", (sender) =>
+			{
+				myCarousel.InsertPage(myCarousel.ItemsSource.Count + 1, myCarousel.Position + 1);
+				myCarousel.SetCurrentPage(myCarousel.Position + 1);
+			});
 				
 			prevBtn.IsVisible = myCarousel.Position > 0;
 			addPageBtn.IsVisible = myCarousel.Position == myCarousel.ItemsSource.Count - 1;

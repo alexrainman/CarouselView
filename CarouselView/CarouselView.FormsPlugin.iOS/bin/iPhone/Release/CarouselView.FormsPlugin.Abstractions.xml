@@ -5,8 +5,9 @@
     </assembly>
     <members>
         <member name="T:CarouselView.FormsPlugin.Abstractions.CarouselViewControl">
-            <summary>
-            CarouselView Interface
-            </summary></member>
+             <summary>
+             CarouselView Interface
+             </summary>
+            </member>
     </members>
 </doc>

@@ -25,7 +25,7 @@ namespace CarouselView.FormsPlugin.Android
 		ViewPager viewPager;
 
 		bool IsRemoving;
-		bool IsPrevious;
+		bool IsRemoveAt;
 		int _removeAt;
 		bool _disposed;
 
@@ -42,7 +42,7 @@ namespace CarouselView.FormsPlugin.Android
 
 			Element.ItemsSourceChanged = new Action (ItemsSourceChanged);
 			Element.RemoveAction = new Action<int> (RemoveItem);
-			Element.InsertAction = new Action<object> (InsertItem);
+			Element.InsertAction = new Action<object, int> (InsertItem);
 			Element.SetCurrentAction = new Action<int> (SetCurrentItem);
 
 			SetNativeControl (viewPager);
@@ -51,22 +51,19 @@ namespace CarouselView.FormsPlugin.Android
 		void ViewPager_PageSelected (object sender, ViewPager.PageSelectedEventArgs e)
 		{
 			Element.Position = e.Position;
-
-			if (!IsRemoving && Element.PositionSelected != null)
-				Element.PositionSelected (Element, EventArgs.Empty);
 		}
 
 		void ViewPager_PageScrollStateChanged (object sender, ViewPager.PageScrollStateChangedEventArgs e)
 		{
 			if (e.State == 0) {
-				if (IsPrevious) {
+				if (IsRemoveAt) {
 					Element.ItemsSource.RemoveAt (_removeAt);
 					viewPager.Adapter.NotifyDataSetChanged ();
-					IsPrevious = false;
-
-					if (Element.PositionSelected != null)
-						Element.PositionSelected (Element, EventArgs.Empty);
+					IsRemoveAt = false;
 				}
+
+				if (!IsRemoving && Element.PositionSelected != null)
+					Element.PositionSelected(Element, EventArgs.Empty);
 			}
 		}
 
@@ -86,6 +83,9 @@ namespace CarouselView.FormsPlugin.Android
 		}
 
 		public void ItemsSourceChanged() {
+
+			if (Element.Position > Element.ItemsSource.Count - 1)
+				Element.Position = Element.ItemsSource.Count - 1;
 			
 			viewPager.Adapter = new PageAdapter (Element);
 			viewPager.SetCurrentItem (Element.Position, false);
@@ -119,7 +119,7 @@ namespace CarouselView.FormsPlugin.Android
 
 					} else {
 
-						IsPrevious = true;
+						IsRemoveAt = true;
 						_removeAt = position;
 
 						viewPager.SetCurrentItem (newPos, true);
@@ -134,17 +134,22 @@ namespace CarouselView.FormsPlugin.Android
 
 				IsRemoving = false;
 
-				if (!IsPrevious) {
+				if (!IsRemoveAt) {
 					if (Element.PositionSelected != null)
 						Element.PositionSelected (Element, EventArgs.Empty);
 				}
 			}
 		}
 
-		public async void InsertItem(object item)
+		public void InsertItem(object item, int position)
 		{
 			if (Element != null && viewPager != null) {
-				Element.ItemsSource.Add (item);
+				
+				if (position == -1)
+				    Element.ItemsSource.Add (item);
+				else
+					Element.ItemsSource.Insert(position, item);
+				
 				viewPager.Adapter.NotifyDataSetChanged ();
 			}
 		}
