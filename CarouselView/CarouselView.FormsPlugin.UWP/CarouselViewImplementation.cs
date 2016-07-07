@@ -1,18 +1,15 @@
 ﻿using CarouselView.FormsPlugin.Abstractions;
 using CarouselView.FormsPlugin.UWP;
 using System;
-using System.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Markup;
-using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
 using System.ComponentModel;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Media;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Diagnostics;
+using Windows.UI.Xaml.Shapes;
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.UWP
@@ -20,40 +17,89 @@ namespace CarouselView.FormsPlugin.UWP
     /// <summary>
     /// CarouselView Renderer
     /// </summary>
-    public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, FlipView>
+    public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, FlipViewControl>
     {
+        FlipViewControl nativeView;
         FlipView flipView;
-        bool _disposed;
+        ItemsControl indicators;
+
+        SolidColorBrush selectedColor;
+        SolidColorBrush fillColor;
 
         double ElementWidth;
         double ElementHeight;
 
         bool IsLoading;
-
         bool IsRemoving;
 
-        ObservableCollection<FrameworkElement> Source= new ObservableCollection<FrameworkElement>();
+        bool _disposed;
+
+        ObservableCollection<FrameworkElement> Source;
+        ObservableCollection<Ellipse> Dots;
 
         protected override void OnElementChanged(ElementChangedEventArgs<CarouselViewControl> e)
         {
             base.OnElementChanged(e);
 
-            if (e.NewElement == null) return;
+            if (Control == null)
+            {
+                // Instantiate the native control and assign it to the Control property with
+                // the SetNativeControl method
 
-            flipView = new FlipView();
+                nativeView = new FlipViewControl();
 
-            flipView.Loaded += FlipView_Loaded;
+                flipView = nativeView.FindName("flipView") as FlipView;               
 
-            flipView.SelectionChanged += FlipView_SelectionChanged;
+                SetNativeControl(nativeView);
+            }
 
-            //flipView.ItemContainerGenerator.ItemsChanged += ItemContainerGenerator_ItemsChanged;
+            if (e.OldElement != null)
+            {
+                // Unsubscribe from event handlers and cleanup any resources
 
-            Element.ItemsSourceChanged = new Action(ItemsSourceChanged);
-            Element.RemoveAction = new Action<int>(RemoveItem);
-            Element.InsertAction = new Action<object, int>(InsertItem);
-            Element.SetCurrentAction = new Action<int>(SetCurrentItem);
+                flipView.Loaded -= FlipView_Loaded;
 
-            SetNativeControl(flipView);
+                flipView.SelectionChanged -= FlipView_SelectionChanged;
+
+                //flipView.ItemContainerGenerator.ItemsChanged -= ItemContainerGenerator_ItemsChanged;
+
+                Element.ItemsSourceChanged = null;
+                Element.RemoveAction = null;
+                Element.InsertAction = null;
+                Element.SetCurrentAction = null;
+            }
+
+            if (e.NewElement != null)
+            {
+                // Configure the control and subscribe to event handlers
+
+                if (Element.PageIndicators)
+                {
+                    Dots = new ObservableCollection<Ellipse>();
+
+                    indicators = nativeView.FindName("indicators") as ItemsControl;
+
+                    var converter = new ColorConverter();
+                    selectedColor = (SolidColorBrush)converter.Convert(Element.CurrentPageIndicatorTintColor, null, null, null);
+                    fillColor = (SolidColorBrush)converter.Convert(Element.PageIndicatorTintColor, null, null, null);
+
+                    var dotsPanel = nativeView.FindName("dotsPanel") as StackPanel;
+                    dotsPanel.Background = (SolidColorBrush)converter.Convert(Element.PageIndicatorBackgroundColor, null, null, null);
+
+                    dotsPanel.Visibility = Visibility.Visible;
+                }
+
+                flipView.Loaded += FlipView_Loaded;
+
+                flipView.SelectionChanged += FlipView_SelectionChanged;
+
+                //flipView.ItemContainerGenerator.ItemsChanged += ItemContainerGenerator_ItemsChanged;
+
+                Element.ItemsSourceChanged = new Action(ItemsSourceChanged);
+                Element.RemoveAction = new Action<int>(RemoveItem);
+                Element.InsertAction = new Action<object, int>(InsertItem);
+                Element.SetCurrentAction = new Action<int>(SetCurrentItem);
+            }
         }
 
         /*private async void ItemContainerGenerator_ItemsChanged(object sender, Windows.UI.Xaml.Controls.Primitives.ItemsChangedEventArgs e)
@@ -78,7 +124,9 @@ namespace CarouselView.FormsPlugin.UWP
                 var rect = this.Element.Bounds;
                 ElementHeight = rect.Height;
 
-                foreach(var item in Element.ItemsSource)
+                Source = new ObservableCollection<FrameworkElement>();
+
+                foreach (var item in Element.ItemsSource)
                 {
                     Source.Add(CreateView(item));
                 }
@@ -86,6 +134,19 @@ namespace CarouselView.FormsPlugin.UWP
                 IsLoading = true;
 
                 flipView.ItemsSource = Source;
+                
+                if (Element.PageIndicators)
+                {
+                    int i = 0;
+                    foreach (var item in Element.ItemsSource)
+                    {
+                        Dots.Add(CreateDot(i, Element.Position));
+                        i++;
+                    }
+
+                    indicators.ItemsSource = Dots;
+                }
+
                 await Task.Delay(100);
 
                 IsLoading = false;
@@ -111,17 +172,32 @@ namespace CarouselView.FormsPlugin.UWP
             {
                 Element.Position = flipView.SelectedIndex;
 
+                if (Element.PageIndicators)
+                {
+                    UpdateIndicators();
+                }
+
                 if (Element.PositionSelected != null)
                     Element.PositionSelected(Element, EventArgs.Empty);
             }
-        }
+        } 
+        
+        void UpdateIndicators()
+        {
+            int i = 0;
+            foreach (var item in indicators.Items)
+            {                
+                ((Ellipse)item).Fill = i == Element.Position ? selectedColor : fillColor;
+                i++;
+            }
+        }       
 
         public async void ItemsSourceChanged()
         {
             if (Element.Position > Element.ItemsSource.Count - 1)
                 Element.Position = Element.ItemsSource.Count - 1;
 
-            var source = new List<FrameworkElement>();
+            var source = new List<FrameworkElement>();          
 
             foreach (var item in Element.ItemsSource)
             {
@@ -131,7 +207,24 @@ namespace CarouselView.FormsPlugin.UWP
             IsLoading = true;
 
             Source = new ObservableCollection<FrameworkElement>(source);
-            flipView.ItemsSource = Source;
+            
+            flipView.ItemsSource = Source;            
+
+            if (Element.PageIndicators)
+            {
+                var dots = new List<Ellipse>();
+
+                int i = 0;
+                foreach (var item in Element.ItemsSource)
+                {
+                    dots.Add(CreateDot(i, Element.Position));
+                    i++;
+                }
+
+                Dots = new ObservableCollection<Ellipse>(dots);
+
+                indicators.ItemsSource = Dots;
+            }
 
             await Task.Delay(100);
 
@@ -171,6 +264,14 @@ namespace CarouselView.FormsPlugin.UWP
 
                 IsRemoving = false;
 
+                Element.Position = flipView.SelectedIndex;
+
+                if (Element.PageIndicators)
+                {
+                    Dots.RemoveAt(position);
+                    UpdateIndicators();
+                }
+
                 if (Element.PositionSelected != null)
                     Element.PositionSelected(Element, EventArgs.Empty);
             }
@@ -184,11 +285,19 @@ namespace CarouselView.FormsPlugin.UWP
                 {
                     Element.ItemsSource.Add(item);
                     Source.Add(CreateView(item));
+                    if (Element.PageIndicators)
+                    {
+                        Dots.Add(CreateDot(-1, position));
+                    }
                 }
                 else
                 {
                     Element.ItemsSource.Insert(position, item);
                     Source.Insert(position, CreateView(item));
+                    if (Element.PageIndicators)
+                    {
+                        Dots.Insert(position, CreateDot(position, position));
+                    }
                 }               
             }
         }
@@ -214,13 +323,24 @@ namespace CarouselView.FormsPlugin.UWP
 
             formsView.BindingContext = bindingContext;
 
-            return FormsViewToNativeUWP.ConvertFormsToNative(formsView, new Rectangle(0, 0, ElementWidth, ElementHeight));
+            return FormsViewToNativeUWP.ConvertFormsToNative(formsView, new Xamarin.Forms.Rectangle(0, 0, ElementWidth, ElementHeight));
+        }
+
+        Ellipse CreateDot(int i, int position)
+        {
+            return new Ellipse()
+            {
+                Fill = i == position ? selectedColor : fillColor,
+                Height = 8,
+                Width = 8,
+                Margin = new Thickness(5, 12, 5, 12)
+            };
         }
 
         private void ButtonHide(FlipView f, string name)
         {
-            Windows.UI.Xaml.Controls.Button b;
-            b = FindVisualChild<Windows.UI.Xaml.Controls.Button>(f, name);
+            Button b;
+            b = FindVisualChild<Button>(f, name);
             b.Opacity = 0.0;
             b.IsHitTestVisible = false;
         }
@@ -251,6 +371,10 @@ namespace CarouselView.FormsPlugin.UWP
                     flipView.SelectionChanged -= FlipView_SelectionChanged;
                     flipView = null;
                 }
+
+                indicators = null;
+
+                nativeView = null;
 
                 _disposed = true;
             }

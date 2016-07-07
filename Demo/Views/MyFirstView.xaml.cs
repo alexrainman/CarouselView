@@ -10,6 +10,7 @@ namespace Demo
 		public MyFirstView ()
 		{
 			InitializeComponent ();
+            BackgroundColor = Color.White;
 		}
 
 		public void RemoveMe (object sender, TappedEventArgs e)

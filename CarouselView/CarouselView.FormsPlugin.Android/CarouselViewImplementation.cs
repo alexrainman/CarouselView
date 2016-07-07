@@ -22,6 +22,7 @@ namespace CarouselView.FormsPlugin.Android
     /// </summary>
 	public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, AViews.View>
 	{
+		AViews.View nativeView;
 		ViewPager viewPager;
 
 		bool IsRemoving;
@@ -33,19 +34,73 @@ namespace CarouselView.FormsPlugin.Android
 		{
 			base.OnElementChanged (e);
 
-			if (e.NewElement == null) return;
+			if (Control == null)
+			{
+				// Instantiate the native control and assign it to the Control property with
+				// the SetNativeControl method
 
-			viewPager = new ViewPager (Forms.Context);
+				var inflater = LayoutInflater.From(Forms.Context);
+				nativeView = inflater.Inflate(Resource.Layout.themed_circles, null);
 
-			viewPager.PageSelected += ViewPager_PageSelected;
-			viewPager.PageScrollStateChanged += ViewPager_PageScrollStateChanged;
+				SetNativeControl(nativeView);
+			}
 
-			Element.ItemsSourceChanged = new Action (ItemsSourceChanged);
-			Element.RemoveAction = new Action<int> (RemoveItem);
-			Element.InsertAction = new Action<object, int> (InsertItem);
-			Element.SetCurrentAction = new Action<int> (SetCurrentItem);
+			if (e.OldElement != null)
+			{
+				// Unsubscribe from event handlers and cleanup any resources
 
-			SetNativeControl (viewPager);
+				viewPager.PageSelected -= ViewPager_PageSelected;
+				viewPager.PageScrollStateChanged -= ViewPager_PageScrollStateChanged;
+
+				Element.ItemsSourceChanged = null;
+				Element.RemoveAction = null;
+				Element.InsertAction = null;
+				Element.SetCurrentAction = null;
+			}
+
+			if (e.NewElement != null)
+			{
+				// Configure the control and subscribe to event handlers
+
+				viewPager = nativeView.FindViewById<ViewPager>(Resource.Id.pager);
+
+				if (Element.PageIndicators)
+				{
+					var indicator = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
+					indicator.SetViewPager(viewPager);
+
+					indicator.SetBackgroundColor(Element.PageIndicatorBackgroundColor.ToAndroid());
+					indicator.SetPageColor(Element.PageIndicatorTintColor.ToAndroid());
+					indicator.SetFillColor(Element.CurrentPageIndicatorTintColor.ToAndroid());
+
+					indicator.Visibility = ViewStates.Visible;
+				}
+
+				viewPager.PageSelected += ViewPager_PageSelected;
+				viewPager.PageScrollStateChanged += ViewPager_PageScrollStateChanged;
+
+				Element.ItemsSourceChanged = new Action(ItemsSourceChanged);
+				Element.RemoveAction = new Action<int>(RemoveItem);
+				Element.InsertAction = new Action<object, int>(InsertItem);
+				Element.SetCurrentAction = new Action<int>(SetCurrentItem);
+			}
+		}
+
+		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			base.OnElementPropertyChanged(sender, e);
+
+			if (e.PropertyName == "Width")
+			{
+				//var rect = this.Element.Bounds;
+			}
+
+			if (e.PropertyName == "Height")
+			{
+				//var rect = this.Element.Bounds;
+				viewPager.Adapter = new PageAdapter(Element);
+				viewPager.SetCurrentItem(Element.Position, false);
+			}
 		}
 
 		void ViewPager_PageSelected (object sender, ViewPager.PageSelectedEventArgs e)
@@ -64,21 +119,6 @@ namespace CarouselView.FormsPlugin.Android
 
 				if (!IsRemoving && Element.PositionSelected != null)
 					Element.PositionSelected(Element, EventArgs.Empty);
-			}
-		}
-
-		protected override void OnElementPropertyChanged (object sender, PropertyChangedEventArgs e)
-		{
-			base.OnElementPropertyChanged (sender, e);
-
-			if (e.PropertyName == "Width") {
-				//var rect = this.Element.Bounds;
-			}
-
-			if (e.PropertyName == "Height") {
-				//var rect = this.Element.Bounds;
-				viewPager.Adapter = new PageAdapter (Element);
-				viewPager.SetCurrentItem (Element.Position, false);
 			}
 		}
 
@@ -229,8 +269,9 @@ namespace CarouselView.FormsPlugin.Android
 				if (viewPager != null) {
 
 					viewPager.PageSelected -= ViewPager_PageSelected;
+                    viewPager.PageScrollStateChanged -= ViewPager_PageScrollStateChanged;
 
-					if (viewPager.Adapter != null)
+                    if (viewPager.Adapter != null)
 						viewPager.Adapter.Dispose ();
 					viewPager.Dispose ();
 					viewPager = null;

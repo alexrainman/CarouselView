@@ -33,76 +33,113 @@ namespace CarouselView.FormsPlugin.iOS
 		{
 			base.OnElementChanged (e);
 
-			if (e.NewElement == null) return;
+			if (Control == null)
+			{
+				// Instantiate the native control and assign it to the Control property with
+				// the SetNativeControl method
 
-			pageController = new UIPageViewController(UIPageViewControllerTransitionStyle.Scroll,
+				pageController = new UIPageViewController(UIPageViewControllerTransitionStyle.Scroll,
 				UIPageViewControllerNavigationOrientation.Horizontal,
 				UIPageViewControllerSpineLocation.None);
 
-			pageController.DidFinishAnimating += PageController_DidFinishAnimating;
-
-			pageController.GetPreviousViewController = (pageViewController, referenceViewController) => {
-
-				var controller = (ViewContainer)referenceViewController;
-				var position = controller.Tag;
-
-				// Determine if we are on the first page
-				if (position == 0) {
-					// We are on the first page, so there is no need for a controller before that
-					return null;
-				} else {
-					int previousPageIndex = position - 1;
-					return CreateViewController(previousPageIndex);
+				if (Element.PageIndicators)
+				{
+					pageController.GetPresentationCount = (p) => Element.ItemsSource.Count;
+					pageController.GetPresentationIndex = (p) => Element.Position;
 				}
-			};
-			
-			pageController.GetNextViewController = (pageViewController, referenceViewController) => {
 
-				var controller = (ViewContainer)referenceViewController;
-				var position = controller.Tag;
+				SetNativeControl(pageController.View);
+			}
 
-				// Determine if we are on the last page
-				if (position == Count - 1) {
-					// We are on the last page, so there is no need for a controller after that
-					return null;
-				} else {
-					int nextPageIndex = position + 1; 
-					return CreateViewController(nextPageIndex);
-				}
-			};
-
-			Element.ItemsSourceChanged = new Action (ItemsSourceChanged);
-			Element.RemoveAction = new Action<int> (RemoveController);
-			Element.InsertAction = new Action<object, int> (InsertController);
-			Element.SetCurrentAction = new Action<int> (SetCurrentController);
-
-			foreach (var view in pageController.View.Subviews)
+			if (e.OldElement != null)
 			{
-				var scroller = view as UIScrollView;
-				if (scroller != null)
-					scroller.Bounces = Element.Bounces;
+				// Unsubscribe from event handlers and cleanup any resources
+
+				pageController.GetPresentationCount = null;
+				pageController.GetPresentationIndex = null;
+
+				pageController.DidFinishAnimating -= PageController_DidFinishAnimating;
+
+				pageController.GetPreviousViewController = null;
+
+				pageController.GetNextViewController = null;
+
+				Element.ItemsSourceChanged = null;
+				Element.RemoveAction = null;
+				Element.InsertAction = null;
+				Element.SetCurrentAction = null;
 			}
 
-			SetNativeControl (pageController.View);
-		}
+			if (e.NewElement != null)
+			{
+				// Configure the control and subscribe to event handlers
 
-		void PageController_DidFinishAnimating (object sender, UIPageViewFinishedAnimationEventArgs e)
-		{
-			if (e.Completed) {
-				var controller = (ViewContainer)pageController.ViewControllers[0];
-				var position = controller.Tag;
-				Element.Position = position;
+				foreach (var view in pageController.View.Subviews)
+				{
+					var scroller = view as UIScrollView;
+					if (scroller != null)
+						scroller.Bounces = Element.Bounces;
 
-				if (Element.PositionSelected != null)
-					Element.PositionSelected(Element, EventArgs.Empty);
+					if (Element.PageIndicators)
+					{
+						var pageControl = view as UIPageControl;
+						if (pageControl != null)
+						{
+							pageControl.BackgroundColor = Element.PageIndicatorBackgroundColor.ToUIColor();
+							pageControl.PageIndicatorTintColor = Element.PageIndicatorTintColor.ToUIColor();
+							pageControl.CurrentPageIndicatorTintColor = Element.CurrentPageIndicatorTintColor.ToUIColor();
+						}
+					}
+				}
 
-				//Console.WriteLine("Position selected");
+				pageController.DidFinishAnimating += PageController_DidFinishAnimating;
+
+				pageController.GetPreviousViewController = (pageViewController, referenceViewController) =>
+				{
+
+					var controller = (ViewContainer)referenceViewController;
+					var position = controller.Tag;
+
+					// Determine if we are on the first page
+					if (position == 0)
+					{
+						// We are on the first page, so there is no need for a controller before that
+						return null;
+					}
+					else {
+						int previousPageIndex = position - 1;
+						return CreateViewController(previousPageIndex);
+					}
+				};
+
+				pageController.GetNextViewController = (pageViewController, referenceViewController) =>
+				{
+
+					var controller = (ViewContainer)referenceViewController;
+					var position = controller.Tag;
+
+					// Determine if we are on the last page
+					if (position == Count - 1)
+					{
+						// We are on the last page, so there is no need for a controller after that
+						return null;
+					}
+					else {
+						int nextPageIndex = position + 1;
+						return CreateViewController(nextPageIndex);
+					}
+				};
+
+				Element.ItemsSourceChanged = new Action(ItemsSourceChanged);
+				Element.RemoveAction = new Action<int>(RemoveController);
+				Element.InsertAction = new Action<object, int>(InsertController);
+				Element.SetCurrentAction = new Action<int>(SetCurrentController);
 			}
 		}
 
-		protected override void OnElementPropertyChanged (object sender, PropertyChangedEventArgs e)
+		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			base.OnElementPropertyChanged (sender, e);
+			base.OnElementPropertyChanged(sender, e);
 
 			if (e.PropertyName == "Width")
 			{
@@ -115,7 +152,19 @@ namespace CarouselView.FormsPlugin.iOS
 				var rect = this.Element.Bounds;
 				ElementHeight = rect.Height;
 				var firstViewController = CreateViewController(Element.Position);
-				pageController.SetViewControllers(new [] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {});
+				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => { });
+			}
+		}
+
+		void PageController_DidFinishAnimating (object sender, UIPageViewFinishedAnimationEventArgs e)
+		{
+			if (e.Completed) {
+				var controller = (ViewContainer)pageController.ViewControllers[0];
+				var position = controller.Tag;
+				Element.Position = position;
+
+				if (Element.PositionSelected != null)
+					Element.PositionSelected(Element, EventArgs.Empty);
 			}
 		}
 
@@ -213,6 +262,8 @@ namespace CarouselView.FormsPlugin.iOS
 			viewController.Tag = index;
 			viewController.View = nativeConverted;
 
+			Element.Position = index;
+
 			return viewController;
 		}
 
@@ -222,7 +273,9 @@ namespace CarouselView.FormsPlugin.iOS
 			{
 				if (pageController != null)
 				{
-					pageController.DidFinishAnimating -= PageController_DidFinishAnimating;
+                    pageController.GetPresentationCount = null;
+                    pageController.GetPresentationIndex = null;
+                    pageController.DidFinishAnimating -= PageController_DidFinishAnimating;
 					pageController.GetPreviousViewController = null;
 					pageController.GetNextViewController = null;
 

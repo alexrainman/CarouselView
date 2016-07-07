@@ -45,12 +45,45 @@ namespace CarouselView.FormsPlugin.Abstractions
 		}
 
 		// UWP only
-		public static readonly BindableProperty ArrowsProperty = BindableProperty.Create("Arrows", typeof(bool), typeof(CarouselViewControl), true);
+		public static readonly BindableProperty ArrowsProperty = BindableProperty.Create("Arrows", typeof(bool), typeof(CarouselViewControl), false);
 
 		public bool Arrows
 		{
 			get { return (bool)GetValue(ArrowsProperty); }
 			set { SetValue(ArrowsProperty, value); }
+		}
+
+		// Page Indicators properties
+		public static readonly BindableProperty PageIndicatorsProperty = BindableProperty.Create("PageIndicators", typeof(bool), typeof(CarouselViewControl), false);
+
+		public bool PageIndicators
+		{
+			get { return (bool)GetValue(PageIndicatorsProperty); }
+			set { SetValue(PageIndicatorsProperty, value); }
+		}
+
+		public static readonly BindableProperty PageIndicatorBackgroundColorProperty = BindableProperty.Create("PageIndicatorBackgroundColor", typeof(Color), typeof(CarouselViewControl), Color.Transparent);
+
+		public Color PageIndicatorBackgroundColor
+		{
+			get { return (Color)GetValue(PageIndicatorBackgroundColorProperty); }
+			set { SetValue(PageIndicatorBackgroundColorProperty, value); }
+		}
+
+		public static readonly BindableProperty PageIndicatorTintColorProperty = BindableProperty.Create("PageIndicatorTintColor", typeof(Color), typeof(CarouselViewControl), Color.Silver);
+
+		public Color PageIndicatorTintColor
+		{
+			get { return (Color)GetValue(PageIndicatorTintColorProperty); }
+			set { SetValue(PageIndicatorTintColorProperty, value); }
+		}
+
+		public static readonly BindableProperty CurrentPageIndicatorTintColorProperty = BindableProperty.Create("CurrentPageIndicatorTintColor", typeof(Color), typeof(CarouselViewControl), Color.Gray);
+
+		public Color CurrentPageIndicatorTintColor
+		{
+			get { return (Color)GetValue(CurrentPageIndicatorTintColorProperty); }
+			set { SetValue(CurrentPageIndicatorTintColorProperty, value); }
 		}
 
 		public Action ItemsSourceChanged;
