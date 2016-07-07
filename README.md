@@ -74,9 +74,17 @@ Then the xaml:
 
 ```Position```: the desired selected view when Carousel starts.
 
-```Bounces```: use this property to disable bounces when you will render one page at a time and move back and fort programmatically (iOS only).
+```Bounces```: use this property to disable bounces when you will render one page at a time and move back and fort programmatically (iOS only, default false).
 
-```Arrows```: disable arrows navigation (UWP only).
+```Arrows```: disable arrows navigation (UWP only, default true).
+
+```PageIndicators```: hide/show page indicators (default false).
+
+```PageIndicatorBackgroundColor```: page indicators container background color (default transparent).
+
+```PageIndicatorTintColor```: page dot indicators fill color (default #C0C0C0).
+
+```CurrentPageIndicatorTintColor```: selected page dot indicator fill color (default #808080).
 
 **Event Handlers**
 
