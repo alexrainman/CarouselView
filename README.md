@@ -67,7 +67,7 @@ Then the xaml:
 <controls:CarouselViewControl Position="0" ItemsSource="{Binding Pages}" ItemTemplate="{StaticResource myTemplateSelector}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
 ```
 
-**CarouselLabel**
+**CarouselLabel (Required)**
 
 HeightRequest calculations are now in the core of the control :)
 
@@ -75,7 +75,7 @@ HeightRequest calculations are now in the core of the control :)
 <controls:CarouselLabel Text="HeightRequest calculations are now in the core of the control." />
 ```
 
-**Default control's HeightRequest by platform**
+**Default control's HeightRequest by platform (only for knowledge, implemented in control core)**
 
 |Control|Android|iOS|UWP|
 | ------------------- | :-----------: | :-----------: | :------------------: |
