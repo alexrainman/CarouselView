@@ -69,13 +69,13 @@ Then the xaml:
 
 **CarouselLabel (Required)**
 
-HeightRequest calculations are now in the core of the control :)
+HeightRequest calculations are now in the control's core :)
 
 ```xml
-<controls:CarouselLabel Text="HeightRequest calculations are now in the core of the control." />
+<controls:CarouselLabel Text="HeightRequest calculations are now in the control's core." />
 ```
 
-**Default control's HeightRequest by platform (only for knowledge, implemented in control core)**
+**Default control's HeightRequest by platform (only for knowledge, implemented in control's core)**
 
 |Control|Android|iOS|UWP|
 | ------------------- | :-----------: | :-----------: | :------------------: |
