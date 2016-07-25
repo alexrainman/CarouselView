@@ -67,6 +67,14 @@ Then the xaml:
 <controls:CarouselViewControl Position="0" ItemsSource="{Binding Pages}" ItemTemplate="{StaticResource myTemplateSelector}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
 ```
 
+**CarouselLabel**
+
+Use the provided custom label control to avoid HeightRequest issues. HeightRequest calculation is now in the core of the control :)
+
+```xml
+<controls:CarouselLabel TextColor="Black" Text="Use the provided custom label control to avoid HeightRequest issues. HeightRequest calculation is now in the core of the control." />
+```
+
 **Bindable Properties**
 
 ```ItemsSource```: IList, List or ObservableCollection used as BindingContext of each view.
