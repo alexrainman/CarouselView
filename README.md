@@ -69,11 +69,28 @@ Then the xaml:
 
 **CarouselLabel**
 
-Use the provided custom label control to avoid HeightRequest issues. HeightRequest calculation is now in the core of the control :)
+HeightRequest calculations are now in the core of the control :)
 
 ```xml
-<controls:CarouselLabel TextColor="Black" Text="Use the provided custom label control to avoid HeightRequest issues. HeightRequest calculation is now in the core of the control." />
+<controls:CarouselLabel Text="HeightRequest calculations are now in the core of the control." />
 ```
+
+**Default control's HeightRequest by platform**
+
+|Control|Android|iOS|UWP|
+| ------------------- | :-----------: | :-----------: | :------------------: |
+|ActivityIndicator|20|48|4|
+|Button|44|48|32|
+|DatePicker|30|45.5|32|
+|Editor|36.5|45.5|32|
+|Entry|30|45.5|32|
+|Picker|30|45.5|32|
+|ProgressBar|2|16|4|
+|Searchbar|44|45|32|
+|Slider|34|18|44|
+|Stepper|29|48|32|
+|Switch|31|27|40|
+|TimePicker|30|45.5|32|
 
 **Bindable Properties**
 
