@@ -28,6 +28,7 @@ var myCarousel = new CarouselViewControl();
 myCarousel.ItemsSource = new List<int> { 1, 2, 3, 4, 5 };
 myCarousel.ItemTemplate = new MyTemplateSelector (); //new DataTemplate (typeof(MyView));
 myCarousel.Position = 0; //default
+myCarousel.InterPageSpacing = 10;
 ```
 
 **XAML:**
@@ -41,7 +42,7 @@ xmlns:controls="clr-namespace:CarouselViewControl.FormsPlugin.Abstractions;assem
 Then add the xaml:
 
 ```xml
-<controls:CarouselViewControl Position="0" ItemsSource="{Binding Pages}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+<controls:CarouselViewControl InterPageSpacing="10" Position="0" ItemsSource="{Binding Pages}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
     <controls:CarouselViewControl.ItemTemplate>
         <DataTemplate>
             <local:MyView />
@@ -86,6 +87,8 @@ Then the xaml:
 
 ```CurrentPageIndicatorTintColor```: selected page dot indicator fill color (default #808080).
 
+```InterPageSpacing```: add a margin/space between pages (Android and iOS only).
+
 **Event Handlers**
 
 ```PositionSelected```: called when position changes.
@@ -100,20 +103,9 @@ Then the xaml:
 
 #### Known issues
 
-- You have to provide HeighRequest for elements like Label, Entry ... I still need to figure it out how to propagate request layout down to each children.
-
-```xml
-<StackLayout Padding="10">
-	<Label TextColor="Black" Text="{Binding .}" HeightRequest="40" />
-	<Entry Placeholder="Name" HeightRequest="40" />
-	<Entry Placeholder="Age" HeightRequest="40" />
-	<Button Text="Remove me!" HeightRequest="40" Clicked="CLick me!"/>
-</StackLayout>
-```
-
-- If you are worried about label height you can use this gist: [ITextMeter](https://gist.github.com/alexrainman/82b00160ab32bef9e69dee6d460f44fa)
-
 - Horizontal StackLayout doesn't works. Why? No idea :) You may use a multi-column Grid instead.
+
+#### Tips
 
 - If you have memory leaks in Android when using the Carousel with images, it's not the control itself. It's Xamarin.Forms Android not handling images correctly. To solve the problem you can use [FFImageLoading](https://github.com/luberda-molinet/FFImageLoading) making sure that you set this properties:
 
