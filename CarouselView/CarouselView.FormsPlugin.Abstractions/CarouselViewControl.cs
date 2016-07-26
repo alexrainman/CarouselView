@@ -86,6 +86,15 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(CurrentPageIndicatorTintColorProperty, value); }
 		}
 
+		// Android and iOS only
+		public static readonly BindableProperty InterPageSpacingProperty = BindableProperty.Create("InterPageSpacing", typeof(int), typeof(CarouselViewControl), 0);
+
+		public int InterPageSpacing
+		{
+			get { return (int)GetValue(InterPageSpacingProperty); }
+			set { SetValue(InterPageSpacingProperty, value); }
+		}
+
 		public Action ItemsSourceChanged;
 
 		public EventHandler PositionSelected;

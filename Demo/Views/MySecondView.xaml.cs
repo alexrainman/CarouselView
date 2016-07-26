@@ -9,7 +9,7 @@ namespace Demo
 		public MySecondView ()
 		{
 			InitializeComponent ();
-            BackgroundColor = Color.White;
+            BackgroundColor = Color.Aqua;
         }
 	}
 }

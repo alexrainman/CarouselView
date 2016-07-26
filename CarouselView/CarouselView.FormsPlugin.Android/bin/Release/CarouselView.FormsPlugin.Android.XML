@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CarouselView.FormsPlugin.Android</name>
+    </assembly>
+    <members>
+        <member name="T:CarouselView.FormsPlugin.Android.CarouselViewRenderer">
+             <summary>
+             CarouselView Renderer
+             </summary>
+            </member>
+        <member name="M:CarouselView.FormsPlugin.Android.CarouselViewRenderer.Init">
+             <summary>
+             Used for registration with dependency service
+             </summary>
+            </member>
+        <member name="M:CarouselView.FormsPlugin.Android.CirclePageIndicator.MeasureLong(System.Int32)">
+            
+            
+            	     * Determines the width of this view
+            	     *
+            	     * @param measureSpec
+            	     *            A measureSpec packed into an int
+            	     * @return The width of the view, honoring constraints from measureSpec
+            	     </member>
+        <member name="M:CarouselView.FormsPlugin.Android.CirclePageIndicator.MeasureShort(System.Int32)">
+            
+            
+            	     * Determines the height of this view
+            	     *
+            	     * @param measureSpec
+            	     *            A measureSpec packed into an int
+            	     * @return The height of the view, honoring constraints from measureSpec
+            	     </member>
+        <member name="M:CarouselView.FormsPlugin.Android.PageIndicator.SetViewPager(Android.Support.V4.View.ViewPager)">
+            
+            
+            	     * Bind the indicator to a ViewPager.
+            	     *
+            	     * @param view
+            	     </member>
+        <member name="M:CarouselView.FormsPlugin.Android.PageIndicator.SetViewPager(Android.Support.V4.View.ViewPager,System.Int32)">
+            
+            
+            	     * Bind the indicator to a ViewPager.
+            	     *
+            	     * @param view
+            	     * @param initialPosition
+            	     </member>
+        <member name="M:CarouselView.FormsPlugin.Android.PageIndicator.SetCurrentItem(System.Int32)">
+            
+            
+            	     * <p>Set the current page of both the ViewPager and indicator.</p>
+            	     *
+            	     * <p>This <strong>must</strong> be used if you need to set the page before
+            	     * the views are drawn on screen (e.g., default start page).</p>
+            	     *
+            	     * @param item
+            	     </member>
+        <member name="M:CarouselView.FormsPlugin.Android.PageIndicator.SetOnPageChangeListener(Android.Support.V4.View.ViewPager.IOnPageChangeListener)">
+            
+            
+            	     * Set a page change listener which will receive forwarded events.
+            	     *
+            	     * @param listener
+            	     </member>
+        <member name="M:CarouselView.FormsPlugin.Android.PageIndicator.NotifyDataSetChanged">
+            
+            
+            	     * Notify the indicator that the fragment list has changed.
+            	     </member>
+    </members>
+</doc>

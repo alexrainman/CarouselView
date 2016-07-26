@@ -455,7 +455,8 @@ namespace CarouselView.FormsPlugin.Android
 			var specMode = MeasureSpec.GetMode (measureSpec);
 			var specSize = MeasureSpec.GetSize (measureSpec);
 	
-			if ((specMode == MeasureSpecMode.Exactly) || (mViewPager == null)) {
+			if ((specMode == MeasureSpecMode.Exactly) || (mViewPager == null) || (mViewPager.Adapter == null))
+			{
 				//We were told how big to be
 				result = specSize;
 			} else {

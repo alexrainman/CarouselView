@@ -12,7 +12,7 @@
 	    <Grid.ColumnDefinitions>
 	        <ColumnDefinition Width="*" />
 	    </Grid.ColumnDefinitions>
-       <controls:CarouselViewControl x:Name="myCarousel" PageIndicators="true" Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+       <controls:CarouselViewControl x:Name="myCarousel" InterPageSpacing="10" PageIndicators="true" Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
        <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="Silver" Padding="12,0,12,0">
            <Grid.RowDefinitions>
 		       <RowDefinition Height="*" />

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CarouselView.FormsPlugin.iOS</name>
+    </assembly>
+    <members>
+        <member name="T:CarouselView.FormsPlugin.iOS.CarouselViewRenderer">
+             <summary>
+             CarouselView Renderer
+             </summary>
+            </member>
+        <member name="M:CarouselView.FormsPlugin.iOS.CarouselViewRenderer.Init">
+             <summary>
+             Used for registration with dependency service
+             </summary>
+            </member>
+    </members>
+</doc>

@@ -11,7 +11,7 @@ namespace Demo
 		public App ()
 		{
 			// The root page of your application
-			MainPage = new NavigationPage (new MainPage ());
+			MainPage = new NavigationPage (new RootPage ());
 		}
 
 		protected override void OnStart ()

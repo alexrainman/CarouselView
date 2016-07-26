@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using CoreGraphics;
+using System.Collections.Specialized;
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.iOS
@@ -38,9 +39,10 @@ namespace CarouselView.FormsPlugin.iOS
 				// Instantiate the native control and assign it to the Control property with
 				// the SetNativeControl method
 
+				var interPageSpacing = (float)Element.InterPageSpacing;
+
 				pageController = new UIPageViewController(UIPageViewControllerTransitionStyle.Scroll,
-				UIPageViewControllerNavigationOrientation.Horizontal,
-				UIPageViewControllerSpineLocation.None);
+				UIPageViewControllerNavigationOrientation.Horizontal, UIPageViewControllerSpineLocation.None, interPageSpacing);
 
 				if (Element.PageIndicators)
 				{
@@ -55,19 +57,25 @@ namespace CarouselView.FormsPlugin.iOS
 			{
 				// Unsubscribe from event handlers and cleanup any resources
 
-				pageController.GetPresentationCount = null;
-				pageController.GetPresentationIndex = null;
+				if (pageController != null)
+				{
+					pageController.GetPresentationCount = null;
+					pageController.GetPresentationIndex = null;
 
-				pageController.DidFinishAnimating -= PageController_DidFinishAnimating;
+					pageController.DidFinishAnimating -= PageController_DidFinishAnimating;
 
-				pageController.GetPreviousViewController = null;
+					pageController.GetPreviousViewController = null;
 
-				pageController.GetNextViewController = null;
+					pageController.GetNextViewController = null;
+				}
 
-				Element.ItemsSourceChanged = null;
-				Element.RemoveAction = null;
-				Element.InsertAction = null;
-				Element.SetCurrentAction = null;
+				if (Element != null)
+				{
+					Element.ItemsSourceChanged = null;
+					Element.RemoveAction = null;
+					Element.InsertAction = null;
+					Element.SetCurrentAction = null;
+				}
 			}
 
 			if (e.NewElement != null)
@@ -134,6 +142,11 @@ namespace CarouselView.FormsPlugin.iOS
 				Element.RemoveAction = new Action<int>(RemoveController);
 				Element.InsertAction = new Action<object, int>(InsertController);
 				Element.SetCurrentAction = new Action<int>(SetCurrentController);
+
+				/*if (Element.ItemsSource is INotifyCollectionChanged)
+				{
+					var collection = Element.ItemsSource as INotifyCollectionChanged;
+				}*/
 			}
 		}
 

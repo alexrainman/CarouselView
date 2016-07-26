@@ -11,7 +11,10 @@
         android:layout_weight="1" />
     <CarouselView.FormsPlugin.Android.CirclePageIndicator
         android:id="@+id/indicator"
-        android:padding="15dip"
+        android:paddingLeft="20dip"
+        android:paddingTop="15dip"
+        android:paddingRight="15dip"
+        android:paddingBottom="15dip"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:background="@android:color/transparent"

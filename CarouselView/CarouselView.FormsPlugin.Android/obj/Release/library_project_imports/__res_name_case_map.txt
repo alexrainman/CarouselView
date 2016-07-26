@@ -1,0 +1,5 @@
+layout/themed_circles.xml;layout/themed_circles.xml
+values/vpi__attrs.xml;values/vpi__attrs.xml
+values/vpi__colors.xml;values/vpi__colors.xml
+values/vpi__defaults.xml;values/vpi__defaults.xml
+values/vpi__styles.xml;values/vpi__styles.xml

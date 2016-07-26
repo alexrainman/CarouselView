@@ -49,20 +49,29 @@ namespace CarouselView.FormsPlugin.Android
 			{
 				// Unsubscribe from event handlers and cleanup any resources
 
-				viewPager.PageSelected -= ViewPager_PageSelected;
-				viewPager.PageScrollStateChanged -= ViewPager_PageScrollStateChanged;
+				if (viewPager != null)
+				{
+					viewPager.PageSelected -= ViewPager_PageSelected;
+					viewPager.PageScrollStateChanged -= ViewPager_PageScrollStateChanged;
+				}
 
-				Element.ItemsSourceChanged = null;
-				Element.RemoveAction = null;
-				Element.InsertAction = null;
-				Element.SetCurrentAction = null;
+				if (Element != null)
+				{
+					Element.ItemsSourceChanged = null;
+					Element.RemoveAction = null;
+					Element.InsertAction = null;
+					Element.SetCurrentAction = null;
+				}
 			}
 
 			if (e.NewElement != null)
 			{
 				// Configure the control and subscribe to event handlers
 
+				var interPageSpacing = Element.InterPageSpacing * 2;
+
 				viewPager = nativeView.FindViewById<ViewPager>(Resource.Id.pager);
+				viewPager.PageMargin = interPageSpacing;
 
 				if (Element.PageIndicators)
 				{

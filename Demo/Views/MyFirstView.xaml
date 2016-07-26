@@ -1,19 +1,20 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="Demo.MyFirstView">
+    x:Class="Demo.MyFirstView"
+	xmlns:local="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
 
     <ScrollView>
-    <StackLayout Padding="10">
+	    <StackLayout Padding="10">
 
-		<Label TextColor="Black" Text="{Binding .}" HeightRequest="40" />
-		<Entry Placeholder="Name" HeightRequest="40" />
-		<Entry Placeholder="Age" HeightRequest="40" />
-		<Button Text="Remove me!" HeightRequest="40" Clicked="RemoveMe"/>
-		<Button Text="Remove next!" HeightRequest="40" Clicked="RemoveNext"/>
-		<Button Text="Insert before next!" HeightRequest="40" Clicked="InsertNext"/>
+			<local:CarouselLabel x:Name="myLabel" TextColor="Black" Text="I came across your resume and preferred to share this job opening with you, if interested we can proceed. Below is the job description for your reference." />
+			<Entry Placeholder="Name" />
+			<Entry Placeholder="Age" />
+			<Button Text="Remove me!" Clicked="RemoveMe"/>
+			<Button Text="Remove next!" Clicked="RemoveNext"/>
+			<Button Text="Insert before next!" Clicked="InsertNext"/>
 
-	</StackLayout>
+		</StackLayout>
 	</ScrollView>
 
 </ContentView>

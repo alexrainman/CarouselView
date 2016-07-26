@@ -12,9 +12,7 @@ namespace Demo
 		{
 			InitializeComponent ();
 
-			Title = "Page Slider";
-
-			myCarousel.ItemsSource = new List<int> { 1, 2, 3, 4, 5 };
+			myCarousel.ItemsSource = new List<int> { 1, 2, 3, 4 };
 			myCarousel.ItemTemplate = new MyTemplateSelector (); //new DataTemplate (typeof(MyView));
 			myCarousel.Position = 0;
 			myCarousel.PositionSelected += PositionSelected;
@@ -39,7 +37,7 @@ namespace Demo
 				myCarousel.SetCurrentPage(myCarousel.Position + 1);
 			});
 				
-			prevBtn.IsVisible = myCarousel.Position > 0;
+			//prevBtn.IsVisible = myCarousel.Position > 0;
 			addPageBtn.IsVisible = myCarousel.Position == myCarousel.ItemsSource.Count - 1;
 			nextBtn.IsVisible = myCarousel.Position < myCarousel.ItemsSource.Count - 1;
 
@@ -52,7 +50,7 @@ namespace Demo
 
 		public void PositionSelected (object sender, EventArgs e)
 		{			
-			prevBtn.IsVisible = myCarousel.Position > 0;
+			//prevBtn.IsVisible = myCarousel.Position > 0;
 			addPageBtn.IsVisible = myCarousel.Position == myCarousel.ItemsSource.Count - 1;
 			nextBtn.IsVisible = myCarousel.Position < myCarousel.ItemsSource.Count - 1;
 			Debug.WriteLine ("Position selected");
@@ -61,7 +59,9 @@ namespace Demo
 		public void OnPrev (object sender, TappedEventArgs e)
 		{
 			if (myCarousel.Position > 0)
-				myCarousel.SetCurrentPage (myCarousel.Position - 1);
+				myCarousel.SetCurrentPage(myCarousel.Position - 1);
+			else
+				Navigation.PopModalAsync();
 		}
 
 		public void OnAdd (object sender, TappedEventArgs e)
