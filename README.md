@@ -94,7 +94,7 @@ HeightRequest calculations are now implemented at core level :)
 
 **Bindable Properties**
 
-```ItemsSource```: IList, List or ObservableCollection used as BindingContext of each view.
+```ItemsSource```: Collection of objects used as BindingContext of each view.
 
 ```ItemTemplate```: supports DataTemplate and DataTemplateSelector.
 
