@@ -120,9 +120,9 @@ HeightRequest calculations are now implemented at core level :)
 
 **Methods**
 
-```RemovePage```: remove a view at given position and slide to previous/next one.
+```RemovePage```: remove a view at given position and slide to previous/next one (Deprecated in future release).
 
-```InsertPage```: insert a view at a given position (if position parameter is not provided, item will be added at the end).
+```InsertPage```: insert a view at a given position (if position parameter is not provided, item will be added at the end. Deprecated in future release).
 
 ```SetCurrentPage```: slide programmatically to a given position.
 
