@@ -124,8 +124,6 @@ HeightRequest calculations are now implemented at core level :)
 
 ```InsertPage```: insert a view at a given position (if position parameter is not provided, item will be added at the end).
 
-- Previous methods will be deprecated in future releases as ItemsSource will support ObservableCollections only and adding/removing pages will be handled at CollectionChanged event callback.
-
 ```SetCurrentPage```: slide programmatically to a given position.
 
 #### Known issues
