@@ -124,7 +124,7 @@ HeightRequest calculations are now implemented at core level :)
 
 ```InsertPage```: insert a view at a given position (if position parameter is not provided, item will be added at the end. Will be deprecated in upcoming release).
 
-```SetCurrentPage```: slide programmatically to a given position.
+```SetCurrentPage```: slide programmatically to a given position (Will be deprecated in upcoming release).
 
 #### Known issues
 
