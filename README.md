@@ -75,7 +75,7 @@ HeightRequest calculations are now implemented at core level :)
 <controls:CarouselLabel Text="HeightRequest calculations are now at core level." />
 ```
 
-**Default control's HeightRequest by platform (only for knowledge, implemented at core level)**
+**Default HeightRequest by platform (only for knowledge, implemented at core level)**
 
 |Control|Android|iOS|UWP|
 | ------------------- | :-----------: | :-----------: | :------------------: |
