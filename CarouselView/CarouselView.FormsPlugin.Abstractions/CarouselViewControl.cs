@@ -119,45 +119,5 @@ namespace CarouselView.FormsPlugin.Abstractions
 			if(SetCurrentAction != null)
 				SetCurrentAction (position);
 		}
-
-		/*protected override void LayoutChildren(double x, double y, double width, double height)
-		{
-			for (int i = 0; i < Children.Count; i++)
-			{
-				var child = (View)Children[i];
-				// skip invisible children
-
-				if (!child.IsVisible)
-					continue;
-				var childSizeRequest = child.GetSizeRequest(double.PositiveInfinity, height);
-				var childWidth = childSizeRequest.Request.Width;
-				LayoutChildIntoBoundingRegion(child, new Rectangle(x, y, childWidth, height));
-				x += childWidth;
-			}
-		}
-
-		protected override SizeRequest OnSizeRequest(double widthConstraint, double heightConstraint)
-		{
-			double height = 0;
-			double minHeight = 0;
-			double width = 0;
-			double minWidth = 0;
-
-			for (int i = 0; i < Children.Count; i++)
-			{
-				var child = (View)Children[i];
-				// skip invisible children
-
-				if (!child.IsVisible)
-					continue;
-				var childSizeRequest = child.GetSizeRequest(double.PositiveInfinity, height);
-				height = Math.Max(height, childSizeRequest.Minimum.Height);
-				minHeight = Math.Max(minHeight, childSizeRequest.Minimum.Height);
-				width += childSizeRequest.Request.Width;
-				minWidth += childSizeRequest.Minimum.Width;
-			}
-
-			return new SizeRequest(new Size(width, height), new Size(minWidth, minHeight));
-		}*/
 	}
 }

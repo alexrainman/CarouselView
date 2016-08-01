@@ -2,17 +2,31 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Demo.MyFirstView"
-	xmlns:local="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
+	xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
 
     <ScrollView>
-	    <StackLayout Padding="10">
+	    <StackLayout Padding="12" Spacing="12">
 
-			<local:CarouselLabel x:Name="myLabel" TextColor="Black" Text="I came across your resume and preferred to share this job opening with you, if interested we can proceed. Below is the job description for your reference." />
-			<Entry Placeholder="Name" />
-			<Entry Placeholder="Age" />
-			<Button Text="Remove me!" Clicked="RemoveMe"/>
-			<Button Text="Remove next!" Clicked="RemoveNext"/>
-			<Button Text="Insert before next!" Clicked="InsertNext"/>
+		    <controls:CVActivityIndicator x:Name="activityIndicator" IsRunning="true"/>
+			<Button x:Name="button" Text="Remove this page" Clicked="Handle_Clicked">
+				<Button.HeightRequest>
+					<OnPlatform x:TypeArguments="x:Double"
+                        Android="48"
+                        iOS="44"
+						WinPhone="32"/>
+				</Button.HeightRequest>
+			</Button>
+			<controls:CVDatePicker x:Name="datePicker" />
+			<controls:CVEditor x:Name="editor" BackgroundColor="Silver"/>
+			<controls:CVEntry x:Name="entry" />
+			<controls:CVPicker x:Name="picker" />
+			<controls:CVProgressBar x:Name="progressBar" Progress="0.5" />
+			<controls:CVSearchBar x:Name="searchBar" />
+			<controls:CVSlider x:Name="slider" />
+			<controls:CVStepper x:Name="stepper" />
+			<controls:CVSwitch x:Name="myswitch" />
+			<controls:CVTimePicker x:Name="timePicker" />
+			<controls:CVLabel x:Name="label" Text="My Label"/>
 
 		</StackLayout>
 	</ScrollView>

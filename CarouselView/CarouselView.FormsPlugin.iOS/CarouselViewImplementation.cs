@@ -1,14 +1,13 @@
-﻿using CarouselView.FormsPlugin.Abstractions;
-using System;
-using Xamarin.Forms;
-using CarouselView.FormsPlugin.iOS;
-using Xamarin.Forms.Platform.iOS;
-using UIKit;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.ComponentModel;
+using CarouselView.FormsPlugin.Abstractions;
+using CarouselView.FormsPlugin.iOS;
 using CoreGraphics;
-using System.Collections.Specialized;
+using UIKit;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.iOS
@@ -19,6 +18,7 @@ namespace CarouselView.FormsPlugin.iOS
 	public class CarouselViewRenderer  : ViewRenderer<CarouselViewControl, UIView>
 	{
 		UIPageViewController pageController;
+		UIPageControl pageControl;
 		bool _disposed;
 
 		int Count {
@@ -46,8 +46,21 @@ namespace CarouselView.FormsPlugin.iOS
 
 				if (Element.PageIndicators)
 				{
-					pageController.GetPresentationCount = (p) => Element.ItemsSource.Count;
-					pageController.GetPresentationIndex = (p) => Element.Position;
+					//pageController.GetPresentationCount = (p) => Element.ItemsSource.Count;
+					//pageController.GetPresentationIndex = (p) => Element.Position;
+
+					pageControl = new UIPageControl(new CGRect(0, pageController.View.Bounds.Bottom - 36, UIScreen.MainScreen.Bounds.Width, 36));
+					pageControl.AutoresizingMask = UIViewAutoresizing.FlexibleTopMargin | UIViewAutoresizing.FlexibleWidth;
+
+					var appearance = UIPageControl.Appearance;
+					appearance.BackgroundColor = Element.PageIndicatorBackgroundColor.ToUIColor();
+
+					pageControl.PageIndicatorTintColor = Element.PageIndicatorTintColor.ToUIColor();
+					pageControl.CurrentPageIndicatorTintColor = Element.CurrentPageIndicatorTintColor.ToUIColor();
+
+					ConfigurePageControl();
+
+					pageController.View.AddSubview(pageControl);
 				}
 
 				SetNativeControl(pageController.View);
@@ -86,18 +99,23 @@ namespace CarouselView.FormsPlugin.iOS
 				{
 					var scroller = view as UIScrollView;
 					if (scroller != null)
+					{
 						scroller.Bounces = Element.Bounces;
+					}
 
-					if (Element.PageIndicators)
+					/*if (Element.PageIndicators)
 					{
 						var pageControl = view as UIPageControl;
 						if (pageControl != null)
 						{
+							pageController.View.BackgroundColor = Color.Teal.ToUIColor();
+							//var appearance = UIPageControl.Appearance;
+							//appearance.BackgroundColor = Element.PageIndicatorBackgroundColor.ToUIColor();
 							pageControl.BackgroundColor = Element.PageIndicatorBackgroundColor.ToUIColor();
 							pageControl.PageIndicatorTintColor = Element.PageIndicatorTintColor.ToUIColor();
 							pageControl.CurrentPageIndicatorTintColor = Element.CurrentPageIndicatorTintColor.ToUIColor();
 						}
-					}
+					}*/
 				}
 
 				pageController.DidFinishAnimating += PageController_DidFinishAnimating;
@@ -176,6 +194,8 @@ namespace CarouselView.FormsPlugin.iOS
 				var position = controller.Tag;
 				Element.Position = position;
 
+				ConfigurePageControl();
+
 				if (Element.PositionSelected != null)
 					Element.PositionSelected(Element, EventArgs.Empty);
 			}
@@ -188,6 +208,8 @@ namespace CarouselView.FormsPlugin.iOS
 			
 			var firstViewController = CreateViewController(Element.Position);
 			pageController.SetViewControllers(new [] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {});
+
+			ConfigurePageControl();
 
 			if (Element.PositionSelected != null)
 				Element.PositionSelected (Element, EventArgs.Empty);
@@ -220,6 +242,8 @@ namespace CarouselView.FormsPlugin.iOS
 
 				}
 
+				ConfigurePageControl();
+
 				if (Element.PositionSelected != null)
 					Element.PositionSelected (Element, EventArgs.Empty);
 			}
@@ -237,17 +261,24 @@ namespace CarouselView.FormsPlugin.iOS
 				var firstViewController = pageController.ViewControllers [0];
 				pageController.SetViewControllers (new [] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {
 				});
+
+				ConfigurePageControl();
 			}
 		}
 
 		public void SetCurrentController(int position)
 		{
 			if (Element != null && pageController != null) {
+
 				var direction = position > Element.Position ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
+
+				Element.Position = position;
+
 				var firstViewController = CreateViewController (position);
 				pageController.SetViewControllers (new [] { firstViewController }, direction, true, s => {
 				});
-				Element.Position = position;
+
+				ConfigurePageControl();
 
 				if (Element.PositionSelected != null)
 					Element.PositionSelected(Element, EventArgs.Empty);
@@ -275,9 +306,16 @@ namespace CarouselView.FormsPlugin.iOS
 			viewController.Tag = index;
 			viewController.View = nativeConverted;
 
-			Element.Position = index;
-
 			return viewController;
+		}
+
+		void ConfigurePageControl()
+		{
+			if (pageControl != null)
+			{
+				pageControl.Pages = Element.ItemsSource.Count;
+				pageControl.CurrentPage = Element.Position;
+			}
 		}
 
 		protected override void Dispose(bool disposing)
@@ -297,6 +335,12 @@ namespace CarouselView.FormsPlugin.iOS
 
 					pageController.Dispose ();
 					pageController = null;
+				}
+
+				if (pageControl != null)
+				{
+					pageControl.Dispose();
+					pageControl = null;
 				}
 
 				_disposed = true;

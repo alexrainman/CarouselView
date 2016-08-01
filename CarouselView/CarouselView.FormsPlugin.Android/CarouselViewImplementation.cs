@@ -11,6 +11,7 @@ using System.ComponentModel;
 using AViews = Android.Views;
 using Droid = Android.OS;
 using App = Android.App;
+using AG = Android.Graphics;
 using Android.Views;
 using Android.Runtime;
 

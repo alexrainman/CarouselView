@@ -2,14 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>2.0.0</version>
+        <version>2.1.0</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
         <licenseUrl>https://github.com/alexrainman/CarouselView/blob/master/README.md</licenseUrl>
         <projectUrl>https://github.com/alexrainman/CarouselView</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>What's new? You don't need to provide HeightRequest for Label or Button or any other UI element anymore. This control provides extra functionality like Page Indicators and an advanced API.</description>
+        <description>What's new? Custom controls and instructions for HeightRequest fix.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>https://github.com/alexrainman/CarouselView/commits</releaseNotes>
         <tags>carouselview carousel pageslider slider viewpager uipageviewcontroller flipview ios android uwp xamarin forms monotouch monodroid</tags>

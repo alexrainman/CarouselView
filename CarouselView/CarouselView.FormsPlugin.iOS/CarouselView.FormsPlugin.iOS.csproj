@@ -40,18 +40,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FormsViewToNativeiOS.cs" />
     <Compile Include="ViewContainer.cs" />
-    <Compile Include="Renderers\ExtendedButtonRenderer.cs" />
-    <Compile Include="Renderers\ExtendedActivityIndicatorRenderer.cs" />
-    <Compile Include="Renderers\ExtendedDatePickerRenderer.cs" />
-    <Compile Include="Renderers\ExtendedEditorRenderer.cs" />
-    <Compile Include="Renderers\ExtendedEntryRenderer.cs" />
-    <Compile Include="Renderers\ExtendedProgressBarRenderer.cs" />
-    <Compile Include="Renderers\ExtendedSearchBarRenderer.cs" />
-    <Compile Include="Renderers\ExtendedSliderRenderer.cs" />
-    <Compile Include="Renderers\ExtendedStepperRenderer.cs" />
-    <Compile Include="Renderers\ExtendedSwitchRenderer.cs" />
-    <Compile Include="Renderers\ExtendedTimePickerRenderer.cs" />
-    <Compile Include="Renderers\ExtendedPickerRenderer.cs" />
     <Compile Include="TextMeterImplementation.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -85,9 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Renderers\" />
   </ItemGroup>
   <Import Project="..\..\packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -51,7 +51,7 @@ namespace CarouselView.FormsPlugin.UWP
 
                 nativeView = new FlipViewControl();
 
-                flipView = nativeView.FindName("flipView") as FlipView;               
+                flipView = nativeView.FindName("flipView") as FlipView;
 
                 SetNativeControl(nativeView);
             }
@@ -71,7 +71,7 @@ namespace CarouselView.FormsPlugin.UWP
                     Element.RemoveAction = null;
                     Element.InsertAction = null;
                     Element.SetCurrentAction = null;
-                }               
+                }
             }
 
             if (e.NewElement != null)
@@ -105,15 +105,41 @@ namespace CarouselView.FormsPlugin.UWP
             }
         }
 
+        
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            var rect = this.Element.Bounds;
+
+            if (e.PropertyName == "Width")
+            {
+                if (ElementWidth == 0)
+                    ElementWidth = rect.Width;
+            }
+
+            if (e.PropertyName == "Height")
+            {
+                if (ElementHeight == 0)
+                    ElementHeight = rect.Height;
+            };
+
+            if (Source == null && ElementWidth > 0 && ElementHeight > 0)
+            {
+                ItemsSourceChanged();
+            }
+        }
+
         private void FlipView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (ElementHeight > 0 && e.NewSize.Height != ElementHeight)
+            if (e.NewSize.Width != ElementWidth || e.NewSize.Height != ElementHeight)
             {
                 if (timer != null)
                     timer.Dispose();
                 timer = null;
 
-                timer = new Timer(OnTick, null, 100, 100);
+                timer = new Timer(OnTick, e.NewSize, 50, 50);
             }
         }
 
@@ -122,27 +148,14 @@ namespace CarouselView.FormsPlugin.UWP
             timer.Dispose();
             timer = null;
 
+            var size = (Windows.Foundation.Size)args;
+            ElementWidth = size.Width;
+            ElementHeight = size.Height;
+
             Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
             {
                 ItemsSourceChanged();
             });
-        }
-
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            base.OnElementPropertyChanged(sender, e);
-
-            if (e.PropertyName == "Width")
-            {
-                var rect = this.Element.Bounds;
-                ElementWidth = rect.Width;
-            }
-
-            if (e.PropertyName == "Height")
-            {
-                var rect = this.Element.Bounds;
-                ElementHeight = rect.Height;
-            };           
         }
 
         private void FlipView_Loaded(object sender, RoutedEventArgs e)
@@ -170,17 +183,17 @@ namespace CarouselView.FormsPlugin.UWP
                 if (Element.PositionSelected != null)
                     Element.PositionSelected(Element, EventArgs.Empty);
             }
-        } 
-        
+        }
+
         void UpdateIndicators()
         {
             int i = 0;
             foreach (var item in indicators.Items)
-            {                
+            {
                 ((Ellipse)item).Fill = i == Element.Position ? selectedColor : fillColor;
                 i++;
             }
-        }       
+        }
 
         public async void ItemsSourceChanged()
         {
@@ -189,16 +202,17 @@ namespace CarouselView.FormsPlugin.UWP
             if (Element.Position > Element.ItemsSource.Count - 1)
                 Element.Position = Element.ItemsSource.Count - 1;
 
-            var source = new List<FrameworkElement>();          
+            var source = new List<FrameworkElement>();
 
-            for(int i = Element.Position; i <= Element.ItemsSource.Count - 1; i++)
+            //for (int i = Element.Position; i <= Element.ItemsSource.Count - 1; i++)
+            for (int i = 0; i <= Element.ItemsSource.Count - 1; i++)
             {
                 source.Add(CreateView(Element.ItemsSource[i]));
             }
 
             Source = new ObservableCollection<FrameworkElement>(source);
-            
-            flipView.ItemsSource = Source;            
+
+            flipView.ItemsSource = Source;
 
             if (Element.PageIndicators)
             {
@@ -220,10 +234,12 @@ namespace CarouselView.FormsPlugin.UWP
 
             await Task.Delay(100);
 
-            for(var j = Element.Position - 1; j >= 0; j--)
+            /*for (var j = Element.Position - 1; j >= 0; j--)
             {
                 Source.Insert(0, CreateView(Element.ItemsSource[j]));
-            }
+            }*/
+
+            //Source.Insert(0, CreateView(Element.ItemsSource[1]));
 
             IsLoading = false;
 
@@ -253,7 +269,7 @@ namespace CarouselView.FormsPlugin.UWP
                         flipView.SelectedIndex = Element.Position = newPos;
                     }
 
-                    await Task.Delay(100);                
+                    await Task.Delay(100);
                 }
 
                 Element.ItemsSource.RemoveAt(position);
@@ -295,7 +311,7 @@ namespace CarouselView.FormsPlugin.UWP
                     {
                         Dots.Insert(position, CreateDot(position, position));
                     }
-                }               
+                }
             }
         }
 
@@ -407,7 +423,8 @@ namespace CarouselView.FormsPlugin.UWP
         /// <summary>
         /// Used for registration with dependency service
         /// </summary>
-        public static void Init() {
+        public static void Init()
+        {
             var temp = DateTime.Now;
         }
     }
