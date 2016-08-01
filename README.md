@@ -67,7 +67,7 @@ Then the xaml:
 <controls:CarouselViewControl Position="0" ItemsSource="{Binding Pages}" ItemTemplate="{StaticResource myTemplateSelector}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
 ```
 
-**Custom Controls (Required)**
+**CUSTOM CONTROLS**
 
 HeightRequest fix is now implemented at core level, but you have to use the provided custom controls in your views to do the trick:
 
