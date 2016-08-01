@@ -69,7 +69,7 @@ Then the xaml:
 
 **CUSTOM CONTROLS**
 
-HeightRequest fix is now implemented at core level, but you have to use the provided custom controls in your views to do the trick:
+HeightRequest fix is now implemented at core level. Yyou have to use the provided custom controls to do the trick:
 
 ```xml
 <controls:CVActivityIndicator x:Name="activityIndicator" IsRunning="true"/>
@@ -93,7 +93,7 @@ If you have your own custom renderers they will have to ExportRenderer for this 
 [assembly: ExportRenderer (typeof(CVButton), typeof(MyButtonRenderer))]
 ```
 
-If you don't want to use them, as an alternative take a look at these code snippet so you know what to do with your own controls:
+If you don't want to use them, as an alternative, take a look at these code snippet so you know what to do with your own controls:
 
 ```
 public class CVLabel : Label
@@ -138,7 +138,7 @@ public class CVButton : Button
 }
 ```
 
-Label fix is required but for other components, you can provide the platform specific default Height.
+Label fix is required but for other components, you can provide the platform specific default Height also.
 
 **Default HeightRequest by platform (only for knowledge, implemented at core level)**
 
