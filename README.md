@@ -194,9 +194,9 @@ You can also use these values if you don't use the provided controls neither imp
 
 **Methods**
 
-```RemovePage```: remove a view at given position. When you remove the current view it will slide to the previous one.
+```RemovePage```: remove a view at given position (when you remove the current view it will slide to the previous one).
 
-```InsertPage```: insert a view at a given position (if position parameter is not provided, item will be added at the end.
+```InsertPage```: insert a view at a given position (if position parameter is not provided, item will be added at the end).
 
 ```SetCurrentPage```: slide programmatically to a given position.
 
