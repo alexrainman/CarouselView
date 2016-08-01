@@ -67,13 +67,78 @@ Then the xaml:
 <controls:CarouselViewControl Position="0" ItemsSource="{Binding Pages}" ItemTemplate="{StaticResource myTemplateSelector}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
 ```
 
-**CarouselLabel (Required)**
+**Custom Controls (Required)**
 
-HeightRequest calculations are now implemented at core level :)
+HeightRequest fix is now implemented at core level :) but you have to use the provided custom controls that do the trick
 
 ```xml
-<controls:CarouselLabel Text="HeightRequest calculations are now at core level." />
+<controls:CVActivityIndicator x:Name="activityIndicator" IsRunning="true"/>
+<controls:CVButton x:Name="button" Text="Remove this page" Clicked="Handle_Clicked"/>
+<controls:CVDatePicker x:Name="datePicker" />
+<controls:CVEditor x:Name="editor" BackgroundColor="Silver"/>
+<controls:CVEntry x:Name="entry" />
+<controls:CVPicker x:Name="picker" />
+<controls:CVProgressBar x:Name="progressBar" Progress="0.5" />
+<controls:CVSearchBar x:Name="searchBar" />
+<controls:CVSlider x:Name="slider" />
+<controls:CVStepper x:Name="stepper" />
+<controls:CVSwitch x:Name="myswitch" />
+<controls:CVTimePicker x:Name="timePicker" />
+<controls:CVLabel x:Name="label" Text="My Label"/>
 ```
+
+If you have your own custom renderers they will have to be ExportRenderer for this controls:
+
+```
+[assembly: ExportRenderer (typeof(CVButton), typeof(MyButtonRenderer))]
+```
+
+If you don't want to use them, as an alternative take a look at these code snippet that do the trick:
+
+```
+public class CVLabel : Label
+{
+	public CVLabel()
+	{
+		SetBinding(Label.HeightRequestProperty, new Binding("WidthRequest", BindingMode.Default, new LabelHeightConverter(), this, null, this));
+	}
+
+	protected override void OnSizeAllocated(double width, double height)
+	{
+		base.OnSizeAllocated(width, height);
+
+		WidthRequest = width;
+
+		this.LayoutTo(new Rectangle(this.X, this.Y, width, height));
+
+		this.InvalidateMeasure();
+	}
+}
+
+public class CVButton : Button 
+{
+	public CVButton()
+	{
+		if (HeightRequest == -1)
+		{
+			switch (Device.OS)
+			{
+				case TargetPlatform.iOS:
+					HeightRequest = 44;
+					break;
+				case TargetPlatform.Android:
+					HeightRequest = 48;
+					break;
+				default:
+					HeightRequest = 32;
+					break;
+			}
+		}
+	}
+}
+```
+
+Label fix is required but for other components you can provide the platform specific default Height.
 
 **Default HeightRequest by platform (only for knowledge, implemented at core level)**
 
@@ -120,11 +185,11 @@ HeightRequest calculations are now implemented at core level :)
 
 **Methods**
 
-```RemovePage```: remove a view at given position and slide to previous/next one (Will be deprecated in upcoming release).
+```RemovePage```: remove a view at given position. When you remove the current one it will slide to the previous one.
 
-```InsertPage```: insert a view at a given position (if position parameter is not provided, item will be added at the end. Will be deprecated in upcoming release).
+```InsertPage```: insert a view at a given position (if position parameter is not provided, item will be added at the end.
 
-```SetCurrentPage```: slide programmatically to a given position (Will be deprecated in upcoming release).
+```SetCurrentPage```: slide programmatically to a given position.
 
 #### Known issues
 
