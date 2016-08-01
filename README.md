@@ -96,7 +96,7 @@ If you have your own custom renderers they will have to ExportRenderer for this 
 If you don't want to use them, as an alternative, take a look at these code snippet so you know what to do with your own controls:
 
 ```
-public class CVLabel : Label
+public class CVLabel : Label // REQUIRED
 {
 	public CVLabel()
 	{
@@ -138,11 +138,9 @@ public class CVButton : Button
 }
 ```
 
-Label fix is required but for other components, you can provide the platform specific default Height also.
+**Default HeightRequest by platform**
 
-**Default HeightRequest by platform (only for knowledge, implemented at core level)**
-
-|Control|Android|iOS|UWP|
+|Control|iOS|Android|UWP|
 | ------------------- | :-----------: | :-----------: | :------------------: |
 |ActivityIndicator|20|48|4|
 |Button|44|48|32|
@@ -156,6 +154,17 @@ Label fix is required but for other components, you can provide the platform spe
 |Stepper|29|48|32|
 |Switch|31|27|40|
 |TimePicker|30|45.5|32|
+
+You can also use these values if you don't use the provided controls neither implement your own.
+
+```xml
+<Button.HeightRequest>
+        <OnPlatform x:TypeArguments="x:Double"
+                Android="48"
+                WinPhone="32"
+                iOS="44" />
+</Button.HeightRequest>
+```
 
 **Bindable Properties**
 
