@@ -69,7 +69,7 @@ Then the xaml:
 
 **CUSTOM CONTROLS**
 
-HeightRequest fix is now implemented at core level. Yyou have to use the provided custom controls to do the trick:
+You can use the provided custom controls that implement the fix for HeightRequest:
 
 ```xml
 <controls:CVActivityIndicator x:Name="activityIndicator" IsRunning="true"/>
@@ -194,7 +194,7 @@ You can also use these values if you don't use the provided controls neither imp
 
 **Methods**
 
-```RemovePage```: remove a view at given position. When you remove the current one it will slide to the previous one.
+```RemovePage```: remove a view at given position. When you remove the current view it will slide to the previous one.
 
 ```InsertPage```: insert a view at a given position (if position parameter is not provided, item will be added at the end.
 
