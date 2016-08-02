@@ -1,5 +1,9 @@
 # CarouselView control for Xamarin Forms
 
+#### Help Needed
+
+Do you want to collaborate? I am looking for a good Xamaritan that can take care of the UWP version of the plugin.
+
 #### Setup
 * Available on NuGet: https://www.nuget.org/packages/CarouselView.FormsPlugin/ [![NuGet](https://img.shields.io/nuget/v/CarouselView.FormsPlugin.svg?label=NuGet)](https://www.nuget.org/packages/CarouselView.FormsPlugin/)
 * Install in your PCL project and Client projects.
