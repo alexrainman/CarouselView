@@ -182,6 +182,34 @@ You can also use these values if you don't use the provided controls neither imp
 
 ```Bounces```: use this property to disable bounces when you will render one page at a time and move back and fort programmatically (iOS only, default true).
 
+* How to render one page at a time, no swiping and move back and fort programmatically?
+
+```
+var pages = new List<int> { 1 }; // only one item in ItemsSource
+Carousel.ItemsSource = pages;
+```
+
+To move forward:
+
+```
+void OnNext (object sender, TappedEventArgs e) {
+	Carousel.InsertPage(2); // parameter is the new item to be used as binding context for the second view
+	Carousel.RemovePage(0);
+}
+```
+
+To move back:
+
+```
+async void OnPrevious (object sender, TappedEventArgs e) {
+	var pages = new List<int>() { 1, pages[0] }; // inserting one item on position 0 of ItemsSource
+	Carousel.Position = 1;
+	Carousel.ItemsSource = pages;
+	await Task.Delay(100);
+	Carousel.RemovePage(1);
+}
+```
+
 ```Arrows```: disable arrows navigation (UWP only, default true).
 
 ```PageIndicators```: hide/show page indicators (default false).
