@@ -1,6 +1,6 @@
 # CarouselView control for Xamarin Forms
 
-#### HELP WANTED
+#### Help Needed
 
 Do you want to collaborate? I am looking for a good Xamaritan that can take care of the UWP version of the plugin.
 
@@ -174,6 +174,8 @@ You can also use these values if you don't use the provided controls neither imp
 
 ```ItemsSource```: Collection of objects used as BindingContext of each view.
 
+* I wanted to support CollectionChanged events, but specially Android ViewPager is not designed to handle that scenario. To Add and Remove pages/items use the provided API. You can use an Observable collection as ItemsSource and use CollectionChanged events in your end for your own business logic.
+
 ```ItemTemplate```: supports DataTemplate and DataTemplateSelector.
 
 ```Position```: the desired selected view when Carousel starts.
@@ -198,11 +200,11 @@ You can also use these values if you don't use the provided controls neither imp
 
 **Methods**
 
-```RemovePage```: remove a view at given position (when you remove the current view it will slide to the previous one).
+```RemovePage (position)```: remove a view at given position (when you remove the current view it will slide to the previous one). This method will also remove the related item from the ItemsSource.
 
-```InsertPage```: insert a view at a given position (if position parameter is not provided, item will be added at the end).
+```InsertPage (item, position)```: insert a view at a given position (if position parameter is not provided, item will be added at the end).
 
-```SetCurrentPage```: slide programmatically to a given position.
+```SetCurrentPage (position)```: slide programmatically to a given position.
 
 #### Known issues
 
