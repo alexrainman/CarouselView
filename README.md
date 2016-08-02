@@ -71,7 +71,7 @@ Then the xaml:
 <controls:CarouselViewControl Position="0" ItemsSource="{Binding Pages}" ItemTemplate="{StaticResource myTemplateSelector}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
 ```
 
-#### Render one page at a time, no swiping and move back and fort programmatically:
+#### Render one page at a time, no swiping, move back and fort programmatically:
 
 ```
 var pages = new List<int> { 1 }; // only one item in ItemsSource
