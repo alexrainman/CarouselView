@@ -104,12 +104,14 @@ async void OnPrevious (object sender, TappedEventArgs e) {
 As a requirement you have to provide HeighRequest for UI components using OnPlatform:
 
 ```xml
-<Button.HeightRequest>
-        <OnPlatform x:TypeArguments="x:Double"
-                Android="48"
-                WinPhone="32"
-                iOS="44" />
-</Button.HeightRequest>
+<Button Text="MyButton">
+        <Button.HeightRequest>
+                <OnPlatform x:TypeArguments="x:Double"
+                        Android="48"
+                        WinPhone="32"
+                        iOS="44" />
+        </Button.HeightRequest>
+</Button>
 ```
 
 **Default HeightRequest by platform**
