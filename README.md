@@ -99,9 +99,37 @@ async void OnPrevious (object sender, TappedEventArgs e) {
 }
 ```
 
-**CUSTOM CONTROLS**
+** HEIGHT REQUEST**
 
-You can use the provided custom controls that implement the fix for HeightRequest:
+As a requirement you have to provide HeighRequest for UI components using OnPlatform:
+
+```xml
+<Button.HeightRequest>
+        <OnPlatform x:TypeArguments="x:Double"
+                Android="48"
+                WinPhone="32"
+                iOS="44" />
+</Button.HeightRequest>
+```
+
+**Default HeightRequest by platform**
+
+|Control|iOS|Android|UWP|
+| ------------------- | :-----------: | :-----------: | :------------------: |
+|ActivityIndicator|20|48|4|
+|Button|44|48|32|
+|DatePicker|30|45.5|32|
+|Editor|36.5|45.5|32|
+|Entry|30|45.5|32|
+|Picker|30|45.5|32|
+|ProgressBar|2|16|4|
+|Searchbar|44|45|32|
+|Slider|34|18|44|
+|Stepper|29|48|32|
+|Switch|31|27|40|
+|TimePicker|30|45.5|32|
+
+As an alternative, I'm providing custom controls that implement a fix for HeightRequest (CVLabel is the only one that is required):
 
 ```xml
 <controls:CVActivityIndicator x:Name="activityIndicator" IsRunning="true"/>
@@ -116,16 +144,16 @@ You can use the provided custom controls that implement the fix for HeightReques
 <controls:CVStepper x:Name="stepper" />
 <controls:CVSwitch x:Name="myswitch" />
 <controls:CVTimePicker x:Name="timePicker" />
-<controls:CVLabel x:Name="label" Text="My Label"/>
+<controls:CVLabel x:Name="label" Text="My Label"/> <!-- Required -->
 ```
 
-If you have your own custom renderers they will have to ExportRenderer for this controls:
+If you have your own custom renderers, and you don't want to provide HeightRequest using OnPlatform, they will have to ExportRenderer for CV controls:
 
 ```
 [assembly: ExportRenderer (typeof(CVButton), typeof(MyButtonRenderer))]
 ```
 
-If you don't want to use them, as an alternative, take a look at these code snippet so you know what to do with your own controls:
+Take a look at these code snippets so you know what CV controls do:
 
 ```
 public class CVLabel : Label // REQUIRED
@@ -168,34 +196,6 @@ public class CVButton : Button
 		}
 	}
 }
-```
-
-**Default HeightRequest by platform**
-
-|Control|iOS|Android|UWP|
-| ------------------- | :-----------: | :-----------: | :------------------: |
-|ActivityIndicator|20|48|4|
-|Button|44|48|32|
-|DatePicker|30|45.5|32|
-|Editor|36.5|45.5|32|
-|Entry|30|45.5|32|
-|Picker|30|45.5|32|
-|ProgressBar|2|16|4|
-|Searchbar|44|45|32|
-|Slider|34|18|44|
-|Stepper|29|48|32|
-|Switch|31|27|40|
-|TimePicker|30|45.5|32|
-
-You can also use these values if you don't use the provided controls neither implement your own.
-
-```xml
-<Button.HeightRequest>
-        <OnPlatform x:TypeArguments="x:Double"
-                Android="48"
-                WinPhone="32"
-                iOS="44" />
-</Button.HeightRequest>
 ```
 
 **Bindable Properties**
