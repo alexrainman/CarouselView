@@ -105,12 +105,12 @@ As a requirement you have to provide HeighRequest for UI components using OnPlat
 
 ```xml
 <Button Text="MyButton">
-        <Button.HeightRequest>
-                <OnPlatform x:TypeArguments="x:Double"
-                        Android="48"
-                        WinPhone="32"
-                        iOS="44" />
-        </Button.HeightRequest>
+    <Button.HeightRequest>
+        <OnPlatform x:TypeArguments="x:Double"
+            Android="48"
+            WinPhone="32"
+            iOS="44" />
+    </Button.HeightRequest>
 </Button>
 ```
 
