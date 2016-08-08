@@ -99,7 +99,7 @@ async void OnPrevious (object sender, TappedEventArgs e) {
 }
 ```
 
-** HEIGHT REQUEST**
+** HEIGHT REQUEST **
 
 As a requirement you have to provide HeighRequest for UI components using OnPlatform:
 
