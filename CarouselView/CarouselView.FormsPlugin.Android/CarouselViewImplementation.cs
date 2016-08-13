@@ -41,7 +41,11 @@ namespace CarouselView.FormsPlugin.Android
 				// the SetNativeControl method
 
 				var inflater = LayoutInflater.From(Forms.Context);
-				nativeView = inflater.Inflate(Resource.Layout.themed_circles, null);
+
+				if (Element.Orientation == Orientation.Horizontal)
+				    nativeView = inflater.Inflate(Resource.Layout.viewpager, null);
+				else
+					nativeView = inflater.Inflate(Resource.Layout.vertical_viewpager, null);
 
 				SetNativeControl(nativeView);
 			}

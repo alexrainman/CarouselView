@@ -95,6 +95,14 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(InterPageSpacingProperty, value); }
 		}
 
+		public static readonly BindableProperty OrientationProperty = BindableProperty.Create("Orientation", typeof(Orientation), typeof(CarouselViewControl), Orientation.Horizontal);
+
+		public Orientation Orientation
+		{
+			get { return (Orientation)GetValue(OrientationProperty); }
+			set { SetValue(OrientationProperty, value); }
+		}
+
 		public Action ItemsSourceChanged;
 
 		public EventHandler PositionSelected;

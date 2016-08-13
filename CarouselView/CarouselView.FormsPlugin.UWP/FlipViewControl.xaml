@@ -8,13 +8,6 @@
     mc:Ignorable="d">
 
     <Grid>
-        <!--<Grid.RowDefinitions>
-	        <RowDefinition Height="*" />
-	        <RowDefinition Height="Auto" />
-	    </Grid.RowDefinitions>
-	    <Grid.ColumnDefinitions>
-	        <ColumnDefinition Width="*" />
-	    </Grid.ColumnDefinitions>-->
         <FlipView x:Name="flipView"/>
         <StackPanel x:Name="dotsPanel" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="32" Visibility="Collapsed">
             <ItemsControl x:Name="indicators" HorizontalAlignment="Center" VerticalAlignment="Bottom">

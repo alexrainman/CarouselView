@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+    <CarouselView.FormsPlugin.Android.CirclePageIndicator
+        android:id="@+id/indicator"
+        android:paddingLeft="20dip"
+        android:paddingTop="15dip"
+        android:paddingRight="15dip"
+        android:paddingBottom="15dip"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@android:color/transparent"
+        app:radius="4dp"
+        app:fillColor="#808080"
+        app:pageColor="#c0c0c0"
+        app:strokeWidth="0dp"
+        app:snap="true"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

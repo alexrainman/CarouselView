@@ -18,9 +18,9 @@ namespace CarouselView.FormsPlugin.UWP
     /// <summary>
     /// CarouselView Renderer
     /// </summary>
-    public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, FlipViewControl>
+    public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, UserControl>
     {
-        FlipViewControl nativeView;
+        UserControl nativeView;
         FlipView flipView;
         ItemsControl indicators;
 
@@ -49,7 +49,10 @@ namespace CarouselView.FormsPlugin.UWP
                 // Instantiate the native control and assign it to the Control property with
                 // the SetNativeControl method
 
-                nativeView = new FlipViewControl();
+                if (Element.Orientation == Abstractions.Orientation.Horizontal)
+                    nativeView = new FlipViewControl();
+                else
+                    nativeView = new VerticalFlipViewControl();
 
                 flipView = nativeView.FindName("flipView") as FlipView;
 
@@ -90,6 +93,14 @@ namespace CarouselView.FormsPlugin.UWP
                     dotsPanel.Background = (SolidColorBrush)converter.Convert(Element.PageIndicatorBackgroundColor, null, null, null);
 
                     dotsPanel.Visibility = Visibility.Visible;
+
+                    if (Element.Orientation == Abstractions.Orientation.Vertical)
+                    {
+                        var dotsPanelBg = nativeView.FindName("dotsPanelBg") as StackPanel;
+                        dotsPanelBg.Background = (SolidColorBrush)converter.Convert(Element.PageIndicatorBackgroundColor, null, null, null);
+
+                        dotsPanelBg.Visibility = Visibility.Visible;
+                    }
                 }
 
                 flipView.Loaded += FlipView_Loaded;
@@ -103,9 +114,7 @@ namespace CarouselView.FormsPlugin.UWP
                 Element.InsertAction = new Action<object, int>(InsertItem);
                 Element.SetCurrentAction = new Action<int>(SetCurrentItem);
             }
-        }
-
-        
+        }      
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -139,7 +148,7 @@ namespace CarouselView.FormsPlugin.UWP
                     timer.Dispose();
                 timer = null;
 
-                timer = new Timer(OnTick, e.NewSize, 50, 50);
+                timer = new Timer(OnTick, e.NewSize, 100, 100);
             }
         }
 
@@ -213,6 +222,9 @@ namespace CarouselView.FormsPlugin.UWP
             Source = new ObservableCollection<FrameworkElement>(source);
 
             flipView.ItemsSource = Source;
+            
+            //flipView.ItemTemplateSelector = new MyTemplateSelector(Element, ElementWidth, ElementHeight);
+            //flipView.ItemsSource = Element.ItemsSource;
 
             if (Element.PageIndicators)
             {
@@ -338,9 +350,6 @@ namespace CarouselView.FormsPlugin.UWP
 
             var element = FormsViewToNativeUWP.ConvertFormsToNative(formsView, new Xamarin.Forms.Rectangle(0, 0, ElementWidth, ElementHeight));
 
-            //var interPageSpacing = Element.InterPageSpacing / 2;
-            //element.Margin = new Thickness(interPageSpacing, 0, interPageSpacing, 0);
-
             return element;
         }
 
@@ -391,6 +400,42 @@ namespace CarouselView.FormsPlugin.UWP
                 _list.AddRange(AllChildren(_child));              
             }
             return _list;
+        }*/
+
+        /*class MyTemplateSelector : DataTemplateSelector
+        {
+            CarouselViewControl Element;
+            double ElementWidth;
+            double ElementHeight;
+
+            public MyTemplateSelector(CarouselViewControl element, double width, double height)
+            {
+                this.Element = element;
+                this.ElementWidth = width;
+                this.ElementHeight = height;
+            }
+
+            protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+            {
+                Xamarin.Forms.View formsView = null;
+                var bindingContext = item;
+
+                var selector = this.Element.ItemTemplate as Xamarin.Forms.DataTemplateSelector;
+                if (selector != null)
+                    formsView = (Xamarin.Forms.View)selector.SelectTemplate(bindingContext, this.Element).CreateContent();
+                else
+                    formsView = (Xamarin.Forms.View)this.Element.ItemTemplate.CreateContent();
+
+                formsView.BindingContext = bindingContext;
+
+                var uielement = FormsViewToNativeUWP.ConvertFormsToNative(formsView, new Xamarin.Forms.Rectangle(0, 0, this.ElementWidth, this.ElementHeight));
+
+                var flipViewItem = (FlipViewItem)container;
+
+                flipViewItem.Content = uielement;
+
+                return base.SelectTemplateCore(item, container);
+            }
         }*/
 
         protected override void Dispose(bool disposing)

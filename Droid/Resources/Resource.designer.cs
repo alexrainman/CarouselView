@@ -976,7 +976,8 @@ namespace Demo.Droid
 			global::CarouselView.FormsPlugin.Android.Resource.Layout.select_dialog_multichoice_material = global::Demo.Droid.Resource.Layout.select_dialog_multichoice_material;
 			global::CarouselView.FormsPlugin.Android.Resource.Layout.select_dialog_singlechoice_material = global::Demo.Droid.Resource.Layout.select_dialog_singlechoice_material;
 			global::CarouselView.FormsPlugin.Android.Resource.Layout.support_simple_spinner_dropdown_item = global::Demo.Droid.Resource.Layout.support_simple_spinner_dropdown_item;
-			global::CarouselView.FormsPlugin.Android.Resource.Layout.themed_circles = global::Demo.Droid.Resource.Layout.themed_circles;
+			global::CarouselView.FormsPlugin.Android.Resource.Layout.vertical_viewpager = global::Demo.Droid.Resource.Layout.vertical_viewpager;
+			global::CarouselView.FormsPlugin.Android.Resource.Layout.viewpager = global::Demo.Droid.Resource.Layout.viewpager;
 			global::CarouselView.FormsPlugin.Android.Resource.String.abc_action_bar_home_description = global::Demo.Droid.Resource.String.abc_action_bar_home_description;
 			global::CarouselView.FormsPlugin.Android.Resource.String.abc_action_bar_home_description_format = global::Demo.Droid.Resource.String.abc_action_bar_home_description_format;
 			global::CarouselView.FormsPlugin.Android.Resource.String.abc_action_bar_home_subtitle_description_format = global::Demo.Droid.Resource.String.abc_action_bar_home_subtitle_description_format;
@@ -4293,8 +4294,8 @@ namespace Demo.Droid
 			// aapt resource value: 0x7f0b0041
 			public const int image = 2131427393;
 			
-			// aapt resource value: 0x7f0b009c
-			public const int indicator = 2131427484;
+			// aapt resource value: 0x7f0b009d
+			public const int indicator = 2131427485;
 			
 			// aapt resource value: 0x7f0b0098
 			public const int info = 2131427480;
@@ -4413,8 +4414,8 @@ namespace Demo.Droid
 			// aapt resource value: 0x7f0b0022
 			public const int normal = 2131427362;
 			
-			// aapt resource value: 0x7f0b009b
-			public const int pager = 2131427483;
+			// aapt resource value: 0x7f0b009c
+			public const int pager = 2131427484;
 			
 			// aapt resource value: 0x7f0b0011
 			public const int parallax = 2131427345;
@@ -4557,8 +4558,8 @@ namespace Demo.Droid
 			// aapt resource value: 0x7f0b004a
 			public const int title_template = 2131427402;
 			
-			// aapt resource value: 0x7f0b009d
-			public const int toolbar = 2131427485;
+			// aapt resource value: 0x7f0b009b
+			public const int toolbar = 2131427483;
 			
 			// aapt resource value: 0x7f0b001c
 			public const int top = 2131427356;
@@ -4837,10 +4838,13 @@ namespace Demo.Droid
 			public const int TabLayout = 2130903095;
 			
 			// aapt resource value: 0x7f030038
-			public const int themed_circles = 2130903096;
+			public const int Toolbar = 2130903096;
 			
 			// aapt resource value: 0x7f030039
-			public const int Toolbar = 2130903097;
+			public const int vertical_viewpager = 2130903097;
+			
+			// aapt resource value: 0x7f03003a
+			public const int viewpager = 2130903098;
 			
 			static Layout()
 			{

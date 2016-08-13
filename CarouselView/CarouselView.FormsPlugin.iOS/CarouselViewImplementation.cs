@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using CarouselView.FormsPlugin.Abstractions;
 using CarouselView.FormsPlugin.iOS;
+using CoreAnimation;
 using CoreGraphics;
+using Foundation;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -41,26 +43,58 @@ namespace CarouselView.FormsPlugin.iOS
 
 				var interPageSpacing = (float)Element.InterPageSpacing;
 
+				var orientation = (UIPageViewControllerNavigationOrientation)Element.Orientation;
+
 				pageController = new UIPageViewController(UIPageViewControllerTransitionStyle.Scroll,
-				UIPageViewControllerNavigationOrientation.Horizontal, UIPageViewControllerSpineLocation.None, interPageSpacing);
+				                                          orientation, UIPageViewControllerSpineLocation.None, interPageSpacing);
 
 				if (Element.PageIndicators)
 				{
 					//pageController.GetPresentationCount = (p) => Element.ItemsSource.Count;
 					//pageController.GetPresentationIndex = (p) => Element.Position;
 
-					pageControl = new UIPageControl(new CGRect(0, pageController.View.Bounds.Bottom - 36, UIScreen.MainScreen.Bounds.Width, 36));
-					pageControl.AutoresizingMask = UIViewAutoresizing.FlexibleTopMargin | UIViewAutoresizing.FlexibleWidth;
-
-					var appearance = UIPageControl.Appearance;
-					appearance.BackgroundColor = Element.PageIndicatorBackgroundColor.ToUIColor();
+					pageControl = new UIPageControl();
 
 					pageControl.PageIndicatorTintColor = Element.PageIndicatorTintColor.ToUIColor();
 					pageControl.CurrentPageIndicatorTintColor = Element.CurrentPageIndicatorTintColor.ToUIColor();
 
+					pageControl.TranslatesAutoresizingMaskIntoConstraints = false;
+
 					ConfigurePageControl();
 
-					pageController.View.AddSubview(pageControl);
+					// TODO: add pageControl to UIView, background color to UIView, add UIView to superview and apply constraints
+
+					if (Element.Orientation == Orientation.Horizontal)
+					{
+						var appearance = UIPageControl.Appearance;
+						appearance.BackgroundColor = Element.PageIndicatorBackgroundColor.ToUIColor();
+
+						pageController.View.AddSubview(pageControl);
+
+						var viewsDictionary = NSDictionary.FromObjectsAndKeys(new NSObject[] { pageControl }, new NSObject[] { new NSString("pageControl") });
+						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("H:|[pageControl]|", NSLayoutFormatOptions.AlignAllCenterX, new NSDictionary(), viewsDictionary));
+						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:[pageControl]|", 0, new NSDictionary(), viewsDictionary));
+					}
+					else {
+						pageControl.Transform = CGAffineTransform.MakeRotation(3.14159265f / 2);
+						var container = new UIView();
+						container.TranslatesAutoresizingMaskIntoConstraints = false;
+						container.BackgroundColor = Element.PageIndicatorBackgroundColor.ToUIColor();
+
+						container.AddSubview(pageControl);
+						pageController.View.AddSubview(container);
+
+						var viewsDictionary1 = NSDictionary.FromObjectsAndKeys(new NSObject[] { container }, new NSObject[] { new NSString("container") });
+						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("[container(==36)]", 0, new NSDictionary(), viewsDictionary1));
+						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("H:[container]|", 0, new NSDictionary(), viewsDictionary1));
+						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:|[container]|", NSLayoutFormatOptions.AlignAllCenterY, new NSDictionary(), viewsDictionary1));
+
+						var viewsDictionary2 = NSDictionary.FromObjectsAndKeys(new NSObject[] { pageControl }, new NSObject[] { new NSString("pageControl") });
+						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("[pageControl(==36)]", 0, new NSDictionary(), viewsDictionary2));
+						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("H:[pageControl]|", 0, new NSDictionary(), viewsDictionary2));
+						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:|[pageControl]|", NSLayoutFormatOptions.AlignAllCenterY, new NSDictionary(), viewsDictionary2));
+					}
+
 				}
 
 				SetNativeControl(pageController.View);

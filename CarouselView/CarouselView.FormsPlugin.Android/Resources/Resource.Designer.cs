@@ -2992,7 +2992,10 @@ namespace CarouselView.FormsPlugin.Android
 			public static int support_simple_spinner_dropdown_item = 2130903094;
 			
 			// aapt resource value: 0x7f030037
-			public static int themed_circles = 2130903095;
+			public static int vertical_viewpager = 2130903095;
+			
+			// aapt resource value: 0x7f030038
+			public static int viewpager = 2130903096;
 			
 			static Layout()
 			{

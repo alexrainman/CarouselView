@@ -1,0 +1,30 @@
+﻿<UserControl
+    x:Class="CarouselView.FormsPlugin.UWP.VerticalFlipViewControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CarouselView.FormsPlugin.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <FlipView x:Name="flipView">
+            <FlipView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </FlipView.ItemsPanel>
+        </FlipView>
+        <StackPanel x:Name="dotsPanelBg"  HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="32" Visibility="Collapsed">
+        </StackPanel>
+        <StackPanel x:Name="dotsPanel" HorizontalAlignment="Right" VerticalAlignment="Center" Width="32" Visibility="Collapsed">
+            <ItemsControl x:Name="indicators" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </StackPanel>
+    </Grid>
+</UserControl>

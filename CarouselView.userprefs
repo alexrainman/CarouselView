@@ -1,17 +1,15 @@
-﻿<Properties StartupItem="iOS/Demo.iOS.csproj" RefactoringSettings.EnableRefactorings="True">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Demo/Views/MyFirstView.xaml">
+﻿<Properties StartupItem="Droid/Demo.Droid.csproj" RefactoringSettings.EnableRefactorings="True">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Droid/MainActivity.cs">
     <Files>
-      <File FileName="Demo/Views/MyFirstView.xaml" Line="16" Column="15" />
-      <File FileName="CarouselView/CarouselView.FormsPlugin.Abstractions/Controls/CVLabel.cs" Line="23" Column="3" />
-      <File FileName="CarouselView/CarouselView.FormsPlugin.Abstractions/Controls/CVButton.cs" Line="7" Column="3" />
+      <File FileName="Droid/MainActivity.cs" Line="13" Column="21" />
     </Files>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.ItemProperties.Demo.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.D6823497-D4AD-4479-9600-FB8732054029" />
   <MonoDevelop.Ide.ItemProperties.CarouselView.FormsPlugin.Android AndroidDesignerPreferredDevice="Nexus 4" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.Demo.Droid PreferredExecutionTarget="Android.SelectDevice" />
+  <MonoDevelop.Ide.ItemProperties.Demo.Droid AndroidDesignerPreferredDevice="Nexus 4" PreferredExecutionTarget="Android.Android_Accelerated_x86" />
 </Properties>
