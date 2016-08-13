@@ -1,9 +1,5 @@
 # CarouselView control for Xamarin Forms
 
-#### Help Needed
-
-Do you want to collaborate? I am looking for a good Xamaritan that can take care of the UWP version of the plugin.
-
 #### Setup
 * Available on NuGet: https://www.nuget.org/packages/CarouselView.FormsPlugin/ [![NuGet](https://img.shields.io/nuget/v/CarouselView.FormsPlugin.svg?label=NuGet)](https://www.nuget.org/packages/CarouselView.FormsPlugin/)
 * Install in your PCL project and Client projects.
@@ -33,6 +29,7 @@ myCarousel.ItemsSource = new List<int> { 1, 2, 3, 4, 5 };
 myCarousel.ItemTemplate = new MyTemplateSelector (); //new DataTemplate (typeof(MyView));
 myCarousel.Position = 0; //default
 myCarousel.InterPageSpacing = 10;
+myCarousel.Orientation = Orientation.Horizontal;
 ```
 
 **XAML:**
@@ -46,7 +43,7 @@ xmlns:controls="clr-namespace:CarouselViewControl.FormsPlugin.Abstractions;assem
 Then add the xaml:
 
 ```xml
-<controls:CarouselViewControl InterPageSpacing="10" Position="0" ItemsSource="{Binding Pages}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+<controls:CarouselViewControl Orientation="Horizontal" InterPageSpacing="10" Position="0" ItemsSource="{Binding Pages}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
     <controls:CarouselViewControl.ItemTemplate>
         <DataTemplate>
             <local:MyView />
@@ -201,6 +198,8 @@ public class CVButton : Button
 ```
 
 **Bindable Properties**
+
+```Orientation```: Vertical or Horizontal swipe/scroll.
 
 ```ItemsSource```: Collection of objects used as BindingContext of each view.
 
