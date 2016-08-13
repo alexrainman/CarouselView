@@ -199,7 +199,7 @@ public class CVButton : Button
 
 **Bindable Properties**
 
-```Orientation```: Vertical or Horizontal swipe/scroll.
+```Orientation```: Vertical or Horizontal swipe/scroll (default horizontal).
 
 ```ItemsSource```: Collection of objects used as BindingContext of each view.
 
