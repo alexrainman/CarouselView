@@ -322,7 +322,9 @@ namespace CarouselView.FormsPlugin.iOS
 		UIViewController CreateViewController(int index){
 
 			Xamarin.Forms.View formsView = null;
-			var bindingContext = Element.ItemsSource.Cast<object> ().ElementAt (index);
+            object bindingContext = null;
+            if (Element.ItemsSource!=null)
+			    bindingContext = Element.ItemsSource.Cast<object> ().ElementAt (index);
 
 			var selector = Element.ItemTemplate as DataTemplateSelector;
 			if (selector != null)
@@ -347,7 +349,8 @@ namespace CarouselView.FormsPlugin.iOS
 		{
 			if (pageControl != null)
 			{
-				pageControl.Pages = Element.ItemsSource.Count;
+                if(Element.ItemsSource!=null)
+    				pageControl.Pages = Element.ItemsSource.Count;
 				pageControl.CurrentPage = Element.Position;
 			}
 		}
