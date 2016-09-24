@@ -25,7 +25,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 		int Count {
 			get {
-				return Element.ItemsSource.Count;
+				return Element.ItemsSource?.Count ?? 0;
 			}
 		}
 
