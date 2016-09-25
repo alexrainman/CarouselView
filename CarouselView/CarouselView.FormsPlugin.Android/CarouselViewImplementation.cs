@@ -227,7 +227,7 @@ namespace CarouselView.FormsPlugin.Android
 
 			public override int Count {
 				get {
-					return Element.ItemsSource.Count;
+					return Element.ItemsSource?.Count ?? 0;
 				}
 			}
 
