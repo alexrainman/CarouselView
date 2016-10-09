@@ -90,17 +90,8 @@ namespace CarouselView.FormsPlugin.UWP
                     fillColor = (SolidColorBrush)converter.Convert(Element.PageIndicatorTintColor, null, null, null);
 
                     var dotsPanel = nativeView.FindName("dotsPanel") as StackPanel;
-                    dotsPanel.Background = (SolidColorBrush)converter.Convert(Element.PageIndicatorBackgroundColor, null, null, null);
 
                     dotsPanel.Visibility = Visibility.Visible;
-
-                    if (Element.Orientation == Abstractions.Orientation.Vertical)
-                    {
-                        var dotsPanelBg = nativeView.FindName("dotsPanelBg") as StackPanel;
-                        dotsPanelBg.Background = (SolidColorBrush)converter.Convert(Element.PageIndicatorBackgroundColor, null, null, null);
-
-                        dotsPanelBg.Visibility = Visibility.Visible;
-                    }
                 }
 
                 flipView.Loaded += FlipView_Loaded;
@@ -213,8 +204,7 @@ namespace CarouselView.FormsPlugin.UWP
 
             var source = new List<FrameworkElement>();
 
-            //for (int i = Element.Position; i <= Element.ItemsSource.Count - 1; i++)
-            for (int i = 0; i <= Element.ItemsSource.Count - 1; i++)
+            for (int i = 0; i <= Element.Position; i++)
             {
                 source.Add(CreateView(Element.ItemsSource[i]));
             }
@@ -222,9 +212,6 @@ namespace CarouselView.FormsPlugin.UWP
             Source = new ObservableCollection<FrameworkElement>(source);
 
             flipView.ItemsSource = Source;
-            
-            //flipView.ItemTemplateSelector = new MyTemplateSelector(Element, ElementWidth, ElementHeight);
-            //flipView.ItemsSource = Element.ItemsSource;
 
             if (Element.PageIndicators)
             {
@@ -242,26 +229,25 @@ namespace CarouselView.FormsPlugin.UWP
                 indicators.ItemsSource = Dots;
             }
 
-            flipView.SelectedIndex = 0;
+            flipView.SelectedIndex = Element.Position;
 
             await Task.Delay(100);
 
-            /*for (var j = Element.Position - 1; j >= 0; j--)
+            for (var j = Element.Position + 1; j <= Element.ItemsSource.Count - 1; j++)
             {
-                Source.Insert(0, CreateView(Element.ItemsSource[j]));
-            }*/
-
-            //Source.Insert(0, CreateView(Element.ItemsSource[1]));
+                Source.Add(CreateView(Element.ItemsSource[j]));
+            }
 
             IsLoading = false;
-
-            flipView.SelectedIndex = Element.Position;
         }
 
         public async void RemoveItem(int position)
         {
             if (Element != null && flipView != null)
             {
+				if (position > Element.ItemsSource.Count - 1)
+					throw new CarouselViewException("Page cannot be removed at a position bigger than ItemsSource.Count - 1");
+				
                 IsRemoving = true;
 
                 if (position == Element.Position)
@@ -302,10 +288,13 @@ namespace CarouselView.FormsPlugin.UWP
             }
         }
 
-        public void InsertItem(object item, int position)
+		public async void InsertItem(object item, int position)
         {
             if (Element != null && flipView != null)
             {
+				if (position > Element.ItemsSource.Count + 1)
+					throw new CarouselViewException("Page cannot be inserted at a position bigger than ItemsSource.Count");
+				
                 if (position == -1)
                 {
                     Element.ItemsSource.Add(item);
@@ -324,6 +313,8 @@ namespace CarouselView.FormsPlugin.UWP
                         Dots.Insert(position, CreateDot(position, position));
                     }
                 }
+
+				await Task.Delay(100);
             }
         }
 
@@ -331,6 +322,9 @@ namespace CarouselView.FormsPlugin.UWP
         {
             if (Element != null && flipView != null)
             {
+				if (position > Element.ItemsSource.Count - 1)
+					throw new CarouselViewException("Current page index cannot be bigger than ItemsSource.Count - 1");
+				
                 flipView.SelectedIndex = position;
             }
         }
@@ -366,10 +360,12 @@ namespace CarouselView.FormsPlugin.UWP
 
         private void ButtonHide(FlipView f, string name)
         {
-            Button b;
-            b = FindVisualChild<Button>(f, name);
-            b.Opacity = 0.0;
-            b.IsHitTestVisible = false;
+            var b = FindVisualChild<Button>(f, name);
+			if (b != null)
+			{
+				b.Opacity = 0.0;
+				b.IsHitTestVisible = false;
+			}
         }
 
         private childItemType FindVisualChild<childItemType>(DependencyObject obj, string name) where childItemType : FrameworkElement
@@ -400,42 +396,6 @@ namespace CarouselView.FormsPlugin.UWP
                 _list.AddRange(AllChildren(_child));              
             }
             return _list;
-        }*/
-
-        /*class MyTemplateSelector : DataTemplateSelector
-        {
-            CarouselViewControl Element;
-            double ElementWidth;
-            double ElementHeight;
-
-            public MyTemplateSelector(CarouselViewControl element, double width, double height)
-            {
-                this.Element = element;
-                this.ElementWidth = width;
-                this.ElementHeight = height;
-            }
-
-            protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
-            {
-                Xamarin.Forms.View formsView = null;
-                var bindingContext = item;
-
-                var selector = this.Element.ItemTemplate as Xamarin.Forms.DataTemplateSelector;
-                if (selector != null)
-                    formsView = (Xamarin.Forms.View)selector.SelectTemplate(bindingContext, this.Element).CreateContent();
-                else
-                    formsView = (Xamarin.Forms.View)this.Element.ItemTemplate.CreateContent();
-
-                formsView.BindingContext = bindingContext;
-
-                var uielement = FormsViewToNativeUWP.ConvertFormsToNative(formsView, new Xamarin.Forms.Rectangle(0, 0, this.ElementWidth, this.ElementHeight));
-
-                var flipViewItem = (FlipViewItem)container;
-
-                flipViewItem.Content = uielement;
-
-                return base.SelectTemplateCore(item, container);
-            }
         }*/
 
         protected override void Dispose(bool disposing)

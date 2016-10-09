@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Demo.MainPage"
@@ -12,7 +12,7 @@
 	    <Grid.ColumnDefinitions>
 	        <ColumnDefinition Width="*" />
 	    </Grid.ColumnDefinitions>
-       <controls:CarouselViewControl x:Name="myCarousel" Orientation="Vertical" InterPageSpacing="10" PageIndicators="true" Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+       <controls:CarouselViewControl x:Name="myCarousel" Orientation="Horizontal" InterPageSpacing="10" PageIndicators="true" Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
        <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="Silver" Padding="12,0,12,0">
            <Grid.RowDefinitions>
 		       <RowDefinition Height="*" />

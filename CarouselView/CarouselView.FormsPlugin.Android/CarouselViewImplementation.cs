@@ -9,26 +9,22 @@ using Xamarin.Forms.Platform.Android;
 using System.ComponentModel;
 
 using AViews = Android.Views;
-using Droid = Android.OS;
-using App = Android.App;
-using AG = Android.Graphics;
-using Android.Views;
-using Android.Runtime;
+using Android.Util;
+using Android.OS;
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.Android
 {
-    /// <summary>
-    /// CarouselView Renderer
-    /// </summary>
+	/// <summary>
+	/// CarouselView Renderer
+	/// </summary>
 	public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, AViews.View>
 	{
 		AViews.View nativeView;
 		ViewPager viewPager;
+		CirclePageIndicator indicator;
 
 		bool IsRemoving;
-		bool IsRemoveAt;
-		int _removeAt;
 		bool _disposed;
 
 		protected override void OnElementChanged (ElementChangedEventArgs<CarouselViewControl> e)
@@ -40,7 +36,7 @@ namespace CarouselView.FormsPlugin.Android
 				// Instantiate the native control and assign it to the Control property with
 				// the SetNativeControl method
 
-				var inflater = LayoutInflater.From(Forms.Context);
+				var inflater = AViews.LayoutInflater.From(Forms.Context);
 
 				if (Element.Orientation == Orientation.Horizontal)
 				    nativeView = inflater.Inflate(Resource.Layout.viewpager, null);
@@ -80,14 +76,13 @@ namespace CarouselView.FormsPlugin.Android
 
 				if (Element.PageIndicators)
 				{
-					var indicator = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
+					indicator = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
 					indicator.SetViewPager(viewPager);
 
-					indicator.SetBackgroundColor(Element.PageIndicatorBackgroundColor.ToAndroid());
 					indicator.SetPageColor(Element.PageIndicatorTintColor.ToAndroid());
 					indicator.SetFillColor(Element.CurrentPageIndicatorTintColor.ToAndroid());
 
-					indicator.Visibility = ViewStates.Visible;
+					indicator.Visibility = AViews.ViewStates.Visible;
 				}
 
 				viewPager.PageSelected += ViewPager_PageSelected;
@@ -112,7 +107,7 @@ namespace CarouselView.FormsPlugin.Android
 			if (e.PropertyName == "Height")
 			{
 				//var rect = this.Element.Bounds;
-				viewPager.Adapter = new PageAdapter(Element);
+				viewPager.Adapter = new PageAdapter(Element, viewPager);
 				viewPager.SetCurrentItem(Element.Position, false);
 			}
 		}
@@ -125,11 +120,6 @@ namespace CarouselView.FormsPlugin.Android
 		void ViewPager_PageScrollStateChanged (object sender, ViewPager.PageScrollStateChangedEventArgs e)
 		{
 			if (e.State == 0) {
-				if (IsRemoveAt) {
-					Element.ItemsSource.RemoveAt (_removeAt);
-					viewPager.Adapter.NotifyDataSetChanged ();
-					IsRemoveAt = false;
-				}
 
 				if (!IsRemoving && Element.PositionSelected != null)
 					Element.PositionSelected(Element, EventArgs.Empty);
@@ -141,7 +131,7 @@ namespace CarouselView.FormsPlugin.Android
 			if (Element.Position > Element.ItemsSource.Count - 1)
 				Element.Position = Element.ItemsSource.Count - 1;
 			
-			viewPager.Adapter = new PageAdapter (Element);
+			viewPager.Adapter = new PageAdapter (Element, viewPager);
 			viewPager.SetCurrentItem (Element.Position, false);
 
 			if (Element.PositionSelected != null)
@@ -154,6 +144,9 @@ namespace CarouselView.FormsPlugin.Android
 			if (Element != null && viewPager != null) {
 				
 				IsRemoving = true;
+
+				if (position > Element.ItemsSource.Count - 1)
+					throw new CarouselViewException("Page cannot be removed at a position bigger than ItemsSource.Count - 1");
 
 				if (position == Element.Position) {
 
@@ -168,36 +161,51 @@ namespace CarouselView.FormsPlugin.Android
 						await Task.Delay (100);
 
 						Element.ItemsSource.RemoveAt (position);
-						viewPager.Adapter = new PageAdapter (Element);
+
+						//viewPager.Adapter = new PageAdapter(Element, viewPager);
+						viewPager.Adapter.NotifyDataSetChanged();
+						viewPager.SetCurrentItem(0, false);
+
 						Element.Position = 0;
 
 					} else {
 
-						IsRemoveAt = true;
-						_removeAt = position;
-
 						viewPager.SetCurrentItem (newPos, true);
+
+						await Task.Delay(100);
+
+						Element.ItemsSource.RemoveAt(position);
+						if (position == 1)
+							viewPager.Adapter = new PageAdapter(Element, viewPager);
+						else
+							viewPager.Adapter.NotifyDataSetChanged();
+						Element.Position = newPos;
 					}
 
 				} else {
 
 					Element.ItemsSource.RemoveAt (position);
-					viewPager.Adapter.NotifyDataSetChanged ();
+
+					if (position == 1)
+						viewPager.Adapter = new PageAdapter(Element, viewPager);
+					else
+						viewPager.Adapter.NotifyDataSetChanged();
 
 				}
+
+				if (Element.PositionSelected != null)
+					Element.PositionSelected(Element, EventArgs.Empty);
 
 				IsRemoving = false;
-
-				if (!IsRemoveAt) {
-					if (Element.PositionSelected != null)
-						Element.PositionSelected (Element, EventArgs.Empty);
-				}
 			}
 		}
 
-		public void InsertItem(object item, int position)
+		public async void InsertItem(object item, int position)
 		{
 			if (Element != null && viewPager != null) {
+
+				if (position > Element.ItemsSource.Count)
+					throw new CarouselViewException("Page cannot be inserted at a position bigger than ItemsSource.Count");
 				
 				if (position == -1)
 				    Element.ItemsSource.Add (item);
@@ -205,12 +213,18 @@ namespace CarouselView.FormsPlugin.Android
 					Element.ItemsSource.Insert(position, item);
 				
 				viewPager.Adapter.NotifyDataSetChanged ();
+
+				await Task.Delay(100);
 			}
 		}
 
 		public void SetCurrentItem(int position)
 		{	
 			if (Element != null && viewPager != null) {
+
+				if (position > Element.ItemsSource.Count - 1)
+					throw new CarouselViewException("Current page index cannot be bigger than ItemsSource.Count - 1");
+				
 				Element.Position = position;
 				viewPager.SetCurrentItem (Element.Position, true);
 			}
@@ -220,9 +234,14 @@ namespace CarouselView.FormsPlugin.Android
 		{
 			CarouselViewControl Element;
 
-			public PageAdapter(CarouselViewControl element)
+			string TAG_VIEWS = "TAG_VIEWS";
+			SparseArray<Parcelable> mViewStates = new SparseArray<Parcelable>();
+			ViewPager mViewPager;
+
+			public PageAdapter(CarouselViewControl element, ViewPager viewpager)
 			{
 				Element = element;
+				mViewPager = viewpager;
 			}
 
 			public override int Count {
@@ -239,13 +258,16 @@ namespace CarouselView.FormsPlugin.Android
 			public override Java.Lang.Object InstantiateItem (AViews.ViewGroup container, int position)
 			{
 				Xamarin.Forms.View formsView = null;
-				var bindingContext = Element.ItemsSource.Cast<object> ().ElementAt (position);
+
+				object bindingContext = null;
+				if (Element.ItemsSource != null)
+				    bindingContext = Element.ItemsSource.Cast<object> ().ElementAt (position);
 
 				var selector = Element.ItemTemplate as DataTemplateSelector;
 				if (selector != null)
-					formsView = (Xamarin.Forms.View)selector.SelectTemplate (bindingContext, Element).CreateContent ();
+					formsView = (View)selector.SelectTemplate (bindingContext, Element).CreateContent ();
 				else
-					formsView = (Xamarin.Forms.View)Element.ItemTemplate.CreateContent ();
+					formsView = (View)Element.ItemTemplate.CreateContent ();
 
 				formsView.BindingContext = bindingContext;
 
@@ -256,6 +278,8 @@ namespace CarouselView.FormsPlugin.Android
 
 				var pager = (ViewPager)container;
 
+				nativeConverted.RestoreHierarchyState(mViewStates);
+
 				pager.AddView (nativeConverted);
 
 				return nativeConverted;
@@ -264,7 +288,9 @@ namespace CarouselView.FormsPlugin.Android
 			public override void DestroyItem (AViews.ViewGroup container, int position, Java.Lang.Object objectValue)
 			{
 				var pager = (ViewPager)container;
-				pager.RemoveView ((AViews.ViewGroup)objectValue);
+				var view = (AViews.ViewGroup)objectValue;
+				view.SaveHierarchyState(mViewStates);
+				pager.RemoveView (view);
 			}
 
 			public override int GetItemPosition (Java.Lang.Object objectValue)
@@ -273,6 +299,29 @@ namespace CarouselView.FormsPlugin.Android
 				if (tag == Element.Position)
 					return tag;
 				return PagerAdapter.PositionNone;
+			}
+
+			public override IParcelable SaveState()
+			{
+				var count = mViewPager.ChildCount;
+				for (int i = 0; i < count; i++)
+				{
+					var c = mViewPager.GetChildAt(i);
+					if (c.SaveFromParentEnabled)
+					{
+						c.SaveHierarchyState(mViewStates);
+					}
+				}
+				var bundle = new Bundle();
+				bundle.PutSparseParcelableArray(TAG_VIEWS, mViewStates);
+				return bundle;
+			}
+
+			public override void RestoreState(IParcelable state, Java.Lang.ClassLoader loader)
+			{
+				var bundle = (Bundle)state;
+				bundle.SetClassLoader(loader);
+				mViewStates = (SparseArray<Parcelable>)bundle.GetSparseParcelableArray(TAG_VIEWS);
 			}
 		}
 

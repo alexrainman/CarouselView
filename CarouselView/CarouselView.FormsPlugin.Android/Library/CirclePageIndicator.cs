@@ -502,7 +502,7 @@ namespace CarouselView.FormsPlugin.Android
 		protected override void OnRestoreInstanceState (IParcelable state)
 		{
 			
-			try {
+			/*try {
 				SavedState savedState = (SavedState)state;
 				base.OnRestoreInstanceState (savedState.SuperState);
 				mCurrentPage = savedState.CurrentPage;
@@ -510,19 +510,45 @@ namespace CarouselView.FormsPlugin.Android
 			} catch {
 				base.OnRestoreInstanceState (state);
 				// Ignore, this needs to support IParcelable...
+			}*/
+
+			try
+			{
+				var bundle = state as Bundle;
+				if (bundle != null)
+				{
+					var superState = (IParcelable)bundle.GetParcelable("base");
+					if (superState != null)
+						base.OnRestoreInstanceState(superState);
+					mCurrentPage = bundle.GetInt("mCurrentPage", 0);
+					mSnapPage = bundle.GetInt("mCurrentPage", 0);
+				}
 			}
+			catch
+			{
+				base.OnRestoreInstanceState(state);
+				// Ignore, this needs to support IParcelable...
+			}
+
 			RequestLayout ();
 		}
 		
 		protected override IParcelable OnSaveInstanceState ()
 		{
-			var superState = base.OnSaveInstanceState ();
+			/*var superState = base.OnSaveInstanceState ();
 			var savedState = new SavedState (superState);
 			savedState.CurrentPage = mCurrentPage;
-			return savedState;
+			return savedState;*/
+
+			var superState = base.OnSaveInstanceState();
+			var state = new Bundle();
+			state.PutParcelable("base", superState);
+			state.PutInt("mCurrentPage", mCurrentPage);
+
+			return state;
 		}
 		
-		public class SavedState : BaseSavedState
+		/*public class SavedState : BaseSavedState
 		{
 			public int CurrentPage { get; set; }
 	
@@ -559,7 +585,7 @@ namespace CarouselView.FormsPlugin.Android
 					return new SavedState[size];
 				}
 			}
-		}
+		}*/
 	}
 }
 

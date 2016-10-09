@@ -25,7 +25,7 @@ namespace CarouselView.FormsPlugin.UWP
             tb.FontSize = fontSize;
             tb.Measure(new Size(width, Double.PositiveInfinity));
 
-            return tb.DesiredSize.Height;
+            return tb.DesiredSize.Height + 5;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using System.Collections;
+using System.Threading.Tasks;
 
 namespace CarouselView.FormsPlugin.Abstractions
 {
@@ -62,14 +63,6 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(PageIndicatorsProperty, value); }
 		}
 
-		public static readonly BindableProperty PageIndicatorBackgroundColorProperty = BindableProperty.Create("PageIndicatorBackgroundColor", typeof(Color), typeof(CarouselViewControl), Color.Transparent);
-
-		public Color PageIndicatorBackgroundColor
-		{
-			get { return (Color)GetValue(PageIndicatorBackgroundColorProperty); }
-			set { SetValue(PageIndicatorBackgroundColorProperty, value); }
-		}
-
 		public static readonly BindableProperty PageIndicatorTintColorProperty = BindableProperty.Create("PageIndicatorTintColor", typeof(Color), typeof(CarouselViewControl), Color.Silver);
 
 		public Color PageIndicatorTintColor
@@ -109,14 +102,14 @@ namespace CarouselView.FormsPlugin.Abstractions
 
 		public Action<int> RemoveAction;
 
-		public void RemovePage(int position){
+		public async Task RemovePage(int position){
 			if(RemoveAction != null)
 				RemoveAction (position);
 		}
 
 		public Action<object, int> InsertAction;
 
-		public void InsertPage(object item, int position = -1){
+		public async Task InsertPage(object item, int position = -1){
 			if(InsertAction != null)
 				InsertAction (item, position);
 		}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using Xamarin.Forms;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Demo
 {
@@ -17,10 +18,10 @@ namespace Demo
 			myCarousel.Position = 0;
 			myCarousel.PositionSelected += PositionSelected;
 
-			MessagingCenter.Subscribe<MyFirstView> (this, "RemoveMe", (sender) => {
+			MessagingCenter.Subscribe<MyFirstView> (this, "RemoveMe", async (sender) => {
 
 				if (myCarousel.ItemsSource.Count > 1)
-				    myCarousel.RemovePage(myCarousel.Position);
+				    await myCarousel.RemovePage(myCarousel.Position);
 
 			});
 				
@@ -29,7 +30,7 @@ namespace Demo
 			nextBtn.IsVisible = myCarousel.Position < myCarousel.ItemsSource.Count - 1;
 
 			ToolbarItems.Add(new ToolbarItem {
-				Name = "Reset",
+				Text = "Reset",
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() => myCarousel.ItemsSource = new List<int> { 1, 2, 3, 4, 5 })
 			});
@@ -40,7 +41,7 @@ namespace Demo
 			prevBtn.IsVisible = myCarousel.Position > 0;
 			addPageBtn.IsVisible = myCarousel.Position == myCarousel.ItemsSource.Count - 1;
 			nextBtn.IsVisible = myCarousel.Position < myCarousel.ItemsSource.Count - 1;
-			Debug.WriteLine ("Position selected");
+			Debug.WriteLine ("Position " + myCarousel.Position + " selected");
 		}
 
 		public void OnPrev (object sender, TappedEventArgs e)
@@ -55,10 +56,10 @@ namespace Demo
 				myCarousel.SetCurrentPage(myCarousel.Position + 1);
 		}
 
-		public void OnAdd (object sender, TappedEventArgs e)
+		public async Task OnAdd (object sender, TappedEventArgs e)
 		{
-			myCarousel.InsertPage (myCarousel.ItemsSource.Count + 1);
-			myCarousel.SetCurrentPage (myCarousel.Position + 1);
+			await myCarousel.InsertPage (myCarousel.ItemsSource.Count + 1);
+			myCarousel.SetCurrentPage (myCarousel.ItemsSource.Count - 1);
 		}
 
 	}

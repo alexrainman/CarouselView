@@ -50,9 +50,6 @@ namespace CarouselView.FormsPlugin.iOS
 
 				if (Element.PageIndicators)
 				{
-					//pageController.GetPresentationCount = (p) => Element.ItemsSource.Count;
-					//pageController.GetPresentationIndex = (p) => Element.Position;
-
 					pageControl = new UIPageControl();
 
 					pageControl.PageIndicatorTintColor = Element.PageIndicatorTintColor.ToUIColor();
@@ -62,37 +59,21 @@ namespace CarouselView.FormsPlugin.iOS
 
 					ConfigurePageControl();
 
-					// TODO: add pageControl to UIView, background color to UIView, add UIView to superview and apply constraints
+					pageController.View.AddSubview(pageControl);
 
 					if (Element.Orientation == Orientation.Horizontal)
 					{
-						var appearance = UIPageControl.Appearance;
-						appearance.BackgroundColor = Element.PageIndicatorBackgroundColor.ToUIColor();
-
-						pageController.View.AddSubview(pageControl);
-
 						var viewsDictionary = NSDictionary.FromObjectsAndKeys(new NSObject[] { pageControl }, new NSObject[] { new NSString("pageControl") });
 						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("H:|[pageControl]|", NSLayoutFormatOptions.AlignAllCenterX, new NSDictionary(), viewsDictionary));
 						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:[pageControl]|", 0, new NSDictionary(), viewsDictionary));
 					}
 					else {
 						pageControl.Transform = CGAffineTransform.MakeRotation(3.14159265f / 2);
-						var container = new UIView();
-						container.TranslatesAutoresizingMaskIntoConstraints = false;
-						container.BackgroundColor = Element.PageIndicatorBackgroundColor.ToUIColor();
 
-						container.AddSubview(pageControl);
-						pageController.View.AddSubview(container);
-
-						var viewsDictionary1 = NSDictionary.FromObjectsAndKeys(new NSObject[] { container }, new NSObject[] { new NSString("container") });
-						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("[container(==36)]", 0, new NSDictionary(), viewsDictionary1));
-						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("H:[container]|", 0, new NSDictionary(), viewsDictionary1));
-						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:|[container]|", NSLayoutFormatOptions.AlignAllCenterY, new NSDictionary(), viewsDictionary1));
-
-						var viewsDictionary2 = NSDictionary.FromObjectsAndKeys(new NSObject[] { pageControl }, new NSObject[] { new NSString("pageControl") });
-						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("[pageControl(==36)]", 0, new NSDictionary(), viewsDictionary2));
-						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("H:[pageControl]|", 0, new NSDictionary(), viewsDictionary2));
-						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:|[pageControl]|", NSLayoutFormatOptions.AlignAllCenterY, new NSDictionary(), viewsDictionary2));
+						var viewsDictionary = NSDictionary.FromObjectsAndKeys(new NSObject[] { pageControl }, new NSObject[] { new NSString("pageControl") });
+						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("[pageControl(==36)]", 0, new NSDictionary(), viewsDictionary));
+						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("H:[pageControl]|", 0, new NSDictionary(), viewsDictionary));
+						pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:|[pageControl]|", NSLayoutFormatOptions.AlignAllTop, new NSDictionary(), viewsDictionary));
 					}
 
 				}
@@ -136,20 +117,6 @@ namespace CarouselView.FormsPlugin.iOS
 					{
 						scroller.Bounces = Element.Bounces;
 					}
-
-					/*if (Element.PageIndicators)
-					{
-						var pageControl = view as UIPageControl;
-						if (pageControl != null)
-						{
-							pageController.View.BackgroundColor = Color.Teal.ToUIColor();
-							//var appearance = UIPageControl.Appearance;
-							//appearance.BackgroundColor = Element.PageIndicatorBackgroundColor.ToUIColor();
-							pageControl.BackgroundColor = Element.PageIndicatorBackgroundColor.ToUIColor();
-							pageControl.PageIndicatorTintColor = Element.PageIndicatorTintColor.ToUIColor();
-							pageControl.CurrentPageIndicatorTintColor = Element.CurrentPageIndicatorTintColor.ToUIColor();
-						}
-					}*/
 				}
 
 				pageController.DidFinishAnimating += PageController_DidFinishAnimating;
@@ -194,11 +161,6 @@ namespace CarouselView.FormsPlugin.iOS
 				Element.RemoveAction = new Action<int>(RemoveController);
 				Element.InsertAction = new Action<object, int>(InsertController);
 				Element.SetCurrentAction = new Action<int>(SetCurrentController);
-
-				/*if (Element.ItemsSource is INotifyCollectionChanged)
-				{
-					var collection = Element.ItemsSource as INotifyCollectionChanged;
-				}*/
 			}
 		}
 
@@ -254,6 +216,9 @@ namespace CarouselView.FormsPlugin.iOS
 			if (Element != null && pageController != null) {
 				Element.ItemsSource.RemoveAt (position);
 
+				if (position > Element.ItemsSource.Count - 1)
+					throw new CarouselViewException("Page cannot be removed at a position bigger than ItemsSource.Count - 1");
+
 				if (position == Element.Position) {
 				
 					var newPos = position - 1;
@@ -283,9 +248,12 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 		}
 
-		public void InsertController(object item, int position)
+		public async void InsertController(object item, int position)
 		{
 			if (Element != null && pageController != null) {
+
+				if (position > Element.ItemsSource.Count + 1)
+					throw new CarouselViewException("Page cannot be inserted at a position bigger than ItemsSource.Count");
 				
 				if (position == -1)
 					Element.ItemsSource.Add(item);
@@ -297,12 +265,17 @@ namespace CarouselView.FormsPlugin.iOS
 				});
 
 				ConfigurePageControl();
+
+				await Task.Delay(100);
 			}
 		}
 
 		public void SetCurrentController(int position)
 		{
 			if (Element != null && pageController != null) {
+
+				if (position > Element.ItemsSource.Count - 1)
+					throw new CarouselViewException("Current page index cannot be bigger than ItemsSource.Count - 1");
 
 				var direction = position > Element.Position ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
 
@@ -322,8 +295,9 @@ namespace CarouselView.FormsPlugin.iOS
 		UIViewController CreateViewController(int index){
 
 			Xamarin.Forms.View formsView = null;
-            object bindingContext = null;
-            if (Element.ItemsSource!=null)
+
+			object bindingContext = null;
+			if (Element.ItemsSource != null)
 			    bindingContext = Element.ItemsSource.Cast<object> ().ElementAt (index);
 
 			var selector = Element.ItemTemplate as DataTemplateSelector;
@@ -349,9 +323,11 @@ namespace CarouselView.FormsPlugin.iOS
 		{
 			if (pageControl != null)
 			{
-                if(Element.ItemsSource!=null)
-    				pageControl.Pages = Element.ItemsSource.Count;
-				pageControl.CurrentPage = Element.Position;
+				if (Element.ItemsSource != null)
+				{
+					pageControl.Pages = Element.ItemsSource.Count;
+					pageControl.CurrentPage = Element.Position;
+				}
 			}
 		}
 

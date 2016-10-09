@@ -10,6 +10,11 @@ namespace Demo
 		{
 			InitializeComponent ();
             BackgroundColor = Color.Aqua;
+
+			/*var source = new List<string>() { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+
+			myList.ItemsSource = source;
+			myList.ItemTemplate = new DataTemplate(typeof(TextCell));*/
         }
 	}
 }

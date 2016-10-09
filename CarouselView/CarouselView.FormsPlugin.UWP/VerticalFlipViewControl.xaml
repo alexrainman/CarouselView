@@ -15,8 +15,6 @@
                 </ItemsPanelTemplate>
             </FlipView.ItemsPanel>
         </FlipView>
-        <StackPanel x:Name="dotsPanelBg"  HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="32" Visibility="Collapsed">
-        </StackPanel>
         <StackPanel x:Name="dotsPanel" HorizontalAlignment="Right" VerticalAlignment="Center" Width="32" Visibility="Collapsed">
             <ItemsControl x:Name="indicators" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <ItemsControl.ItemsPanel>
