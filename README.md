@@ -68,34 +68,6 @@ Then the xaml:
 <controls:CarouselViewControl Position="0" ItemsSource="{Binding Pages}" ItemTemplate="{StaticResource myTemplateSelector}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
 ```
 
-#### Render one page at a time, no swiping, move back and fort programmatically:
-
-```
-var pages = new List<int> { 1 }; // only one item in ItemsSource
-Carousel.ItemsSource = pages;
-```
-
-To move forward:
-
-```
-void OnNext (object sender, TappedEventArgs e) {
-	Carousel.InsertPage(2); // parameter is the new item to be used as binding context for the second view
-	Carousel.RemovePage(0);
-}
-```
-
-To move back:
-
-```
-async void OnPrevious (object sender, TappedEventArgs e) {
-	var pages = new List<int>() { 1, pages[0] }; // inserting one item on position 0 of ItemsSource
-	Carousel.Position = 1;
-	Carousel.ItemsSource = pages;
-	await Task.Delay(100);
-	Carousel.RemovePage(1);
-}
-```
-
 **HEIGHT REQUEST**
 
 As a requirement you have to provide HeighRequest for UI components using OnPlatform:
@@ -109,6 +81,14 @@ As a requirement you have to provide HeighRequest for UI components using OnPlat
             iOS="44" />
     </Button.HeightRequest>
 </Button>
+```
+
+```
+Device.OnPlatform(
+    iOS: () => myButton.HeightRequest = 44,
+    Android: () => myButton.HeightRequest = 48,
+    WinPhone: ()=> myButton.HeightRequest = 32
+);
 ```
 
 **Default HeightRequest by platform**
@@ -128,31 +108,7 @@ As a requirement you have to provide HeighRequest for UI components using OnPlat
 |Switch|31|27|40|
 |TimePicker|30|45.5|32|
 
-As an alternative, I'm providing custom controls that implement a fix for HeightRequest (CVLabel is the only one that is required):
-
-```xml
-<controls:CVActivityIndicator x:Name="activityIndicator" IsRunning="true"/>
-<controls:CVButton x:Name="button" Text="Remove this page" Clicked="Handle_Clicked"/>
-<controls:CVDatePicker x:Name="datePicker" />
-<controls:CVEditor x:Name="editor" BackgroundColor="Silver"/>
-<controls:CVEntry x:Name="entry" />
-<controls:CVPicker x:Name="picker" />
-<controls:CVProgressBar x:Name="progressBar" Progress="0.5" />
-<controls:CVSearchBar x:Name="searchBar" />
-<controls:CVSlider x:Name="slider" />
-<controls:CVStepper x:Name="stepper" />
-<controls:CVSwitch x:Name="myswitch" />
-<controls:CVTimePicker x:Name="timePicker" />
-<controls:CVLabel x:Name="label" Text="My Label"/> <!-- Required -->
-```
-
-If you have your own custom renderers, and you don't want to provide HeightRequest using OnPlatform, they will have to ExportRenderer for CV controls:
-
-```
-[assembly: ExportRenderer (typeof(CVButton), typeof(MyButtonRenderer))]
-```
-
-Take a look at these code snippets so you know what CV controls do:
+#### Take a look at these code snippets so you know what CV controls do:
 
 ```
 public class CVLabel : Label // REQUIRED
@@ -171,28 +127,6 @@ public class CVLabel : Label // REQUIRED
 		this.LayoutTo(new Rectangle(this.X, this.Y, width, height));
 
 		this.InvalidateMeasure();
-	}
-}
-
-public class CVButton : Button 
-{
-	public CVButton()
-	{
-		if (HeightRequest == -1)
-		{
-			switch (Device.OS)
-			{
-				case TargetPlatform.iOS:
-					HeightRequest = 44;
-					break;
-				case TargetPlatform.Android:
-					HeightRequest = 48;
-					break;
-				default:
-					HeightRequest = 32;
-					break;
-			}
-		}
 	}
 }
 ```
@@ -234,6 +168,34 @@ public class CVButton : Button
 ```InsertPage (item, position)```: insert a view at a given position (if position parameter is not provided, item will be added at the end).
 
 ```SetCurrentPage (position)```: slide programmatically to a given position.
+
+#### Render one page at a time, no swiping, move back and fort programmatically:
+
+```
+var pages = new List<int> { 1 }; // only one item in ItemsSource
+Carousel.ItemsSource = pages;
+```
+
+To move forward:
+
+```
+void OnNext (object sender, TappedEventArgs e) {
+	Carousel.InsertPage(2); // parameter is the new item to be used as binding context for the second view
+	Carousel.RemovePage(0);
+}
+```
+
+To move back:
+
+```
+async void OnPrevious (object sender, TappedEventArgs e) {
+	var pages = new List<int>() { 1, pages[0] }; // inserting one item on position 0 of ItemsSource
+	Carousel.Position = 1;
+	Carousel.ItemsSource = pages;
+	await Task.Delay(100);
+	Carousel.RemovePage(1);
+}
+```
 
 #### Known issues
 
