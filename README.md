@@ -108,10 +108,10 @@ Device.OnPlatform(
 |Switch|31|27|40|
 |TimePicker|30|45.5|32|
 
-#### Take a look at these code snippets so you know what CV controls do:
+#### You can use CVLabel or your own custom label implementing the following code snippet:
 
 ```
-public class CVLabel : Label // REQUIRED
+public class CVLabel : Label
 {
 	public CVLabel()
 	{
@@ -137,7 +137,7 @@ public class CVLabel : Label // REQUIRED
 
 ```ItemsSource```: Collection of objects used as BindingContext of each view.
 
-* I wanted to support CollectionChanged events, but specially Android ViewPager is not designed to handle that scenario. To Add and Remove pages/items use the provided API. You can use an Observable collection as ItemsSource and use CollectionChanged events in your end for your own business logic.
+* You can use an Observable collection as ItemsSource and use CollectionChanged events in your end for your own business logic.
 
 ```ItemTemplate```: supports DataTemplate and DataTemplateSelector.
 
@@ -148,8 +148,6 @@ public class CVLabel : Label // REQUIRED
 ```Arrows```: disable arrows navigation (UWP only, default true).
 
 ```PageIndicators```: hide/show page indicators (default false).
-
-```PageIndicatorBackgroundColor```: page indicators container background color (default transparent).
 
 ```PageIndicatorTintColor```: page dot indicators fill color (default #C0C0C0).
 
@@ -200,6 +198,7 @@ async void OnPrevious (object sender, TappedEventArgs e) {
 #### Known issues
 
 - Horizontal StackLayout doesn't works. Why? No idea :) You may use a multi-column Grid instead.
+- ListView inside a page of CarouselView doesn't works with Xamarin.Forms versions bigger than 2.3.0.107 as there's a bug with Platform.SetRenderer API.
 
 #### Tips
 
