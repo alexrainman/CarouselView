@@ -108,7 +108,7 @@ Device.OnPlatform(
 |Switch|31|27|40|
 |TimePicker|30|45.5|32|
 
-#### You can use CVLabel or your own custom label implementing the following code snippet:
+#### I provide CVLabel to solve HeightRequest issue. If you have your own Label renderer you need to add this code snippet:
 
 ```
 public class CVLabel : Label
@@ -198,7 +198,7 @@ async void OnPrevious (object sender, TappedEventArgs e) {
 #### Known issues
 
 - Horizontal StackLayout doesn't works. Why? No idea :) You may use a multi-column Grid instead.
-- ListView inside a page of CarouselView doesn't works with Xamarin.Forms versions bigger than 2.3.0.107 as there's a bug with Platform.SetRenderer API.
+- ListView inside a page of CarouselView doesn't works with Xamarin.Forms versions bigger than 2.3.0.107 as there's a bug with Platform.SetRenderer API (by the way latest Xamarin.Forms releases are buggy).
 
 #### Tips
 
