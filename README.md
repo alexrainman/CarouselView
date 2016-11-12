@@ -37,7 +37,7 @@ myCarousel.Orientation = Orientation.Horizontal;
 First add the xmlns namespace:
 
 ```xml
-xmlns:controls="clr-namespace:CarouselViewControl.FormsPlugin.Abstractions;assembly=CarouselViewControl.FormsPlugin.Abstractions"
+xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
 ```
 
 Then add the xaml:
