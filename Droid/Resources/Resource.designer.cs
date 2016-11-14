@@ -115,7 +115,6 @@ namespace Demo.Droid
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.cardMaxElevation = global::Demo.Droid.Resource.Attribute.cardMaxElevation;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.cardPreventCornerOverlap = global::Demo.Droid.Resource.Attribute.cardPreventCornerOverlap;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.cardUseCompatPadding = global::Demo.Droid.Resource.Attribute.cardUseCompatPadding;
-			global::CarouselView.FormsPlugin.Android.Resource.Attribute.centered = global::Demo.Droid.Resource.Attribute.centered;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.checkboxStyle = global::Demo.Droid.Resource.Attribute.checkboxStyle;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.checkedTextViewStyle = global::Demo.Droid.Resource.Attribute.checkedTextViewStyle;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.closeIcon = global::Demo.Droid.Resource.Attribute.closeIcon;
@@ -179,7 +178,6 @@ namespace Demo.Droid
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.expandedTitleTextAppearance = global::Demo.Droid.Resource.Attribute.expandedTitleTextAppearance;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.externalRouteEnabledDrawable = global::Demo.Droid.Resource.Attribute.externalRouteEnabledDrawable;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.fabSize = global::Demo.Droid.Resource.Attribute.fabSize;
-			global::CarouselView.FormsPlugin.Android.Resource.Attribute.fillColor = global::Demo.Droid.Resource.Attribute.fillColor;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.foregroundInsidePadding = global::Demo.Droid.Resource.Attribute.foregroundInsidePadding;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.gapBetweenBars = global::Demo.Droid.Resource.Attribute.gapBetweenBars;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.goIcon = global::Demo.Droid.Resource.Attribute.goIcon;
@@ -255,11 +253,9 @@ namespace Demo.Droid
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.navigationContentDescription = global::Demo.Droid.Resource.Attribute.navigationContentDescription;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.navigationIcon = global::Demo.Droid.Resource.Attribute.navigationIcon;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.navigationMode = global::Demo.Droid.Resource.Attribute.navigationMode;
-			global::CarouselView.FormsPlugin.Android.Resource.Attribute.orientation = global::Demo.Droid.Resource.Attribute.orientation;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.overlapAnchor = global::Demo.Droid.Resource.Attribute.overlapAnchor;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.paddingEnd = global::Demo.Droid.Resource.Attribute.paddingEnd;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.paddingStart = global::Demo.Droid.Resource.Attribute.paddingStart;
-			global::CarouselView.FormsPlugin.Android.Resource.Attribute.pageColor = global::Demo.Droid.Resource.Attribute.pageColor;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.panelBackground = global::Demo.Droid.Resource.Attribute.panelBackground;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.panelMenuListTheme = global::Demo.Droid.Resource.Attribute.panelMenuListTheme;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.panelMenuListWidth = global::Demo.Droid.Resource.Attribute.panelMenuListWidth;
@@ -273,7 +269,6 @@ namespace Demo.Droid
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.queryBackground = global::Demo.Droid.Resource.Attribute.queryBackground;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.queryHint = global::Demo.Droid.Resource.Attribute.queryHint;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.radioButtonStyle = global::Demo.Droid.Resource.Attribute.radioButtonStyle;
-			global::CarouselView.FormsPlugin.Android.Resource.Attribute.radius = global::Demo.Droid.Resource.Attribute.radius;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.ratingBarStyle = global::Demo.Droid.Resource.Attribute.ratingBarStyle;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.ratingBarStyleIndicator = global::Demo.Droid.Resource.Attribute.ratingBarStyleIndicator;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.ratingBarStyleSmall = global::Demo.Droid.Resource.Attribute.ratingBarStyleSmall;
@@ -289,7 +284,6 @@ namespace Demo.Droid
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.showDividers = global::Demo.Droid.Resource.Attribute.showDividers;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.showText = global::Demo.Droid.Resource.Attribute.showText;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.singleChoiceItemLayout = global::Demo.Droid.Resource.Attribute.singleChoiceItemLayout;
-			global::CarouselView.FormsPlugin.Android.Resource.Attribute.snap = global::Demo.Droid.Resource.Attribute.snap;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.spanCount = global::Demo.Droid.Resource.Attribute.spanCount;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.spinBars = global::Demo.Droid.Resource.Attribute.spinBars;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.spinnerDropDownItemStyle = global::Demo.Droid.Resource.Attribute.spinnerDropDownItemStyle;
@@ -300,8 +294,6 @@ namespace Demo.Droid
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.state_above_anchor = global::Demo.Droid.Resource.Attribute.state_above_anchor;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.statusBarBackground = global::Demo.Droid.Resource.Attribute.statusBarBackground;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.statusBarScrim = global::Demo.Droid.Resource.Attribute.statusBarScrim;
-			global::CarouselView.FormsPlugin.Android.Resource.Attribute.strokeColor = global::Demo.Droid.Resource.Attribute.strokeColor;
-			global::CarouselView.FormsPlugin.Android.Resource.Attribute.strokeWidth = global::Demo.Droid.Resource.Attribute.strokeWidth;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.submitBackground = global::Demo.Droid.Resource.Attribute.submitBackground;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.subtitle = global::Demo.Droid.Resource.Attribute.subtitle;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.subtitleTextAppearance = global::Demo.Droid.Resource.Attribute.subtitleTextAppearance;
@@ -357,7 +349,15 @@ namespace Demo.Droid
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.track = global::Demo.Droid.Resource.Attribute.track;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.useCompatPadding = global::Demo.Droid.Resource.Attribute.useCompatPadding;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.voiceIcon = global::Demo.Droid.Resource.Attribute.voiceIcon;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiCentered = global::Demo.Droid.Resource.Attribute.vpiCentered;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiCirclePageIndicatorStyle = global::Demo.Droid.Resource.Attribute.vpiCirclePageIndicatorStyle;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiFillColor = global::Demo.Droid.Resource.Attribute.vpiFillColor;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiOrientation = global::Demo.Droid.Resource.Attribute.vpiOrientation;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiPageColor = global::Demo.Droid.Resource.Attribute.vpiPageColor;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiRadius = global::Demo.Droid.Resource.Attribute.vpiRadius;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiSnap = global::Demo.Droid.Resource.Attribute.vpiSnap;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiStrokeColor = global::Demo.Droid.Resource.Attribute.vpiStrokeColor;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiStrokeWidth = global::Demo.Droid.Resource.Attribute.vpiStrokeWidth;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.windowActionBar = global::Demo.Droid.Resource.Attribute.windowActionBar;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.windowActionBarOverlay = global::Demo.Droid.Resource.Attribute.windowActionBarOverlay;
 			global::CarouselView.FormsPlugin.Android.Resource.Attribute.windowActionModeOverlay = global::Demo.Droid.Resource.Attribute.windowActionModeOverlay;
@@ -1585,14 +1585,14 @@ namespace Demo.Droid
 			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CardView_contentPaddingRight = global::Demo.Droid.Resource.Styleable.CardView_contentPaddingRight;
 			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CardView_contentPaddingTop = global::Demo.Droid.Resource.Styleable.CardView_contentPaddingTop;
 			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator = global::Demo.Droid.Resource.Styleable.CirclePageIndicator;
-			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_centered = global::Demo.Droid.Resource.Styleable.CirclePageIndicator_centered;
-			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_fillColor = global::Demo.Droid.Resource.Styleable.CirclePageIndicator_fillColor;
-			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_orientation = global::Demo.Droid.Resource.Styleable.CirclePageIndicator_orientation;
-			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_pageColor = global::Demo.Droid.Resource.Styleable.CirclePageIndicator_pageColor;
-			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_radius = global::Demo.Droid.Resource.Styleable.CirclePageIndicator_radius;
-			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_snap = global::Demo.Droid.Resource.Styleable.CirclePageIndicator_snap;
-			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_strokeColor = global::Demo.Droid.Resource.Styleable.CirclePageIndicator_strokeColor;
-			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_strokeWidth = global::Demo.Droid.Resource.Styleable.CirclePageIndicator_strokeWidth;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_vpiCentered = global::Demo.Droid.Resource.Styleable.CirclePageIndicator_vpiCentered;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_vpiFillColor = global::Demo.Droid.Resource.Styleable.CirclePageIndicator_vpiFillColor;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_vpiOrientation = global::Demo.Droid.Resource.Styleable.CirclePageIndicator_vpiOrientation;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_vpiPageColor = global::Demo.Droid.Resource.Styleable.CirclePageIndicator_vpiPageColor;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_vpiRadius = global::Demo.Droid.Resource.Styleable.CirclePageIndicator_vpiRadius;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_vpiSnap = global::Demo.Droid.Resource.Styleable.CirclePageIndicator_vpiSnap;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_vpiStrokeColor = global::Demo.Droid.Resource.Styleable.CirclePageIndicator_vpiStrokeColor;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_vpiStrokeWidth = global::Demo.Droid.Resource.Styleable.CirclePageIndicator_vpiStrokeWidth;
 			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CollapsingAppBarLayout_LayoutParams = global::Demo.Droid.Resource.Styleable.CollapsingAppBarLayout_LayoutParams;
 			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CollapsingAppBarLayout_LayoutParams_layout_collapseMode = global::Demo.Droid.Resource.Styleable.CollapsingAppBarLayout_LayoutParams_layout_collapseMode;
 			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CollapsingAppBarLayout_LayoutParams_layout_collapseParallaxMultiplier = global::Demo.Droid.Resource.Styleable.CollapsingAppBarLayout_LayoutParams_layout_collapseParallaxMultiplier;
@@ -2138,9 +2138,6 @@ namespace Demo.Droid
 			// aapt resource value: 0x7f01001b
 			public const int cardUseCompatPadding = 2130771995;
 			
-			// aapt resource value: 0x7f01013d
-			public const int centered = 2130772285;
-			
 			// aapt resource value: 0x7f0100f5
 			public const int checkboxStyle = 2130772213;
 			
@@ -2329,9 +2326,6 @@ namespace Demo.Droid
 			
 			// aapt resource value: 0x7f010040
 			public const int fabSize = 2130772032;
-			
-			// aapt resource value: 0x7f01013e
-			public const int fillColor = 2130772286;
 			
 			// aapt resource value: 0x7f010044
 			public const int foregroundInsidePadding = 2130772036;
@@ -2558,9 +2552,6 @@ namespace Demo.Droid
 			// aapt resource value: 0x7f01006f
 			public const int navigationMode = 2130772079;
 			
-			// aapt resource value: 0x7f010140
-			public const int orientation = 2130772288;
-			
 			// aapt resource value: 0x7f010112
 			public const int overlapAnchor = 2130772242;
 			
@@ -2569,9 +2560,6 @@ namespace Demo.Droid
 			
 			// aapt resource value: 0x7f010137
 			public const int paddingStart = 2130772279;
-			
-			// aapt resource value: 0x7f01013f
-			public const int pageColor = 2130772287;
 			
 			// aapt resource value: 0x7f0100dd
 			public const int panelBackground = 2130772189;
@@ -2611,9 +2599,6 @@ namespace Demo.Droid
 			
 			// aapt resource value: 0x7f0100f8
 			public const int radioButtonStyle = 2130772216;
-			
-			// aapt resource value: 0x7f010141
-			public const int radius = 2130772289;
 			
 			// aapt resource value: 0x7f0100f9
 			public const int ratingBarStyle = 2130772217;
@@ -2660,9 +2645,6 @@ namespace Demo.Droid
 			// aapt resource value: 0x7f01008d
 			public const int singleChoiceItemLayout = 2130772109;
 			
-			// aapt resource value: 0x7f010142
-			public const int snap = 2130772290;
-			
 			// aapt resource value: 0x7f010068
 			public const int spanCount = 2130772072;
 			
@@ -2692,12 +2674,6 @@ namespace Demo.Droid
 			
 			// aapt resource value: 0x7f010031
 			public const int statusBarScrim = 2130772017;
-			
-			// aapt resource value: 0x7f010143
-			public const int strokeColor = 2130772291;
-			
-			// aapt resource value: 0x7f010144
-			public const int strokeWidth = 2130772292;
 			
 			// aapt resource value: 0x7f010120
 			public const int submitBackground = 2130772256;
@@ -2864,8 +2840,32 @@ namespace Demo.Droid
 			// aapt resource value: 0x7f01011c
 			public const int voiceIcon = 2130772252;
 			
+			// aapt resource value: 0x7f01013d
+			public const int vpiCentered = 2130772285;
+			
 			// aapt resource value: 0x7f01013c
 			public const int vpiCirclePageIndicatorStyle = 2130772284;
+			
+			// aapt resource value: 0x7f010142
+			public const int vpiFillColor = 2130772290;
+			
+			// aapt resource value: 0x7f01013f
+			public const int vpiOrientation = 2130772287;
+			
+			// aapt resource value: 0x7f01013e
+			public const int vpiPageColor = 2130772286;
+			
+			// aapt resource value: 0x7f010141
+			public const int vpiRadius = 2130772289;
+			
+			// aapt resource value: 0x7f010140
+			public const int vpiSnap = 2130772288;
+			
+			// aapt resource value: 0x7f010143
+			public const int vpiStrokeColor = 2130772291;
+			
+			// aapt resource value: 0x7f010144
+			public const int vpiStrokeWidth = 2130772292;
 			
 			// aapt resource value: 0x7f010091
 			public const int windowActionBar = 2130772113;
@@ -6903,28 +6903,28 @@ namespace Demo.Droid
 					2130772292};
 			
 			// aapt resource value: 0
-			public const int CirclePageIndicator_centered = 0;
-			
-			// aapt resource value: 1
-			public const int CirclePageIndicator_fillColor = 1;
-			
-			// aapt resource value: 3
-			public const int CirclePageIndicator_orientation = 3;
-			
-			// aapt resource value: 2
-			public const int CirclePageIndicator_pageColor = 2;
-			
-			// aapt resource value: 4
-			public const int CirclePageIndicator_radius = 4;
+			public const int CirclePageIndicator_vpiCentered = 0;
 			
 			// aapt resource value: 5
-			public const int CirclePageIndicator_snap = 5;
+			public const int CirclePageIndicator_vpiFillColor = 5;
+			
+			// aapt resource value: 2
+			public const int CirclePageIndicator_vpiOrientation = 2;
+			
+			// aapt resource value: 1
+			public const int CirclePageIndicator_vpiPageColor = 1;
+			
+			// aapt resource value: 4
+			public const int CirclePageIndicator_vpiRadius = 4;
+			
+			// aapt resource value: 3
+			public const int CirclePageIndicator_vpiSnap = 3;
 			
 			// aapt resource value: 6
-			public const int CirclePageIndicator_strokeColor = 6;
+			public const int CirclePageIndicator_vpiStrokeColor = 6;
 			
 			// aapt resource value: 7
-			public const int CirclePageIndicator_strokeWidth = 7;
+			public const int CirclePageIndicator_vpiStrokeWidth = 7;
 			
 			public static int[] CollapsingAppBarLayout_LayoutParams = new int[]
 			{

@@ -128,14 +128,17 @@ namespace CarouselView.FormsPlugin.Android
 
 		public void ItemsSourceChanged() {
 
-			if (Element.Position > Element.ItemsSource.Count - 1)
-				Element.Position = Element.ItemsSource.Count - 1;
-			
-			viewPager.Adapter = new PageAdapter (Element, viewPager);
-			viewPager.SetCurrentItem (Element.Position, false);
+			if (Element != null && viewPager != null)
+			{
+				if (Element.Position > Element.ItemsSource.Count - 1)
+					Element.Position = Element.ItemsSource.Count - 1;
 
-			if (Element.PositionSelected != null)
-				Element.PositionSelected (Element, EventArgs.Empty);
+				viewPager.Adapter = new PageAdapter(Element, viewPager);
+				viewPager.SetCurrentItem(Element.Position, false);
+
+				if (Element.PositionSelected != null)
+					Element.PositionSelected(Element, EventArgs.Empty);
+			}
 		}
 
 		// Android ViewPager is the most complicated piece of code ever :)
@@ -289,7 +292,7 @@ namespace CarouselView.FormsPlugin.Android
 			{
 				var pager = (ViewPager)container;
 				var view = (AViews.ViewGroup)objectValue;
-				view.SaveHierarchyState(mViewStates);
+				//view.SaveHierarchyState(mViewStates);
 				pager.RemoveView (view);
 			}
 
@@ -349,6 +352,7 @@ namespace CarouselView.FormsPlugin.Android
 			}
 			catch(Exception ex)
 			{
+				Console.WriteLine(ex.Message);
 				return;
 			}
 		}

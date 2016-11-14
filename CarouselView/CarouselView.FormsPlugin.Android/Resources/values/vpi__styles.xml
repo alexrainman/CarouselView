@@ -22,13 +22,14 @@
     <style name="Widget"></style>
 
     <style name="Widget.CirclePageIndicator" parent="Widget">
-        <item name="centered">@bool/default_circle_indicator_centered</item>
-        <item name="fillColor">@color/default_circle_indicator_fill_color</item>
-        <item name="pageColor">@color/default_circle_indicator_page_color</item>
-        <item name="orientation">@integer/default_circle_indicator_orientation</item>
-        <item name="radius">@dimen/default_circle_indicator_radius</item>
-        <item name="snap">@bool/default_circle_indicator_snap</item>
-        <item name="strokeColor">@color/default_circle_indicator_stroke_color</item>
-        <item name="strokeWidth">@dimen/default_circle_indicator_stroke_width</item>
+        <item name="vpiCentered">@bool/default_circle_indicator_centered</item>
+        <item name="vpiPageColor">@color/default_circle_indicator_page_color</item>
+        <item name="vpiOrientation">@integer/default_circle_indicator_orientation</item>
+        <item name="vpiSnap">@bool/default_circle_indicator_snap</item>
+
+		<item name="vpiRadius">@dimen/default_circle_indicator_radius</item>
+		<item name="vpiFillColor">@color/default_circle_indicator_fill_color</item>
+		<item name="vpiStrokeColor">@color/default_circle_indicator_stroke_color</item>
+        <item name="vpiStrokeWidth">@dimen/default_circle_indicator_stroke_width</item>
     </style>
 </resources>

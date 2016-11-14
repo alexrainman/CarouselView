@@ -197,48 +197,51 @@ namespace CarouselView.FormsPlugin.UWP
 
         public async void ItemsSourceChanged()
         {
-            IsLoading = true;
+			if (Element != null && flipView != null)
+			{
+				IsLoading = true;
 
-            if (Element.Position > Element.ItemsSource.Count - 1)
-                Element.Position = Element.ItemsSource.Count - 1;
+				if (Element.Position > Element.ItemsSource.Count - 1)
+					Element.Position = Element.ItemsSource.Count - 1;
 
-            var source = new List<FrameworkElement>();
+				var source = new List<FrameworkElement>();
 
-            for (int i = 0; i <= Element.Position; i++)
-            {
-                source.Add(CreateView(Element.ItemsSource[i]));
-            }
+				for (int i = 0; i <= Element.Position; i++)
+				{
+					source.Add(CreateView(Element.ItemsSource[i]));
+				}
 
-            Source = new ObservableCollection<FrameworkElement>(source);
+				Source = new ObservableCollection<FrameworkElement>(source);
 
-            flipView.ItemsSource = Source;
+				flipView.ItemsSource = Source;
 
-            if (Element.PageIndicators)
-            {
-                var dots = new List<Ellipse>();
+				if (Element.PageIndicators)
+				{
+					var dots = new List<Ellipse>();
 
-                int i = 0;
-                foreach (var item in Element.ItemsSource)
-                {
-                    dots.Add(CreateDot(i, Element.Position));
-                    i++;
-                }
+					int i = 0;
+					foreach (var item in Element.ItemsSource)
+					{
+						dots.Add(CreateDot(i, Element.Position));
+						i++;
+					}
 
-                Dots = new ObservableCollection<Ellipse>(dots);
+					Dots = new ObservableCollection<Ellipse>(dots);
 
-                indicators.ItemsSource = Dots;
-            }
+					indicators.ItemsSource = Dots;
+				}
 
-            flipView.SelectedIndex = Element.Position;
+				flipView.SelectedIndex = Element.Position;
 
-            await Task.Delay(100);
+				await Task.Delay(100);
 
-            for (var j = Element.Position + 1; j <= Element.ItemsSource.Count - 1; j++)
-            {
-                Source.Add(CreateView(Element.ItemsSource[j]));
-            }
+				for (var j = Element.Position + 1; j <= Element.ItemsSource.Count - 1; j++)
+				{
+					Source.Add(CreateView(Element.ItemsSource[j]));
+				}
 
-            IsLoading = false;
+				IsLoading = false;
+			}
         }
 
         public async void RemoveItem(int position)

@@ -16,7 +16,7 @@
     <AssemblyName>Demo.Droid</AssemblyName>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
-    <ReleaseVersion>2.3.0</ReleaseVersion>
+    <ReleaseVersion>2.3.2</ReleaseVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
