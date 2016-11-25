@@ -14,7 +14,6 @@ namespace CarouselView.FormsPlugin.Android
 			if (Platform.GetRenderer(view) == null)
 				Platform.SetRenderer(view, Platform.CreateRenderer(view));
 			var vRenderer = Platform.GetRenderer(view);
-
             
             var viewGroup = vRenderer.ViewGroup;
             vRenderer.Tracker.UpdateLayout ();

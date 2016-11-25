@@ -29,6 +29,8 @@ namespace CarouselView.FormsPlugin.Android
 		public VerticalViewPager(Context context, IAttributeSet attrs) : base(context, attrs)
 		{
 			SetPageTransformer(false, new DefaultTransformer());
+			// get rid of the overscroll drawing that happens on the left and right
+			OverScrollMode = OverScrollMode.Never;
 		}
 
 		private MotionEvent SwapTouchEvent(MotionEvent ev)
