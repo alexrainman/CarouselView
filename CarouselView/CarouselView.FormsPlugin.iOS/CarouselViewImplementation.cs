@@ -311,6 +311,7 @@ namespace CarouselView.FormsPlugin.iOS
 				formsView = (Xamarin.Forms.View)Element.ItemTemplate.CreateContent();
 
 			formsView.BindingContext = bindingContext;
+			formsView.Parent = this.Element;
 
 			// UIScreen.MainScreen.Bounds.Width, UIScreen.MainScreen.Bounds.Height
 			var rect = new CGRect (Element.X, Element.Y, ElementWidth, ElementHeight);

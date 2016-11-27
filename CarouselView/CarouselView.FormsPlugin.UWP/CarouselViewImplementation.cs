@@ -344,6 +344,7 @@ namespace CarouselView.FormsPlugin.UWP
                 formsView = (Xamarin.Forms.View)Element.ItemTemplate.CreateContent();
 
             formsView.BindingContext = bindingContext;
+			formsView.Parent = this.Element;
 
             var element = FormsViewToNativeUWP.ConvertFormsToNative(formsView, new Xamarin.Forms.Rectangle(0, 0, ElementWidth, ElementHeight));
 

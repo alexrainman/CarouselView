@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>2.3.2</version>
+        <version>2.4.0</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
@@ -12,6 +12,9 @@
         <description>Create Horizontal and Vertical carousels, add page indicators, render one page at a time moving back and fort programmatically and much more. “How to” at Github repository.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
+        2.4.0
+        [Android] Fixing exception when including ListView in a page
+        [Update] Adding compatibility for Forms > 2.3.0.107
         2.3.2
         [Bug] Fixing exception on ItemsSourceChanged when Element is null.
         [Android] Circle page indicators attributes names incompatibility with other libraries (Fixed).
