@@ -1,110 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="Demo.MyFirstView"
-	xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
+    x:Class="Demo.MyFirstView">
 
     <ScrollView>
 	    <StackLayout Padding="12" Spacing="12">
 			
-	        <controls:CVLabel x:Name="label" Text="Quod cum ita sit, paucae domus studiorum seriis cultibus antea celebratae nunc ludibriis ignaviae torpentis exundant, vocali sonu, perflabili tinnitu fidium resultantes. denique pro philosopho cantor et in locum oratoris doctor artium ludicrarum accitur et bybliothecis sepulcrorum ritu in perpetuum clausis organa fabricantur hydraulica, et lyrae ad speciem carpentorum ingentes tibiaeque et histrionici gestus instrumenta non levia."/>
+	        <Label Text="Quod cum ita sit, paucae domus studiorum seriis cultibus antea celebratae nunc ludibriis ignaviae torpentis exundant, vocali sonu, perflabili tinnitu fidium resultantes. denique pro philosopho cantor et in locum oratoris doctor artium ludicrarum accitur et bybliothecis sepulcrorum ritu in perpetuum clausis organa fabricantur hydraulica, et lyrae ad speciem carpentorum ingentes tibiaeque et histrionici gestus instrumenta non levia." />
+			<ActivityIndicator IsRunning="true"/>
+			<Button x:Name="myButton" Text="Remove this page" Clicked="Handle_Clicked"/>
+			<DatePicker/>
+			<Editor BackgroundColor="Silver"/>
+			<Entry/>
+			<Picker/>
+			<ProgressBar Progress="0.5"/>
+			<SearchBar/>
+			<Slider/>
+			<Stepper/>
+			<Switch/>
+			<TimePicker/>
 
-			<ActivityIndicator IsRunning="true">
-				<ActivityIndicator.HeightRequest>
-					<OnPlatform x:TypeArguments="x:Double"
-                        Android="48"
-                        iOS="20"
-						WinPhone="4"/>
-				</ActivityIndicator.HeightRequest>
-			</ActivityIndicator>
-			<Button x:Name="myButton" Text="Remove this page" Clicked="Handle_Clicked">
-				<!--<Button.HeightRequest>
-					<OnPlatform x:TypeArguments="x:Double"
-                        Android="48"
-                        iOS="44"
-						WinPhone="32"/>
-				</Button.HeightRequest>-->
-			</Button>
-			<DatePicker>
-				<DatePicker.HeightRequest>
-					<OnPlatform x:TypeArguments="x:Double"
-                        Android="45.5"
-                        iOS="30"
-						WinPhone="32"/>
-				</DatePicker.HeightRequest>
-			</DatePicker>
-			<Editor BackgroundColor="Silver">
-			    <Editor.HeightRequest>
-					<OnPlatform x:TypeArguments="x:Double"
-                        Android="45.5"
-                        iOS="36.5"
-						WinPhone="32"/>
-				</Editor.HeightRequest>
-			</Editor>
-			<Entry>
-			    <Entry.HeightRequest>
-					<OnPlatform x:TypeArguments="x:Double"
-                        Android="45.5"
-                        iOS="30"
-						WinPhone="32"/>
-				</Entry.HeightRequest>
-			</Entry>
-			<Picker>
-			    <Picker.HeightRequest>
-					<OnPlatform x:TypeArguments="x:Double"
-                        Android="45.5"
-                        iOS="30"
-						WinPhone="32"/>
-				</Picker.HeightRequest>
-			</Picker>
-			<ProgressBar Progress="0.5">
-		        <ProgressBar.HeightRequest>
-					<OnPlatform x:TypeArguments="x:Double"
-                        Android="16"
-                        iOS="2"
-						WinPhone="4"/>
-				</ProgressBar.HeightRequest>
-			</ProgressBar>
-			<SearchBar>
-			    <SearchBar.HeightRequest>
-					<OnPlatform x:TypeArguments="x:Double"
-                        Android="45"
-                        iOS="44"
-						WinPhone="32"/>
-				</SearchBar.HeightRequest>
-			</SearchBar>
-			<Slider>
-			    <Slider.HeightRequest>
-					<OnPlatform x:TypeArguments="x:Double"
-                        Android="18"
-                        iOS="34"
-						WinPhone="44"/>
-				</Slider.HeightRequest>
-			</Slider>
-			<Stepper>
-			    <Stepper.HeightRequest>
-					<OnPlatform x:TypeArguments="x:Double"
-                        Android="48"
-                        iOS="29"
-						WinPhone="32"/>
-				</Stepper.HeightRequest>
-			</Stepper>
-			<Switch>
-			    <Switch.HeightRequest>
-					<OnPlatform x:TypeArguments="x:Double"
-                        Android="27"
-                        iOS="31"
-						WinPhone="40"/>
-				</Switch.HeightRequest>
-			</Switch>
-			<TimePicker>
-			    <TimePicker.HeightRequest>
-					<OnPlatform x:TypeArguments="x:Double"
-                        Android="45.5"
-                        iOS="30"
-						WinPhone="32"/>
-				</TimePicker.HeightRequest>
-			</TimePicker>
+			<StackLayout Orientation="Horizontal">
+				<Label Text="Left" />
+				<Label Text="Right" />
+			</StackLayout>
 
 		</StackLayout>
 	</ScrollView>

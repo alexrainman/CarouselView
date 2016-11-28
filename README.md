@@ -68,69 +68,6 @@ Then the xaml:
 <controls:CarouselViewControl Position="0" ItemsSource="{Binding Pages}" ItemTemplate="{StaticResource myTemplateSelector}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
 ```
 
-**HEIGHT REQUEST**
-
-As a requirement you have to provide HeighRequest for UI components using OnPlatform:
-
-```xml
-<Button Text="MyButton">
-    <Button.HeightRequest>
-        <OnPlatform x:TypeArguments="x:Double"
-            Android="48"
-            WinPhone="32"
-            iOS="44" />
-    </Button.HeightRequest>
-</Button>
-```
-
-```
-Device.OnPlatform(
-    iOS: () => myButton.HeightRequest = 44,
-    Android: () => myButton.HeightRequest = 48,
-    WinPhone: ()=> myButton.HeightRequest = 32
-);
-```
-
-**Default HeightRequest by platform**
-
-|Control|iOS|Android|UWP|
-| ------------------- | :-----------: | :-----------: | :------------------: |
-|ActivityIndicator|20|48|4|
-|Button|44|48|32|
-|DatePicker|30|45.5|32|
-|Editor|36.5|45.5|32|
-|Entry|30|45.5|32|
-|Picker|30|45.5|32|
-|ProgressBar|2|16|4|
-|Searchbar|44|45|32|
-|Slider|34|18|44|
-|Stepper|29|48|32|
-|Switch|31|27|40|
-|TimePicker|30|45.5|32|
-
-#### I provide CVLabel to solve HeightRequest issue. If you have your own Label renderer you need to add this code snippet:
-
-```
-public class CVLabel : Label
-{
-	public CVLabel()
-	{
-		SetBinding(Label.HeightRequestProperty, new Binding("WidthRequest", BindingMode.Default, new LabelHeightConverter(), this, null, this));
-	}
-
-	protected override void OnSizeAllocated(double width, double height)
-	{
-		base.OnSizeAllocated(width, height);
-
-		WidthRequest = width;
-
-		this.LayoutTo(new Rectangle(this.X, this.Y, width, height));
-
-		this.InvalidateMeasure();
-	}
-}
-```
-
 **Bindable Properties**
 
 ```Orientation```: Vertical or Horizontal swipe/scroll (default horizontal).
@@ -195,14 +132,9 @@ async void OnPrevious (object sender, TappedEventArgs e) {
 }
 ```
 
-#### Known issues
-
-- Horizontal StackLayout doesn't works. Why? No idea :) You may use a multi-column Grid instead.
-- ListView inside a page of CarouselView doesn't works with Xamarin.Forms versions bigger than 2.3.0.107 as there's a bug with Platform.SetRenderer API (by the way latest Xamarin.Forms releases are buggy).
-
 #### Tips
 
-- If you have memory leaks in Android when using the Carousel with images, it's not the control itself. It's Xamarin.Forms Android not handling images correctly. To solve the problem you can use [FFImageLoading](https://github.com/luberda-molinet/FFImageLoading) making sure that you set this properties:
+- If you have memory leaks in Android when using the Carousel with images, it's not the control itself. It's Xamarin Android not handling images correctly. To solve the problem you can use [FFImageLoading](https://github.com/luberda-molinet/FFImageLoading) making sure that you set this properties:
 
 ```
 DownsampleToViewSize="true" DownsampleWidth="WIDTH"

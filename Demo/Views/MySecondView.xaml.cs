@@ -9,12 +9,11 @@ namespace Demo
 		public MySecondView ()
 		{
 			InitializeComponent ();
-            BackgroundColor = Color.Aqua;
+			BackgroundColor = Color.White;
 
 			var source = new List<string>() { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
 
 			myList.ItemsSource = source;
-			myList.ItemTemplate = new DataTemplate(typeof(TextCell));
         }
 	}
 }

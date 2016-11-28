@@ -114,7 +114,6 @@
     </Compile>
     <Compile Include="FormsViewToNativeUWP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TextMeterImplementation.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="VerticalFlipViewControl.xaml.cs">
       <DependentUpon>VerticalFlipViewControl.xaml</DependentUpon>

@@ -12,12 +12,6 @@ namespace Demo
 		{
 			InitializeComponent ();
             BackgroundColor = Color.White;
-
-			Device.OnPlatform(
-				iOS: () => myButton.HeightRequest = 44,
-				Android: () => myButton.HeightRequest = 48,
-				WinPhone: ()=> myButton.HeightRequest = 32
-			);
 		}
 
 		void Handle_Clicked(object sender, System.EventArgs e)

@@ -16,7 +16,7 @@
     <DevInstrumentationEnabled>True</DevInstrumentationEnabled>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v7.0</TargetFrameworkVersion>
     <ReleaseVersion>2.4.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -92,10 +92,8 @@
     <Compile Include="FormsToNativeDroid.cs" />
     <Compile Include="Library\CirclePageIndicator.cs" />
     <Compile Include="Library\PageIndicator.cs" />
-    <Compile Include="TextMeterImplementation.cs" />
     <Compile Include="Library\DefaultPageTransformer.cs" />
     <Compile Include="Library\VerticalViewPager.cs" />
-    <Compile Include="Parcelable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
