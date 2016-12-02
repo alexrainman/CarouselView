@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>2.5.0</version>
+        <version>2.5.1</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
@@ -12,6 +12,8 @@
         <description>Create Horizontal and Vertical carousels, add page indicators, render one page at a time moving back and fort programmatically and much more. “How to” at Github repository. WHAT'S NEW?: HeightRequest declaration no needed anymore. CVLabel deprecated. Horizontal StackLayout is working.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
+        2.5.1
+        [iOS] Disabling UIPageControl tap event
         2.5.0
         [Update] HeighRequest declaration no needed anymore
         [Update] CVLabel deprecated

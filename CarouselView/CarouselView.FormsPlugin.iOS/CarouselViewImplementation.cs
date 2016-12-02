@@ -56,6 +56,7 @@ namespace CarouselView.FormsPlugin.iOS
 					pageControl.CurrentPageIndicatorTintColor = Element.CurrentPageIndicatorTintColor.ToUIColor();
 
 					pageControl.TranslatesAutoresizingMaskIntoConstraints = false;
+					pageControl.Enabled = false;
 
 					ConfigurePageControl();
 
