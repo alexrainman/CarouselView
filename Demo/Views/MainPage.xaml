@@ -40,4 +40,25 @@
        </Grid>
     </Grid>
 
+	<!--<AbsoluteLayout BackgroundColor="Yellow" VerticalOptions="Fill">
+        <StackLayout BackgroundColor="Blue" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+			AbsoluteLayout.LayoutBounds="0,0,1,.9" 
+			AbsoluteLayout.LayoutFlags="All">
+            <controls:CarouselViewControl x:Name="myCarousel" Orientation="Horizontal" InterPageSpacing="10" PageIndicators="true" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+        </StackLayout>
+        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+			AbsoluteLayout.LayoutBounds="1,1,1,.1" 
+			AbsoluteLayout.LayoutFlags="All"
+            BackgroundColor="Red"
+            Orientation="Horizontal">
+            <Button
+                x:Name="prevBtn"
+                IsVisible="false"
+                Text="Previous" />
+            <Button
+                x:Name="nextBtn"
+                Text="Next" />
+        </StackLayout>
+    </AbsoluteLayout>-->
+
 </ContentPage>

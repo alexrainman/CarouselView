@@ -69,10 +69,11 @@ namespace CarouselView.FormsPlugin.Android
 			{
 				// Configure the control and subscribe to event handlers
 
-				var interPageSpacing = Element.InterPageSpacing * 2;
+				var metrics = Resources.DisplayMetrics;
+				var interPageSpacing = Element.InterPageSpacing * metrics.Density;
 
 				viewPager = nativeView.FindViewById<ViewPager>(Resource.Id.pager);
-				viewPager.PageMargin = interPageSpacing;
+				viewPager.PageMargin = (int)interPageSpacing;
 
 				if (Element.PageIndicators)
 				{
@@ -135,6 +136,7 @@ namespace CarouselView.FormsPlugin.Android
 
 				viewPager.Adapter = new PageAdapter(Element, viewPager);
 				viewPager.SetCurrentItem(Element.Position, false);
+				indicator.SetCurrentItem(Element.Position);
 
 				if (Element.PositionSelected != null)
 					Element.PositionSelected(Element, EventArgs.Empty);
@@ -230,6 +232,7 @@ namespace CarouselView.FormsPlugin.Android
 				
 				Element.Position = position;
 				viewPager.SetCurrentItem (Element.Position, true);
+				indicator.SetCurrentItem(Element.Position);
 			}
 		}
 

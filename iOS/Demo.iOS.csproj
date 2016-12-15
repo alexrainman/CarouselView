@@ -9,7 +9,7 @@
     <RootNamespace>Demo.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>DemoiOS</AssemblyName>
-    <ReleaseVersion>2.5.1</ReleaseVersion>
+    <ReleaseVersion>2.5.2</ReleaseVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>

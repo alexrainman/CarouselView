@@ -24,15 +24,19 @@ namespace Demo
 				    await myCarousel.RemovePage(myCarousel.Position);
 
 			});
-				
+
 			prevBtn.IsVisible = myCarousel.Position > 0;
 			addPageBtn.IsVisible = myCarousel.Position == myCarousel.ItemsSource.Count - 1;
 			nextBtn.IsVisible = myCarousel.Position < myCarousel.ItemsSource.Count - 1;
 
-			ToolbarItems.Add(new ToolbarItem {
+			ToolbarItems.Add(new ToolbarItem
+			{
 				Text = "Reset",
 				Order = ToolbarItemOrder.Primary,
-				Command = new Command(() => myCarousel.ItemsSource = new List<int> { 1, 2, 3, 4, 5 })
+				Command = new Command(() => { 
+					myCarousel.ItemsSource = new List<int> { 1, 2, 3, 4, 5 };
+					//myCarousel.SetCurrentPage(0);
+				})
 			});
 		}
 
