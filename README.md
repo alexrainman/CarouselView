@@ -140,6 +140,11 @@ async void OnPrevious (object sender, TappedEventArgs e) {
 DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 ```
 
+#### Roadmap
+
+* Page indicators tap event
+* Load more event
+
 #### Contributors
 * [alexrainman](https://github.com/alexrainman)
 
