@@ -140,6 +140,37 @@ async void OnPrevious (object sender, TappedEventArgs e) {
 DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 ```
 
+#### Release Notes
+
+2.6.0
+[iOS] Small fix to avoid UIPageViewController.View go outside its container bounds
+[Update] ShowIndicators property now does what it supposed to do, hide/show indicators :)
+[Update] ItemsSourceChanged method removed, implemented at OnElementPropertyChanged
+2.5.2
+[Android] #40 SetCurrentPage doesn't work for "0" (fixed)
+[iOS] #39 Page indicator doesn't work on iOS (fixed)
+2.5.1
+[iOS] Disabling UIPageControl tap event
+2.5.0
+[Update] HeighRequest declaration no needed anymore
+[Update] CVLabel deprecated
+[Update] Horizontal StackLayout is working
+2.4.0
+[Android] Fixing exception when including ListView in a page
+[Update] Adding compatibility for Forms > 2.3.0.107
+2.3.2
+[Bug] Fixing exception on ItemsSourceChanged when Element is null.
+[Android] Circle page indicators attributes names incompatibility with other libraries (Fixed).
+2.3.1
+[iOS] Fixing exception when removing last page.
+2.3.0
+[update] Deprecating PageIndicatorsBackgroundColor.
+[Update] Deprecating CV custom controls except for CVLabel.
+[bug fix] Crash when calling OnRestoreInstanceState (Android).
+[bug fix] NullReferenceException during creation if control is not visible (UWP).
+[bug fix] Fix NullReferenceException in PageAdapter.get_Count when ItemSource is null.
+[bug fix] Other bug fixes and enhancements.
+
 #### Roadmap
 
 * Remove SetCurrentPage method, implement at OnElementPropertyChanged (requires lot of refactoring)
