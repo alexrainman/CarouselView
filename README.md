@@ -142,6 +142,7 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Roadmap
 
+* Remove SetCurrentPage method, implement at OnElementPropertyChanged (requires lot of refactoring)
 * Page indicators tap event
 * Load more event
 
