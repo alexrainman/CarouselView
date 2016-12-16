@@ -84,7 +84,7 @@ Then the xaml:
 
 ```Arrows```: disable arrows navigation (UWP only, default true).
 
-```PageIndicators```: hide/show page indicators (default false).
+```ShowIndicators```: hide/show page indicators (default false).
 
 ```PageIndicatorTintColor```: page dot indicators fill color (default #C0C0C0).
 
@@ -145,6 +145,8 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 2.6.0
 
 [iOS] Small fix to avoid UIPageViewController.View go outside its container bounds
+
+[Update] PageIndicators property renamed to ShowIndicators
 
 [Update] ShowIndicators property now does what it supposed to do, hide/show indicators :)
 
