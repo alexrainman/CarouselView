@@ -9,8 +9,8 @@
 
     <Grid>
         <FlipView x:Name="flipView"/>
-        <StackPanel x:Name="dotsPanel" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="32" Visibility="Collapsed">
-            <ItemsControl x:Name="indicators" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+        <StackPanel x:Name="indicators" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="32">
+            <ItemsControl x:Name="dotsPanel" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal" />

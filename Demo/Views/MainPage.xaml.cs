@@ -33,9 +33,10 @@ namespace Demo
 			{
 				Text = "Reset",
 				Order = ToolbarItemOrder.Primary,
-				Command = new Command(() => { 
+				Command = new Command(() => {
 					myCarousel.ItemsSource = new List<int> { 1, 2, 3, 4, 5 };
 					//myCarousel.SetCurrentPage(0);
+					//myCarousel.ShowIndicators = !myCarousel.ShowIndicators;
 				})
 			});
 		}

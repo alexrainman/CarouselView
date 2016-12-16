@@ -11,6 +11,10 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Shapes;
 using System.Diagnostics;
+using Windows.UI.Xaml.Markup;
+using System.IO;
+using System.Xml;
+using System.Text;
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.UWP
@@ -22,7 +26,7 @@ namespace CarouselView.FormsPlugin.UWP
     {
         UserControl nativeView;
         FlipView flipView;
-        ItemsControl indicators;
+        StackPanel indicators;
 
         SolidColorBrush selectedColor;
         SolidColorBrush fillColor;
@@ -56,6 +60,13 @@ namespace CarouselView.FormsPlugin.UWP
 
                 flipView = nativeView.FindName("flipView") as FlipView;
 
+                indicators = nativeView.FindName("indicators") as StackPanel;
+                indicators.Visibility = Element.ShowIndicators ? Visibility.Visible : Visibility.Collapsed;
+
+                var converter = new ColorConverter();
+                selectedColor = (SolidColorBrush)converter.Convert(Element.CurrentPageIndicatorTintColor, null, null, null);
+                fillColor = (SolidColorBrush)converter.Convert(Element.PageIndicatorTintColor, null, null, null);
+
                 SetNativeControl(nativeView);
             }
 
@@ -70,7 +81,6 @@ namespace CarouselView.FormsPlugin.UWP
 
                 if (Element != null)
                 {
-                    Element.ItemsSourceChanged = null;
                     Element.RemoveAction = null;
                     Element.InsertAction = null;
                     Element.SetCurrentAction = null;
@@ -81,26 +91,12 @@ namespace CarouselView.FormsPlugin.UWP
             {
                 // Configure the control and subscribe to event handlers
 
-                if (Element.PageIndicators)
-                {
-                    indicators = nativeView.FindName("indicators") as ItemsControl;
-
-                    var converter = new ColorConverter();
-                    selectedColor = (SolidColorBrush)converter.Convert(Element.CurrentPageIndicatorTintColor, null, null, null);
-                    fillColor = (SolidColorBrush)converter.Convert(Element.PageIndicatorTintColor, null, null, null);
-
-                    var dotsPanel = nativeView.FindName("dotsPanel") as StackPanel;
-
-                    dotsPanel.Visibility = Visibility.Visible;
-                }
-
                 flipView.Loaded += FlipView_Loaded;
 
                 flipView.SelectionChanged += FlipView_SelectionChanged;
 
                 flipView.SizeChanged += FlipView_SizeChanged;
 
-                Element.ItemsSourceChanged = new Action(ItemsSourceChanged);
                 Element.RemoveAction = new Action<int>(RemoveItem);
                 Element.InsertAction = new Action<object, int>(InsertItem);
                 Element.SetCurrentAction = new Action<int>(SetCurrentItem);
@@ -113,17 +109,23 @@ namespace CarouselView.FormsPlugin.UWP
 
             var rect = this.Element.Bounds;
 
-            if (e.PropertyName == "Width")
+            switch (e.PropertyName)
             {
-                if (ElementWidth == 0)
-                    ElementWidth = rect.Width;
+                case "Width":
+                    if (ElementWidth == 0)
+                        ElementWidth = rect.Width;
+                    break;
+                case "Height":
+                    if (ElementHeight == 0)
+                        ElementHeight = rect.Height;
+                    break;
+                case "ShowIndicators":
+                    indicators.Visibility = Element.ShowIndicators ? Visibility.Visible : Visibility.Collapsed;
+                    break;
+                case "ItemsSource": // TODO: don't execute the first time
+                    ItemsSourceChanged();
+                    break;
             }
-
-            if (e.PropertyName == "Height")
-            {
-                if (ElementHeight == 0)
-                    ElementHeight = rect.Height;
-            };
 
             if (Source == null && ElementWidth > 0 && ElementHeight > 0)
             {
@@ -175,10 +177,7 @@ namespace CarouselView.FormsPlugin.UWP
             {
                 Element.Position = flipView.SelectedIndex;
 
-                if (Element.PageIndicators)
-                {
-                    UpdateIndicators();
-                }
+                UpdateIndicators();
 
                 if (Element.PositionSelected != null)
                     Element.PositionSelected(Element, EventArgs.Empty);
@@ -187,8 +186,9 @@ namespace CarouselView.FormsPlugin.UWP
 
         void UpdateIndicators()
         {
+            var dotsPanel = nativeView.FindName("dotsPanel") as ItemsControl;
             int i = 0;
-            foreach (var item in indicators.Items)
+            foreach (var item in dotsPanel.Items)
             {
                 ((Ellipse)item).Fill = i == Element.Position ? selectedColor : fillColor;
                 i++;
@@ -206,30 +206,30 @@ namespace CarouselView.FormsPlugin.UWP
 
 				var source = new List<FrameworkElement>();
 
-				for (int i = 0; i <= Element.Position; i++)
+				for (int j = 0; j <= Element.Position; j++)
 				{
-					source.Add(CreateView(Element.ItemsSource[i]));
+					source.Add(CreateView(Element.ItemsSource[j]));
 				}
 
 				Source = new ObservableCollection<FrameworkElement>(source);
 
-				flipView.ItemsSource = Source;
+                flipView.ItemsSource = Source;
+                //flipView.ItemsSource = Element.ItemsSource;
+                //flipView.ItemTemplateSelector = new MyTemplateSelector(Element);
 
-				if (Element.PageIndicators)
+				var dots = new List<Ellipse>();
+
+				int i = 0;
+				foreach (var item in Element.ItemsSource)
 				{
-					var dots = new List<Ellipse>();
-
-					int i = 0;
-					foreach (var item in Element.ItemsSource)
-					{
-						dots.Add(CreateDot(i, Element.Position));
-						i++;
-					}
-
-					Dots = new ObservableCollection<Ellipse>(dots);
-
-					indicators.ItemsSource = Dots;
+					dots.Add(CreateDot(i, Element.Position));
+					i++;
 				}
+
+				Dots = new ObservableCollection<Ellipse>(dots);
+
+                var dotsPanel = nativeView.FindName("dotsPanel") as ItemsControl;
+                dotsPanel.ItemsSource = Dots;
 
 				flipView.SelectedIndex = Element.Position;
 
@@ -280,11 +280,8 @@ namespace CarouselView.FormsPlugin.UWP
 
                 Element.Position = flipView.SelectedIndex;
 
-                if (Element.PageIndicators)
-                {
-                    Dots.RemoveAt(position);
-                    UpdateIndicators();
-                }
+                Dots.RemoveAt(position);
+                UpdateIndicators();
 
                 if (Element.PositionSelected != null)
                     Element.PositionSelected(Element, EventArgs.Empty);
@@ -302,19 +299,13 @@ namespace CarouselView.FormsPlugin.UWP
                 {
                     Element.ItemsSource.Add(item);
                     Source.Add(CreateView(item));
-                    if (Element.PageIndicators)
-                    {
-                        Dots.Add(CreateDot(-1, position));
-                    }
+                    Dots.Add(CreateDot(-1, position));
                 }
                 else
                 {
                     Element.ItemsSource.Insert(position, item);
                     Source.Insert(position, CreateView(item));
-                    if (Element.PageIndicators)
-                    {
-                        Dots.Insert(position, CreateDot(position, position));
-                    }
+                    Dots.Insert(position, CreateDot(position, position));
                 }
 
 				await Task.Delay(100);
@@ -437,4 +428,53 @@ namespace CarouselView.FormsPlugin.UWP
             var temp = DateTime.Now;
         }
     }
+
+    /*public class MyTemplateSelector : DataTemplateSelector
+    {
+        CarouselViewControl Element;
+
+        public MyTemplateSelector(CarouselViewControl element)
+        {
+            Element = element;
+        }
+
+        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+        {
+            Xamarin.Forms.View formsView = null;
+            var bindingContext = item;
+
+            var selector = Element.ItemTemplate as Xamarin.Forms.DataTemplateSelector;
+            if (selector != null)
+                formsView = (Xamarin.Forms.View)selector.SelectTemplate(bindingContext, Element).CreateContent();
+            else
+                formsView = (Xamarin.Forms.View)Element.ItemTemplate.CreateContent();
+
+            formsView.BindingContext = bindingContext;
+            formsView.Parent = this.Element;
+
+            var element = FormsViewToNativeUWP.ConvertFormsToNative(formsView, new Xamarin.Forms.Rectangle(0, 0, 300, 300));
+
+            var template = CreateDateTemplate();
+            var content = (StackPanel)template.LoadContent();
+            
+            content.Children.Add(element);
+
+            return template;
+        }
+
+        DataTemplate CreateDateTemplate()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("<DataTemplate xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\">");
+            sb.Append("<StackPanel>");
+            sb.Append("<StackPanel Orientation=\"Horizontal\" Margin=\"3,3,0,3\"><TextBlock Text=\"Name:\" Margin=\"0,0,5,0\"/><TextBlock Text=\"Name\"/></StackPanel>");
+            sb.Append("<StackPanel Orientation=\"Horizontal\" Margin=\"3,3,0,3\"><TextBlock Text=\"Price:\" Margin=\"0,0,5,0\"/><TextBlock Text=\"Price\"/></StackPanel>");
+            sb.Append("<StackPanel Orientation=\"Horizontal\" Margin=\"3,3,0,3\"><TextBlock Text=\"Author:\" Margin=\"0,0,5,0\"/><TextBlock Text=\"Author\"/></StackPanel>");
+            sb.Append("</StackPanel>");
+            sb.Append("</DataTemplate>");
+
+            return  (DataTemplate)XamlReader.Load(sb.ToString());
+        }
+    }*/
 }

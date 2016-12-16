@@ -10,12 +10,7 @@ namespace CarouselView.FormsPlugin.Abstractions
     /// </summary>
 	public class CarouselViewControl : View //Layout<View>
 	{
-		public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create("ItemsSource", typeof(IList), typeof(CarouselViewControl), null,
-			propertyChanged: (bindableObject, oldValue, newValue) => {
-				var carousel = (CarouselViewControl)bindableObject;
-				if(carousel.ItemsSourceChanged != null)
-					carousel.ItemsSourceChanged();
-			});
+		public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create("ItemsSource", typeof(IList), typeof(CarouselViewControl), null);
 
 		public IList ItemsSource{
 			get { return (IList)GetValue (ItemsSourceProperty); }
@@ -55,12 +50,12 @@ namespace CarouselView.FormsPlugin.Abstractions
 		}
 
 		// Page Indicators properties
-		public static readonly BindableProperty PageIndicatorsProperty = BindableProperty.Create("PageIndicators", typeof(bool), typeof(CarouselViewControl), false);
+		public static readonly BindableProperty ShowIndicatorsProperty = BindableProperty.Create("ShowIndicators", typeof(bool), typeof(CarouselViewControl), false);
 
-		public bool PageIndicators
+		public bool ShowIndicators
 		{
-			get { return (bool)GetValue(PageIndicatorsProperty); }
-			set { SetValue(PageIndicatorsProperty, value); }
+			get { return (bool)GetValue(ShowIndicatorsProperty); }
+			set { SetValue(ShowIndicatorsProperty, value); }
 		}
 
 		public static readonly BindableProperty PageIndicatorTintColorProperty = BindableProperty.Create("PageIndicatorTintColor", typeof(Color), typeof(CarouselViewControl), Color.Silver);
@@ -95,8 +90,6 @@ namespace CarouselView.FormsPlugin.Abstractions
 			get { return (Orientation)GetValue(OrientationProperty); }
 			set { SetValue(OrientationProperty, value); }
 		}
-
-		public Action ItemsSourceChanged;
 
 		public EventHandler PositionSelected;
 

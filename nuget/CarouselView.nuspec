@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>2.5.2</version>
+        <version>2.6.0</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
@@ -12,6 +12,10 @@
         <description>Create Horizontal and Vertical carousels, add page indicators, render one page at a time moving back and fort programmatically and much more. “How to” at Github repository. WHAT'S NEW?: HeightRequest declaration no needed anymore. CVLabel deprecated. Horizontal StackLayout is working.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
+        2.6.0
+        [iOS] Small fix to avoid UIPageViewController.View go outside its container bounds
+        [Update] ShowIndicators property now does what it supposed to do, hide/show indicators :)
+        [Update] ItemsSourceChanged method removed, implemented at OnElementPropertyChanged
         2.5.2
         [Android] #40 SetCurrentPage doesn't work for "0" (fixed)
         [iOS] #39 Page indicator doesn't work on iOS (fixed)

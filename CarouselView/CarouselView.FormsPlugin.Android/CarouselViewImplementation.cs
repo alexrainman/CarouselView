@@ -43,6 +43,20 @@ namespace CarouselView.FormsPlugin.Android
 				else
 					nativeView = inflater.Inflate(Resource.Layout.vertical_viewpager, null);
 
+				var metrics = Resources.DisplayMetrics;
+				var interPageSpacing = Element.InterPageSpacing * metrics.Density;
+
+				viewPager = nativeView.FindViewById<ViewPager>(Resource.Id.pager);
+				viewPager.PageMargin = (int)interPageSpacing;
+
+				indicator = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
+				indicator.SetViewPager(viewPager);
+
+				indicator.SetPageColor(Element.PageIndicatorTintColor.ToAndroid());
+				indicator.SetFillColor(Element.CurrentPageIndicatorTintColor.ToAndroid());
+
+				indicator.Visibility = Element.ShowIndicators ? AViews.ViewStates.Visible : AViews.ViewStates.Gone;
+
 				SetNativeControl(nativeView);
 			}
 
@@ -58,7 +72,6 @@ namespace CarouselView.FormsPlugin.Android
 
 				if (Element != null)
 				{
-					Element.ItemsSourceChanged = null;
 					Element.RemoveAction = null;
 					Element.InsertAction = null;
 					Element.SetCurrentAction = null;
@@ -69,27 +82,9 @@ namespace CarouselView.FormsPlugin.Android
 			{
 				// Configure the control and subscribe to event handlers
 
-				var metrics = Resources.DisplayMetrics;
-				var interPageSpacing = Element.InterPageSpacing * metrics.Density;
-
-				viewPager = nativeView.FindViewById<ViewPager>(Resource.Id.pager);
-				viewPager.PageMargin = (int)interPageSpacing;
-
-				if (Element.PageIndicators)
-				{
-					indicator = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
-					indicator.SetViewPager(viewPager);
-
-					indicator.SetPageColor(Element.PageIndicatorTintColor.ToAndroid());
-					indicator.SetFillColor(Element.CurrentPageIndicatorTintColor.ToAndroid());
-
-					indicator.Visibility = AViews.ViewStates.Visible;
-				}
-
 				viewPager.PageSelected += ViewPager_PageSelected;
 				viewPager.PageScrollStateChanged += ViewPager_PageScrollStateChanged;
 
-				Element.ItemsSourceChanged = new Action(ItemsSourceChanged);
 				Element.RemoveAction = new Action<int>(RemoveItem);
 				Element.InsertAction = new Action<object, int>(InsertItem);
 				Element.SetCurrentAction = new Action<int>(SetCurrentItem);
@@ -100,16 +95,32 @@ namespace CarouselView.FormsPlugin.Android
 		{
 			base.OnElementPropertyChanged(sender, e);
 
-			if (e.PropertyName == "Width")
+			switch (e.PropertyName)
 			{
-				//var rect = this.Element.Bounds;
-			}
+				case "Width":
+					//var rect = this.Element.Bounds;
+					break;
+				case "Height":
+					//var rect = this.Element.Bounds;
+					viewPager.Adapter = new PageAdapter(Element, viewPager);
+					viewPager.SetCurrentItem(Element.Position, false);
+					break;
+				case "ShowIndicators":
+					indicator.Visibility = Element.ShowIndicators ? AViews.ViewStates.Visible : AViews.ViewStates.Gone;
+					break;
+				case "ItemsSource": // TODO: don't execute the first time
+					if (Element != null && viewPager != null)
+					{
+						if (Element.Position > Element.ItemsSource.Count - 1)
+							Element.Position = Element.ItemsSource.Count - 1;
 
-			if (e.PropertyName == "Height")
-			{
-				//var rect = this.Element.Bounds;
-				viewPager.Adapter = new PageAdapter(Element, viewPager);
-				viewPager.SetCurrentItem(Element.Position, false);
+						viewPager.Adapter = new PageAdapter(Element, viewPager);
+						viewPager.SetCurrentItem(Element.Position, false);
+
+						if (Element.PositionSelected != null)
+							Element.PositionSelected(Element, EventArgs.Empty);
+					}
+					break;
 			}
 		}
 
@@ -123,22 +134,6 @@ namespace CarouselView.FormsPlugin.Android
 			if (e.State == 0) {
 
 				if (!IsRemoving && Element.PositionSelected != null)
-					Element.PositionSelected(Element, EventArgs.Empty);
-			}
-		}
-
-		public void ItemsSourceChanged() {
-
-			if (Element != null && viewPager != null)
-			{
-				if (Element.Position > Element.ItemsSource.Count - 1)
-					Element.Position = Element.ItemsSource.Count - 1;
-
-				viewPager.Adapter = new PageAdapter(Element, viewPager);
-				viewPager.SetCurrentItem(Element.Position, false);
-				indicator.SetCurrentItem(Element.Position);
-
-				if (Element.PositionSelected != null)
 					Element.PositionSelected(Element, EventArgs.Empty);
 			}
 		}
@@ -232,7 +227,6 @@ namespace CarouselView.FormsPlugin.Android
 				
 				Element.Position = position;
 				viewPager.SetCurrentItem (Element.Position, true);
-				indicator.SetCurrentItem(Element.Position);
 			}
 		}
 
