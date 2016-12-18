@@ -49,6 +49,8 @@ namespace CarouselView.FormsPlugin.Android
 				viewPager = nativeView.FindViewById<ViewPager>(Resource.Id.pager);
 				viewPager.PageMargin = (int)interPageSpacing;
 
+				viewPager.SetBackgroundColor(Element.InterPageSpacingColor.ToAndroid());
+
 				indicator = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
 				indicator.SetViewPager(viewPager);
 

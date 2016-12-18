@@ -53,6 +53,8 @@ namespace CarouselView.FormsPlugin.iOS
 				pageController = new UIPageViewController(UIPageViewControllerTransitionStyle.Scroll,
 														  orientation, UIPageViewControllerSpineLocation.None, interPageSpacing);
 
+				pageController.View.BackgroundColor = Element.InterPageSpacingColor.ToUIColor();
+
 				nativeView.AddSubview(pageController.View);
 
 				pageControl = new UIPageControl();
