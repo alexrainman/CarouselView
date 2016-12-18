@@ -9,7 +9,7 @@
         <licenseUrl>https://github.com/alexrainman/CarouselView/blob/master/README.md</licenseUrl>
         <projectUrl>https://github.com/alexrainman/CarouselView</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Create Horizontal and Vertical carousels, add page indicators, render one page at a time moving back and fort programmatically and much more. “How to” at Github repository. WHAT'S NEW?: HeightRequest declaration no needed anymore. CVLabel deprecated. Horizontal StackLayout is working.</description>
+        <description>Create Horizontal and Vertical carousels, add page indicators, render one page at a time moving back and fort programmatically and much more. “How to” at Github repository.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
         2.6.1
