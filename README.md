@@ -72,17 +72,15 @@ Then the xaml:
 
 ```Orientation```: Vertical or Horizontal swipe/scroll (default horizontal).
 
-```ItemsSource```: Collection of objects used as BindingContext of each view.
+```ItemsSource```: List of objects used as BindingContext of each view.
 
 * You can use an Observable collection as ItemsSource and use CollectionChanged events in your end for your own business logic.
 
-```ItemTemplate```: supports DataTemplate and DataTemplateSelector.
-
 ```Position```: the desired selected view when Carousel starts.
 
-```Bounces```: use this property to disable bounces when you will render one page at a time and move back and fort programmatically (iOS only, default true).
+```InterPageSpacing```: add a margin/space between pages (Android and iOS only).
 
-```Arrows```: disable arrows navigation (UWP only, default true).
+```InterPageSpacingColor```: color for the margin/space between pages (default #FFFFFF).
 
 ```ShowIndicators```: hide/show page indicators (default false).
 
@@ -90,7 +88,11 @@ Then the xaml:
 
 ```CurrentPageIndicatorTintColor```: selected page dot indicator fill color (default #808080).
 
-```InterPageSpacing```: add a margin/space between pages (Android and iOS only).
+```ItemTemplate```: supports DataTemplate and DataTemplateSelector.
+
+```Bounces```: use this property to disable bounces when you will render one page at a time and move back and fort programmatically (iOS only, default true).
+
+```Arrows```: disable arrows navigation (UWP only, default true).
 
 **Event Handlers**
 
@@ -141,6 +143,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 ```
 
 #### Release Notes
+
+2.6.1
+
+[New feature] InterPageSpacingColor property to change the color of the margin/space between pages (default #FFFFFF).
 
 2.6.0
 
