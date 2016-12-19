@@ -214,7 +214,6 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Roadmap
 
-* Square indicators dots
 * Remove SetCurrentPage method, implement at OnElementPropertyChanged (requires lot of refactoring)
 * Page indicators tap event
 * Load more event
