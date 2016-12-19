@@ -5,6 +5,7 @@ using Android.Graphics;
 using Android.Support.V4.View;
 using Android.Util;
 using Java.Lang;
+using CarouselView.FormsPlugin.Abstractions;
 
 namespace CarouselView.FormsPlugin.Android
 {
@@ -26,6 +27,7 @@ namespace CarouselView.FormsPlugin.Android
 		private int mOrientation;
 		private bool mCentered;
 		private bool mSnap;
+		private IndicatorsStyle indicatorsStyle = IndicatorsStyle.Rounded;
 
 		public CirclePageIndicator(Context context) : this(context, null)
 		{
@@ -80,6 +82,12 @@ namespace CarouselView.FormsPlugin.Android
 		public void SetFillColor(Color fillColor)
 		{
 			mPaintFill.Color = fillColor;
+			Invalidate();
+		}
+
+		public void SetStyle(IndicatorsStyle style)
+		{
+			indicatorsStyle = style;
 			Invalidate();
 		}
 
@@ -151,16 +159,37 @@ namespace CarouselView.FormsPlugin.Android
 					dX = shortOffset;
 					dY = drawLong;
 				}
+
 				// Only paint fill if not completely transparent
 				if (mPaintPageFill.Alpha > 0)
 				{
-					canvas.DrawCircle(dX, dY, pageFillRadius, mPaintPageFill);
+					switch (indicatorsStyle)
+					{
+						case IndicatorsStyle.Squared:
+							var rect1 = new Xamarin.Forms.Rectangle((int)dX, (int)dY, (int)pageFillRadius * 2, (int)pageFillRadius * 2);
+							var rect1_native = new Rect((int)rect1.Left, (int)rect1.Top, (int)rect1.Right, (int)rect1.Bottom);
+							canvas.DrawRect(rect1_native, mPaintPageFill);
+							break;
+						default:
+							canvas.DrawCircle(dX, dY, pageFillRadius, mPaintPageFill);
+							break;
+					}
 				}
 
 				// Only paint stroke if a stroke width was non-zero
 				if (pageFillRadius != mRadius)
 				{
-					canvas.DrawCircle(dX, dY, mRadius, mPaintStroke);
+					switch (indicatorsStyle)
+					{
+						case IndicatorsStyle.Squared:
+							var rect2 = new Xamarin.Forms.Rectangle((int)dX, (int)dY, (int)mRadius * 2, (int)mRadius * 2);
+							var rect2_native = new Rect((int)rect2.Left, (int)rect2.Top, (int)rect2.Right, (int)rect2.Bottom);
+							canvas.DrawRect(rect2_native, mPaintPageFill);
+							break;
+						default:
+							canvas.DrawCircle(dX, dY, mRadius, mPaintStroke);
+							break;
+					}
 				}
 			}
 
@@ -179,7 +208,18 @@ namespace CarouselView.FormsPlugin.Android
 				dX = shortOffset;
 				dY = longOffset + cx;
 			}
-			canvas.DrawCircle(dX, dY, mRadius, mPaintFill);
+
+			switch (indicatorsStyle)
+			{
+				case IndicatorsStyle.Squared:
+					var rect3 = new Xamarin.Forms.Rectangle((int)dX, (int)dY, (int)mRadius * 2, (int)mRadius * 2);
+					var rect3_native = new Rect((int)rect3.Left, (int)rect3.Top, (int)rect3.Right, (int)rect3.Bottom);
+					canvas.DrawRect(rect3_native, mPaintFill);
+					break;
+				default:
+					canvas.DrawCircle(dX, dY, mRadius, mPaintFill);
+					break;
+			}
 		}
 
 		public void SetViewPager(ViewPager view)

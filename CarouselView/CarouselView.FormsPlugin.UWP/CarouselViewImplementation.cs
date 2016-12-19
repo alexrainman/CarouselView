@@ -40,7 +40,7 @@ namespace CarouselView.FormsPlugin.UWP
         bool _disposed;
 
         ObservableCollection<FrameworkElement> Source;
-        ObservableCollection<Ellipse> Dots;
+        ObservableCollection<Shape> Dots;
 
         Timer timer;
 
@@ -190,7 +190,7 @@ namespace CarouselView.FormsPlugin.UWP
             int i = 0;
             foreach (var item in dotsPanel.Items)
             {
-                ((Ellipse)item).Fill = i == Element.Position ? selectedColor : fillColor;
+                ((Shape)item).Fill = i == Element.Position ? selectedColor : fillColor;
                 i++;
             }
         }
@@ -217,7 +217,7 @@ namespace CarouselView.FormsPlugin.UWP
                 //flipView.ItemsSource = Element.ItemsSource;
                 //flipView.ItemTemplateSelector = new MyTemplateSelector(Element);
 
-				var dots = new List<Ellipse>();
+				var dots = new List<Shape>();
 
 				int i = 0;
 				foreach (var item in Element.ItemsSource)
@@ -226,7 +226,7 @@ namespace CarouselView.FormsPlugin.UWP
 					i++;
 				}
 
-				Dots = new ObservableCollection<Ellipse>(dots);
+				Dots = new ObservableCollection<Shape>(dots);
 
                 var dotsPanel = nativeView.FindName("dotsPanel") as ItemsControl;
                 dotsPanel.ItemsSource = Dots;
@@ -342,15 +342,28 @@ namespace CarouselView.FormsPlugin.UWP
             return element;
         }
 
-        Ellipse CreateDot(int i, int position)
+        Shape CreateDot(int i, int position)
         {
-            return new Ellipse()
+            if (Element.IndicatorsStyle == IndicatorsStyle.Rounded)
             {
-                Fill = i == position ? selectedColor : fillColor,
-                Height = 8,
-                Width = 8,
-                Margin = new Thickness(5, 12, 5, 12)
-            };
+                return new Ellipse()
+                {
+                    Fill = i == position ? selectedColor : fillColor,
+                    Height = 7,
+                    Width = 7,
+                    Margin = new Thickness(4, 12, 4, 12)
+                };
+            }
+            else
+            {
+                return new Rectangle()
+                {
+                    Fill = i == position ? selectedColor : fillColor,
+                    Height = 6,
+                    Width = 6,
+                    Margin = new Thickness(4, 12, 4, 12)
+                };
+            }
         }
 
         private void ButtonHide(FlipView f, string name)

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>2.6.1</version>
+        <version>2.7.0</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
@@ -12,6 +12,8 @@
         <description>Create Horizontal and Vertical carousels, add page indicators, render one page at a time moving back and fort programmatically and much more. “How to” at Github repository.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
+        2.7.0
+        [New feature] New property named IndicatorsStyle with value equal Rounded or Squared (default Rounded).
         2.6.1
         [New feature] InterPageSpacingColor property to change the color of the margin/space between pages (default #FFFFFF).
         2.6.0

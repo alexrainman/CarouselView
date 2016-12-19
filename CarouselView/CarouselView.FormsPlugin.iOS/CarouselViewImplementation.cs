@@ -65,8 +65,6 @@ namespace CarouselView.FormsPlugin.iOS
 				pageControl.TranslatesAutoresizingMaskIntoConstraints = false;
 				pageControl.Enabled = false;
 
-				ConfigurePageControl();
-
 				nativeView.AddSubview(pageControl);
 
 				var viewsDictionary = NSDictionary.FromObjectsAndKeys(new NSObject[] { pageControl }, new NSObject[] { new NSString("pageControl") });
@@ -185,6 +183,7 @@ namespace CarouselView.FormsPlugin.iOS
 					ElementHeight = rect.Height;
 					var firstViewController = CreateViewController(Element.Position);
 					pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => { });
+					ConfigurePageControl();
 					break;
 				case "ShowIndicators":
 					pageControl.Hidden = !Element.ShowIndicators;
@@ -348,6 +347,21 @@ namespace CarouselView.FormsPlugin.iOS
 			{
 				pageControl.Pages = Element.ItemsSource.Count;
 				pageControl.CurrentPage = Element.Position;
+
+				if (Element.IndicatorsStyle == IndicatorsStyle.Squared)
+				{
+					foreach (var view in pageControl.Subviews)
+					{
+						view.Layer.CornerRadius = 0;
+						var frame = view.Frame;
+						if (frame.Width == 7)
+						{
+							frame.Width = frame.Width - 1;
+							frame.Height = frame.Height - 1;
+							view.Frame = frame;
+						}
+					}
+				}
 			}
 		}
 
