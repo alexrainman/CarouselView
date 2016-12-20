@@ -58,12 +58,12 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(ShowIndicatorsProperty, value); }
 		}
 
-		public static readonly BindableProperty IndicatorsStyleProperty = BindableProperty.Create("IndicatorsStyle", typeof(IndicatorsStyle), typeof(CarouselViewControl), IndicatorsStyle.Rounded);
+		public static readonly BindableProperty IndicatorsShapeProperty = BindableProperty.Create("IndicatorsShape", typeof(IndicatorsShape), typeof(CarouselViewControl), IndicatorsShape.Circle);
 
-		public IndicatorsStyle IndicatorsStyle
+		public IndicatorsShape IndicatorsShape
 		{
-			get { return (IndicatorsStyle)GetValue(IndicatorsStyleProperty); }
-			set { SetValue(IndicatorsStyleProperty, value); }
+			get { return (IndicatorsShape)GetValue(IndicatorsShapeProperty); }
+			set { SetValue(IndicatorsShapeProperty, value); }
 		}
 
 		public static readonly BindableProperty PageIndicatorTintColorProperty = BindableProperty.Create("PageIndicatorTintColor", typeof(Color), typeof(CarouselViewControl), Color.Silver);

@@ -56,7 +56,7 @@ namespace CarouselView.FormsPlugin.Android
 
 				indicator.SetPageColor(Element.PageIndicatorTintColor.ToAndroid());
 				indicator.SetFillColor(Element.CurrentPageIndicatorTintColor.ToAndroid());
-				indicator.SetStyle(Element.IndicatorsStyle); // Rounded or Squared
+				indicator.SetStyle(Element.IndicatorsShape); // Rounded or Squared
 
 				indicator.Visibility = Element.ShowIndicators ? AViews.ViewStates.Visible : AViews.ViewStates.Gone;
 

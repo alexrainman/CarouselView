@@ -344,7 +344,7 @@ namespace CarouselView.FormsPlugin.UWP
 
         Shape CreateDot(int i, int position)
         {
-            if (Element.IndicatorsStyle == IndicatorsStyle.Rounded)
+            if (Element.IndicatorsShape == IndicatorsShape.Circle)
             {
                 return new Ellipse()
                 {

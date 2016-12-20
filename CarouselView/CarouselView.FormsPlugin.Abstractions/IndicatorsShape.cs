@@ -1,9 +1,9 @@
 ﻿using System;
 namespace CarouselView.FormsPlugin.Abstractions
 {
-	public enum IndicatorsStyle
+	public enum IndicatorsShape
 	{
-		Rounded,
-		Squared
+		Circle,
+		Square
 	}
 }

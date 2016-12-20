@@ -27,7 +27,7 @@ namespace CarouselView.FormsPlugin.Android
 		private int mOrientation;
 		private bool mCentered;
 		private bool mSnap;
-		private IndicatorsStyle indicatorsStyle = IndicatorsStyle.Rounded;
+		private IndicatorsShape indicatorsStyle = IndicatorsShape.Circle;
 
 		public CirclePageIndicator(Context context) : this(context, null)
 		{
@@ -85,7 +85,7 @@ namespace CarouselView.FormsPlugin.Android
 			Invalidate();
 		}
 
-		public void SetStyle(IndicatorsStyle style)
+		public void SetStyle(IndicatorsShape style)
 		{
 			indicatorsStyle = style;
 			Invalidate();
@@ -165,7 +165,7 @@ namespace CarouselView.FormsPlugin.Android
 				{
 					switch (indicatorsStyle)
 					{
-						case IndicatorsStyle.Squared:
+						case IndicatorsShape.Square:
 							var rect1 = new Xamarin.Forms.Rectangle((int)dX, (int)dY, (int)pageFillRadius * 2, (int)pageFillRadius * 2);
 							var rect1_native = new Rect((int)rect1.Left, (int)rect1.Top, (int)rect1.Right, (int)rect1.Bottom);
 							canvas.DrawRect(rect1_native, mPaintPageFill);
@@ -181,7 +181,7 @@ namespace CarouselView.FormsPlugin.Android
 				{
 					switch (indicatorsStyle)
 					{
-						case IndicatorsStyle.Squared:
+						case IndicatorsShape.Square:
 							var rect2 = new Xamarin.Forms.Rectangle((int)dX, (int)dY, (int)mRadius * 2, (int)mRadius * 2);
 							var rect2_native = new Rect((int)rect2.Left, (int)rect2.Top, (int)rect2.Right, (int)rect2.Bottom);
 							canvas.DrawRect(rect2_native, mPaintPageFill);
@@ -211,7 +211,7 @@ namespace CarouselView.FormsPlugin.Android
 
 			switch (indicatorsStyle)
 			{
-				case IndicatorsStyle.Squared:
+				case IndicatorsShape.Square:
 					var rect3 = new Xamarin.Forms.Rectangle((int)dX, (int)dY, (int)mRadius * 2, (int)mRadius * 2);
 					var rect3_native = new Rect((int)rect3.Left, (int)rect3.Top, (int)rect3.Right, (int)rect3.Bottom);
 					canvas.DrawRect(rect3_native, mPaintFill);

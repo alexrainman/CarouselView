@@ -348,7 +348,7 @@ namespace CarouselView.FormsPlugin.iOS
 				pageControl.Pages = Element.ItemsSource.Count;
 				pageControl.CurrentPage = Element.Position;
 
-				if (Element.IndicatorsStyle == IndicatorsStyle.Squared)
+				if (Element.IndicatorsShape == IndicatorsShape.Square)
 				{
 					foreach (var view in pageControl.Subviews)
 					{
