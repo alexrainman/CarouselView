@@ -20,7 +20,7 @@ namespace CarouselView.FormsPlugin.Android
 		private ViewPager mViewPager;
 		private ViewPager.IOnPageChangeListener mListener;
 		private int mCurrentPage;
-		private int mSnapPage;
+		public int mSnapPage;
 		private int mCurrentOffset;
 		private int mScrollState;
 		private int mPageSize;
@@ -166,9 +166,7 @@ namespace CarouselView.FormsPlugin.Android
 					switch (indicatorsStyle)
 					{
 						case IndicatorsShape.Square:
-							var rect1 = new Xamarin.Forms.Rectangle((int)dX, (int)dY, (int)pageFillRadius * 2, (int)pageFillRadius * 2);
-							var rect1_native = new Rect((int)rect1.Left, (int)rect1.Top, (int)rect1.Right, (int)rect1.Bottom);
-							canvas.DrawRect(rect1_native, mPaintPageFill);
+							canvas.DrawRect(dX, dY, dX + (pageFillRadius * 2), dY + (pageFillRadius * 2), mPaintPageFill);
 							break;
 						default:
 							canvas.DrawCircle(dX, dY, pageFillRadius, mPaintPageFill);
@@ -177,20 +175,18 @@ namespace CarouselView.FormsPlugin.Android
 				}
 
 				// Only paint stroke if a stroke width was non-zero
-				if (pageFillRadius != mRadius)
+				/*if (pageFillRadius != mRadius)
 				{
 					switch (indicatorsStyle)
 					{
 						case IndicatorsShape.Square:
-							var rect2 = new Xamarin.Forms.Rectangle((int)dX, (int)dY, (int)mRadius * 2, (int)mRadius * 2);
-							var rect2_native = new Rect((int)rect2.Left, (int)rect2.Top, (int)rect2.Right, (int)rect2.Bottom);
-							canvas.DrawRect(rect2_native, mPaintPageFill);
+							canvas.DrawRect(dX, dY, dX + (this.mRadius * 2), dY + (this.mRadius * 2), mPaintStroke);
 							break;
 						default:
 							canvas.DrawCircle(dX, dY, mRadius, mPaintStroke);
 							break;
 					}
-				}
+				}*/
 			}
 
 			//Draw the filled circle according to the current scroll
@@ -212,9 +208,7 @@ namespace CarouselView.FormsPlugin.Android
 			switch (indicatorsStyle)
 			{
 				case IndicatorsShape.Square:
-					var rect3 = new Xamarin.Forms.Rectangle((int)dX, (int)dY, (int)mRadius * 2, (int)mRadius * 2);
-					var rect3_native = new Rect((int)rect3.Left, (int)rect3.Top, (int)rect3.Right, (int)rect3.Bottom);
-					canvas.DrawRect(rect3_native, mPaintFill);
+					canvas.DrawRect(dX, dY, dX + (this.mRadius * 2), dY + (this.mRadius * 2), mPaintFill);
 					break;
 				default:
 					canvas.DrawCircle(dX, dY, mRadius, mPaintFill);

@@ -122,7 +122,7 @@ namespace CarouselView.FormsPlugin.UWP
                 case "ShowIndicators":
                     indicators.Visibility = Element.ShowIndicators ? Visibility.Visible : Visibility.Collapsed;
                     break;
-                case "ItemsSource": // TODO: don't execute the first time
+                case "ItemsSource":
                     ItemsSourceChanged();
                     break;
             }
@@ -199,54 +199,72 @@ namespace CarouselView.FormsPlugin.UWP
         {
 			if (Element != null && flipView != null)
 			{
-				IsLoading = true;
+                if (Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
+                {
+                    IsLoading = true;
 
-				if (Element.Position > Element.ItemsSource.Count - 1)
-					Element.Position = Element.ItemsSource.Count - 1;
+                    if (Element.Position > Element.ItemsSource.Count - 1)
+                        Element.Position = Element.ItemsSource.Count - 1;
 
-				var source = new List<FrameworkElement>();
+                    var source = new List<FrameworkElement>();
 
-				for (int j = 0; j <= Element.Position; j++)
-				{
-					source.Add(CreateView(Element.ItemsSource[j]));
-				}
+                    for (int j = 0; j <= Element.Position; j++)
+                    {
+                        source.Add(CreateView(Element.ItemsSource[j]));
+                    }
 
-				Source = new ObservableCollection<FrameworkElement>(source);
+                    Source = new ObservableCollection<FrameworkElement>(source);
 
-                flipView.ItemsSource = Source;
-                //flipView.ItemsSource = Element.ItemsSource;
-                //flipView.ItemTemplateSelector = new MyTemplateSelector(Element);
+                    flipView.ItemsSource = Source;
+                    //flipView.ItemsSource = Element.ItemsSource;
+                    //flipView.ItemTemplateSelector = new MyTemplateSelector(Element);
 
-				var dots = new List<Shape>();
+                    var dots = new List<Shape>();
 
-				int i = 0;
-				foreach (var item in Element.ItemsSource)
-				{
-					dots.Add(CreateDot(i, Element.Position));
-					i++;
-				}
+                    int i = 0;
+                    foreach (var item in Element.ItemsSource)
+                    {
+                        dots.Add(CreateDot(i, Element.Position));
+                        i++;
+                    }
 
-				Dots = new ObservableCollection<Shape>(dots);
+                    Dots = new ObservableCollection<Shape>(dots);
 
-                var dotsPanel = nativeView.FindName("dotsPanel") as ItemsControl;
-                dotsPanel.ItemsSource = Dots;
+                    var dotsPanel = nativeView.FindName("dotsPanel") as ItemsControl;
+                    dotsPanel.ItemsSource = Dots;
 
-				flipView.SelectedIndex = Element.Position;
+                    flipView.SelectedIndex = Element.Position;
 
-				await Task.Delay(100);
+                    await Task.Delay(100);
 
-				for (var j = Element.Position + 1; j <= Element.ItemsSource.Count - 1; j++)
-				{
-					Source.Add(CreateView(Element.ItemsSource[j]));
-				}
+                    for (var j = Element.Position + 1; j <= Element.ItemsSource.Count - 1; j++)
+                    {
+                        Source.Add(CreateView(Element.ItemsSource[j]));
+                    }
 
-				IsLoading = false;
+                    IsLoading = false;
+                }
+                else
+                {
+					Element.Position = 0;
+					
+                    var source = new List<FrameworkElement>();
+                    Source = new ObservableCollection<FrameworkElement>(source);
+
+                    flipView.ItemsSource = Source;
+
+                    var dots = new List<Shape>();
+                    Dots = new ObservableCollection<Shape>(dots);
+
+                    var dotsPanel = nativeView.FindName("dotsPanel") as ItemsControl;
+                    dotsPanel.ItemsSource = Dots;
+                }
 			}
         }
 
         public async void RemoveItem(int position)
         {
-            if (Element != null && flipView != null)
+            if (Element != null && flipView != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
             {
 				if (position > Element.ItemsSource.Count - 1)
 					throw new CarouselViewException("Page cannot be removed at a position bigger than ItemsSource.Count - 1");
@@ -290,7 +308,7 @@ namespace CarouselView.FormsPlugin.UWP
 
 		public async void InsertItem(object item, int position)
         {
-            if (Element != null && flipView != null)
+            if (Element != null && flipView != null && Element.ItemsSource != null)
             {
 				if (position > Element.ItemsSource.Count + 1)
 					throw new CarouselViewException("Page cannot be inserted at a position bigger than ItemsSource.Count");
@@ -314,7 +332,7 @@ namespace CarouselView.FormsPlugin.UWP
 
         public void SetCurrentItem(int position)
         {
-            if (Element != null && flipView != null)
+            if (Element != null && flipView != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
             {
 				if (position > Element.ItemsSource.Count - 1)
 					throw new CarouselViewException("Current page index cannot be bigger than ItemsSource.Count - 1");

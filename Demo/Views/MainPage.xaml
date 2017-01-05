@@ -1,64 +1,78 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="Demo.MainPage"
-    xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="Demo.MainPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
 
     <Grid RowSpacing="0">
         <Grid.RowDefinitions>
-	        <RowDefinition Height="*" />
-	        <RowDefinition Height="56" />
-	    </Grid.RowDefinitions>
-	    <Grid.ColumnDefinitions>
-	        <ColumnDefinition Width="*" />
-	    </Grid.ColumnDefinitions>
-       <controls:CarouselViewControl x:Name="myCarousel" Orientation="Horizontal" InterPageSpacing="10" InterPageSpacingColor="Red" ShowIndicators="true" IndicatorsShape="Square" Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
-       <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="Silver" Padding="12,0,12,0">
-           <Grid.RowDefinitions>
-		       <RowDefinition Height="*" />
-		   </Grid.RowDefinitions>
-		   <Grid.ColumnDefinitions>
-		       <ColumnDefinition Width="80" />
-		       <ColumnDefinition Width="*" />
-		       <ColumnDefinition Width="80" />
-		   </Grid.ColumnDefinitions>
-		   <Label x:Name="prevBtn" Text="Prev" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Start">
-		       <Label.GestureRecognizers>
-                   <TapGestureRecognizer Tapped="OnPrev"/>
-               </Label.GestureRecognizers>
-		   </Label>
-		   <Label x:Name="addPageBtn" Text="Add Page" Grid.Row="0" Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
-		       <Label.GestureRecognizers>
-                   <TapGestureRecognizer Tapped="OnAdd"/>
-               </Label.GestureRecognizers>
-		   </Label>
-		   <Label x:Name="nextBtn" Text="Next" Grid.Row="0" Grid.Column="2" VerticalTextAlignment="Center" HorizontalTextAlignment="End">
-		       <Label.GestureRecognizers>
-                   <TapGestureRecognizer Tapped="OnNext"/>
-               </Label.GestureRecognizers>
-		   </Label>
-       </Grid>
-    </Grid>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="56" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-	<!--<AbsoluteLayout BackgroundColor="Yellow" VerticalOptions="Fill">
-        <StackLayout BackgroundColor="Blue" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
-			AbsoluteLayout.LayoutBounds="0,0,1,.9" 
-			AbsoluteLayout.LayoutFlags="All">
-            <controls:CarouselViewControl x:Name="myCarousel" Orientation="Horizontal" InterPageSpacing="10" PageIndicators="true" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
-        </StackLayout>
-        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
-			AbsoluteLayout.LayoutBounds="1,1,1,.1" 
-			AbsoluteLayout.LayoutFlags="All"
-            BackgroundColor="Red"
-            Orientation="Horizontal">
-            <Button
-                x:Name="prevBtn"
-                IsVisible="false"
-                Text="Previous" />
-            <Button
-                x:Name="nextBtn"
-                Text="Next" />
-        </StackLayout>
-    </AbsoluteLayout>-->
+        <controls:CarouselViewControl x:Name="myCarousel"
+                                      Grid.Row="0"
+                                      Grid.Column="0"
+                                      HorizontalOptions="FillAndExpand"
+                                      VerticalOptions="FillAndExpand"
+                                      IndicatorsShape="Square"
+                                      InterPageSpacing="10"
+                                      InterPageSpacingColor="Red"
+                                      Orientation="Horizontal"
+                                      ShowIndicators="true">
+            <!--<controls:CarouselViewControl.ItemTemplate>
+                <DataTemplate>
+                    <Label Text="{Binding .}" />
+                </DataTemplate>
+            </controls:CarouselViewControl.ItemTemplate>-->
+        </controls:CarouselViewControl>
+
+        <Grid Grid.Row="1"
+              Grid.Column="0"
+              BackgroundColor="Silver"
+              Padding="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="80" />
+            </Grid.ColumnDefinitions>
+            <Label x:Name="prevBtn"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   HorizontalTextAlignment="Start"
+                   Text="Prev"
+                   VerticalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnPrev" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label x:Name="addPageBtn"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   HorizontalTextAlignment="Center"
+                   Text="Add Page"
+                   VerticalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAdd" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label x:Name="nextBtn"
+                   Grid.Row="0"
+                   Grid.Column="2"
+                   HorizontalTextAlignment="End"
+                   Text="Next"
+                   VerticalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNext" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+    </Grid>
 
 </ContentPage>

@@ -46,14 +46,7 @@ namespace CarouselView.FormsPlugin.iOS
 				nativeView = new UIView();
 				nativeView.ClipsToBounds = true;
 
-				var interPageSpacing = (float)Element.InterPageSpacing;
-
-				var orientation = (UIPageViewControllerNavigationOrientation)Element.Orientation;
-
-				pageController = new UIPageViewController(UIPageViewControllerTransitionStyle.Scroll,
-														  orientation, UIPageViewControllerSpineLocation.None, interPageSpacing);
-
-				pageController.View.BackgroundColor = Element.InterPageSpacingColor.ToUIColor();
+				ConfigurePageController();
 
 				nativeView.AddSubview(pageController.View);
 
@@ -124,12 +117,42 @@ namespace CarouselView.FormsPlugin.iOS
 			{
 				// Configure the control and subscribe to event handlers
 
-				pageController.DidFinishAnimating += PageController_DidFinishAnimating;
+				AttachEvents();
 
-				pageController.GetPreviousViewController = (pageViewController, referenceViewController) =>
+				Element.RemoveAction = new Action<int>(RemoveController);
+				Element.InsertAction = new Action<object, int>(InsertController);
+				Element.SetCurrentAction = new Action<int>(SetCurrentController);
+			}
+		}
+
+		void ConfigurePageController()
+		{
+			var interPageSpacing = (float)Element.InterPageSpacing;
+
+			var orientation = (UIPageViewControllerNavigationOrientation)Element.Orientation;
+
+			pageController = new UIPageViewController(UIPageViewControllerTransitionStyle.Scroll,
+													  orientation, UIPageViewControllerSpineLocation.None, interPageSpacing);
+
+			pageController.View.BackgroundColor = Element.InterPageSpacingColor.ToUIColor();
+
+			if (nativeView.Subviews.Count() > 0)
+			    nativeView.Subviews[0].RemoveFromSuperview();
+			
+			nativeView.InsertSubview(pageController.View, 0);
+
+			AttachEvents();
+		}
+
+		void AttachEvents()
+		{
+			pageController.DidFinishAnimating += PageController_DidFinishAnimating;
+
+			pageController.GetPreviousViewController = (pageViewController, referenceViewController) =>
+			{
+				var controller = (ViewContainer)referenceViewController;
+				if (controller != null)
 				{
-
-					var controller = (ViewContainer)referenceViewController;
 					var position = controller.Tag;
 
 					// Determine if we are on the first page
@@ -142,12 +165,17 @@ namespace CarouselView.FormsPlugin.iOS
 						int previousPageIndex = position - 1;
 						return CreateViewController(previousPageIndex);
 					}
-				};
+				}
+				else {
+					return null;
+				}
+			};
 
-				pageController.GetNextViewController = (pageViewController, referenceViewController) =>
+			pageController.GetNextViewController = (pageViewController, referenceViewController) =>
+			{
+				var controller = (ViewContainer)referenceViewController;
+				if (controller != null)
 				{
-
-					var controller = (ViewContainer)referenceViewController;
 					var position = controller.Tag;
 
 					// Determine if we are on the last page
@@ -160,12 +188,11 @@ namespace CarouselView.FormsPlugin.iOS
 						int nextPageIndex = position + 1;
 						return CreateViewController(nextPageIndex);
 					}
-				};
-
-				Element.RemoveAction = new Action<int>(RemoveController);
-				Element.InsertAction = new Action<object, int>(InsertController);
-				Element.SetCurrentAction = new Action<int>(SetCurrentController);
-			}
+				}
+				else {
+					return null;
+				}
+			};
 		}
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -181,9 +208,12 @@ namespace CarouselView.FormsPlugin.iOS
 					break;
 				case "Height":
 					ElementHeight = rect.Height;
-					var firstViewController = CreateViewController(Element.Position);
-					pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => { });
-					ConfigurePageControl();
+					if (Element != null && pageController != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
+					{
+						var firstViewController = CreateViewController(Element.Position);
+						pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => { });
+						ConfigurePageControl();
+					}
 					break;
 				case "ShowIndicators":
 					pageControl.Hidden = !Element.ShowIndicators;
@@ -191,11 +221,20 @@ namespace CarouselView.FormsPlugin.iOS
 				case "ItemsSource": // TODO: don't execute the first time
 					if (Element != null && pageController != null)
 					{
-						if (Element.Position > Element.ItemsSource.Count - 1)
+						if (Element.Position > Element.ItemsSource?.Count - 1)
 							Element.Position = Element.ItemsSource.Count - 1;
 
-						var secondViewController = CreateViewController(Element.Position);
-						pageController.SetViewControllers(new[] { secondViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => { });
+						if (Element.Position == -1)
+							Element.Position = 0;
+
+						if (Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
+						{
+							var secondViewController = CreateViewController(Element.Position);
+							pageController.SetViewControllers(new[] { secondViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => { });
+						}
+						else {
+							ConfigurePageController();
+						}
 
 						ConfigurePageControl();
 
@@ -223,7 +262,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 		public async void RemoveController(int position)
 		{
-			if (Element != null && pageController != null)
+			if (Element != null && pageController != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
 			{
 
 				if (position > Element.ItemsSource.Count - 1)
@@ -266,7 +305,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 		public async void InsertController(object item, int position)
 		{
-			if (Element != null && pageController != null)
+			if (Element != null && pageController != null && Element.ItemsSource != null)
 			{
 
 				if (position > Element.ItemsSource.Count + 1)
@@ -277,7 +316,12 @@ namespace CarouselView.FormsPlugin.iOS
 				else
 					Element.ItemsSource.Insert(position, item);
 
-				var firstViewController = pageController.ViewControllers[0];
+				UIViewController firstViewController;
+				if (pageController.ViewControllers.Count() > 0)
+				    firstViewController = pageController.ViewControllers[0];
+				else
+					firstViewController = CreateViewController(0);
+				
 				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
 				{
 				});
@@ -290,9 +334,8 @@ namespace CarouselView.FormsPlugin.iOS
 
 		public void SetCurrentController(int position)
 		{
-			if (Element != null && pageController != null)
+			if (Element != null && pageController != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
 			{
-
 				if (position > Element.ItemsSource.Count - 1)
 					throw new CarouselViewException("Current page index cannot be bigger than ItemsSource.Count - 1");
 
@@ -318,7 +361,7 @@ namespace CarouselView.FormsPlugin.iOS
 			Xamarin.Forms.View formsView = null;
 
 			object bindingContext = null;
-			if (Element.ItemsSource != null)
+			if (Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
 				bindingContext = Element.ItemsSource.Cast<object>().ElementAt(index);
 
 			var selector = Element.ItemTemplate as DataTemplateSelector;
@@ -343,9 +386,9 @@ namespace CarouselView.FormsPlugin.iOS
 
 		void ConfigurePageControl()
 		{
-			if (pageControl != null && Element.ItemsSource != null)
+			if (Element != null && pageControl != null)
 			{
-				pageControl.Pages = Element.ItemsSource.Count;
+				pageControl.Pages = Count;
 				pageControl.CurrentPage = Element.Position;
 
 				if (Element.IndicatorsShape == IndicatorsShape.Square)
@@ -353,11 +396,9 @@ namespace CarouselView.FormsPlugin.iOS
 					foreach (var view in pageControl.Subviews)
 					{
 						view.Layer.CornerRadius = 0;
-						var frame = view.Frame;
-						if (frame.Width == 7)
+						if (view.Frame.Width == 7)
 						{
-							frame.Width = frame.Width - 1;
-							frame.Height = frame.Height - 1;
+							var frame = new CGRect(view.Frame.X, view.Frame.Y, view.Frame.Width - 1, view.Frame.Height - 1);
 							view.Frame = frame;
 						}
 					}

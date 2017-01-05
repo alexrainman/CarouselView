@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Demo.MySecondView">
 
-	<ListView x:Name="myList">
+	<!--<ListView x:Name="myList">
 		<ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
@@ -11,9 +11,9 @@
                 </ViewCell>
             </DataTemplate>
         </ListView.ItemTemplate>
-	</ListView>
+	</ListView>-->
 
-<!--    <AbsoluteLayout BackgroundColor="#FF8080">
+    <!--<AbsoluteLayout BackgroundColor="#FF8080">
 	    <BoxView Color="#8080FF"
 	             AbsoluteLayout.LayoutBounds="0.33, 0, 0.25, 0.25"
 	             AbsoluteLayout.LayoutFlags="All" />
@@ -49,7 +49,7 @@
 	</AbsoluteLayout>-->
 
 	<!-- requires x:Name so we can reference in RelativeToView on Green box -->
-	<!--<RelativeLayout>
+	<RelativeLayout>
     
 	    <BoxView Color="Red" x:Name="Red"
 	            WidthRequest="200" 
@@ -83,6 +83,6 @@
 	                 "{ConstraintExpression Type=RelativeToParent, 
 	                                        Property=Height,
 	                                        Factor=0.3}" />
-	</RelativeLayout>-->
+	</RelativeLayout>
 
 </ContentView>

@@ -11,9 +11,9 @@ namespace Demo
 			InitializeComponent ();
 			BackgroundColor = Color.White;
 
-			var source = new List<string>() { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+			/*var source = new List<string>() { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
 
-			myList.ItemsSource = source;
+			myList.ItemsSource = source;*/
         }
 	}
 }

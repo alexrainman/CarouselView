@@ -114,8 +114,13 @@ namespace CarouselView.FormsPlugin.Android
 				case "ItemsSource": // TODO: don't execute the first time
 					if (Element != null && viewPager != null)
 					{
-						if (Element.Position > Element.ItemsSource.Count - 1)
+						if (Element.Position > Element.ItemsSource?.Count - 1)
 							Element.Position = Element.ItemsSource.Count - 1;
+
+						if (Element.Position == -1)
+							Element.Position = 0;
+
+						indicator.mSnapPage = Element.Position;
 
 						viewPager.Adapter = new PageAdapter(Element, viewPager);
 						viewPager.SetCurrentItem(Element.Position, false);
@@ -144,7 +149,7 @@ namespace CarouselView.FormsPlugin.Android
 		// Android ViewPager is the most complicated piece of code ever :)
 		public async void RemoveItem(int position)
 		{	
-			if (Element != null && viewPager != null) {
+			if (Element != null && viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0) {
 				
 				IsRemoving = true;
 
@@ -205,7 +210,7 @@ namespace CarouselView.FormsPlugin.Android
 
 		public async void InsertItem(object item, int position)
 		{
-			if (Element != null && viewPager != null) {
+			if (Element != null && viewPager != null && Element.ItemsSource != null) {
 
 				if (position > Element.ItemsSource.Count)
 					throw new CarouselViewException("Page cannot be inserted at a position bigger than ItemsSource.Count");
@@ -223,7 +228,7 @@ namespace CarouselView.FormsPlugin.Android
 
 		public void SetCurrentItem(int position)
 		{	
-			if (Element != null && viewPager != null) {
+			if (Element != null && viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0) {
 
 				if (position > Element.ItemsSource.Count - 1)
 					throw new CarouselViewException("Current page index cannot be bigger than ItemsSource.Count - 1");
@@ -263,7 +268,7 @@ namespace CarouselView.FormsPlugin.Android
 				Xamarin.Forms.View formsView = null;
 
 				object bindingContext = null;
-				if (Element.ItemsSource != null)
+				if (Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
 				    bindingContext = Element.ItemsSource.Cast<object> ().ElementAt (position);
 
 				var selector = Element.ItemTemplate as DataTemplateSelector;

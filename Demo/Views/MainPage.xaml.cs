@@ -13,7 +13,7 @@ namespace Demo
 		{
 			InitializeComponent ();
 
-			myCarousel.ItemsSource = new List<int> { 1, 2, 3, 4, 5 };
+			myCarousel.ItemsSource = new List<int>() { 1, 2, 3, 4, 5 };
 			myCarousel.ItemTemplate = new MyTemplateSelector (); //new DataTemplate (typeof(MyView));
 			myCarousel.Position = 0;
 			myCarousel.PositionSelected += PositionSelected;
@@ -26,15 +26,15 @@ namespace Demo
 			});
 
 			prevBtn.IsVisible = myCarousel.Position > 0;
-			addPageBtn.IsVisible = myCarousel.Position == myCarousel.ItemsSource.Count - 1;
-			nextBtn.IsVisible = myCarousel.Position < myCarousel.ItemsSource.Count - 1;
+			addPageBtn.IsVisible = myCarousel.Position == myCarousel.ItemsSource?.Count - 1;
+			nextBtn.IsVisible = myCarousel.Position < myCarousel.ItemsSource?.Count - 1;
 
 			ToolbarItems.Add(new ToolbarItem
 			{
 				Text = "Reset",
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() => {
-					myCarousel.ItemsSource = new List<int> { 1, 2, 3, 4, 5 };
+					myCarousel.ItemsSource = new List<int>() { 1, 2, 3, 4, 5 };
 					//myCarousel.SetCurrentPage(0);
 					//myCarousel.ShowIndicators = !myCarousel.ShowIndicators;
 				})
@@ -44,8 +44,8 @@ namespace Demo
 		public void PositionSelected (object sender, EventArgs e)
 		{			
 			prevBtn.IsVisible = myCarousel.Position > 0;
-			addPageBtn.IsVisible = myCarousel.Position == myCarousel.ItemsSource.Count - 1;
-			nextBtn.IsVisible = myCarousel.Position < myCarousel.ItemsSource.Count - 1;
+			addPageBtn.IsVisible = myCarousel.ItemsSource != null;
+			nextBtn.IsVisible = myCarousel.Position < myCarousel.ItemsSource?.Count - 1;
 			Debug.WriteLine ("Position " + myCarousel.Position + " selected");
 		}
 
@@ -57,14 +57,19 @@ namespace Demo
 
 		public void OnNext(object sender, TappedEventArgs e)
 		{
-			if (myCarousel.Position < myCarousel.ItemsSource.Count - 1)
+			if (myCarousel.Position < myCarousel.ItemsSource?.Count - 1)
 				myCarousel.SetCurrentPage(myCarousel.Position + 1);
 		}
 
-		public async Task OnAdd (object sender, TappedEventArgs e)
+		public async Task OnAdd(object sender, TappedEventArgs e)
 		{
-			await myCarousel.InsertPage (myCarousel.ItemsSource.Count + 1);
-			myCarousel.SetCurrentPage (myCarousel.ItemsSource.Count - 1);
+			if (myCarousel.ItemsSource != null)
+			{
+				await myCarousel.InsertPage(myCarousel.ItemsSource.Count);
+
+				if (myCarousel.ItemsSource.Count > 1)
+			        myCarousel.SetCurrentPage(myCarousel.ItemsSource.Count - 1);
+		    }
 		}
 
 	}
