@@ -84,7 +84,7 @@ Then the xaml:
 
 ```ShowIndicators```: hide/show page indicators (default false).
 
-```IndicatorsStyle```: Sets the style of indicators dots to Rounded or Squared (default Rounded).
+```IndicatorsShape```: Indicators shape (default Circle).
 
 ```PageIndicatorTintColor```: page dot indicators fill color (default #C0C0C0).
 
@@ -145,6 +145,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 ```
 
 #### Release Notes
+
+2.7.1
+
+[Update] IndicatorsStyle property renamed to IndicatorsShape (default Circle).
 
 2.7.0
 
