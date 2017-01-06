@@ -1,7 +1,7 @@
 ﻿using System;
-using Xamarin.Forms;
 using System.Collections;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace CarouselView.FormsPlugin.Abstractions
 {
@@ -106,6 +106,14 @@ namespace CarouselView.FormsPlugin.Abstractions
 		{
 			get { return (Orientation)GetValue(OrientationProperty); }
 			set { SetValue(OrientationProperty, value); }
+		}
+
+		public static readonly BindableProperty AnimateTransitionProperty = BindableProperty.Create("AnimateTransition", typeof(bool), typeof(CarouselViewControl), true);
+
+		public bool AnimateTransition
+		{
+			get { return (bool)GetValue(AnimateTransitionProperty); }
+			set { SetValue(AnimateTransitionProperty, value); }
 		}
 
 		public EventHandler PositionSelected;

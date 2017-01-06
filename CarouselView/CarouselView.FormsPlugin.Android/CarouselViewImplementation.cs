@@ -1,16 +1,15 @@
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Android.OS;
 using Android.Support.V4.View;
+using Android.Util;
 using CarouselView.FormsPlugin.Abstractions;
 using CarouselView.FormsPlugin.Android;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using System.ComponentModel;
-
 using AViews = Android.Views;
-using Android.Util;
-using Android.OS;
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.Android
@@ -164,7 +163,7 @@ namespace CarouselView.FormsPlugin.Android
 
 					if (position == 0) {
 
-						viewPager.SetCurrentItem (1, true);
+						viewPager.SetCurrentItem (1, Element.AnimateTransition);
 
 						await Task.Delay (100);
 
@@ -178,7 +177,7 @@ namespace CarouselView.FormsPlugin.Android
 
 					} else {
 
-						viewPager.SetCurrentItem (newPos, true);
+						viewPager.SetCurrentItem (newPos, Element.AnimateTransition);
 
 						await Task.Delay(100);
 
@@ -234,7 +233,7 @@ namespace CarouselView.FormsPlugin.Android
 					throw new CarouselViewException("Current page index cannot be bigger than ItemsSource.Count - 1");
 				
 				Element.Position = position;
-				viewPager.SetCurrentItem (Element.Position, true);
+				viewPager.SetCurrentItem (Element.Position, Element.AnimateTransition);
 			}
 		}
 
