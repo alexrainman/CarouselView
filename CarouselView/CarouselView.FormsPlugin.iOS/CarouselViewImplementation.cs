@@ -238,8 +238,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 						ConfigurePageControl();
 
-						if (Element.PositionSelected != null)
-							Element.PositionSelected(Element, EventArgs.Empty);
+						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 					}
 					break;
 			}
@@ -255,8 +254,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 				ConfigurePageControl();
 
-				if (Element.PositionSelected != null)
-					Element.PositionSelected(Element, EventArgs.Empty);
+				Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 			}
 		}
 
@@ -280,8 +278,9 @@ namespace CarouselView.FormsPlugin.iOS
 					await Task.Delay(100);
 					var direction = position == 0 ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
 					var firstViewController = CreateViewController(newPos);
-					pageController.SetViewControllers(new[] { firstViewController }, direction, true, s =>
+					pageController.SetViewControllers(new[] { firstViewController }, direction, Element.AnimateTransition, s =>
 					{
+						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 					});
 
 					Element.Position = newPos;
@@ -292,14 +291,12 @@ namespace CarouselView.FormsPlugin.iOS
 					var firstViewController = pageController.ViewControllers[0];
 					pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
 					{
+						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 					});
 
 				}
 
 				ConfigurePageControl();
-
-				if (Element.PositionSelected != null)
-					Element.PositionSelected(Element, EventArgs.Empty);
 			}
 		}
 
@@ -322,7 +319,7 @@ namespace CarouselView.FormsPlugin.iOS
 				else
 					firstViewController = CreateViewController(0);
 				
-				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
+				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, Element.AnimateTransition, s =>
 				{
 				});
 
@@ -344,14 +341,12 @@ namespace CarouselView.FormsPlugin.iOS
 				Element.Position = position;
 
 				var firstViewController = CreateViewController(position);
-				pageController.SetViewControllers(new[] { firstViewController }, direction, true, s =>
+				pageController.SetViewControllers(new[] { firstViewController }, direction, Element.AnimateTransition, s =>
 				{
+					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 				});
 
 				ConfigurePageControl();
-
-				if (Element.PositionSelected != null)
-					Element.PositionSelected(Element, EventArgs.Empty);
 			}
 		}
 
