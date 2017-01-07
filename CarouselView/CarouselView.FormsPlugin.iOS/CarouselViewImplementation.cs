@@ -46,9 +46,10 @@ namespace CarouselView.FormsPlugin.iOS
 				nativeView = new UIView();
 				nativeView.ClipsToBounds = true;
 
-				ConfigurePageController();
+				configPosition();
 
-				nativeView.AddSubview(pageController.View);
+				// NEW CODE (DONE)
+				ConfigurePageController();
 
 				pageControl = new UIPageControl();
 
@@ -117,6 +118,7 @@ namespace CarouselView.FormsPlugin.iOS
 			{
 				// Configure the control and subscribe to event handlers
 
+				// NEW CODE (DONE)
 				AttachEvents();
 
 				Element.RemoveAction = new Action<int>(RemoveController);
@@ -125,6 +127,22 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 		}
 
+		void configPosition()
+		{
+			if (Element.ItemsSource != null)
+			{
+				if (Element.Position > Element.ItemsSource.Count - 1)
+					Element.Position = Element.ItemsSource.Count - 1;
+
+				if (Element.Position == -1)
+					Element.Position = 0;
+			}
+			else {
+				Element.Position = 0;
+			}
+		}
+
+		// NEW CODE (DONE)
 		void ConfigurePageController()
 		{
 			var interPageSpacing = (float)Element.InterPageSpacing;
@@ -144,6 +162,29 @@ namespace CarouselView.FormsPlugin.iOS
 			AttachEvents();
 		}
 
+		void ConfigurePageControl()
+		{
+			if (Element != null && pageControl != null)
+			{
+				pageControl.Pages = Count;
+				pageControl.CurrentPage = Element.Position;
+
+				if (Element.IndicatorsShape == IndicatorsShape.Square)
+				{
+					foreach (var view in pageControl.Subviews)
+					{
+						view.Layer.CornerRadius = 0;
+						if (view.Frame.Width == 7)
+						{
+							var frame = new CGRect(view.Frame.X, view.Frame.Y, view.Frame.Width - 1, view.Frame.Height - 1);
+							view.Frame = frame;
+						}
+					}
+				}
+			}
+		}
+
+		// NEW CODE (DONE)
 		void AttachEvents()
 		{
 			pageController.DidFinishAnimating += PageController_DidFinishAnimating;
@@ -151,6 +192,7 @@ namespace CarouselView.FormsPlugin.iOS
 			pageController.GetPreviousViewController = (pageViewController, referenceViewController) =>
 			{
 				var controller = (ViewContainer)referenceViewController;
+				// NEW CODE (DONE)
 				if (controller != null)
 				{
 					var position = controller.Tag;
@@ -174,6 +216,7 @@ namespace CarouselView.FormsPlugin.iOS
 			pageController.GetNextViewController = (pageViewController, referenceViewController) =>
 			{
 				var controller = (ViewContainer)referenceViewController;
+				// NEW CODE (DONE)
 				if (controller != null)
 				{
 					var position = controller.Tag;
@@ -208,6 +251,7 @@ namespace CarouselView.FormsPlugin.iOS
 					break;
 				case "Height":
 					ElementHeight = rect.Height;
+					// NEW CODE (DONE)
 					if (Element != null && pageController != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
 					{
 						var firstViewController = CreateViewController(Element.Position);
@@ -221,12 +265,9 @@ namespace CarouselView.FormsPlugin.iOS
 				case "ItemsSource": // TODO: don't execute the first time
 					if (Element != null && pageController != null)
 					{
-						if (Element.Position > Element.ItemsSource?.Count - 1)
-							Element.Position = Element.ItemsSource.Count - 1;
+						configPosition();
 
-						if (Element.Position == -1)
-							Element.Position = 0;
-
+						// NEW CODE (DONE)
 						if (Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
 						{
 							var secondViewController = CreateViewController(Element.Position);
@@ -238,8 +279,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 						ConfigurePageControl();
 
-						if (Element.PositionSelected != null)
-							Element.PositionSelected(Element, EventArgs.Empty);
+						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 					}
 					break;
 			}
@@ -255,13 +295,42 @@ namespace CarouselView.FormsPlugin.iOS
 
 				ConfigurePageControl();
 
-				if (Element.PositionSelected != null)
-					Element.PositionSelected(Element, EventArgs.Empty);
+				Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+			}
+		}
+
+		public async void InsertController(object item, int position)
+		{
+			// NEW CODE (DONE)
+			if (Element != null && pageController != null && Element.ItemsSource != null)
+			{
+
+				if (position > Element.ItemsSource.Count + 1)
+					throw new CarouselViewException("Page cannot be inserted at a position bigger than ItemsSource.Count");
+
+				if (position == -1)
+					Element.ItemsSource.Add(item);
+				else
+					Element.ItemsSource.Insert(position, item);
+
+				UIViewController firstViewController;
+				if (pageController.ViewControllers.Count() > 0)
+					firstViewController = pageController.ViewControllers[0];
+				else
+					firstViewController = CreateViewController(0);
+
+				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, async s =>
+				{
+					ConfigurePageControl();
+
+					await Task.Delay(100);
+				});
 			}
 		}
 
 		public async void RemoveController(int position)
 		{
+			// NEW CODE (DONE)
 			if (Element != null && pageController != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
 			{
 
@@ -280,60 +349,31 @@ namespace CarouselView.FormsPlugin.iOS
 					await Task.Delay(100);
 					var direction = position == 0 ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
 					var firstViewController = CreateViewController(newPos);
-					pageController.SetViewControllers(new[] { firstViewController }, direction, true, s =>
+					pageController.SetViewControllers(new[] { firstViewController }, direction, Element.AnimateTransition, s =>
 					{
+						Element.Position = newPos;
+
+						ConfigurePageControl();
+
+						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 					});
-
-					Element.Position = newPos;
-
 				}
 				else {
 
 					var firstViewController = pageController.ViewControllers[0];
 					pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
 					{
+						ConfigurePageControl();
+
+						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 					});
-
 				}
-
-				ConfigurePageControl();
-
-				if (Element.PositionSelected != null)
-					Element.PositionSelected(Element, EventArgs.Empty);
-			}
-		}
-
-		public async void InsertController(object item, int position)
-		{
-			if (Element != null && pageController != null && Element.ItemsSource != null)
-			{
-
-				if (position > Element.ItemsSource.Count + 1)
-					throw new CarouselViewException("Page cannot be inserted at a position bigger than ItemsSource.Count");
-
-				if (position == -1)
-					Element.ItemsSource.Add(item);
-				else
-					Element.ItemsSource.Insert(position, item);
-
-				UIViewController firstViewController;
-				if (pageController.ViewControllers.Count() > 0)
-				    firstViewController = pageController.ViewControllers[0];
-				else
-					firstViewController = CreateViewController(0);
-				
-				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
-				{
-				});
-
-				ConfigurePageControl();
-
-				await Task.Delay(100);
 			}
 		}
 
 		public void SetCurrentController(int position)
 		{
+			// NEW CODE (DONE)
 			if (Element != null && pageController != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
 			{
 				if (position > Element.ItemsSource.Count - 1)
@@ -344,14 +384,12 @@ namespace CarouselView.FormsPlugin.iOS
 				Element.Position = position;
 
 				var firstViewController = CreateViewController(position);
-				pageController.SetViewControllers(new[] { firstViewController }, direction, true, s =>
+				pageController.SetViewControllers(new[] { firstViewController }, direction, Element.AnimateTransition, s =>
 				{
+					ConfigurePageControl();
+
+					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 				});
-
-				ConfigurePageControl();
-
-				if (Element.PositionSelected != null)
-					Element.PositionSelected(Element, EventArgs.Empty);
 			}
 		}
 
@@ -361,6 +399,7 @@ namespace CarouselView.FormsPlugin.iOS
 			Xamarin.Forms.View formsView = null;
 
 			object bindingContext = null;
+			// NEW CODE (DONE)
 			if (Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
 				bindingContext = Element.ItemsSource.Cast<object>().ElementAt(index);
 
@@ -382,28 +421,6 @@ namespace CarouselView.FormsPlugin.iOS
 			viewController.View = nativeConverted;
 
 			return viewController;
-		}
-
-		void ConfigurePageControl()
-		{
-			if (Element != null && pageControl != null)
-			{
-				pageControl.Pages = Count;
-				pageControl.CurrentPage = Element.Position;
-
-				if (Element.IndicatorsShape == IndicatorsShape.Square)
-				{
-					foreach (var view in pageControl.Subviews)
-					{
-						view.Layer.CornerRadius = 0;
-						if (view.Frame.Width == 7)
-						{
-							var frame = new CGRect(view.Frame.X, view.Frame.Y, view.Frame.Width - 1, view.Frame.Height - 1);
-							view.Frame = frame;
-						}
-					}
-				}
-			}
 		}
 
 		protected override void Dispose(bool disposing)

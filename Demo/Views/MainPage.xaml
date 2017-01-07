@@ -18,16 +18,12 @@
                                       Grid.Column="0"
                                       HorizontalOptions="FillAndExpand"
                                       VerticalOptions="FillAndExpand"
+                                      AnimateTransition="false"
                                       IndicatorsShape="Square"
                                       InterPageSpacing="10"
                                       InterPageSpacingColor="Red"
                                       Orientation="Horizontal"
                                       ShowIndicators="true">
-            <!--<controls:CarouselViewControl.ItemTemplate>
-                <DataTemplate>
-                    <Label Text="{Binding .}" />
-                </DataTemplate>
-            </controls:CarouselViewControl.ItemTemplate>-->
         </controls:CarouselViewControl>
 
         <Grid Grid.Row="1"

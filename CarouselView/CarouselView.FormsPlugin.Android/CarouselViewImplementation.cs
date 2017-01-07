@@ -54,6 +54,8 @@ namespace CarouselView.FormsPlugin.Android
 				indicator = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
 				indicator.SetViewPager(viewPager);
 
+				configPosition();
+
 				indicator.SetPageColor(Element.PageIndicatorTintColor.ToAndroid());
 				indicator.SetFillColor(Element.CurrentPageIndicatorTintColor.ToAndroid());
 				indicator.SetStyle(Element.IndicatorsShape); // Rounded or Squared
@@ -111,25 +113,38 @@ namespace CarouselView.FormsPlugin.Android
 				case "ShowIndicators":
 					indicator.Visibility = Element.ShowIndicators ? AViews.ViewStates.Visible : AViews.ViewStates.Gone;
 					break;
-				case "ItemsSource": // TODO: don't execute the first time
+				case "ItemsSource":
+					// NEW CODE
 					if (Element != null && viewPager != null)
 					{
-						if (Element.Position > Element.ItemsSource?.Count - 1)
-							Element.Position = Element.ItemsSource.Count - 1;
-
-						if (Element.Position == -1)
-							Element.Position = 0;
-
-						indicator.mSnapPage = Element.Position;
+						configPosition();
 
 						viewPager.Adapter = new PageAdapter(Element, viewPager);
 						viewPager.SetCurrentItem(Element.Position, false);
 
-						if (Element.PositionSelected != null)
-							Element.PositionSelected(Element, EventArgs.Empty);
+						indicator.SetViewPager(viewPager);
+
+						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 					}
 					break;
 			}
+		}
+
+		void configPosition()
+		{
+			if (Element.ItemsSource != null)
+			{
+				if (Element.Position > Element.ItemsSource.Count - 1)
+					Element.Position = Element.ItemsSource.Count - 1;
+			}
+			else {
+				Element.Position = 0;
+			}
+
+			if (Element.Position == -1)
+				Element.Position = 0;
+
+			indicator.mSnapPage = Element.Position;
 		}
 
 		void ViewPager_PageSelected (object sender, ViewPager.PageSelectedEventArgs e)
@@ -141,14 +156,35 @@ namespace CarouselView.FormsPlugin.Android
 		{
 			if (e.State == 0) {
 
-				if (!IsRemoving && Element.PositionSelected != null)
-					Element.PositionSelected(Element, EventArgs.Empty);
+				if (!IsRemoving)
+					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+			}
+		}
+
+		public async void InsertItem(object item, int position)
+		{
+			// NEW CODE
+			if (Element != null && viewPager != null && Element.ItemsSource != null)
+			{
+
+				if (position > Element.ItemsSource.Count)
+					throw new CarouselViewException("Page cannot be inserted at a position bigger than ItemsSource.Count");
+
+				if (position == -1)
+					Element.ItemsSource.Add(item);
+				else
+					Element.ItemsSource.Insert(position, item);
+
+				viewPager.Adapter.NotifyDataSetChanged();
+
+				await Task.Delay(100);
 			}
 		}
 
 		// Android ViewPager is the most complicated piece of code ever :)
 		public async void RemoveItem(int position)
-		{	
+		{
+			// NEW CODE
 			if (Element != null && viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0) {
 				
 				IsRemoving = true;
@@ -164,7 +200,7 @@ namespace CarouselView.FormsPlugin.Android
 
 					if (position == 0) {
 
-						viewPager.SetCurrentItem (1, true);
+						viewPager.SetCurrentItem (1, Element.AnimateTransition);
 
 						await Task.Delay (100);
 
@@ -178,7 +214,7 @@ namespace CarouselView.FormsPlugin.Android
 
 					} else {
 
-						viewPager.SetCurrentItem (newPos, true);
+						viewPager.SetCurrentItem (newPos, Element.AnimateTransition);
 
 						await Task.Delay(100);
 
@@ -201,40 +237,25 @@ namespace CarouselView.FormsPlugin.Android
 
 				}
 
-				if (Element.PositionSelected != null)
-					Element.PositionSelected(Element, EventArgs.Empty);
+				Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 
 				IsRemoving = false;
 			}
 		}
 
-		public async void InsertItem(object item, int position)
-		{
-			if (Element != null && viewPager != null && Element.ItemsSource != null) {
-
-				if (position > Element.ItemsSource.Count)
-					throw new CarouselViewException("Page cannot be inserted at a position bigger than ItemsSource.Count");
-				
-				if (position == -1)
-				    Element.ItemsSource.Add (item);
-				else
-					Element.ItemsSource.Insert(position, item);
-				
-				viewPager.Adapter.NotifyDataSetChanged ();
-
-				await Task.Delay(100);
-			}
-		}
-
 		public void SetCurrentItem(int position)
-		{	
+		{
+			// NEW CODE
 			if (Element != null && viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0) {
 
 				if (position > Element.ItemsSource.Count - 1)
 					throw new CarouselViewException("Current page index cannot be bigger than ItemsSource.Count - 1");
 				
 				Element.Position = position;
-				viewPager.SetCurrentItem (Element.Position, true);
+				viewPager.SetCurrentItem (Element.Position, Element.AnimateTransition);
+
+				if (!Element.AnimateTransition)
+					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 			}
 		}
 
@@ -268,6 +289,7 @@ namespace CarouselView.FormsPlugin.Android
 				Xamarin.Forms.View formsView = null;
 
 				object bindingContext = null;
+				// NEW CODE
 				if (Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
 				    bindingContext = Element.ItemsSource.Cast<object> ().ElementAt (position);
 

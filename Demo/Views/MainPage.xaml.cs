@@ -13,7 +13,7 @@ namespace Demo
 		{
 			InitializeComponent ();
 
-			myCarousel.ItemsSource = new List<int>() { 1, 2, 3, 4, 5 };
+			myCarousel.ItemsSource = new List<int>();
 			myCarousel.ItemTemplate = new MyTemplateSelector (); //new DataTemplate (typeof(MyView));
 			myCarousel.Position = 0;
 			myCarousel.PositionSelected += PositionSelected;
@@ -26,7 +26,7 @@ namespace Demo
 			});
 
 			prevBtn.IsVisible = myCarousel.Position > 0;
-			addPageBtn.IsVisible = myCarousel.Position == myCarousel.ItemsSource?.Count - 1;
+			addPageBtn.IsVisible = myCarousel.ItemsSource != null;
 			nextBtn.IsVisible = myCarousel.Position < myCarousel.ItemsSource?.Count - 1;
 
 			ToolbarItems.Add(new ToolbarItem
@@ -34,7 +34,7 @@ namespace Demo
 				Text = "Reset",
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() => {
-					myCarousel.ItemsSource = new List<int>() { 1, 2, 3, 4, 5 };
+					myCarousel.ItemsSource = new List<int>();
 					//myCarousel.SetCurrentPage(0);
 					//myCarousel.ShowIndicators = !myCarousel.ShowIndicators;
 				})

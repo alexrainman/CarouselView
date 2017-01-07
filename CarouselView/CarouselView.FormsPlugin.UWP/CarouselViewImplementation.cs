@@ -179,8 +179,7 @@ namespace CarouselView.FormsPlugin.UWP
 
                 UpdateIndicators();
 
-                if (Element.PositionSelected != null)
-                    Element.PositionSelected(Element, EventArgs.Empty);
+                Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
             }
         }
 
@@ -203,8 +202,17 @@ namespace CarouselView.FormsPlugin.UWP
                 {
                     IsLoading = true;
 
-                    if (Element.Position > Element.ItemsSource.Count - 1)
-                        Element.Position = Element.ItemsSource.Count - 1;
+					if (Element.ItemsSource != null)
+					{
+						if (Element.Position > Element.ItemsSource.Count - 1)
+							Element.Position = Element.ItemsSource.Count - 1;
+					}
+					else {
+						Element.Position = 0;
+					}
+
+					if (Element.Position == -1)
+						Element.Position = 0;
 
                     var source = new List<FrameworkElement>();
 
@@ -262,6 +270,30 @@ namespace CarouselView.FormsPlugin.UWP
 			}
         }
 
+		public async void InsertItem(object item, int position)
+		{
+			if (Element != null && flipView != null && Element.ItemsSource != null)
+			{
+				if (position > Element.ItemsSource.Count + 1)
+					throw new CarouselViewException("Page cannot be inserted at a position bigger than ItemsSource.Count");
+
+				if (position == -1)
+				{
+					Element.ItemsSource.Add(item);
+					Source.Add(CreateView(item));
+					Dots.Add(CreateDot(-1, position));
+				}
+				else
+				{
+					Element.ItemsSource.Insert(position, item);
+					Source.Insert(position, CreateView(item));
+					Dots.Insert(position, CreateDot(position, position));
+				}
+
+				await Task.Delay(100);
+			}
+		}
+
         public async void RemoveItem(int position)
         {
             if (Element != null && flipView != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
@@ -301,32 +333,7 @@ namespace CarouselView.FormsPlugin.UWP
                 Dots.RemoveAt(position);
                 UpdateIndicators();
 
-                if (Element.PositionSelected != null)
-                    Element.PositionSelected(Element, EventArgs.Empty);
-            }
-        }
-
-		public async void InsertItem(object item, int position)
-        {
-            if (Element != null && flipView != null && Element.ItemsSource != null)
-            {
-				if (position > Element.ItemsSource.Count + 1)
-					throw new CarouselViewException("Page cannot be inserted at a position bigger than ItemsSource.Count");
-				
-                if (position == -1)
-                {
-                    Element.ItemsSource.Add(item);
-                    Source.Add(CreateView(item));
-                    Dots.Add(CreateDot(-1, position));
-                }
-                else
-                {
-                    Element.ItemsSource.Insert(position, item);
-                    Source.Insert(position, CreateView(item));
-                    Dots.Insert(position, CreateDot(position, position));
-                }
-
-				await Task.Delay(100);
+                Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
             }
         }
 
