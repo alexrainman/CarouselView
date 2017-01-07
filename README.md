@@ -96,6 +96,8 @@ Then the xaml:
 
 ```Arrows```: disable arrows navigation (UWP only, default true).
 
+```AnimateTransition```: enables transition animation when swiping programmatically (Android and iOS only, default true).
+
 **Event Handlers**
 
 ```PositionSelected```: called when position changes.
