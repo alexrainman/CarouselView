@@ -148,6 +148,14 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+2.9.0
+
+[New feature] animateTransition, enables transition animation when swiping programmatically (default true).
+
+2.8.0
+
+[Update] ItemsSource now supports empty or null list.
+
 2.7.1
 
 [Update] IndicatorsStyle property renamed to IndicatorsShape (default Circle).
