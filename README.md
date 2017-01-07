@@ -150,7 +150,7 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 2.9.0
 
-[New feature] animateTransition, enables transition animation when swiping programmatically (default true).
+[New feature] AnimateTransition property, enables transition animation when swiping programmatically (default true).
 
 2.8.0
 
