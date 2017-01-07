@@ -146,6 +146,15 @@ async void OnPrevious (object sender, TappedEventArgs e) {
 DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 ```
 
+#### Roadmap
+
+* Remove SetCurrentPage method, implement at OnElementPropertyChanged (requires lot of refactoring)
+* Page indicators tap event
+* Load more event
+
+#### Contributors
+* [alexrainman](https://github.com/alexrainman)
+
 #### Release Notes
 
 2.9.0
@@ -225,15 +234,6 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 [bug fix] Fix NullReferenceException in PageAdapter.get_Count when ItemSource is null.
 
 [bug fix] Other bug fixes and enhancements.
-
-#### Roadmap
-
-* Remove SetCurrentPage method, implement at OnElementPropertyChanged (requires lot of refactoring)
-* Page indicators tap event
-* Load more event
-
-#### Contributors
-* [alexrainman](https://github.com/alexrainman)
 
 Thanks!
 
