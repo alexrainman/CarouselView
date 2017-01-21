@@ -246,6 +246,9 @@ namespace CarouselView.FormsPlugin.iOS
 
 			switch (e.PropertyName)
 			{
+				case "Position":
+					this.SetCurrentController(Element.Position);
+					break;
 				case "Width":
 					ElementWidth = rect.Width;
 					break;
@@ -403,13 +406,18 @@ namespace CarouselView.FormsPlugin.iOS
 			if (Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
 				bindingContext = Element.ItemsSource.Cast<object>().ElementAt(index);
 
-			var selector = Element.ItemTemplate as DataTemplateSelector;
-			if (selector != null)
-				formsView = (Xamarin.Forms.View)selector.SelectTemplate(bindingContext, Element).CreateContent();
-			else
-				formsView = (Xamarin.Forms.View)Element.ItemTemplate.CreateContent();
+			var dt = bindingContext as DataTemplate;
+			if(dt != null){
+				formsView = dt.CreateContent();
+			}else{
+				var selector = Element.ItemTemplate as DataTemplateSelector;
+				if (selector != null)
+					formsView = (Xamarin.Forms.View)selector.SelectTemplate(bindingContext, Element).CreateContent();
+				else
+					formsView = (Xamarin.Forms.View)Element.ItemTemplate.CreateContent();
 
-			formsView.BindingContext = bindingContext;
+				formsView.BindingContext = bindingContext;
+			}
 			formsView.Parent = this.Element;
 
 			// UIScreen.MainScreen.Bounds.Width, UIScreen.MainScreen.Bounds.Height
