@@ -246,6 +246,9 @@ namespace CarouselView.FormsPlugin.iOS
 
 			switch (e.PropertyName)
 			{
+				case "Position":
+					this.SetCurrentController(Element.Position);
+					break;
 				case "Width":
 					ElementWidth = rect.Width;
 					break;

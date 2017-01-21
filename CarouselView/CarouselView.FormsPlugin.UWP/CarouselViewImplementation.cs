@@ -111,6 +111,9 @@ namespace CarouselView.FormsPlugin.UWP
 
             switch (e.PropertyName)
             {
+                case "Position":
+                    this.SetCurrentItem(Element.Position);
+                    break;
                 case "Width":
                     if (ElementWidth == 0)
                         ElementWidth = rect.Width;

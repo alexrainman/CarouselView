@@ -102,6 +102,9 @@ namespace CarouselView.FormsPlugin.Android
 
 			switch (e.PropertyName)
 			{
+				case "Position":
+					SetCurrentItem(Element.Position);
+					break;
 				case "Width":
 					//var rect = this.Element.Bounds;
 					break;
