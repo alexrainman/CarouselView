@@ -293,13 +293,20 @@ namespace CarouselView.FormsPlugin.Android
 				if (Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
 				    bindingContext = Element.ItemsSource.Cast<object> ().ElementAt (position);
 
-				var selector = Element.ItemTemplate as DataTemplateSelector;
-				if (selector != null)
-					formsView = (View)selector.SelectTemplate (bindingContext, Element).CreateContent ();
-				else
-					formsView = (View)Element.ItemTemplate.CreateContent ();
+				var dt = bindingContext as DataTemplate;
 
-				formsView.BindingContext = bindingContext;
+				if(dt != null){
+					formsView = dt.CreateContent();
+				}else{
+
+					var selector = Element.ItemTemplate as DataTemplateSelector;
+					if (selector != null)
+						formsView = (View)selector.SelectTemplate (bindingContext, Element).CreateContent ();
+					else
+						formsView = (View)Element.ItemTemplate.CreateContent ();
+
+					formsView.BindingContext = bindingContext;
+				}
 				formsView.Parent = this.Element;
 
 				// Width in dip and not in pixels. (all Xamarin.Forms controls use dip for their WidthRequest and HeightRequest)

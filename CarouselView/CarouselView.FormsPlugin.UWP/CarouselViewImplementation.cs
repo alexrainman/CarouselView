@@ -353,13 +353,19 @@ namespace CarouselView.FormsPlugin.UWP
             Xamarin.Forms.View formsView = null;
             var bindingContext = item;
 
-            var selector = Element.ItemTemplate as Xamarin.Forms.DataTemplateSelector;
-            if (selector != null)
-                formsView = (Xamarin.Forms.View)selector.SelectTemplate(bindingContext, Element).CreateContent();
-            else
-                formsView = (Xamarin.Forms.View)Element.ItemTemplate.CreateContent();
+            var dt = bindingContext as DataTemplate;
 
-            formsView.BindingContext = bindingContext;
+            if(dt != null){
+                formsView = dt.CreateContent();
+            }else{
+                var selector = Element.ItemTemplate as Xamarin.Forms.DataTemplateSelector;
+                if (selector != null)
+                    formsView = (Xamarin.Forms.View)selector.SelectTemplate(bindingContext, Element).CreateContent();
+                else
+                    formsView = (Xamarin.Forms.View)Element.ItemTemplate.CreateContent();
+
+                formsView.BindingContext = bindingContext;
+            }
 			formsView.Parent = this.Element;
 
             var element = FormsViewToNativeUWP.ConvertFormsToNative(formsView, new Xamarin.Forms.Rectangle(0, 0, ElementWidth, ElementHeight));
