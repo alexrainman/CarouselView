@@ -300,7 +300,8 @@ namespace CarouselView.FormsPlugin.Android
 					formsView = (View)Element.ItemTemplate.CreateContent ();
 
 				formsView.BindingContext = bindingContext;
-				formsView.Parent = this.Element;
+				if(formsView.Parent == null)
+				    formsView.Parent = this.Element;
 
 				// Width in dip and not in pixels. (all Xamarin.Forms controls use dip for their WidthRequest and HeightRequest)
 				// Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Density
