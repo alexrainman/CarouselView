@@ -76,7 +76,39 @@ Then the xaml:
 
 * You can use an Observable collection as ItemsSource and use CollectionChanged events in your end for your own business logic.
 
+* If you want to display different Views for the same data, you can provide List<DataTemplate> as ItemsSource.
+
+```
+<controls:CarouselViewControl BindingContext="{Binding Person}">
+	<controls:CarouselViewControl.ItemsSource>
+       <x:Array Type="{x:Type DataTemplate}">
+
+                <DataTemplate>
+				    <StackLayout>
+                        <Image Source="{Binding PhotoUrl}" Aspect="AspectFill"/>
+					</StackLayout>
+                </DataTemplate>
+
+                <DataTemplate>
+				    <StackLayout>
+                        <Label Text="{Binding Bio}"/>
+					</StackLayout>
+                </DataTemplate>
+
+                <DataTemplate>
+                    <StackLayout>
+                        <Label Text="{Binding ContactInfo}"/>
+					</StackLayout>
+                </DataTemplate>
+
+       </x:Array>
+    </controls:CarouselViewControl.ItemsSource>
+</controls:CarouselViewControl>
+```
+
 ```Position```: the desired selected view when Carousel starts.
+
+* Change position in code behind or binding to set current page or swipe programmatically.
 
 ```InterPageSpacing```: add a margin/space between pages (Android and iOS only).
 
@@ -107,8 +139,6 @@ Then the xaml:
 ```InsertPage (item, position)```: insert a view at a given position (if position parameter is not provided, item will be added at the end).
 
 ```RemovePage (position)```: remove a view at given position (when you remove the current view it will slide to the previous one). This method will also remove the related item from the ItemsSource.
-
-```SetCurrentPage (position)```: slide programmatically to a given position.
 
 #### Render one page at a time, no swiping, move back and fort programmatically:
 
@@ -148,14 +178,21 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Roadmap
 
-* Remove SetCurrentPage method, implement at OnElementPropertyChanged (requires lot of refactoring)
-* Page indicators tap event
 * Load more event
+* Page indicators tap event
 
 #### Contributors
 * [alexrainman](https://github.com/alexrainman)
 
 #### Release Notes
+
+3.0.0
+
+[Update] Deprecating SetCurrentPage. Change position property in code behind to set current page (binding supported).
+
+[New feature] ItemsSource now support a DataTemplate List (see repo for tutorial).
+
+[iOS] Bug fixes and improvements.
 
 2.9.0
 

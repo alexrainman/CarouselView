@@ -79,7 +79,7 @@ namespace CarouselView.FormsPlugin.Android
 				{
 					Element.RemoveAction = null;
 					Element.InsertAction = null;
-					Element.SetCurrentAction = null;
+					//Element.SetCurrentAction = null;
 				}
 			}
 
@@ -92,7 +92,7 @@ namespace CarouselView.FormsPlugin.Android
 
 				Element.RemoveAction = new Action<int>(RemoveItem);
 				Element.InsertAction = new Action<object, int>(InsertItem);
-				Element.SetCurrentAction = new Action<int>(SetCurrentItem);
+				//Element.SetCurrentAction = new Action<int>(SetCurrentItem);
 			}
 		}
 
@@ -127,29 +127,21 @@ namespace CarouselView.FormsPlugin.Android
 						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 					}
 					break;
+				case "Position":
+					if (Element.Position != -1 && !isSwiping)
+					    SetCurrentItem(Element.Position);
+					break;
 			}
 		}
 
-		void configPosition()
-		{
-			if (Element.ItemsSource != null)
-			{
-				if (Element.Position > Element.ItemsSource.Count - 1)
-					Element.Position = Element.ItemsSource.Count - 1;
-			}
-			else {
-				Element.Position = 0;
-			}
-
-			if (Element.Position == -1)
-				Element.Position = 0;
-
-			indicator.mSnapPage = Element.Position;
-		}
+		// To avoid triggering Position changed
+		bool isSwiping;
 
 		void ViewPager_PageSelected (object sender, ViewPager.PageSelectedEventArgs e)
 		{
+			isSwiping = true;
 			Element.Position = e.Position;
+			isSwiping = false;
 		}
 
 		void ViewPager_PageScrollStateChanged (object sender, ViewPager.PageScrollStateChangedEventArgs e)
@@ -159,6 +151,25 @@ namespace CarouselView.FormsPlugin.Android
 				if (!IsRemoving)
 					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 			}
+		}
+
+		void configPosition()
+		{
+			isSwiping = true;
+			if (Element.ItemsSource != null)
+			{
+				if (Element.Position > Element.ItemsSource.Count - 1)
+					Element.Position = Element.ItemsSource.Count - 1;
+
+				if (Element.Position == -1)
+					Element.Position = 0;
+			}
+			else {
+				Element.Position = 0;
+			}
+			isSwiping = false;
+
+			indicator.mSnapPage = Element.Position;
 		}
 
 		public async void InsertItem(object item, int position)
@@ -192,58 +203,77 @@ namespace CarouselView.FormsPlugin.Android
 				if (position > Element.ItemsSource.Count - 1)
 					throw new CarouselViewException("Page cannot be removed at a position bigger than ItemsSource.Count - 1");
 
-				if (position == Element.Position) {
+				if (Element.ItemsSource?.Count == 1)
+				{
+					Element.ItemsSource.RemoveAt(position);
+					viewPager.Adapter = new PageAdapter(Element, viewPager);
+					viewPager.SetCurrentItem(Element.Position, false);
 
-					var newPos = position - 1;
-					if (newPos == -1)
-						newPos = 0;
+					indicator.SetViewPager(viewPager);
+				}
+				else {
 
-					if (position == 0) {
+					if (position == Element.Position)
+					{
 
-						viewPager.SetCurrentItem (1, Element.AnimateTransition);
+						var newPos = position - 1;
+						if (newPos == -1)
+							newPos = 0;
 
-						await Task.Delay (100);
+						isSwiping = true;
 
-						Element.ItemsSource.RemoveAt (position);
+						if (position == 0)
+						{
 
-						//viewPager.Adapter = new PageAdapter(Element, viewPager);
-						viewPager.Adapter.NotifyDataSetChanged();
-						viewPager.SetCurrentItem(0, false);
+							viewPager.SetCurrentItem(1, Element.AnimateTransition);
 
-						Element.Position = 0;
+							await Task.Delay(100);
 
-					} else {
+							Element.ItemsSource.RemoveAt(position);
 
-						viewPager.SetCurrentItem (newPos, Element.AnimateTransition);
+							//viewPager.Adapter = new PageAdapter(Element, viewPager);
+							viewPager.Adapter.NotifyDataSetChanged();
+							viewPager.SetCurrentItem(0, false);
 
-						await Task.Delay(100);
+							Element.Position = 0;
+
+						}
+						else {
+
+							viewPager.SetCurrentItem(newPos, Element.AnimateTransition);
+
+							await Task.Delay(100);
+
+							Element.ItemsSource.RemoveAt(position);
+							if (position == 1)
+								viewPager.Adapter = new PageAdapter(Element, viewPager);
+							else
+								viewPager.Adapter.NotifyDataSetChanged();
+							Element.Position = newPos;
+						}
+
+						isSwiping = false;
+
+					}
+					else {
 
 						Element.ItemsSource.RemoveAt(position);
+
 						if (position == 1)
 							viewPager.Adapter = new PageAdapter(Element, viewPager);
 						else
 							viewPager.Adapter.NotifyDataSetChanged();
-						Element.Position = newPos;
+
 					}
 
-				} else {
-
-					Element.ItemsSource.RemoveAt (position);
-
-					if (position == 1)
-						viewPager.Adapter = new PageAdapter(Element, viewPager);
-					else
-						viewPager.Adapter.NotifyDataSetChanged();
-
+					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 				}
-
-				Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 
 				IsRemoving = false;
 			}
 		}
 
-		public void SetCurrentItem(int position)
+		void SetCurrentItem(int position)
 		{
 			// NEW CODE
 			if (Element != null && viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0) {
@@ -251,7 +281,6 @@ namespace CarouselView.FormsPlugin.Android
 				if (position > Element.ItemsSource.Count - 1)
 					throw new CarouselViewException("Current page index cannot be bigger than ItemsSource.Count - 1");
 				
-				Element.Position = position;
 				viewPager.SetCurrentItem (Element.Position, Element.AnimateTransition);
 
 				if (!Element.AnimateTransition)
@@ -289,17 +318,27 @@ namespace CarouselView.FormsPlugin.Android
 				Xamarin.Forms.View formsView = null;
 
 				object bindingContext = null;
-				// NEW CODE
+
 				if (Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
 				    bindingContext = Element.ItemsSource.Cast<object> ().ElementAt (position);
+				
+				var dt = bindingContext as DataTemplate;
 
-				var selector = Element.ItemTemplate as DataTemplateSelector;
-				if (selector != null)
-					formsView = (View)selector.SelectTemplate (bindingContext, Element).CreateContent ();
-				else
-					formsView = (View)Element.ItemTemplate.CreateContent ();
+				if (dt != null)
+				{
+					formsView = (Xamarin.Forms.View)dt.CreateContent();
+				}
+				else {
 
-				formsView.BindingContext = bindingContext;
+					var selector = Element.ItemTemplate as DataTemplateSelector;
+					if (selector != null)
+						formsView = (View)selector.SelectTemplate(bindingContext, Element).CreateContent();
+					else
+						formsView = (View)Element.ItemTemplate.CreateContent();
+
+					formsView.BindingContext = bindingContext;
+				}
+
 				formsView.Parent = this.Element;
 
 				// Width in dip and not in pixels. (all Xamarin.Forms controls use dip for their WidthRequest and HeightRequest)

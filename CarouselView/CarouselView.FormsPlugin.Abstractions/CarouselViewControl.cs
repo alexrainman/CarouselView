@@ -132,11 +132,11 @@ namespace CarouselView.FormsPlugin.Abstractions
 				InsertAction (item, position);
 		}
 
-		public Action<int> SetCurrentAction;
+		/*public Action<int> SetCurrentAction;
 
 		public void SetCurrentPage(int position){
 			if(SetCurrentAction != null)
 				SetCurrentAction (position);
-		}
+		}*/
 	}
 }
