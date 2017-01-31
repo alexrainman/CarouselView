@@ -188,7 +188,7 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 3.0.0
 
-[Update] Deprecating SetCurrentPage. Change position property in code behind to set current page (binding supported).
+[Update] Deprecating SetCurrentPage. Change position in code behind or binding to set current page/swipe programmatically.
 
 [New feature] ItemsSource now support a DataTemplate List (see repo for tutorial).
 
