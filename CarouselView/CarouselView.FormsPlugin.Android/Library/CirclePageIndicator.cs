@@ -99,7 +99,7 @@ namespace CarouselView.FormsPlugin.Android
 			{
 				return;
 			}
-			int count = mViewPager.Adapter.Count;
+			int count = mViewPager?.Adapter?.Count ?? 0;
 			if (count == 0)
 			{
 				return;
