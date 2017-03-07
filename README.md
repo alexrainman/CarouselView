@@ -186,6 +186,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+3.0.1
+
+[Android] NullReference exception. CirclePageIndicator.OnDraw (Fixed)
+
 3.0.0
 
 [Update] Deprecating SetCurrentPage. Change position in code behind or binding to set current page/swipe programmatically.
