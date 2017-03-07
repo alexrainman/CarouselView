@@ -1,34 +1,38 @@
 ﻿using System;
 using Xamarin.Forms;
-using System.Collections;
 using System.Threading.Tasks;
+using System.Collections.Specialized;
+using System.Collections;
 
 namespace CarouselView.FormsPlugin.Abstractions
 {
-    /// <summary>
-    /// CarouselView Interface
-    /// </summary>
+	/// <summary>
+	/// CarouselView Interface
+	/// </summary>
 	public class CarouselViewControl : View //Layout<View>
 	{
 		public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create("ItemsSource", typeof(IList), typeof(CarouselViewControl), null);
 
-		public IList ItemsSource{
-			get { return (IList)GetValue (ItemsSourceProperty); }
-			set { SetValue (ItemsSourceProperty, value); }
+		public IList ItemsSource
+		{
+			get { return (IList)GetValue(ItemsSourceProperty); }
+			set { SetValue(ItemsSourceProperty, value); }
 		}
 
 		public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create("ItemTemplate", typeof(DataTemplate), typeof(CarouselViewControl), null);
 
-		public DataTemplate ItemTemplate {
-			get { return (DataTemplate)GetValue (ItemTemplateProperty); }
-			set { SetValue (ItemTemplateProperty, value); }
+		public DataTemplate ItemTemplate
+		{
+			get { return (DataTemplate)GetValue(ItemTemplateProperty); }
+			set { SetValue(ItemTemplateProperty, value); }
 		}
 
 		public static readonly BindableProperty PositionProperty = BindableProperty.Create("Position", typeof(int), typeof(CarouselViewControl), 0);
 
-		public int Position {
-			get { return (int)GetValue (PositionProperty); }
-			set { SetValue (PositionProperty, value); }
+		public int Position
+		{
+			get { return (int)GetValue(PositionProperty); }
+			set { SetValue(PositionProperty, value); }
 		}
 
 		// iOS only
@@ -109,27 +113,29 @@ namespace CarouselView.FormsPlugin.Abstractions
 		}
 
 		public static readonly BindableProperty AnimateTransitionProperty = BindableProperty.Create("AnimateTransition", typeof(bool), typeof(CarouselViewControl), true);
- 
- 		public bool AnimateTransition
- 		{
- 			get { return (bool)GetValue(AnimateTransitionProperty); }
- 			set { SetValue(AnimateTransitionProperty, value); }
- 		}
+
+		public bool AnimateTransition
+		{
+			get { return (bool)GetValue(AnimateTransitionProperty); }
+			set { SetValue(AnimateTransitionProperty, value); }
+		}
 
 		public EventHandler PositionSelected;
 
 		public Action<int> RemoveAction;
 
-		public async Task RemovePage(int position){
-			if(RemoveAction != null)
-				RemoveAction (position);
+		public async Task RemovePage(int position)
+		{
+			if (RemoveAction != null)
+				RemoveAction(position);
 		}
 
 		public Action<object, int> InsertAction;
 
-		public async Task InsertPage(object item, int position = -1){
-			if(InsertAction != null)
-				InsertAction (item, position);
+		public async Task InsertPage(object item, int position = -1)
+		{
+			if (InsertAction != null)
+				InsertAction(item, position);
 		}
 
 		/*public Action<int> SetCurrentAction;

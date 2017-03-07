@@ -99,7 +99,8 @@ namespace CarouselView.FormsPlugin.Android
 			{
 				return;
 			}
-			int count = mViewPager.Adapter.Count;
+			// Fix for NullReferenceException on Android tabbed page #67
+			int count = mViewPager?.Adapter?.Count ?? 0;
 			if (count == 0)
 			{
 				return;

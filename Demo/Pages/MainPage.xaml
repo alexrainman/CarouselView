@@ -71,4 +71,65 @@
         </Grid>
     </Grid>
 
+    <!--<AbsoluteLayout HorizontalOptions="Fill"
+                    VerticalOptions="Fill"
+                    BackgroundColor="Yellow">
+
+        <controls:CarouselViewControl x:Name="myCarousel"
+                                      HorizontalOptions="FillAndExpand"
+                                      VerticalOptions="FillAndExpand"
+                                      AbsoluteLayout.LayoutBounds="0,0,1,0.9"
+                                      AbsoluteLayout.LayoutFlags="All"
+                                      AnimateTransition="true"
+                                      IndicatorsShape="Square"
+                                      InterPageSpacing="10"
+                                      InterPageSpacingColor="Red"
+                                      Orientation="Horizontal"
+                                      ShowIndicators="true" />
+
+        <Grid AbsoluteLayout.LayoutBounds="1,1,1,0.1"
+              AbsoluteLayout.LayoutFlags="All"
+              BackgroundColor="Silver"
+              Padding="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="80" />
+            </Grid.ColumnDefinitions>
+            <Label x:Name="prevBtn"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   HorizontalTextAlignment="Start"
+                   Text="Prev"
+                   VerticalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnPrev" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label x:Name="addPageBtn"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   HorizontalTextAlignment="Center"
+                   Text="Add Page"
+                   VerticalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAdd" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label x:Name="nextBtn"
+                   Grid.Row="0"
+                   Grid.Column="2"
+                   HorizontalTextAlignment="End"
+                   Text="Next"
+                   VerticalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNext" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+    </AbsoluteLayout>-->
+
 </ContentPage>

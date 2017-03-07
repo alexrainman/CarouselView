@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace Demo
 {
@@ -46,6 +47,7 @@ namespace Demo
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() =>
 				{
+					//Navigation.PushAsync(new MyTabbedPage());
 					Navigation.PushAsync(new SecondPage());
 				})
 			});
@@ -84,7 +86,6 @@ namespace Demo
 					myCarousel.Position = myCarousel.ItemsSource.Count - 1;
 		    }
 		}
-
 	}
 }
 

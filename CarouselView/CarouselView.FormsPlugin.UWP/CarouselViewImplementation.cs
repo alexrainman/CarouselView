@@ -282,6 +282,8 @@ namespace CarouselView.FormsPlugin.UWP
                 }
 
 				isSwiping = false;
+
+				Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 			}
         }
 
@@ -306,6 +308,9 @@ namespace CarouselView.FormsPlugin.UWP
 				}
 
 				await Task.Delay(100);
+
+				if (Element.ItemsSource.Count == 1)
+					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 			}
 		}
 

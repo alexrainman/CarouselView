@@ -42,7 +42,6 @@ namespace CarouselView.FormsPlugin.iOS
 				// Instantiate the native control and assign it to the Control property with
 				// the SetNativeControl method
 
-				configPosition();
 				ConfigurePageController();
 			}
 
@@ -72,8 +71,6 @@ namespace CarouselView.FormsPlugin.iOS
 			if (e.NewElement != null)
 			{
 				// Configure the control and subscribe to event handlers
-
-				AttachEvents();
 
 				Element.RemoveAction = new Action<int>(RemoveController);
 				Element.InsertAction = new Action<object, int>(InsertController);
@@ -108,16 +105,7 @@ namespace CarouselView.FormsPlugin.iOS
 					if (Element != null && pageController != null)
 					{
 						// NEW CODE
-						configPosition();
 						ConfigurePageController();
-
-						AttachEvents();
-
-						if (Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
-						{
-							var secondViewController = CreateViewController(Element.Position);
-							pageController.SetViewControllers(new[] { secondViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => { });
-						}
 
 						ConfigurePageControl();
 
@@ -153,7 +141,7 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 		}
 
-		void configPosition()
+		void ConfigurePageController()
 		{
 			isSwiping = true;
 			if (Element.ItemsSource != null)
@@ -168,10 +156,7 @@ namespace CarouselView.FormsPlugin.iOS
 				Element.Position = 0;
 			}
 			isSwiping = false;
-		}
 
-		void ConfigurePageController()
-		{
 			var interPageSpacing = (float)Element.InterPageSpacing;
 			var orientation = (UIPageViewControllerNavigationOrientation)Element.Orientation;
 			pageController = new UIPageViewController(UIPageViewControllerTransitionStyle.Scroll,
@@ -208,33 +193,6 @@ namespace CarouselView.FormsPlugin.iOS
 				}
 			}
 
-			SetNativeControl(pageController.View);
-		}
-
-		void ConfigurePageControl()
-		{
-			if (Element != null && pageControl != null)
-			{
-				pageControl.Pages = Count;
-				pageControl.CurrentPage = Element.Position;
-
-				if (Element.IndicatorsShape == IndicatorsShape.Square)
-				{
-					foreach (var view in pageControl.Subviews)
-					{
-						view.Layer.CornerRadius = 0;
-						if (view.Frame.Width == 7)
-						{
-							var frame = new CGRect(view.Frame.X, view.Frame.Y, view.Frame.Width - 1, view.Frame.Height - 1);
-							view.Frame = frame;
-						}
-					}
-				}
-			}
-		}
-
-		void AttachEvents()
-		{
 			pageController.DidFinishAnimating += PageController_DidFinishAnimating;
 
 			pageController.GetPreviousViewController = (pageViewController, referenceViewController) =>
@@ -284,6 +242,36 @@ namespace CarouselView.FormsPlugin.iOS
 					return null;
 				}
 			};
+
+			if (Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
+			{
+				var firstViewController = CreateViewController(Element.Position);
+				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => { });
+			}
+
+			SetNativeControl(pageController.View);
+		}
+
+		void ConfigurePageControl()
+		{
+			if (Element != null && pageControl != null)
+			{
+				pageControl.Pages = Count;
+				pageControl.CurrentPage = Element.Position;
+
+				if (Element.IndicatorsShape == IndicatorsShape.Square)
+				{
+					foreach (var view in pageControl.Subviews)
+					{
+						view.Layer.CornerRadius = 0;
+						if (view.Frame.Width == 7)
+						{
+							var frame = new CGRect(view.Frame.X, view.Frame.Y, view.Frame.Width - 1, view.Frame.Height - 1);
+							view.Frame = frame;
+						}
+					}
+				}
+			}
 		}
 
 		public async void InsertController(object item, int position)
@@ -310,6 +298,9 @@ namespace CarouselView.FormsPlugin.iOS
 					ConfigurePageControl();
 
 					await Task.Delay(100);
+
+					if (Element.ItemsSource.Count == 1)
+						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 				});
 			}
 		}
@@ -325,7 +316,6 @@ namespace CarouselView.FormsPlugin.iOS
 				{
 					Element.ItemsSource.RemoveAt(position);
 					ConfigurePageController();
-					AttachEvents();
 					ConfigurePageControl();
 				}
 				else {

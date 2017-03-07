@@ -11,6 +11,7 @@ using System.ComponentModel;
 using AViews = Android.Views;
 using Android.Util;
 using Android.OS;
+using System.Collections.Specialized;
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.Android
@@ -52,6 +53,13 @@ namespace CarouselView.FormsPlugin.Android
 				viewPager.SetBackgroundColor(Element.InterPageSpacingColor.ToAndroid());
 
 				indicator = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
+
+				// Fix for NullReferenceException on Android tabbed page #59
+				if (viewPager.Adapter == null)
+				{
+					viewPager.Adapter = new PageAdapter(Element, viewPager);
+				}
+
 				indicator.SetViewPager(viewPager);
 
 				configPosition();
@@ -93,8 +101,21 @@ namespace CarouselView.FormsPlugin.Android
 				Element.RemoveAction = new Action<int>(RemoveItem);
 				Element.InsertAction = new Action<object, int>(InsertItem);
 				//Element.SetCurrentAction = new Action<int>(SetCurrentItem);
+
+				//Element.ItemsSource.CollectionChanged += ItemsSource_CollectionChanged;
 			}
 		}
+
+		/*void ItemsSource_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+		{
+			if (e.Action == NotifyCollectionChangedAction.Add)
+			{
+			}
+
+			if (e.Action == NotifyCollectionChangedAction.Remove)
+			{
+			}
+		}*/
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
@@ -146,10 +167,8 @@ namespace CarouselView.FormsPlugin.Android
 
 		void ViewPager_PageScrollStateChanged (object sender, ViewPager.PageScrollStateChangedEventArgs e)
 		{
-			if (e.State == 0) {
-
-				if (!IsRemoving)
-					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+			if (e.State == 0 && !isSwiping) {
+				Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 			}
 		}
 
@@ -177,7 +196,6 @@ namespace CarouselView.FormsPlugin.Android
 			// NEW CODE
 			if (Element != null && viewPager != null && Element.ItemsSource != null)
 			{
-
 				if (position > Element.ItemsSource.Count)
 					throw new CarouselViewException("Page cannot be inserted at a position bigger than ItemsSource.Count");
 
@@ -189,6 +207,9 @@ namespace CarouselView.FormsPlugin.Android
 				viewPager.Adapter.NotifyDataSetChanged();
 
 				await Task.Delay(100);
+
+				if (Element.ItemsSource.Count == 1)
+					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 			}
 		}
 
@@ -198,7 +219,7 @@ namespace CarouselView.FormsPlugin.Android
 			// NEW CODE
 			if (Element != null && viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0) {
 				
-				IsRemoving = true;
+				isSwiping = true;
 
 				if (position > Element.ItemsSource.Count - 1)
 					throw new CarouselViewException("Page cannot be removed at a position bigger than ItemsSource.Count - 1");
@@ -219,8 +240,6 @@ namespace CarouselView.FormsPlugin.Android
 						var newPos = position - 1;
 						if (newPos == -1)
 							newPos = 0;
-
-						isSwiping = true;
 
 						if (position == 0)
 						{
@@ -252,8 +271,6 @@ namespace CarouselView.FormsPlugin.Android
 							Element.Position = newPos;
 						}
 
-						isSwiping = false;
-
 					}
 					else {
 
@@ -266,10 +283,10 @@ namespace CarouselView.FormsPlugin.Android
 
 					}
 
-					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+					//Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 				}
 
-				IsRemoving = false;
+				isSwiping = false;
 			}
 		}
 
@@ -281,7 +298,7 @@ namespace CarouselView.FormsPlugin.Android
 				if (position > Element.ItemsSource.Count - 1)
 					throw new CarouselViewException("Current page index cannot be bigger than ItemsSource.Count - 1");
 				
-				viewPager.SetCurrentItem (Element.Position, Element.AnimateTransition);
+				viewPager.SetCurrentItem (position, Element.AnimateTransition);
 
 				if (!Element.AnimateTransition)
 					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
