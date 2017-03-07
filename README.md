@@ -76,7 +76,7 @@ Then the xaml:
 
 * You can use an Observable collection as ItemsSource and use CollectionChanged events in your end for your own business logic.
 
-* If you want to display different Views for the same data, you can provide List<DataTemplate> as ItemsSource.
+* If you want to display different Views for the same data, you can provide a DataTemplate List as ItemsSource.
 
 ```
 <controls:CarouselViewControl BindingContext="{Binding Person}">
@@ -108,7 +108,7 @@ Then the xaml:
 
 ```Position```: the desired selected view when Carousel starts.
 
-* Change position in code behind or binding to set current page or swipe programmatically.
+* Change position in code behind or binding to set current page/swipe programmatically.
 
 ```InterPageSpacing```: add a margin/space between pages (Android and iOS only).
 
@@ -188,7 +188,7 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 3.0.0
 
-[Update] Deprecating SetCurrentPage. Change position property in code behind to set current page (binding supported).
+[Update] Deprecating SetCurrentPage. Change position in code behind or binding to set current page/swipe programmatically.
 
 [New feature] ItemsSource now support a DataTemplate List (see repo for tutorial).
 
