@@ -149,8 +149,7 @@ Or, template selector in your ViewModel:
 #### Render one page at a time, no swiping, move back and fort programmatically:
 
 ```
-var pages = new List<int> { 1 }; // only one item in ItemsSource
-Carousel.ItemsSource = pages;
+myCarousel.ItemsSource = new List<int> { 0 }; // only one item in ItemsSource
 ```
 
 To move forward:
@@ -158,9 +157,9 @@ To move forward:
 ```
 public async void OnNext(object sender, TappedEventArgs e)
 {
-	if (_vm.ItemsSource[0] < 4)
+	if (myCarousel.ItemsSource[0] < 4)
 	{
-		await myCarousel.InsertPage(_vm.ItemsSource[0] + 1);
+		await myCarousel.InsertPage(myCarousel.ItemsSource[0] + 1);
 		await myCarousel.RemovePage(0);
 	}
 }
@@ -171,9 +170,9 @@ To move backward:
 ```
 public async void OnPrev(object sender, TappedEventArgs e)
 {
-	if (_vm.ItemsSource[0] > 0)
+	if (myCarousel.ItemsSource[0] > 0)
 	{
-		_vm.ItemsSource = new List<int>() { _vm.ItemsSource[0] - 1, _vm.ItemsSource[0] };
+		myCarousel.ItemsSource = new List<int>() { myCarousel.ItemsSource[0] - 1,  myCarousel.ItemsSource[0] };
 		await Task.Delay(100);
 		myCarousel.AnimateTransition = false;
 		myCarousel.Position = 1;
