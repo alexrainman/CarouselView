@@ -156,21 +156,30 @@ Carousel.ItemsSource = pages;
 To move forward:
 
 ```
-void OnNext (object sender, TappedEventArgs e) {
-	Carousel.InsertPage(2); // parameter is the new item to be used as binding context for the second view
-	Carousel.RemovePage(0);
+public async void OnNext(object sender, TappedEventArgs e)
+{
+	if (_vm.ItemsSource[0] < 4)
+	{
+		await myCarousel.InsertPage(_vm.ItemsSource[0] + 1);
+		await myCarousel.RemovePage(0);
+	}
 }
 ```
 
 To move back:
 
 ```
-async void OnPrevious (object sender, TappedEventArgs e) {
-	var pages = new List<int>() { 1, pages[0] }; // inserting one item on position 0 of ItemsSource
-	Carousel.Position = 1;
-	Carousel.ItemsSource = pages;
-	await Task.Delay(100);
-	Carousel.RemovePage(1);
+public async void OnPrev(object sender, TappedEventArgs e)
+{
+	if (_vm.ItemsSource[0] > 0)
+	{
+		_vm.ItemsSource = new List<int>() { _vm.ItemsSource[0] - 1, _vm.ItemsSource[0] };
+		await Task.Delay(100);
+		myCarousel.AnimateTransition = false;
+		myCarousel.Position = 1;
+		myCarousel.AnimateTransition = true;
+		await myCarousel.RemovePage(1);
+	}
 }
 ```
 
