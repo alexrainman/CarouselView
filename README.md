@@ -166,7 +166,7 @@ public async void OnNext(object sender, TappedEventArgs e)
 }
 ```
 
-To move back:
+To move backward:
 
 ```
 public async void OnPrev(object sender, TappedEventArgs e)
