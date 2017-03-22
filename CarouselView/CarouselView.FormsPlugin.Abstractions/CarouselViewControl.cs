@@ -27,7 +27,7 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(ItemTemplateProperty, value); }
 		}
 
-		public static readonly BindableProperty PositionProperty = BindableProperty.Create("Position", typeof(int), typeof(CarouselViewControl), 0);
+		public static readonly BindableProperty PositionProperty = BindableProperty.Create("Position", typeof(int), typeof(CarouselViewControl), 0, BindingMode.TwoWay);
 
 		public int Position
 		{
@@ -137,12 +137,5 @@ namespace CarouselView.FormsPlugin.Abstractions
 			if (InsertAction != null)
 				InsertAction(item, position);
 		}
-
-		/*public Action<int> SetCurrentAction;
-
-		public void SetCurrentPage(int position){
-			if(SetCurrentAction != null)
-				SetCurrentAction (position);
-		}*/
 	}
 }

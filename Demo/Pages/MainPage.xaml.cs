@@ -4,40 +4,33 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Collections.ObjectModel;
 
 namespace Demo
 {
 	public partial class MainPage : ContentPage
 	{
+		public MainViewModel _vm;
+
 		public MainPage ()
 		{
 			InitializeComponent ();
 
-			myCarousel.ItemsSource = new List<int>();
-			myCarousel.ItemTemplate = new MyTemplateSelector (); //new DataTemplate (typeof(MyView));
-			myCarousel.Position = 0;
+			BindingContext = _vm = new MainViewModel();
+
 			myCarousel.PositionSelected += PositionSelected;
 
 			MessagingCenter.Subscribe<MyFirstView> (this, "RemoveMe", async (sender) => {
-
-				//if (myCarousel.ItemsSource.Count > 1)
-				    await myCarousel.RemovePage(myCarousel.Position);
-
+				await myCarousel.RemovePage(myCarousel.Position);
 			});
 
-			prevBtn.IsVisible = myCarousel.Position > 0;
-			addPageBtn.IsVisible = myCarousel.ItemsSource != null;
-			nextBtn.IsVisible = myCarousel.Position < myCarousel.ItemsSource?.Count - 1;
+			ConfigureButtons();
 
 			ToolbarItems.Add(new ToolbarItem
 			{
 				Text = "Reset",
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() => {
-					myCarousel.ItemsSource = new List<int>();
-					//myCarousel.SetCurrentPage(0);
-					//myCarousel.ShowIndicators = !myCarousel.ShowIndicators;
+					_vm.ItemsSource = new List<int>();
 				})
 			});
 
@@ -47,43 +40,45 @@ namespace Demo
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() =>
 				{
-					//Navigation.PushAsync(new MyTabbedPage());
 					Navigation.PushAsync(new SecondPage());
+					//Navigation.PushAsync(new MyTabbedPage());
 				})
 			});
 		}
 
+		void ConfigureButtons()
+		{
+			prevBtn.IsVisible = _vm.Position > 0;
+			addPageBtn.IsVisible = _vm.ItemsSource != null;
+			nextBtn.IsVisible = _vm.Position < _vm.ItemsSource?.Count - 1;
+		}
+
 		public void PositionSelected (object sender, EventArgs e)
-		{			
-			prevBtn.IsVisible = myCarousel.Position > 0;
-			addPageBtn.IsVisible = myCarousel.ItemsSource != null;
-			nextBtn.IsVisible = myCarousel.Position < myCarousel.ItemsSource?.Count - 1;
+		{
+			ConfigureButtons();
 			Debug.WriteLine ("Position " + myCarousel.Position + " selected");
 		}
 
 		public void OnPrev (object sender, TappedEventArgs e)
 		{
-			if (myCarousel.Position > 0)
-				//myCarousel.SetCurrentPage(myCarousel.Position - 1);
-				myCarousel.Position--;
+			if (_vm.Position > 0)
+				_vm.Position--;
 		}
 
 		public void OnNext(object sender, TappedEventArgs e)
 		{
-			if (myCarousel.Position < myCarousel.ItemsSource?.Count - 1)
-				//myCarousel.SetCurrentPage(myCarousel.Position + 1);
-				myCarousel.Position++;
+			if (_vm.Position < _vm.ItemsSource?.Count - 1)
+				_vm.Position++;
 		}
 
 		public async Task OnAdd(object sender, TappedEventArgs e)
 		{
-			if (myCarousel.ItemsSource != null)
+			if (_vm.ItemsSource != null)
 			{
-				await myCarousel.InsertPage(myCarousel.ItemsSource.Count);
+				await myCarousel.InsertPage(_vm.ItemsSource.Count);
 
-				if (myCarousel.ItemsSource.Count > 1)
-					//myCarousel.SetCurrentPage(myCarousel.ItemsSource.Count - 1);
-					myCarousel.Position = myCarousel.ItemsSource.Count - 1;
+				if (_vm.ItemsSource.Count > 1)
+					_vm.Position = _vm.ItemsSource.Count - 1;
 		    }
 		}
 	}

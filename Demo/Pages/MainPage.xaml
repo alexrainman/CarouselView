@@ -22,9 +22,11 @@
                                       IndicatorsShape="Square"
                                       InterPageSpacing="10"
                                       InterPageSpacingColor="Red"
+                                      ItemTemplate="{Binding TemplateSelector}"
+                                      ItemsSource="{Binding ItemsSource}"
                                       Orientation="Horizontal"
-                                      ShowIndicators="true">
-        </controls:CarouselViewControl>
+                                      Position="{Binding Position}"
+                                      ShowIndicators="true" />
 
         <Grid Grid.Row="1"
               Grid.Column="0"

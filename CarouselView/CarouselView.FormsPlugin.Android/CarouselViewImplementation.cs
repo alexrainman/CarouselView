@@ -11,7 +11,6 @@ using System.ComponentModel;
 using AViews = Android.Views;
 using Android.Util;
 using Android.OS;
-using System.Collections.Specialized;
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.Android
@@ -87,35 +86,19 @@ namespace CarouselView.FormsPlugin.Android
 				{
 					Element.RemoveAction = null;
 					Element.InsertAction = null;
-					//Element.SetCurrentAction = null;
 				}
 			}
 
 			if (e.NewElement != null)
 			{
 				// Configure the control and subscribe to event handlers
-
 				viewPager.PageSelected += ViewPager_PageSelected;
 				viewPager.PageScrollStateChanged += ViewPager_PageScrollStateChanged;
 
 				Element.RemoveAction = new Action<int>(RemoveItem);
 				Element.InsertAction = new Action<object, int>(InsertItem);
-				//Element.SetCurrentAction = new Action<int>(SetCurrentItem);
-
-				//Element.ItemsSource.CollectionChanged += ItemsSource_CollectionChanged;
 			}
 		}
-
-		/*void ItemsSource_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-		{
-			if (e.Action == NotifyCollectionChangedAction.Add)
-			{
-			}
-
-			if (e.Action == NotifyCollectionChangedAction.Remove)
-			{
-			}
-		}*/
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
@@ -135,7 +118,6 @@ namespace CarouselView.FormsPlugin.Android
 					indicator.Visibility = Element.ShowIndicators ? AViews.ViewStates.Visible : AViews.ViewStates.Gone;
 					break;
 				case "ItemsSource":
-					// NEW CODE
 					if (Element != null && viewPager != null)
 					{
 						configPosition();
@@ -193,7 +175,6 @@ namespace CarouselView.FormsPlugin.Android
 
 		public async void InsertItem(object item, int position)
 		{
-			// NEW CODE
 			if (Element != null && viewPager != null && Element.ItemsSource != null)
 			{
 				if (position > Element.ItemsSource.Count)
@@ -216,7 +197,6 @@ namespace CarouselView.FormsPlugin.Android
 		// Android ViewPager is the most complicated piece of code ever :)
 		public async void RemoveItem(int position)
 		{
-			// NEW CODE
 			if (Element != null && viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0) {
 				
 				isSwiping = true;
@@ -292,7 +272,6 @@ namespace CarouselView.FormsPlugin.Android
 
 		void SetCurrentItem(int position)
 		{
-			// NEW CODE
 			if (Element != null && viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0) {
 
 				if (position > Element.ItemsSource.Count - 1)
@@ -376,7 +355,7 @@ namespace CarouselView.FormsPlugin.Android
 			{
 				var pager = (ViewPager)container;
 				var view = (AViews.ViewGroup)objectValue;
-				//view.SaveHierarchyState(mViewStates);
+				view.SaveHierarchyState(mViewStates);
 				pager.RemoveView (view);
 			}
 

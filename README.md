@@ -43,7 +43,7 @@ xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=Car
 Then add the xaml:
 
 ```xml
-<controls:CarouselViewControl Orientation="Horizontal" InterPageSpacing="10" Position="0" ItemsSource="{Binding Pages}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+<controls:CarouselViewControl Orientation="Horizontal" InterPageSpacing="10" Position="{Binding myPosition}" ItemsSource="{Binding myItemsSource}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
     <controls:CarouselViewControl.ItemTemplate>
         <DataTemplate>
             <local:MyView />
@@ -52,7 +52,7 @@ Then add the xaml:
 </controls:CarouselViewControl>
 ```
 
-Or, you can use a data template selector.
+Or, you can use a data template selector as StaticResource:
 
 ```xml
 <ContentPage.Resources>
@@ -66,6 +66,12 @@ Then the xaml:
 
 ```xml
 <controls:CarouselViewControl Position="0" ItemsSource="{Binding Pages}" ItemTemplate="{StaticResource myTemplateSelector}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+```
+
+Or, template selector in your ViewModel:
+
+```xml
+<controls:CarouselViewControl Position="{Binding myPosition}" ItemsSource="{Binding myItemsSource}" ItemTemplate="{Binding myTemplateSelector}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
 ```
 
 **Bindable Properties**
@@ -185,6 +191,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 * [alexrainman](https://github.com/alexrainman)
 
 #### Release Notes
+
+3.0.2
+
+[Update] Minor fixes for Position binding.
 
 3.0.1
 

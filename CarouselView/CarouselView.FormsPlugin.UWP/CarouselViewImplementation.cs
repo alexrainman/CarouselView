@@ -83,7 +83,6 @@ namespace CarouselView.FormsPlugin.UWP
                 {
                     Element.RemoveAction = null;
                     Element.InsertAction = null;
-                    //Element.SetCurrentAction = null;
                 }
             }
 
@@ -99,7 +98,6 @@ namespace CarouselView.FormsPlugin.UWP
 
                 Element.RemoveAction = new Action<int>(RemoveItem);
                 Element.InsertAction = new Action<object, int>(InsertItem);
-                //Element.SetCurrentAction = new Action<int>(SetCurrentItem);
             }
         }      
 

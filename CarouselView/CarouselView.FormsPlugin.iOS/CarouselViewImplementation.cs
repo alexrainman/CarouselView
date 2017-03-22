@@ -64,17 +64,14 @@ namespace CarouselView.FormsPlugin.iOS
 				{
 					Element.RemoveAction = null;
 					Element.InsertAction = null;
-					//Element.SetCurrentAction = null;
 				}
 			}
 
 			if (e.NewElement != null)
 			{
 				// Configure the control and subscribe to event handlers
-
 				Element.RemoveAction = new Action<int>(RemoveController);
 				Element.InsertAction = new Action<object, int>(InsertController);
-				//Element.SetCurrentAction = new Action<int>(SetCurrentController);
 			}
 		}
 
@@ -104,16 +101,12 @@ namespace CarouselView.FormsPlugin.iOS
 				case "ItemsSource": // TODO: don't execute the first time
 					if (Element != null && pageController != null)
 					{
-						// NEW CODE
 						ConfigurePageController();
-
 						ConfigurePageControl();
-
 						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 					}
 					break;
                 case "Position":
-					// NEW CODE
 					if (Element.Position != -1 && !isSwiping)
 					    SetCurrentController(Element.Position);
 					break;
@@ -130,9 +123,9 @@ namespace CarouselView.FormsPlugin.iOS
 				var controller = (ViewContainer)pageController.ViewControllers[0];
 				var position = controller.Tag;
 
-				// NEW CODE
 				isSwiping = true;
 				Element.Position = position;
+				prevPosition = position;
 				isSwiping = false;
 
 				ConfigurePageControl();
@@ -366,8 +359,8 @@ namespace CarouselView.FormsPlugin.iOS
 				if (position > Element.ItemsSource.Count - 1)
 					throw new CarouselViewException("Current page index cannot be bigger than ItemsSource.Count - 1");
 
-				// NEW CODE
 				var direction = position > prevPosition ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
+				prevPosition = position;
 
 				var firstViewController = CreateViewController(position);
 				pageController.SetViewControllers(new[] { firstViewController }, direction, Element.AnimateTransition, s =>
@@ -381,9 +374,6 @@ namespace CarouselView.FormsPlugin.iOS
 
 		UIViewController CreateViewController(int index)
 		{
-			// NEW CODE
-			prevPosition = index;
-
 			Xamarin.Forms.View formsView = null;
 
 			object bindingContext = null;
@@ -393,7 +383,6 @@ namespace CarouselView.FormsPlugin.iOS
 
 			var dt = bindingContext as DataTemplate;
 
-			// NEW CODE
 			if (dt != null)
 			{
 				formsView = (Xamarin.Forms.View)dt.CreateContent();
