@@ -22,6 +22,8 @@ namespace CarouselView.FormsPlugin.Android
 {
 	public class VerticalViewPager : ViewPager
 	{
+		private bool isSwipingEnabled = true;
+
 		public VerticalViewPager(Context context) : base(context, null)
 		{
 		}
@@ -46,17 +48,32 @@ namespace CarouselView.FormsPlugin.Android
 			return ev;
 		}
 
-		public override bool OnInterceptTouchEvent(MotionEvent ev)
+		public override bool OnTouchEvent(MotionEvent ev)
 		{
-			bool intercept = base.OnInterceptTouchEvent(SwapTouchEvent(ev));
-		    //If not intercept, touch event should not be swapped.
-		    SwapTouchEvent(ev);
-			return intercept;
+			if (this.isSwipingEnabled)
+			{
+				return base.OnTouchEvent(SwapTouchEvent(ev));
+			}
+
+			return false;
 		}
 
-		public override bool OnTouchEvent(MotionEvent e)
+		public override bool OnInterceptTouchEvent(MotionEvent ev)
 		{
-			return base.OnTouchEvent(SwapTouchEvent(e));
+			if (this.isSwipingEnabled)
+			{
+				bool intercept = base.OnInterceptTouchEvent(SwapTouchEvent(ev));
+				//If not intercept, touch event should not be swapped.
+				SwapTouchEvent(ev);
+				return intercept;
+			}
+
+			return false;
+		}
+
+		public void SetPagingEnabled(bool enabled)
+		{
+			this.isSwipingEnabled = enabled;
 		}
 	}
 }

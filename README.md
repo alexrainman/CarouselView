@@ -149,28 +149,38 @@ Or, template selector in your ViewModel:
 #### Render one page at a time, no swiping, move back and fort programmatically:
 
 ```
-var pages = new List<int> { 1 }; // only one item in ItemsSource
+var pages = new List<int> { 0 }; // only one item in ItemsSource
 Carousel.ItemsSource = pages;
+```
+
+To move backward:
+
+```
+async void OnPrevious (object sender, TappedEventArgs e) {
+    if (pages[0] > 0)
+	{
+	    // the first element is the bindingContext of the new page
+	    // the second element is the bindingContext of the current page
+	    var pages = new List<int>() { pages[0] - 1, pages[0] };
+	    Carousel.ItemsSource = pages;
+		await Task.Delay(100);
+		Carousel.AnimateTransition = false;
+		Carousel.Position = 1;
+		Carousel.AnimateTransition = true;
+		Carousel.RemovePage(1);
+    }
+}
 ```
 
 To move forward:
 
 ```
-void OnNext (object sender, TappedEventArgs e) {
-	Carousel.InsertPage(2); // parameter is the new item to be used as binding context for the second view
-	Carousel.RemovePage(0);
-}
-```
-
-To move back:
-
-```
-async void OnPrevious (object sender, TappedEventArgs e) {
-	var pages = new List<int>() { 1, pages[0] }; // inserting one item on position 0 of ItemsSource
-	Carousel.Position = 1;
-	Carousel.ItemsSource = pages;
-	await Task.Delay(100);
-	Carousel.RemovePage(1);
+async void OnNext (object sender, TappedEventArgs e) {
+    if (pages[0] < 4)
+	{
+	    await Carousel.InsertPage(pages[0] + 1);
+	    await Carousel.RemovePage(0);
+	}
 }
 ```
 
@@ -191,6 +201,18 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 * [alexrainman](https://github.com/alexrainman)
 
 #### Release Notes
+
+3.1.0
+
+[Android] Dynamically Changing Carousel Doesn't Load Threads, duplicates #75 (fixed)
+
+[Android] Call to DataTemplateSelector.OnSelectTemplate happend multiple times on Android #78 (fixed)
+
+[Android] Adding Xamarin.Android.Support.v4 version 24.2.1 dependency (Android 7)
+
+3.0.3
+
+[Update] Adding platform specific dependencies.
 
 3.0.2
 

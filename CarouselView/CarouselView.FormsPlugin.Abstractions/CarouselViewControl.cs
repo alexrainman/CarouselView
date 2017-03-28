@@ -35,25 +35,6 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(PositionProperty, value); }
 		}
 
-		// iOS only
-		public static readonly BindableProperty BouncesProperty = BindableProperty.Create("Bounces", typeof(bool), typeof(CarouselViewControl), true);
-
-		public bool Bounces
-		{
-			get { return (bool)GetValue(BouncesProperty); }
-			set { SetValue(BouncesProperty, value); }
-		}
-
-		// UWP only
-		public static readonly BindableProperty ArrowsProperty = BindableProperty.Create("Arrows", typeof(bool), typeof(CarouselViewControl), false);
-
-		public bool Arrows
-		{
-			get { return (bool)GetValue(ArrowsProperty); }
-			set { SetValue(ArrowsProperty, value); }
-		}
-
-		// Page Indicators properties
 		public static readonly BindableProperty ShowIndicatorsProperty = BindableProperty.Create("ShowIndicators", typeof(bool), typeof(CarouselViewControl), false);
 
 		public bool ShowIndicators
@@ -86,6 +67,30 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(CurrentPageIndicatorTintColorProperty, value); }
 		}
 
+		public static readonly BindableProperty OrientationProperty = BindableProperty.Create("Orientation", typeof(Orientation), typeof(CarouselViewControl), Orientation.Horizontal);
+
+		public Orientation Orientation
+		{
+			get { return (Orientation)GetValue(OrientationProperty); }
+			set { SetValue(OrientationProperty, value); }
+		}
+
+		public static readonly BindableProperty AnimateTransitionProperty = BindableProperty.Create("AnimateTransition", typeof(bool), typeof(CarouselViewControl), true);
+
+		public bool AnimateTransition
+		{
+			get { return (bool)GetValue(AnimateTransitionProperty); }
+			set { SetValue(AnimateTransitionProperty, value); }
+		}
+
+		public static readonly BindableProperty IsSwipingEnabledProperty = BindableProperty.Create("IsSwipingEnabled", typeof(bool), typeof(CarouselViewControl), true);
+
+		public bool IsSwipingEnabled
+		{
+			get { return (bool)GetValue(IsSwipingEnabledProperty); }
+			set { SetValue(IsSwipingEnabledProperty, value); }
+		}
+
 		// Android and iOS only
 		public static readonly BindableProperty InterPageSpacingProperty = BindableProperty.Create("InterPageSpacing", typeof(int), typeof(CarouselViewControl), 0);
 
@@ -104,20 +109,13 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(InterPageSpacingColorProperty, value); }
 		}
 
-		public static readonly BindableProperty OrientationProperty = BindableProperty.Create("Orientation", typeof(Orientation), typeof(CarouselViewControl), Orientation.Horizontal);
+		// UWP only
+		public static readonly BindableProperty ArrowsProperty = BindableProperty.Create("Arrows", typeof(bool), typeof(CarouselViewControl), false);
 
-		public Orientation Orientation
+		public bool Arrows
 		{
-			get { return (Orientation)GetValue(OrientationProperty); }
-			set { SetValue(OrientationProperty, value); }
-		}
-
-		public static readonly BindableProperty AnimateTransitionProperty = BindableProperty.Create("AnimateTransition", typeof(bool), typeof(CarouselViewControl), true);
-
-		public bool AnimateTransition
-		{
-			get { return (bool)GetValue(AnimateTransitionProperty); }
-			set { SetValue(AnimateTransitionProperty, value); }
+			get { return (bool)GetValue(ArrowsProperty); }
+			set { SetValue(ArrowsProperty, value); }
 		}
 
 		public EventHandler PositionSelected;

@@ -17,7 +17,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkVersion>v7.0</TargetFrameworkVersion>
-    <ReleaseVersion>3.0.2</ReleaseVersion>
+    <ReleaseVersion>3.1.0</ReleaseVersion>
     <AndroidTlsProvider></AndroidTlsProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -109,10 +109,11 @@
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FormsToNativeDroid.cs" />
-    <Compile Include="Library\CirclePageIndicator.cs" />
-    <Compile Include="Library\PageIndicator.cs" />
-    <Compile Include="Library\DefaultPageTransformer.cs" />
-    <Compile Include="Library\VerticalViewPager.cs" />
+    <Compile Include="Implementation\CirclePageIndicator.cs" />
+    <Compile Include="Implementation\PageIndicator.cs" />
+    <Compile Include="Implementation\DefaultPageTransformer.cs" />
+    <Compile Include="Implementation\VerticalViewPager.cs" />
+    <Compile Include="Implementation\CustomViewPager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

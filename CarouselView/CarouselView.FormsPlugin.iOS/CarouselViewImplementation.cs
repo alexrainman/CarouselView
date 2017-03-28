@@ -182,7 +182,7 @@ namespace CarouselView.FormsPlugin.iOS
 				var scroller = view as UIScrollView;
 				if (scroller != null)
 				{
-					scroller.Bounces = Element.Bounces;
+					scroller.Bounces = Element.IsSwipingEnabled;
 				}
 			}
 

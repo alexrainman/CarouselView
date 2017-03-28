@@ -51,13 +51,21 @@ namespace CarouselView.FormsPlugin.Android
 
 				viewPager.SetBackgroundColor(Element.InterPageSpacingColor.ToAndroid());
 
-				indicator = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
+				if (!Element.IsSwipingEnabled)
+				{
+					if (Element.Orientation == Orientation.Horizontal)
+					    ((CustomViewPager)viewPager).SetPagingEnabled(false);
+					else
+						((VerticalViewPager)viewPager).SetPagingEnabled(false);
+				}
 
 				// Fix for NullReferenceException on Android tabbed page #59
 				if (viewPager.Adapter == null)
 				{
 					viewPager.Adapter = new PageAdapter(Element, viewPager);
 				}
+
+				indicator = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
 
 				indicator.SetViewPager(viewPager);
 
@@ -185,7 +193,13 @@ namespace CarouselView.FormsPlugin.Android
 				else
 					Element.ItemsSource.Insert(position, item);
 
-				viewPager.Adapter.NotifyDataSetChanged();
+				if (position == Element.Position)
+				{
+					viewPager.Adapter = new PageAdapter(Element, viewPager);
+					viewPager.SetCurrentItem(Element.Position, false);
+				}
+				else
+					viewPager.Adapter.NotifyDataSetChanged();
 
 				await Task.Delay(100);
 
@@ -304,9 +318,9 @@ namespace CarouselView.FormsPlugin.Android
 				}
 			}
 
-			public override bool IsViewFromObject (AViews.View view, Java.Lang.Object objectValue)
+			public override bool IsViewFromObject (AViews.View view, Java.Lang.Object @object)
 			{
-				return view == objectValue;
+				return view == @object;
 			} 
 
 			public override Java.Lang.Object InstantiateItem (AViews.ViewGroup container, int position)
@@ -344,7 +358,7 @@ namespace CarouselView.FormsPlugin.Android
 
 				var pager = (ViewPager)container;
 
-				nativeConverted.RestoreHierarchyState(mViewStates);
+				//nativeConverted.RestoreHierarchyState(mViewStates);
 
 				pager.AddView (nativeConverted);
 
@@ -355,7 +369,7 @@ namespace CarouselView.FormsPlugin.Android
 			{
 				var pager = (ViewPager)container;
 				var view = (AViews.ViewGroup)objectValue;
-				view.SaveHierarchyState(mViewStates);
+				//view.SaveHierarchyState(mViewStates);
 				pager.RemoveView (view);
 			}
 
@@ -367,7 +381,7 @@ namespace CarouselView.FormsPlugin.Android
 				return PagerAdapter.PositionNone;
 			}
 
-			public override IParcelable SaveState()
+			/*public override IParcelable SaveState()
 			{
 				var count = mViewPager.ChildCount;
 				for (int i = 0; i < count; i++)
@@ -388,7 +402,7 @@ namespace CarouselView.FormsPlugin.Android
 				var bundle = (Bundle)state;
 				bundle.SetClassLoader(loader);
 				mViewStates = (SparseArray<Parcelable>)bundle.GetSparseParcelableArray(TAG_VIEWS);
-			}
+			}*/
 		}
 
 		protected override void Dispose(bool disposing)

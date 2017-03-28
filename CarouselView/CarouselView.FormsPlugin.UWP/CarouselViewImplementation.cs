@@ -225,7 +225,8 @@ namespace CarouselView.FormsPlugin.UWP
 
                     var source = new List<FrameworkElement>();
 
-                    for (int j = 0; j <= Element.Position; j++)
+                    //for (int j = 0; j <= Element.Position; j++)
+                    for (int j = 0; j <= Element.ItemsSource.Count - 1; j++)
                     {
                         source.Add(CreateView(Element.ItemsSource[j]));
                     }
@@ -252,12 +253,12 @@ namespace CarouselView.FormsPlugin.UWP
 
                     flipView.SelectedIndex = Element.Position;
 
-                    await Task.Delay(100);
+                    //await Task.Delay(100);
 
-                    for (var j = Element.Position + 1; j <= Element.ItemsSource.Count - 1; j++)
+                    /*for (var j = Element.Position + 1; j <= Element.ItemsSource.Count - 1; j++)
                     {
                         Source.Add(CreateView(Element.ItemsSource[j]));
-                    }
+                    }*/
 
                     IsLoading = false;
                 }
@@ -294,18 +295,18 @@ namespace CarouselView.FormsPlugin.UWP
 
 				if (position == -1)
 				{
-					Element.ItemsSource.Add(item);
-					Source.Add(CreateView(item));
-					Dots.Add(CreateDot(-1, position));
-				}
+                    Element.ItemsSource.Add(item);
+                    Source.Add(CreateView(item));
+                    Dots.Add(CreateDot(-1, position));
+                }
 				else
 				{
-					Element.ItemsSource.Insert(position, item);
-					Source.Insert(position, CreateView(item));
-					Dots.Insert(position, CreateDot(position, position));
-				}
+                    Element.ItemsSource.Insert(position, item);
+                    Source.Insert(position, CreateView(item));
+                    Dots.Insert(position, CreateDot(position, position));
+                }
 
-				await Task.Delay(100);
+                await Task.Delay(100);
 
 				if (Element.ItemsSource.Count == 1)
 					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
@@ -348,10 +349,10 @@ namespace CarouselView.FormsPlugin.UWP
 						await Task.Delay(100);
 					}
 
-					Element.ItemsSource.RemoveAt(position);
-					Source.RemoveAt(position);
-
-					IsRemoving = false;
+                    Element.ItemsSource.RemoveAt(position);
+                    Source.RemoveAt(position);
+                    
+                    IsRemoving = false;
 
 					isSwiping = true;
 					Element.Position = flipView.SelectedIndex;

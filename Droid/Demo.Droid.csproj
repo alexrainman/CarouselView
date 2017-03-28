@@ -16,7 +16,7 @@
     <AssemblyName>Demo.Droid</AssemblyName>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <TargetFrameworkVersion>v7.0</TargetFrameworkVersion>
-    <ReleaseVersion>3.0.2</ReleaseVersion>
+    <ReleaseVersion>3.1.0</ReleaseVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <AndroidTlsProvider></AndroidTlsProvider>

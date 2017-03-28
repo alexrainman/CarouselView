@@ -40,7 +40,8 @@ namespace Demo
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() =>
 				{
-					Navigation.PushAsync(new SecondPage());
+					Navigation.PushAsync(new NoSwipePage());
+					//Navigation.PushAsync(new SecondPage());
 					//Navigation.PushAsync(new MyTabbedPage());
 				})
 			});

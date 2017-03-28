@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="Demo.NoSwipePage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
+    <Grid RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="56" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <controls:CarouselViewControl x:Name="myCarousel"
+                                      Grid.Row="0"
+                                      Grid.Column="0"
+                                      HorizontalOptions="FillAndExpand"
+                                      VerticalOptions="FillAndExpand"
+                                      AnimateTransition="true"
+                                      IndicatorsShape="Square"
+                                      InterPageSpacing="10"
+                                      InterPageSpacingColor="Red"
+                                      IsSwipingEnabled="false"
+                                      ItemsSource="{Binding ItemsSource}"
+                                      Orientation="Horizontal"
+                                      ShowIndicators="false" />
+
+        <Grid Grid.Row="1"
+              Grid.Column="0"
+              BackgroundColor="Silver"
+              Padding="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="80" />
+            </Grid.ColumnDefinitions>
+            <Label x:Name="prevBtn"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   HorizontalTextAlignment="Start"
+                   Text="Prev"
+                   VerticalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnPrev" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label x:Name="nextBtn"
+                   Grid.Row="0"
+                   Grid.Column="2"
+                   HorizontalTextAlignment="End"
+                   Text="Next"
+                   VerticalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNext" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+    </Grid>
+</ContentPage>

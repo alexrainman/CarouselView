@@ -9,6 +9,7 @@ using Android.Widget;
 using Android.OS;
 using CarouselView.FormsPlugin.Android;
 using Xamarin.Forms.Platform.Android;
+using CarouselView.FormsPlugin.Abstractions;
 
 namespace Demo.Droid
 {
@@ -27,11 +28,6 @@ namespace Demo.Droid
 			CarouselViewRenderer.Init ();
 
 			LoadApplication (new App ());
-		}
-
-		protected override void OnRestoreInstanceState(Bundle savedInstanceState)
-		{
-			base.OnRestoreInstanceState(savedInstanceState);
 		}
 	}
 }

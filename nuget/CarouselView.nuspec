@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>3.0.2</version>
+        <version>3.1.0</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
@@ -12,6 +12,12 @@
         <description>Create Horizontal and Vertical carousels, add page indicators, render one page at a time moving back and fort programmatically and much more. “How to” at Github repository.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
+        3.1.0
+        [Android] Dynamically Changing Carousel Doesn't Load Threads, duplicates #75 (fixed)
+        [Android] Call to DataTemplateSelector.OnSelectTemplate happend multiple times on Android #78 (fixed)
+        [Android] Adding Xamarin.Android.Support.v4 version 24.2.1 dependency (Android 7)
+        3.0.3
+        [Update] Adding platform specific dependencies.
         3.0.2
         [Update] Minor fixes for Position binding.
         3.0.1
@@ -61,9 +67,16 @@
         </releaseNotes>
         <tags>carouselview carousel pageslider slider viewpager uipageviewcontroller flipview ios android uwp xamarin forms monotouch monodroid</tags>
         <dependencies>
-			<group>
-				<dependency id="Xamarin.Forms" version="2.2.0.31"/>
-			</group>
+			 <group targetFramework="MonoAndroid10">
+			    <dependency id="Xamarin.Forms" version="2.3.3.193"/>
+	            <dependency id="Xamarin.Android.Support.v4" version="24.2.1"/>
+	        </group>
+	        <group targetFramework="Xamarin.iOS10">
+	            <dependency id="Xamarin.Forms" version="2.3.3.193"/>
+	        </group>
+	        <group targetFramework="UAP10">
+	            <dependency id="Xamarin.Forms" version="2.3.3.193"/>
+	        </group>
 		</dependencies>
     </metadata>
     <files>
