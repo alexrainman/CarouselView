@@ -73,6 +73,12 @@ namespace CarouselView.FormsPlugin.iOS
 				Element.RemoveAction = new Action<int>(RemoveController);
 				Element.InsertAction = new Action<object, int>(InsertController);
 			}
+
+			var element = e.OldElement ?? e.NewElement;
+			if (element != null && element.Position > -1)
+			{
+				prevPosition = element.Position;
+			}
 		}
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -367,7 +373,7 @@ namespace CarouselView.FormsPlugin.iOS
 				{
 					ConfigurePageControl();
 
-					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+					Element?.PositionSelected?.Invoke(Element, EventArgs.Empty);
 				});
 			}
 		}
