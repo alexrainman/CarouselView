@@ -9,8 +9,6 @@ using Xamarin.Forms.Platform.Android;
 using System.ComponentModel;
 
 using AViews = Android.Views;
-using Android.Util;
-using Android.OS;
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.Android
@@ -23,8 +21,6 @@ namespace CarouselView.FormsPlugin.Android
 		AViews.View nativeView;
 		ViewPager viewPager;
 		CirclePageIndicator indicator;
-
-		bool IsRemoving;
 		bool _disposed;
 
 		protected override void OnElementChanged (ElementChangedEventArgs<CarouselViewControl> e)
@@ -38,8 +34,8 @@ namespace CarouselView.FormsPlugin.Android
 
 				var inflater = AViews.LayoutInflater.From(Forms.Context);
 
-				if (Element.Orientation == Orientation.Horizontal)
-				    nativeView = inflater.Inflate(Resource.Layout.viewpager, null);
+				if (Element.Orientation == CarouselViewOrientation.Horizontal)
+				    nativeView = inflater.Inflate(Resource.Layout.horizontal_viewpager, null);
 				else
 					nativeView = inflater.Inflate(Resource.Layout.vertical_viewpager, null);
 
@@ -53,7 +49,7 @@ namespace CarouselView.FormsPlugin.Android
 
 				if (!Element.IsSwipingEnabled)
 				{
-					if (Element.Orientation == Orientation.Horizontal)
+					if (Element.Orientation == CarouselViewOrientation.Horizontal)
 					    ((CustomViewPager)viewPager).SetPagingEnabled(false);
 					else
 						((VerticalViewPager)viewPager).SetPagingEnabled(false);
@@ -62,7 +58,7 @@ namespace CarouselView.FormsPlugin.Android
 				// Fix for NullReferenceException on Android tabbed page #59
 				if (viewPager.Adapter == null)
 				{
-					viewPager.Adapter = new PageAdapter(Element, viewPager);
+					viewPager.Adapter = new PageAdapter(Element);
 				}
 
 				indicator = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
@@ -103,8 +99,8 @@ namespace CarouselView.FormsPlugin.Android
 				viewPager.PageSelected += ViewPager_PageSelected;
 				viewPager.PageScrollStateChanged += ViewPager_PageScrollStateChanged;
 
-				Element.RemoveAction = new Action<int>(RemoveItem);
-				Element.InsertAction = new Action<object, int>(InsertItem);
+				Element.RemoveAction = new Func<int, Task>(RemoveItem);
+				Element.InsertAction = new Func<object, int, Task>(InsertItem);
 			}
 		}
 
@@ -119,7 +115,7 @@ namespace CarouselView.FormsPlugin.Android
 					break;
 				case "Height":
 					//var rect = this.Element.Bounds;
-					viewPager.Adapter = new PageAdapter(Element, viewPager);
+					viewPager.Adapter = new PageAdapter(Element);
 					viewPager.SetCurrentItem(Element.Position, false);
 					break;
 				case "ShowIndicators":
@@ -130,7 +126,7 @@ namespace CarouselView.FormsPlugin.Android
 					{
 						configPosition();
 
-						viewPager.Adapter = new PageAdapter(Element, viewPager);
+						viewPager.Adapter = new PageAdapter(Element);
 						viewPager.SetCurrentItem(Element.Position, false);
 
 						indicator.SetViewPager(viewPager);
@@ -181,7 +177,7 @@ namespace CarouselView.FormsPlugin.Android
 			indicator.mSnapPage = Element.Position;
 		}
 
-		public async void InsertItem(object item, int position)
+		public async Task InsertItem(object item, int position)
 		{
 			if (Element != null && viewPager != null && Element.ItemsSource != null)
 			{
@@ -195,7 +191,7 @@ namespace CarouselView.FormsPlugin.Android
 
 				if (position == Element.Position)
 				{
-					viewPager.Adapter = new PageAdapter(Element, viewPager);
+					viewPager.Adapter = new PageAdapter(Element);
 					viewPager.SetCurrentItem(Element.Position, false);
 				}
 				else
@@ -209,7 +205,7 @@ namespace CarouselView.FormsPlugin.Android
 		}
 
 		// Android ViewPager is the most complicated piece of code ever :)
-		public async void RemoveItem(int position)
+		public async Task RemoveItem(int position)
 		{
 			if (Element != null && viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0) {
 				
@@ -221,7 +217,7 @@ namespace CarouselView.FormsPlugin.Android
 				if (Element.ItemsSource?.Count == 1)
 				{
 					Element.ItemsSource.RemoveAt(position);
-					viewPager.Adapter = new PageAdapter(Element, viewPager);
+					viewPager.Adapter = new PageAdapter(Element);
 					viewPager.SetCurrentItem(Element.Position, false);
 
 					indicator.SetViewPager(viewPager);
@@ -259,7 +255,7 @@ namespace CarouselView.FormsPlugin.Android
 
 							Element.ItemsSource.RemoveAt(position);
 							if (position == 1)
-								viewPager.Adapter = new PageAdapter(Element, viewPager);
+								viewPager.Adapter = new PageAdapter(Element);
 							else
 								viewPager.Adapter.NotifyDataSetChanged();
 							Element.Position = newPos;
@@ -271,13 +267,11 @@ namespace CarouselView.FormsPlugin.Android
 						Element.ItemsSource.RemoveAt(position);
 
 						if (position == 1)
-							viewPager.Adapter = new PageAdapter(Element, viewPager);
+							viewPager.Adapter = new PageAdapter(Element);
 						else
 							viewPager.Adapter.NotifyDataSetChanged();
 
 					}
-
-					//Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 				}
 
 				isSwiping = false;
@@ -302,14 +296,13 @@ namespace CarouselView.FormsPlugin.Android
 		{
 			CarouselViewControl Element;
 
-			string TAG_VIEWS = "TAG_VIEWS";
-			SparseArray<Parcelable> mViewStates = new SparseArray<Parcelable>();
-			ViewPager mViewPager;
+			//string TAG_VIEWS = "TAG_VIEWS";
+			//SparseArray<Parcelable> mViewStates = new SparseArray<Parcelable>();
+			//ViewPager mViewPager;
 
-			public PageAdapter(CarouselViewControl element, ViewPager viewpager)
+			public PageAdapter(CarouselViewControl element)
 			{
 				Element = element;
-				mViewPager = viewpager;
 			}
 
 			public override int Count {
@@ -351,8 +344,6 @@ namespace CarouselView.FormsPlugin.Android
 
 				formsView.Parent = this.Element;
 
-				// Width in dip and not in pixels. (all Xamarin.Forms controls use dip for their WidthRequest and HeightRequest)
-				// Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Density
 				var nativeConverted = FormsToNativeDroid.ConvertFormsToNative (formsView, new Rectangle (0, 0, Element.Width, Element.Height));
 				nativeConverted.Tag = position;
 

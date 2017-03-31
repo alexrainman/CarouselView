@@ -17,7 +17,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <ReleaseVersion>3.1.0</ReleaseVersion>
+    <ReleaseVersion>3.1.1</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,7 +40,7 @@
   <ItemGroup>
     <Compile Include="CarouselViewControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Orientation.cs" />
+    <Compile Include="CarouselViewOrientation.cs" />
     <Compile Include="CarouselViewException.cs" />
     <Compile Include="IndicatorsShape.cs" />
   </ItemGroup>

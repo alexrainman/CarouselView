@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Markup;
 using System.IO;
 using System.Xml;
 using System.Text;
+using Windows.UI.Xaml.Input;
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.UWP
@@ -53,12 +54,14 @@ namespace CarouselView.FormsPlugin.UWP
                 // Instantiate the native control and assign it to the Control property with
                 // the SetNativeControl method
 
-                if (Element.Orientation == Abstractions.Orientation.Horizontal)
+                if (Element.Orientation == CarouselViewOrientation.Horizontal)
                     nativeView = new FlipViewControl();
                 else
                     nativeView = new VerticalFlipViewControl();
 
                 flipView = nativeView.FindName("flipView") as FlipView;
+
+                //flipView.ManipulationMode = Element.IsSwipingEnabled ? ManipulationModes.All : ManipulationModes.None;
 
                 indicators = nativeView.FindName("indicators") as StackPanel;
                 indicators.Visibility = Element.ShowIndicators ? Visibility.Visible : Visibility.Collapsed;
@@ -96,8 +99,8 @@ namespace CarouselView.FormsPlugin.UWP
 
                 flipView.SizeChanged += FlipView_SizeChanged;
 
-                Element.RemoveAction = new Action<int>(RemoveItem);
-                Element.InsertAction = new Action<object, int>(InsertItem);
+                Element.RemoveAction = new Func<int, Task>(RemoveItem);
+                Element.InsertAction = new Func<object, int, Task>(InsertItem);
             }
         }      
 
@@ -201,7 +204,7 @@ namespace CarouselView.FormsPlugin.UWP
             }
         }
 
-        public async void ItemsSourceChanged()
+        public void ItemsSourceChanged()
         {
 			if (Element != null && flipView != null)
 			{
@@ -286,7 +289,7 @@ namespace CarouselView.FormsPlugin.UWP
 			}
         }
 
-		public async void InsertItem(object item, int position)
+		public async Task InsertItem(object item, int position)
 		{
 			if (Element != null && flipView != null && Element.ItemsSource != null)
 			{
@@ -313,7 +316,7 @@ namespace CarouselView.FormsPlugin.UWP
 			}
 		}
 
-        public async void RemoveItem(int position)
+        public async Task RemoveItem(int position)
         {
             if (Element != null && flipView != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
             {
@@ -402,6 +405,8 @@ namespace CarouselView.FormsPlugin.UWP
 			formsView.Parent = this.Element;
 
             var element = FormsViewToNativeUWP.ConvertFormsToNative(formsView, new Xamarin.Forms.Rectangle(0, 0, ElementWidth, ElementHeight));
+
+            //element.ManipulationMode = Element.IsSwipingEnabled ? ManipulationModes.All : ManipulationModes.None;
 
             return element;
         }

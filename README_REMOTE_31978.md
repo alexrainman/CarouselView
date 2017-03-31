@@ -200,22 +200,6 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
-3.1.1
-
-[iOS] Fix for issues after recreating the control #86
-
-3.1.0
-
-[Android] Dynamically Changing Carousel Doesn't Load Threads, duplicates #75 (fixed)
-
-[Android] Call to DataTemplateSelector.OnSelectTemplate happend multiple times on Android #78 (fixed)
-
-[Android] Adding Xamarin.Android.Support.v4 version 24.2.1 dependency (Android 7)
-
-3.0.3
-
-[Update] Adding platform specific dependencies.
-
 3.0.2
 
 [Update] Minor fixes for Position binding.

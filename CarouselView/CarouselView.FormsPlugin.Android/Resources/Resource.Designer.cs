@@ -2667,8 +2667,8 @@ namespace CarouselView.FormsPlugin.Android
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0b0092
-			public static int action0 = 2131427474;
+			// aapt resource value: 0x7f0b0094
+			public static int action0 = 2131427476;
 			
 			// aapt resource value: 0x7f0b0060
 			public static int action_bar = 2131427424;
@@ -2694,8 +2694,8 @@ namespace CarouselView.FormsPlugin.Android
 			// aapt resource value: 0x7f0b0061
 			public static int action_context_bar = 2131427425;
 			
-			// aapt resource value: 0x7f0b0096
-			public static int action_divider = 2131427478;
+			// aapt resource value: 0x7f0b0098
+			public static int action_divider = 2131427480;
 			
 			// aapt resource value: 0x7f0b0003
 			public static int action_menu_divider = 2131427331;
@@ -2739,8 +2739,8 @@ namespace CarouselView.FormsPlugin.Android
 			// aapt resource value: 0x7f0b0049
 			public static int buttonPanel = 2131427401;
 			
-			// aapt resource value: 0x7f0b0093
-			public static int cancel_action = 2131427475;
+			// aapt resource value: 0x7f0b0095
+			public static int cancel_action = 2131427477;
 			
 			// aapt resource value: 0x7f0b0012
 			public static int center = 2131427346;
@@ -2754,8 +2754,8 @@ namespace CarouselView.FormsPlugin.Android
 			// aapt resource value: 0x7f0b0057
 			public static int checkbox = 2131427415;
 			
-			// aapt resource value: 0x7f0b0099
-			public static int chronometer = 2131427481;
+			// aapt resource value: 0x7f0b009b
+			public static int chronometer = 2131427483;
 			
 			// aapt resource value: 0x7f0b001e
 			public static int clip_horizontal = 2131427358;
@@ -2805,8 +2805,8 @@ namespace CarouselView.FormsPlugin.Android
 			// aapt resource value: 0x7f0b0015
 			public static int end = 2131427349;
 			
-			// aapt resource value: 0x7f0b009e
-			public static int end_padder = 2131427486;
+			// aapt resource value: 0x7f0b00a0
+			public static int end_padder = 2131427488;
 			
 			// aapt resource value: 0x7f0b000b
 			public static int enterAlways = 2131427339;
@@ -2853,11 +2853,11 @@ namespace CarouselView.FormsPlugin.Android
 			// aapt resource value: 0x7f0b0044
 			public static int image = 2131427396;
 			
-			// aapt resource value: 0x7f0b00a0
-			public static int indicator = 2131427488;
+			// aapt resource value: 0x7f0b007a
+			public static int indicator = 2131427450;
 			
-			// aapt resource value: 0x7f0b009d
-			public static int info = 2131427485;
+			// aapt resource value: 0x7f0b009f
+			public static int info = 2131427487;
 			
 			// aapt resource value: 0x7f0b000a
 			public static int item_touch_helper_previous_elevation = 2131427338;
@@ -2865,11 +2865,11 @@ namespace CarouselView.FormsPlugin.Android
 			// aapt resource value: 0x7f0b0017
 			public static int left = 2131427351;
 			
-			// aapt resource value: 0x7f0b0097
-			public static int line1 = 2131427479;
+			// aapt resource value: 0x7f0b0099
+			public static int line1 = 2131427481;
 			
-			// aapt resource value: 0x7f0b009b
-			public static int line3 = 2131427483;
+			// aapt resource value: 0x7f0b009d
+			public static int line3 = 2131427485;
 			
 			// aapt resource value: 0x7f0b002c
 			public static int listMode = 2131427372;
@@ -2877,8 +2877,8 @@ namespace CarouselView.FormsPlugin.Android
 			// aapt resource value: 0x7f0b0046
 			public static int list_item = 2131427398;
 			
-			// aapt resource value: 0x7f0b0095
-			public static int media_actions = 2131427477;
+			// aapt resource value: 0x7f0b0097
+			public static int media_actions = 2131427479;
 			
 			// aapt resource value: 0x7f0b0037
 			public static int middle = 2131427383;
@@ -2886,77 +2886,77 @@ namespace CarouselView.FormsPlugin.Android
 			// aapt resource value: 0x7f0b0023
 			public static int mini = 2131427363;
 			
-			// aapt resource value: 0x7f0b0084
-			public static int mr_art = 2131427460;
-			
-			// aapt resource value: 0x7f0b0079
-			public static int mr_chooser_list = 2131427449;
-			
-			// aapt resource value: 0x7f0b007c
-			public static int mr_chooser_route_desc = 2131427452;
-			
-			// aapt resource value: 0x7f0b007a
-			public static int mr_chooser_route_icon = 2131427450;
+			// aapt resource value: 0x7f0b0086
+			public static int mr_art = 2131427462;
 			
 			// aapt resource value: 0x7f0b007b
-			public static int mr_chooser_route_name = 2131427451;
-			
-			// aapt resource value: 0x7f0b0081
-			public static int mr_close = 2131427457;
-			
-			// aapt resource value: 0x7f0b0087
-			public static int mr_control_divider = 2131427463;
-			
-			// aapt resource value: 0x7f0b008d
-			public static int mr_control_play_pause = 2131427469;
-			
-			// aapt resource value: 0x7f0b0090
-			public static int mr_control_subtitle = 2131427472;
-			
-			// aapt resource value: 0x7f0b008f
-			public static int mr_control_title = 2131427471;
-			
-			// aapt resource value: 0x7f0b008e
-			public static int mr_control_title_container = 2131427470;
-			
-			// aapt resource value: 0x7f0b0082
-			public static int mr_custom_control = 2131427458;
-			
-			// aapt resource value: 0x7f0b0083
-			public static int mr_default_control = 2131427459;
+			public static int mr_chooser_list = 2131427451;
 			
 			// aapt resource value: 0x7f0b007e
-			public static int mr_dialog_area = 2131427454;
+			public static int mr_chooser_route_desc = 2131427454;
+			
+			// aapt resource value: 0x7f0b007c
+			public static int mr_chooser_route_icon = 2131427452;
 			
 			// aapt resource value: 0x7f0b007d
-			public static int mr_expandable_area = 2131427453;
+			public static int mr_chooser_route_name = 2131427453;
 			
-			// aapt resource value: 0x7f0b0091
-			public static int mr_group_expand_collapse = 2131427473;
-			
-			// aapt resource value: 0x7f0b0085
-			public static int mr_media_main_control = 2131427461;
-			
-			// aapt resource value: 0x7f0b0080
-			public static int mr_name = 2131427456;
-			
-			// aapt resource value: 0x7f0b0086
-			public static int mr_playback_control = 2131427462;
-			
-			// aapt resource value: 0x7f0b007f
-			public static int mr_title_bar = 2131427455;
-			
-			// aapt resource value: 0x7f0b0088
-			public static int mr_volume_control = 2131427464;
+			// aapt resource value: 0x7f0b0083
+			public static int mr_close = 2131427459;
 			
 			// aapt resource value: 0x7f0b0089
-			public static int mr_volume_group_list = 2131427465;
+			public static int mr_control_divider = 2131427465;
+			
+			// aapt resource value: 0x7f0b008f
+			public static int mr_control_play_pause = 2131427471;
+			
+			// aapt resource value: 0x7f0b0092
+			public static int mr_control_subtitle = 2131427474;
+			
+			// aapt resource value: 0x7f0b0091
+			public static int mr_control_title = 2131427473;
+			
+			// aapt resource value: 0x7f0b0090
+			public static int mr_control_title_container = 2131427472;
+			
+			// aapt resource value: 0x7f0b0084
+			public static int mr_custom_control = 2131427460;
+			
+			// aapt resource value: 0x7f0b0085
+			public static int mr_default_control = 2131427461;
+			
+			// aapt resource value: 0x7f0b0080
+			public static int mr_dialog_area = 2131427456;
+			
+			// aapt resource value: 0x7f0b007f
+			public static int mr_expandable_area = 2131427455;
+			
+			// aapt resource value: 0x7f0b0093
+			public static int mr_group_expand_collapse = 2131427475;
+			
+			// aapt resource value: 0x7f0b0087
+			public static int mr_media_main_control = 2131427463;
+			
+			// aapt resource value: 0x7f0b0082
+			public static int mr_name = 2131427458;
+			
+			// aapt resource value: 0x7f0b0088
+			public static int mr_playback_control = 2131427464;
+			
+			// aapt resource value: 0x7f0b0081
+			public static int mr_title_bar = 2131427457;
+			
+			// aapt resource value: 0x7f0b008a
+			public static int mr_volume_control = 2131427466;
 			
 			// aapt resource value: 0x7f0b008b
-			public static int mr_volume_item_icon = 2131427467;
+			public static int mr_volume_group_list = 2131427467;
 			
-			// aapt resource value: 0x7f0b008c
-			public static int mr_volume_slider = 2131427468;
+			// aapt resource value: 0x7f0b008d
+			public static int mr_volume_item_icon = 2131427469;
+			
+			// aapt resource value: 0x7f0b008e
+			public static int mr_volume_slider = 2131427470;
 			
 			// aapt resource value: 0x7f0b0027
 			public static int multiply = 2131427367;
@@ -2973,8 +2973,8 @@ namespace CarouselView.FormsPlugin.Android
 			// aapt resource value: 0x7f0b0024
 			public static int normal = 2131427364;
 			
-			// aapt resource value: 0x7f0b009f
-			public static int pager = 2131427487;
+			// aapt resource value: 0x7f0b0079
+			public static int pager = 2131427449;
 			
 			// aapt resource value: 0x7f0b001c
 			public static int parallax = 2131427356;
@@ -3087,8 +3087,8 @@ namespace CarouselView.FormsPlugin.Android
 			// aapt resource value: 0x7f0b0019
 			public static int start = 2131427353;
 			
-			// aapt resource value: 0x7f0b0094
-			public static int status_bar_latest_event_content = 2131427476;
+			// aapt resource value: 0x7f0b0096
+			public static int status_bar_latest_event_content = 2131427478;
 			
 			// aapt resource value: 0x7f0b005a
 			public static int submenuarrow = 2131427418;
@@ -3099,11 +3099,11 @@ namespace CarouselView.FormsPlugin.Android
 			// aapt resource value: 0x7f0b002d
 			public static int tabMode = 2131427373;
 			
-			// aapt resource value: 0x7f0b009c
-			public static int text = 2131427484;
+			// aapt resource value: 0x7f0b009e
+			public static int text = 2131427486;
 			
-			// aapt resource value: 0x7f0b009a
-			public static int text2 = 2131427482;
+			// aapt resource value: 0x7f0b009c
+			public static int text2 = 2131427484;
 			
 			// aapt resource value: 0x7f0b0052
 			public static int textSpacerNoButtons = 2131427410;
@@ -3111,8 +3111,8 @@ namespace CarouselView.FormsPlugin.Android
 			// aapt resource value: 0x7f0b0078
 			public static int text_input_password_toggle = 2131427448;
 			
-			// aapt resource value: 0x7f0b0098
-			public static int time = 2131427480;
+			// aapt resource value: 0x7f0b009a
+			public static int time = 2131427482;
 			
 			// aapt resource value: 0x7f0b0048
 			public static int title = 2131427400;
@@ -3141,8 +3141,8 @@ namespace CarouselView.FormsPlugin.Android
 			// aapt resource value: 0x7f0b0000
 			public static int view_offset_helper = 2131427328;
 			
-			// aapt resource value: 0x7f0b008a
-			public static int volume_item_container = 2131427466;
+			// aapt resource value: 0x7f0b008c
+			public static int volume_item_container = 2131427468;
 			
 			// aapt resource value: 0x7f0b003c
 			public static int withText = 2131427388;
@@ -3346,64 +3346,64 @@ namespace CarouselView.FormsPlugin.Android
 			public static int design_text_input_password_icon = 2130903078;
 			
 			// aapt resource value: 0x7f030027
-			public static int mr_chooser_dialog = 2130903079;
+			public static int horizontal_viewpager = 2130903079;
 			
 			// aapt resource value: 0x7f030028
-			public static int mr_chooser_list_item = 2130903080;
+			public static int mr_chooser_dialog = 2130903080;
 			
 			// aapt resource value: 0x7f030029
-			public static int mr_controller_material_dialog_b = 2130903081;
+			public static int mr_chooser_list_item = 2130903081;
 			
 			// aapt resource value: 0x7f03002a
-			public static int mr_controller_volume_item = 2130903082;
+			public static int mr_controller_material_dialog_b = 2130903082;
 			
 			// aapt resource value: 0x7f03002b
-			public static int mr_playback_control = 2130903083;
+			public static int mr_controller_volume_item = 2130903083;
 			
 			// aapt resource value: 0x7f03002c
-			public static int mr_volume_control = 2130903084;
+			public static int mr_playback_control = 2130903084;
 			
 			// aapt resource value: 0x7f03002d
-			public static int notification_media_action = 2130903085;
+			public static int mr_volume_control = 2130903085;
 			
 			// aapt resource value: 0x7f03002e
-			public static int notification_media_cancel_action = 2130903086;
+			public static int notification_media_action = 2130903086;
 			
 			// aapt resource value: 0x7f03002f
-			public static int notification_template_big_media = 2130903087;
+			public static int notification_media_cancel_action = 2130903087;
 			
 			// aapt resource value: 0x7f030030
-			public static int notification_template_big_media_narrow = 2130903088;
+			public static int notification_template_big_media = 2130903088;
 			
 			// aapt resource value: 0x7f030031
-			public static int notification_template_lines = 2130903089;
+			public static int notification_template_big_media_narrow = 2130903089;
 			
 			// aapt resource value: 0x7f030032
-			public static int notification_template_media = 2130903090;
+			public static int notification_template_lines = 2130903090;
 			
 			// aapt resource value: 0x7f030033
-			public static int notification_template_part_chronometer = 2130903091;
+			public static int notification_template_media = 2130903091;
 			
 			// aapt resource value: 0x7f030034
-			public static int notification_template_part_time = 2130903092;
+			public static int notification_template_part_chronometer = 2130903092;
 			
 			// aapt resource value: 0x7f030035
-			public static int select_dialog_item_material = 2130903093;
+			public static int notification_template_part_time = 2130903093;
 			
 			// aapt resource value: 0x7f030036
-			public static int select_dialog_multichoice_material = 2130903094;
+			public static int select_dialog_item_material = 2130903094;
 			
 			// aapt resource value: 0x7f030037
-			public static int select_dialog_singlechoice_material = 2130903095;
+			public static int select_dialog_multichoice_material = 2130903095;
 			
 			// aapt resource value: 0x7f030038
-			public static int support_simple_spinner_dropdown_item = 2130903096;
+			public static int select_dialog_singlechoice_material = 2130903096;
 			
 			// aapt resource value: 0x7f030039
-			public static int vertical_viewpager = 2130903097;
+			public static int support_simple_spinner_dropdown_item = 2130903097;
 			
 			// aapt resource value: 0x7f03003a
-			public static int viewpager = 2130903098;
+			public static int vertical_viewpager = 2130903098;
 			
 			static Layout()
 			{

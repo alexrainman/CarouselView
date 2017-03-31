@@ -6,6 +6,7 @@ using Android.Support.V4.View;
 using Android.Util;
 using Java.Lang;
 using CarouselView.FormsPlugin.Abstractions;
+using Android.Support.V4.Content;
 
 namespace CarouselView.FormsPlugin.Android
 {
@@ -41,10 +42,10 @@ namespace CarouselView.FormsPlugin.Android
 		{
 			//Load defaults from resources
 			var res = Resources;
-			int defaultPageColor = res.GetColor(Resource.Color.default_circle_indicator_page_color);
-			int defaultFillColor = res.GetColor(Resource.Color.default_circle_indicator_fill_color);
+			int defaultPageColor = ContextCompat.GetColor(context, Resource.Color.default_circle_indicator_page_color);
+			int defaultFillColor = ContextCompat.GetColor(context, Resource.Color.default_circle_indicator_fill_color);
 			int defaultOrientation = res.GetInteger(Resource.Integer.default_circle_indicator_orientation);
-			int defaultStrokeColor = res.GetColor(Resource.Color.default_circle_indicator_stroke_color);
+			int defaultStrokeColor = ContextCompat.GetColor(context, Resource.Color.default_circle_indicator_stroke_color);
 			float defaultStrokeWidth = res.GetDimension(Resource.Dimension.default_circle_indicator_stroke_width);
 			float defaultRadius = res.GetDimension(Resource.Dimension.default_circle_indicator_radius);
 			bool defaultCentered = res.GetBoolean(Resource.Boolean.default_circle_indicator_centered);

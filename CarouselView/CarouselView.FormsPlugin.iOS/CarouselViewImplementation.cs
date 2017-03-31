@@ -70,9 +70,17 @@ namespace CarouselView.FormsPlugin.iOS
 			if (e.NewElement != null)
 			{
 				// Configure the control and subscribe to event handlers
-				Element.RemoveAction = new Action<int>(RemoveController);
-				Element.InsertAction = new Action<object, int>(InsertController);
+				Element.RemoveAction = new Func<int, Task>(RemoveController);
+				Element.InsertAction = new Func<object, int, Task>(InsertController);
 			}
+
+			// Fix for issues after recreating the control #86
+			var element = e.OldElement ?? e.NewElement;
+			if (element != null && element.Position > -1)
+			{
+				prevPosition = element.Position;
+			}
+
 		}
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -103,7 +111,7 @@ namespace CarouselView.FormsPlugin.iOS
 					{
 						ConfigurePageController();
 						ConfigurePageControl();
-						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+						Element?.PositionSelected?.Invoke(Element, EventArgs.Empty);
 					}
 					break;
                 case "Position":
@@ -163,7 +171,7 @@ namespace CarouselView.FormsPlugin.iOS
 			pageControl.Enabled = false;
 			pageController.View.AddSubview(pageControl);
 			var viewsDictionary = NSDictionary.FromObjectsAndKeys(new NSObject[] { pageControl }, new NSObject[] { new NSString("pageControl") });
-			if (Element.Orientation == Orientation.Horizontal)
+			if (Element.Orientation == CarouselViewOrientation.Horizontal)
 			{
 				pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("H:|[pageControl]|", NSLayoutFormatOptions.AlignAllCenterX, new NSDictionary(), viewsDictionary));
 				pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:[pageControl]|", 0, new NSDictionary(), viewsDictionary));
@@ -267,7 +275,7 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 		}
 
-		public async void InsertController(object item, int position)
+		public async Task InsertController(object item, int position)
 		{
 			if (Element != null && pageController != null && Element.ItemsSource != null)
 			{
@@ -280,11 +288,11 @@ namespace CarouselView.FormsPlugin.iOS
 				else
 					Element.ItemsSource.Insert(position, item);
 
-				UIViewController firstViewController;
-				if (pageController.ViewControllers.Count() > 0)
-					firstViewController = pageController.ViewControllers[0];
-				else
-					firstViewController = CreateViewController(0);
+				//UIViewController firstViewController;
+				//if (pageController.ViewControllers.Count() > 0)
+					//firstViewController = pageController.ViewControllers[0];
+				//else
+				var firstViewController = CreateViewController(Element.Position);
 
 				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, async s =>
 				{
@@ -298,7 +306,7 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 		}
 
-		public async void RemoveController(int position)
+		public async Task RemoveController(int position)
 		{
 			if (Element != null && pageController != null && Element.ItemsSource != null && Element.ItemsSource?.Count > 0)
 			{
@@ -374,7 +382,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 		UIViewController CreateViewController(int index)
 		{
-			Xamarin.Forms.View formsView = null;
+			View formsView = null;
 
 			object bindingContext = null;
 
@@ -385,15 +393,15 @@ namespace CarouselView.FormsPlugin.iOS
 
 			if (dt != null)
 			{
-				formsView = (Xamarin.Forms.View)dt.CreateContent();
+				formsView = (View)dt.CreateContent();
 			}
 			else {
 
 				var selector = Element.ItemTemplate as DataTemplateSelector;
 				if (selector != null)
-					formsView = (Xamarin.Forms.View)selector.SelectTemplate(bindingContext, Element).CreateContent();
+					formsView = (View)selector.SelectTemplate(bindingContext, Element).CreateContent();
 				else
-					formsView = (Xamarin.Forms.View)Element.ItemTemplate.CreateContent();
+					formsView = (View)Element.ItemTemplate.CreateContent();
 
 				formsView.BindingContext = bindingContext;
 			}
@@ -445,6 +453,7 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 			catch (Exception ex)
 			{
+				Console.WriteLine(ex.Message);
 				return;
 			}
 		}

@@ -149,12 +149,43 @@ Or, template selector in your ViewModel:
 #### Render one page at a time, no swiping, move back and fort programmatically:
 
 ```
+<<<<<<< HEAD
+var pages = new List<int> { 0 }; // only one item in ItemsSource
+Carousel.ItemsSource = pages;
+=======
 myCarousel.ItemsSource = new List<int> { 0 }; // only one item in ItemsSource
+>>>>>>> dcf6ed611ec8f0f238f6c0e0d35bd3d444df5762
+```
+
+To move backward:
+
+```
+<<<<<<< HEAD
+async void OnPrevious (object sender, TappedEventArgs e) {
+    if (pages[0] > 0)
+	{
+	    // the first element is the bindingContext of the new page
+	    // the second element is the bindingContext of the current page
+	    var pages = new List<int>() { pages[0] - 1, pages[0] };
+	    Carousel.ItemsSource = pages;
+		await Task.Delay(100);
+		Carousel.AnimateTransition = false;
+		Carousel.Position = 1;
+		Carousel.AnimateTransition = true;
+		Carousel.RemovePage(1);
+    }
+}
 ```
 
 To move forward:
 
 ```
+async void OnNext (object sender, TappedEventArgs e) {
+    if (pages[0] < 4)
+	{
+	    await Carousel.InsertPage(pages[0] + 1);
+	    await Carousel.RemovePage(0);
+=======
 public async void OnNext(object sender, TappedEventArgs e)
 {
 	if (myCarousel.ItemsSource[0] < 4)
@@ -178,6 +209,7 @@ public async void OnPrev(object sender, TappedEventArgs e)
 		myCarousel.Position = 1;
 		myCarousel.AnimateTransition = true;
 		await myCarousel.RemovePage(1);
+>>>>>>> dcf6ed611ec8f0f238f6c0e0d35bd3d444df5762
 	}
 }
 ```
@@ -199,10 +231,6 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 * [alexrainman](https://github.com/alexrainman)
 
 #### Release Notes
-
-3.1.1
-
-[iOS] Fix for issues after recreating the control #86
 
 3.1.0
 

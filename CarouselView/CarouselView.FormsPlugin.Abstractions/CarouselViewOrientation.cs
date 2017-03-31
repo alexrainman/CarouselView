@@ -1,7 +1,7 @@
 ﻿using System;
 namespace CarouselView.FormsPlugin.Abstractions
 {
-	public enum Orientation
+	public enum CarouselViewOrientation
 	{
 		Horizontal,
 		Vertical

@@ -22,6 +22,7 @@
                                       IndicatorsShape="Square"
                                       InterPageSpacing="10"
                                       InterPageSpacingColor="Red"
+                                      IsSwipingEnabled="true"
                                       ItemTemplate="{Binding TemplateSelector}"
                                       ItemsSource="{Binding ItemsSource}"
                                       Orientation="Horizontal"

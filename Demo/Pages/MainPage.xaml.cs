@@ -18,6 +18,7 @@ namespace Demo
 			BindingContext = _vm = new MainViewModel();
 
 			myCarousel.PositionSelected += PositionSelected;
+			//myCarousel.ItemTemplate = new DataTemplate(typeof(MyFirstView));
 
 			MessagingCenter.Subscribe<MyFirstView> (this, "RemoveMe", async (sender) => {
 				await myCarousel.RemovePage(myCarousel.Position);

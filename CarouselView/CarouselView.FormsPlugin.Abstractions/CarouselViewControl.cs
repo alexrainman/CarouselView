@@ -67,11 +67,11 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(CurrentPageIndicatorTintColorProperty, value); }
 		}
 
-		public static readonly BindableProperty OrientationProperty = BindableProperty.Create("Orientation", typeof(Orientation), typeof(CarouselViewControl), Orientation.Horizontal);
+		public static readonly BindableProperty OrientationProperty = BindableProperty.Create("Orientation", typeof(CarouselViewOrientation), typeof(CarouselViewControl), CarouselViewOrientation.Horizontal);
 
-		public Orientation Orientation
+		public CarouselViewOrientation Orientation
 		{
-			get { return (Orientation)GetValue(OrientationProperty); }
+			get { return (CarouselViewOrientation)GetValue(OrientationProperty); }
 			set { SetValue(OrientationProperty, value); }
 		}
 
@@ -120,20 +120,24 @@ namespace CarouselView.FormsPlugin.Abstractions
 
 		public EventHandler PositionSelected;
 
-		public Action<int> RemoveAction;
-
-		public async Task RemovePage(int position)
-		{
-			if (RemoveAction != null)
-				RemoveAction(position);
-		}
-
-		public Action<object, int> InsertAction;
+		public Func<object, int, Task> InsertAction;
 
 		public async Task InsertPage(object item, int position = -1)
 		{
 			if (InsertAction != null)
-				InsertAction(item, position);
+			{
+				await InsertAction(item, position);
+			}
+		}
+
+		public Func<int, Task> RemoveAction;
+
+		public async Task RemovePage(int position)
+		{
+			if (RemoveAction != null)
+			{
+				await RemoveAction(position);
+			}
 		}
 	}
 }
