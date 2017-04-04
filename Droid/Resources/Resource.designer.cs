@@ -5470,9 +5470,6 @@ namespace Demo.Droid
 			// aapt resource value: 0x7f03003c
 			public const int vertical_viewpager = 2130903100;
 			
-			// aapt resource value: 0x7f03003d
-			public const int viewpager = 2130903101;
-			
 			static Layout()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

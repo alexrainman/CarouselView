@@ -1,21 +1,20 @@
 ﻿using System;
 using Xamarin.Forms;
 using System.Threading.Tasks;
-using System.Collections.Specialized;
-using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace CarouselView.FormsPlugin.Abstractions
 {
 	/// <summary>
 	/// CarouselView Interface
 	/// </summary>
-	public class CarouselViewControl : View //Layout<View>
+	public class CarouselViewControl : View//Layout<View>
 	{
-		public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create("ItemsSource", typeof(IList), typeof(CarouselViewControl), null);
+		public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create("ItemsSource", typeof(ObservableCollection<object>), typeof(CarouselViewControl), null);
 
-		public IList ItemsSource
+		public ObservableCollection<object> ItemsSource
 		{
-			get { return (IList)GetValue(ItemsSourceProperty); }
+			get { return (ObservableCollection<object>)GetValue(ItemsSourceProperty); }
 			set { SetValue(ItemsSourceProperty, value); }
 		}
 
@@ -119,25 +118,5 @@ namespace CarouselView.FormsPlugin.Abstractions
 		}
 
 		public EventHandler PositionSelected;
-
-		public Func<object, int, Task> InsertAction;
-
-		public async Task InsertPage(object item, int position = -1)
-		{
-			if (InsertAction != null)
-			{
-				await InsertAction(item, position);
-			}
-		}
-
-		public Func<int, Task> RemoveAction;
-
-		public async Task RemovePage(int position)
-		{
-			if (RemoveAction != null)
-			{
-				await RemoveAction(position);
-			}
-		}
 	}
 }

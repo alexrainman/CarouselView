@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -25,8 +26,8 @@ namespace Demo
 
 		void ConfigureButtons()
 		{
-			prevBtn.IsVisible = _vm.ItemsSource[0] > 0;
-			nextBtn.IsVisible = _vm.ItemsSource[0] < 4;
+			prevBtn.IsVisible = (int)_vm.ItemsSource[0] > 0;
+			nextBtn.IsVisible = (int)_vm.ItemsSource[0] < 4;
 		}
 
 		public void PositionSelected(object sender, EventArgs e)
@@ -36,23 +37,26 @@ namespace Demo
 
 		public async void OnPrev(object sender, TappedEventArgs e)
 		{
-			if (_vm.ItemsSource[0] > 0)
+			if ((int)_vm.ItemsSource[0] > 0)
 			{
-				_vm.ItemsSource = new List<int>() { _vm.ItemsSource[0] - 1, _vm.ItemsSource[0] };
+				_vm.ItemsSource = new ObservableCollection<object>() { (int)_vm.ItemsSource[0] - 1, (int)_vm.ItemsSource[0] };
 				await Task.Delay(100);
 				myCarousel.AnimateTransition = false;
 				myCarousel.Position = 1;
 				myCarousel.AnimateTransition = true;
-				await myCarousel.RemovePage(1);
+				//await myCarousel.RemovePage(1);
+				myCarousel.ItemsSource.RemoveAt(1);
 			}
 		}
 
 		public async void OnNext(object sender, TappedEventArgs e)
 		{
-			if (_vm.ItemsSource[0] < 4)
+			if ((int)_vm.ItemsSource[0] < 4)
 			{
-				await myCarousel.InsertPage(_vm.ItemsSource[0] + 1);
-				await myCarousel.RemovePage(0);
+				//await myCarousel.InsertPage(_vm.ItemsSource[0] + 1);
+				//await myCarousel.RemovePage(0);
+				myCarousel.ItemsSource.Add((int)_vm.ItemsSource[0] + 1);
+				myCarousel.ItemsSource.RemoveAt(0);
 			}
 		}
 	}

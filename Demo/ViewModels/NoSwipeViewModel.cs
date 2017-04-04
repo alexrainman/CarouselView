@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using PropertyChanged;
 using Xamarin.Forms;
 
@@ -10,9 +11,9 @@ namespace Demo
 	{
 		public NoSwipeViewModel()
 		{
-			ItemsSource = new List<int>() { 0 };
+			ItemsSource = new ObservableCollection<object>() { 0 };
 		}
 
-		public List<int> ItemsSource { get; set; }
+		public ObservableCollection<object> ItemsSource { get; set; }
 	}
 }

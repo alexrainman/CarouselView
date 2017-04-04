@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace Demo
 {
@@ -21,7 +22,8 @@ namespace Demo
 			//myCarousel.ItemTemplate = new DataTemplate(typeof(MyFirstView));
 
 			MessagingCenter.Subscribe<MyFirstView> (this, "RemoveMe", async (sender) => {
-				await myCarousel.RemovePage(myCarousel.Position);
+				//await myCarousel.RemovePage(myCarousel.Position);
+				_vm.ItemsSource.RemoveAt(myCarousel.Position);
 			});
 
 			ConfigureButtons();
@@ -31,7 +33,8 @@ namespace Demo
 				Text = "Reset",
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() => {
-					_vm.ItemsSource = new List<int>();
+					//_vm.ItemsSource = new ObservableCollection<object>();
+					myCarousel.ItemTemplate = new DataTemplate(() => { return new MySecondView(); });
 				})
 			});
 
@@ -77,7 +80,9 @@ namespace Demo
 		{
 			if (_vm.ItemsSource != null)
 			{
-				await myCarousel.InsertPage(_vm.ItemsSource.Count);
+				//await myCarousel.InsertPage(_vm.ItemsSource.Count);
+
+				_vm.ItemsSource.Add(_vm.ItemsSource.Count);
 
 				if (_vm.ItemsSource.Count > 1)
 					_vm.Position = _vm.ItemsSource.Count - 1;
