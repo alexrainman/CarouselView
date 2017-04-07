@@ -42,6 +42,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CarouselViewOrientation.cs" />
     <Compile Include="IndicatorsShape.cs" />
+    <Compile Include="IEnumerableExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

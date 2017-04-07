@@ -74,15 +74,16 @@ namespace CarouselView.FormsPlugin.Android
 
 		}
 
-		public void SetPageColor(Color pageColor)
-		{
-			mPaintPageFill.Color = pageColor;
-			Invalidate();
-		}
-
 		public void SetFillColor(Color fillColor)
 		{
-			mPaintFill.Color = fillColor;
+			mPaintPageFill.Color = fillColor;
+			Invalidate();
+
+		}
+
+		public void SetPageColor(Color pageColor)
+		{
+			mPaintFill.Color = pageColor;
 			Invalidate();
 		}
 

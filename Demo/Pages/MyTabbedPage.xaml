@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
 		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 		x:Class="Demo.MyTabbedPage"
@@ -13,31 +13,7 @@
                                       InterPageSpacing="10"
                                       InterPageSpacingColor="Red"
                                       Orientation="Horizontal"
-                                      ShowIndicators="true">
-		<controls:CarouselViewControl.ItemsSource>
-           <x:Array Type="{x:Type DataTemplate}">
-
-                    <DataTemplate>
-					    <StackLayout BackgroundColor="White" Padding="12">
-                            <Image Source="{Binding PhotoUrl}" Aspect="AspectFill"/>
-						</StackLayout>
-                    </DataTemplate>
-
-                    <DataTemplate>
-					    <StackLayout BackgroundColor="White" Padding="12">
-                            <Label Text="{Binding Bio}"/>
-						</StackLayout>
-                    </DataTemplate>
-
-                    <DataTemplate>
-                        <StackLayout BackgroundColor="White" Padding="12">
-                            <Label Text="{Binding ContactInfo}"/>
-						</StackLayout>
-                    </DataTemplate>
-
-           </x:Array>
-        </controls:CarouselViewControl.ItemsSource>
-    </controls:CarouselViewControl>
+                                      ShowIndicators="true"/>
 	</ContentPage>
 
 	<ContentPage Title="Second">
@@ -45,6 +21,10 @@
 	</ContentPage>
 
 	<ContentPage Title="Third">
+		<Label Text="Third tab" />
+	</ContentPage>
+
+	<ContentPage Title="Four">
 		<Label Text="Third tab" />
 	</ContentPage>
 

@@ -11,9 +11,9 @@ namespace Demo
 	{
 		public NoSwipeViewModel()
 		{
-			ItemsSource = new ObservableCollection<object>() { 0 };
+			ItemsSource = new ObservableCollection<int>() { 0 };
 		}
 
-		public ObservableCollection<object> ItemsSource { get; set; }
+		public ObservableCollection<int> ItemsSource { get; set; }
 	}
 }

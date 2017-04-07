@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using CarouselView.FormsPlugin.Abstractions;
 
 namespace Demo
 {
@@ -21,8 +22,7 @@ namespace Demo
 			myCarousel.PositionSelected += PositionSelected;
 			//myCarousel.ItemTemplate = new DataTemplate(typeof(MyFirstView));
 
-			MessagingCenter.Subscribe<MyFirstView> (this, "RemoveMe", async (sender) => {
-				//await myCarousel.RemovePage(myCarousel.Position);
+			MessagingCenter.Subscribe<MyFirstView> (this, "RemoveMe", (sender) => {
 				_vm.ItemsSource.RemoveAt(myCarousel.Position);
 			});
 
@@ -33,8 +33,8 @@ namespace Demo
 				Text = "Reset",
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() => {
-					//_vm.ItemsSource = new ObservableCollection<object>();
-					myCarousel.ItemTemplate = new DataTemplate(() => { return new MySecondView(); });
+					_vm.ItemsSource = new ObservableCollection<int>() { 0, 1, 2, 3, 4 };
+					//myCarousel.Orientation = CarouselViewOrientation.Vertical;
 				})
 			});
 
@@ -44,9 +44,9 @@ namespace Demo
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() =>
 				{
-					Navigation.PushAsync(new NoSwipePage());
+					//Navigation.PushAsync(new NoSwipePage());
 					//Navigation.PushAsync(new SecondPage());
-					//Navigation.PushAsync(new MyTabbedPage());
+					Navigation.PushAsync(new MyTabbedPage());
 				})
 			});
 		}
@@ -76,12 +76,10 @@ namespace Demo
 				_vm.Position++;
 		}
 
-		public async Task OnAdd(object sender, TappedEventArgs e)
+		public void OnAdd(object sender, TappedEventArgs e)
 		{
 			if (_vm.ItemsSource != null)
 			{
-				//await myCarousel.InsertPage(_vm.ItemsSource.Count);
-
 				_vm.ItemsSource.Add(_vm.ItemsSource.Count);
 
 				if (_vm.ItemsSource.Count > 1)

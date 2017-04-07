@@ -114,6 +114,7 @@
     <Compile Include="Implementation\DefaultPageTransformer.cs" />
     <Compile Include="Implementation\VerticalViewPager.cs" />
     <Compile Include="Implementation\CustomViewPager.cs" />
+    <Compile Include="Implementation\IViewPager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

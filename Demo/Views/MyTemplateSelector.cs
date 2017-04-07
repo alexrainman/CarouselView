@@ -11,7 +11,7 @@ namespace Demo
 		public MyTemplateSelector ()
 		{
 			this.templateOne = new DataTemplate (typeof(MyFirstView));
-			this.templateTwo = new DataTemplate (typeof (MySecondView));
+			this.templateTwo = new DataTemplate (typeof(MySecondView));
 		}
 
 		protected override DataTemplate OnSelectTemplate (object item, BindableObject container)

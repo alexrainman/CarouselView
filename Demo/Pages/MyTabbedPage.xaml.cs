@@ -11,6 +11,13 @@ namespace Demo
 		{
 			InitializeComponent();
 
+			myCarousel.ItemsSource = new List<DataTemplate>()
+			{
+				new DataTemplate(() => { return new PhotoUrl(); }),
+				new DataTemplate(() => { return new Bio(); }),
+				new DataTemplate(() => { return new ContactInfo(); })
+			};
+
 			myCarousel.BindingContext = new Person()
 			{
 				PhotoUrl = "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAefAAAAJDJkNGNiOTU4LWI4ZTQtNDY5My1hZWJhLTE3ZGQ5Y2I1MzRmMQ.jpg",

@@ -6,7 +6,7 @@ using Android.Views;
 
 namespace CarouselView.FormsPlugin.Android
 {
-	public class CustomViewPager : ViewPager
+	public class CustomViewPager : ViewPager, IViewPager
 	{
 		private bool isSwipingEnabled = true;
 
