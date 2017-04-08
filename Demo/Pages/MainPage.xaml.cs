@@ -33,8 +33,9 @@ namespace Demo
 				Text = "Reset",
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() => {
-					_vm.ItemsSource = new ObservableCollection<int>() { 0, 1, 2, 3, 4 };
 					//myCarousel.Orientation = CarouselViewOrientation.Vertical;
+                    //_vm.ItemsSource = new ObservableCollection<int>() { 0, 1, 2, 3, 4 };
+					myCarousel.ItemTemplate = new DataTemplate(typeof(MySecondView));
 				})
 			});
 

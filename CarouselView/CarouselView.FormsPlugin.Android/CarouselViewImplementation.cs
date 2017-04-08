@@ -25,6 +25,8 @@ namespace CarouselView.FormsPlugin.Android
 		CirclePageIndicator indicators;
 		bool _disposed;
 
+        double ElementHeight;
+
 		protected override void OnElementChanged(ElementChangedEventArgs<CarouselViewControl> e)
 		{
 			base.OnElementChanged(e);
@@ -58,12 +60,12 @@ namespace CarouselView.FormsPlugin.Android
 		{
 			if (e.Action == NotifyCollectionChangedAction.Add)
 			{
-				InsertItem(Element.ItemsSource.GetItem(e.NewStartingIndex), e.NewStartingIndex);
+				InsertPage(Element.ItemsSource.GetItem(e.NewStartingIndex), e.NewStartingIndex);
 			}
 
 			if (e.Action == NotifyCollectionChangedAction.Remove)
 			{
-				await RemoveItem(e.OldStartingIndex);
+				await RemovePage(e.OldStartingIndex);
 			}
 		}
 
@@ -71,24 +73,33 @@ namespace CarouselView.FormsPlugin.Android
 		{
 			base.OnElementPropertyChanged(sender, e);
 
+            var rect = this.Element.Bounds;
+
 			switch (e.PropertyName)
 			{
 				case "Renderer":
 					// Fix for NullReferenceException on Android tabbed page #59
 					if (!Element.Height.Equals(-1))
 					{
-						ConfigureViewPager();
+						SetNativeView();
+						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 					}
 					break;
 				case "Width":
-					//var rect = this.Element.Bounds;
+                    //ElementWidth = rect.Width;
 					break;
 				case "Height":
-					//var rect = this.Element.Bounds;
-					ConfigureViewPager();
+					// To avoid calling ConfigureViewPager twice on launch;
+					if (ElementHeight.Equals(0))
+					{
+						ElementHeight = rect.Height;
+						SetNativeView();
+						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+					}
 					break;
 				case "Orientation":
-					ConfigureViewPager();
+					SetNativeView();
+					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 					break;
 				case "InterPageSpacing":
 					//var metrics = Resources.DisplayMetrics;
@@ -96,30 +107,31 @@ namespace CarouselView.FormsPlugin.Android
 					//viewPager.PageMargin = (int)interPageSpacing;
 					break;
 				case "InterPageSpacingColor":
-					viewPager.SetBackgroundColor(Element.InterPageSpacingColor.ToAndroid());
+					viewPager?.SetBackgroundColor(Element.InterPageSpacingColor.ToAndroid());
 					break;
 				case "IsSwipingEnabled":
 					SetIsSwipingEnabled();
 					break;
 				case "IndicatorsTintColor":
-					indicators.SetFillColor(Element.IndicatorsTintColor.ToAndroid());
+					indicators?.SetFillColor(Element.IndicatorsTintColor.ToAndroid());
 					break;
 				case "CurrentPageIndicatorTintColor":
-					indicators.SetPageColor(Element.CurrentPageIndicatorTintColor.ToAndroid());
+					indicators?.SetPageColor(Element.CurrentPageIndicatorTintColor.ToAndroid());
 					break;
 				case "IndicatorsShape":
-					indicators.SetStyle(Element.IndicatorsShape);
+					indicators?.SetStyle(Element.IndicatorsShape);
 					break;
 				case "ShowIndicators":
-					indicators.Visibility = Element.ShowIndicators ? AViews.ViewStates.Visible : AViews.ViewStates.Gone;
+					if (indicators != null)
+					    indicators.Visibility = Element.ShowIndicators ? AViews.ViewStates.Visible : AViews.ViewStates.Gone;
 					break;
 				case "ItemsSource":
 					if (viewPager != null)
 					{
-						ConfigPosition();
+						SetPosition();
 						viewPager.Adapter = new PageAdapter(Element);
 						viewPager.SetCurrentItem(Element.Position, false);
-						indicators.SetViewPager(viewPager);
+						indicators?.SetViewPager(viewPager);
 						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 						if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
 						    ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
@@ -130,19 +142,15 @@ namespace CarouselView.FormsPlugin.Android
 					{
 						viewPager.Adapter = new PageAdapter(Element);
 						viewPager.SetCurrentItem(Element.Position, false);
-						indicators.SetViewPager(viewPager);
+						indicators?.SetViewPager(viewPager);
+						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 					}
 					break;
 				case "Position":
-					if (Element.Position != -1 && !isSwiping)
-					    SetCurrentItem(Element.Position);
+					if (!isSwiping)
+					    SetCurrentPage(Element.Position);
 					break;
 			}
-		}
-
-		void SetIsSwipingEnabled()
-		{
-			((IViewPager)viewPager).SetPagingEnabled(Element.IsSwipingEnabled);
 		}
 
 		// To avoid triggering Position changed more than once
@@ -151,20 +159,30 @@ namespace CarouselView.FormsPlugin.Android
 		// To assign position when page selected
 		void ViewPager_PageSelected (object sender, ViewPager.PageSelectedEventArgs e)
 		{
+			// To avoid calling SetCurrentPage
 			isSwiping = true;
 			Element.Position = e.Position;
+			// Call PositionSelected from here when 0
+			if (e.Position == 0)
+				Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 			isSwiping = false;
 		}
 
         // To invoke PositionSelected
 		void ViewPager_PageScrollStateChanged (object sender, ViewPager.PageScrollStateChangedEventArgs e)
 		{
-			if (e.State == 0 && !isSwiping) {
+			// Call PositionSelected when scroll finish, after swiping finished and position > 0
+			if (e.State == 0 && !isSwiping && Element.Position > 0) {
 				Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 			}
 		}
 
-		void ConfigPosition()
+		void SetIsSwipingEnabled()
+		{
+			((IViewPager)viewPager)?.SetPagingEnabled(Element.IsSwipingEnabled);
+		}
+
+		void SetPosition()
 		{
 			isSwiping = true;
 			if (Element.ItemsSource != null)
@@ -182,7 +200,7 @@ namespace CarouselView.FormsPlugin.Android
 			indicators.mSnapPage = Element.Position;
 		}
 
-		void ConfigureViewPager()
+		void SetNativeView()
 		{
 			var inflater = AViews.LayoutInflater.From(Forms.Context);
 
@@ -211,7 +229,7 @@ namespace CarouselView.FormsPlugin.Android
 			// INDICATORS
 			indicators = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
 
-			ConfigPosition();
+			SetPosition();
 
 			indicators.SetViewPager(viewPager);
 
@@ -233,9 +251,9 @@ namespace CarouselView.FormsPlugin.Android
 			SetNativeControl(nativeView);
 		}
 
-		void InsertItem(object item, int position)
+		void InsertPage(object item, int position)
 		{
-			var Source = ((PageAdapter)viewPager.Adapter).Source;
+			var Source = ((PageAdapter)viewPager?.Adapter).Source;
 
 			if (viewPager != null && Source != null)
 			{
@@ -257,23 +275,21 @@ namespace CarouselView.FormsPlugin.Android
 		}
 
 		// Android ViewPager is the most complicated piece of code ever :)
-		async Task RemoveItem(int position)
+		async Task RemovePage(int position)
 		{
-			var Source = ((PageAdapter)viewPager.Adapter).Source;
+			var Source = ((PageAdapter)viewPager?.Adapter).Source;
 
 			if (viewPager != null && Source != null && Source?.Count > 0) {
 				
 				isSwiping = true;
 
 				// To remove latest page, rebuild viewpager or the page wont disappear
-				if (Source?.Count == 1)
+				if (Source.Count == 1)
 				{
 					Source.RemoveAt(position);
 					viewPager.Adapter = new PageAdapter(Element);
 					viewPager.SetCurrentItem(Element.Position, false);
-
-					// TODO: verify if its needed everywhere
-					indicators.SetViewPager(viewPager);
+					indicators?.SetViewPager(viewPager);
 				}
 				else {
 					// To remove current page
@@ -340,7 +356,7 @@ namespace CarouselView.FormsPlugin.Android
 			}
 		}
 
-		void SetCurrentItem(int position)
+		void SetCurrentPage(int position)
 		{
 			if (viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.Count() > 0) {
 
@@ -391,7 +407,7 @@ namespace CarouselView.FormsPlugin.Android
 				
 				var dt = bindingContext as DataTemplate;
 
-                // Support for DataTemplate as ItemsSource
+                // Support for List<DataTemplate> as ItemsSource
 				if (dt != null)
 				{
 					formsView = (View)dt.CreateContent();

@@ -110,12 +110,12 @@ namespace CarouselView.FormsPlugin.Abstractions
 		}
 
 		// UWP only
-		public static readonly BindableProperty ArrowsProperty = BindableProperty.Create("ShowArrows", typeof(bool), typeof(CarouselViewControl), false);
+		public static readonly BindableProperty ShowArrowsProperty = BindableProperty.Create("ShowArrows", typeof(bool), typeof(CarouselViewControl), false);
 
-		public bool Arrows
+		public bool ShowArrows
 		{
-			get { return (bool)GetValue(ArrowsProperty); }
-			set { SetValue(ArrowsProperty, value); }
+			get { return (bool)GetValue(ShowArrowsProperty); }
+			set { SetValue(ShowArrowsProperty, value); }
 		}
 
 		public EventHandler PositionSelected;

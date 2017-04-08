@@ -71,12 +71,12 @@ namespace CarouselView.FormsPlugin.iOS
 		{
 			if (e.Action == NotifyCollectionChangedAction.Add)
 			{
-				InsertController(Element.ItemsSource.GetItem(e.NewStartingIndex), e.NewStartingIndex);
+				InsertPage(Element.ItemsSource.GetItem(e.NewStartingIndex), e.NewStartingIndex);
 			}
 
 			if (e.Action == NotifyCollectionChangedAction.Remove)
 			{
-				await RemoveController(e.OldStartingIndex);
+				await RemovePage(e.OldStartingIndex);
 			}
 		}
 
@@ -97,12 +97,14 @@ namespace CarouselView.FormsPlugin.iOS
 					break;
 				case "Height":
 					ElementHeight = rect.Height;
-					ConfigurePageController();
-					ConfigurePageControl();
+					SetNativeView();
+					SetIndicators();
+					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 					break;
 				case "Orientation":
-					ConfigurePageController();
-					ConfigurePageControl();
+					SetNativeView();
+					SetIndicators();
+					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 					break;
 				case "InterPageSpacing":
 					// InterPageSpacing not exposed as a property in UIPageViewController :(
@@ -110,51 +112,48 @@ namespace CarouselView.FormsPlugin.iOS
 					//ConfigurePageControl();
 					break;
 				case "InterPageSpacingColor":
-					pageController.View.BackgroundColor = Element.InterPageSpacingColor.ToUIColor();
+					if (pageController != null)
+					    pageController.View.BackgroundColor = Element.InterPageSpacingColor.ToUIColor();
 					break;
 				case "IsSwipingEnabled":
 					SetIsSwipingEnabled();
 					break;
 				case "IndicatorsTintColor":
-					ConfigurePageControl();
+					SetIndicators();
 					break;
 				case "CurrentPageIndicatorTintColor":
-					ConfigurePageControl();
+					SetIndicators();
 					break;
 				case "IndicatorsShape":
-					ConfigurePageControl();
+					SetIndicators();
 					break;
 				case "ShowIndicators":
-					pageControl.Hidden = !Element.ShowIndicators;
+					if (pageControl != null)
+					    pageControl.Hidden = !Element.ShowIndicators;
 					break;
 				case "ItemsSource":
-					if (pageController != null)
-					{
-						ConfigPosition();
-						ConfigurePageController();
-						ConfigurePageControl();
-						Element?.PositionSelected?.Invoke(Element, EventArgs.Empty);
-						if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-							((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
-					}
+					SetPosition();
+					SetNativeView();
+					SetIndicators();
+					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+					if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
+						((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
 					break;
 				case "ItemTemplate":
-					if (pageController != null)
-					{
-						ConfigurePageController();
-						ConfigurePageControl();
-					}
+					SetNativeView();
+					SetIndicators();
+					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 					break;
                 case "Position":
-					if (Element.Position != -1 && !isSwiping)
-					    SetCurrentController(Element.Position);
+					if (!isSwiping)
+					    SetCurrentPage(Element.Position);
 					break;
 			}
 		}
 
 		void SetIsSwipingEnabled()
 		{
-			foreach (var view in pageController.View.Subviews)
+			foreach (var view in pageController?.View.Subviews)
 			{
 				var scroller = view as UIScrollView;
 				if (scroller != null)
@@ -177,12 +176,12 @@ namespace CarouselView.FormsPlugin.iOS
 				Element.Position = position;
 				prevPosition = position;
 				isSwiping = false;
-				ConfigurePageControl();
+				SetIndicators();
 				Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 			}
 		}
 
-		void ConfigPosition()
+		void SetPosition()
 		{
 			isSwiping = true;
 			if (Element.ItemsSource != null)
@@ -200,7 +199,7 @@ namespace CarouselView.FormsPlugin.iOS
 			isSwiping = false;
 		}
 
-		void ConfigurePageController()
+		void SetNativeView()
 		{
 			var interPageSpacing = (float)Element.InterPageSpacing;
 
@@ -298,7 +297,7 @@ namespace CarouselView.FormsPlugin.iOS
 			SetNativeControl(pageController.View);
 		}
 
-		void ConfigurePageControl()
+		void SetIndicators()
 		{
 			if (pageControl != null)
 			{
@@ -342,7 +341,7 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 		}
 
-		void InsertController(object item, int position)
+		void InsertPage(object item, int position)
 		{
 			if (pageController != null && Source != null)
 			{
@@ -352,7 +351,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
 				{
-					ConfigurePageControl();
+					SetIndicators();
 
                     // Call position selected when inserting first page
 					if (Element.ItemsSource.Count() == 1)
@@ -361,16 +360,16 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 		}
 
-		async Task RemoveController(int position)
+		async Task RemovePage(int position)
 		{
 			if (pageController != null && Source != null && Source?.Count > 0)
 			{
                 // To remove latest page, rebuild pageController or the page wont disappear
-				if (Source?.Count == 1)
+				if (Source.Count == 1)
 				{
 					Source.RemoveAt(position);
-					ConfigurePageController();
-					ConfigurePageControl();
+					SetNativeView();
+					SetIndicators();
 				}
 				else {
 
@@ -395,7 +394,7 @@ namespace CarouselView.FormsPlugin.iOS
 							Element.Position = newPos;
 							isSwiping = false;
 
-							ConfigurePageControl();
+							SetIndicators();
 
                             // Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 							Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
@@ -406,7 +405,7 @@ namespace CarouselView.FormsPlugin.iOS
 						var firstViewController = pageController.ViewControllers[0];
 						pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
 						{
-							ConfigurePageControl();
+							SetIndicators();
 
                             // Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 							Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
@@ -420,7 +419,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 		int prevPosition;
 
-		void SetCurrentController(int position)
+		void SetCurrentPage(int position)
 		{
 			if (pageController != null && Element.ItemsSource != null && Element.ItemsSource?.Count() > 0)
 			{
@@ -431,7 +430,7 @@ namespace CarouselView.FormsPlugin.iOS
 				var firstViewController = CreateViewController(position);
 				pageController.SetViewControllers(new[] { firstViewController }, direction, Element.AnimateTransition, s =>
 				{
-					ConfigurePageControl();
+					SetIndicators();
 
                     // Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
@@ -450,7 +449,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 			var dt = bindingContext as DataTemplate;
 
-			// Support for DataTemplate as ItemsSource
+			// Support for List<DataTemplate> as ItemsSource
 			if (dt != null)
 			{
 				formsView = (View)dt.CreateContent();

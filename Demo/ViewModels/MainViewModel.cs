@@ -10,8 +10,8 @@ namespace Demo
 	{
 		public MainViewModel()
 		{
-			Position = 1;
-			ItemsSource = new ObservableCollection<int>() { 0, 1, 2, 3, 4 };
+			Position = 0;
+			ItemsSource = new ObservableCollection<int>() { 0 };
 			TemplateSelector = new MyTemplateSelector(); //new DataTemplate (typeof(MyView));
 		}
 
