@@ -19,7 +19,7 @@ namespace CarouselView.FormsPlugin.Abstractions
 			return null;
 		}
 
-		public static int Count(this IEnumerable e)
+		public static int GetCount(this IEnumerable e)
 		{
 			var enumerator = e.GetEnumerator();
 			int i = 0;
@@ -30,7 +30,7 @@ namespace CarouselView.FormsPlugin.Abstractions
 			return i;
 		}
 
-		public static List<object> ToList(this IEnumerable e)
+		public static List<object> GetList(this IEnumerable e)
 		{
 			var enumerator = e.GetEnumerator();
 			var list = new List<object>();

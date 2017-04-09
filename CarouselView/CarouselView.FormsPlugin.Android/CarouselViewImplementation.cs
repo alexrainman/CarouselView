@@ -187,8 +187,8 @@ namespace CarouselView.FormsPlugin.Android
 			isSwiping = true;
 			if (Element.ItemsSource != null)
 			{
-				if (Element.Position > Element.ItemsSource.Count() - 1)
-					Element.Position = Element.ItemsSource.Count() - 1;
+				if (Element.Position > Element.ItemsSource.GetCount() - 1)
+					Element.Position = Element.ItemsSource.GetCount() - 1;
 				if (Element.Position == -1)
 					Element.Position = 0;
 			}
@@ -269,7 +269,7 @@ namespace CarouselView.FormsPlugin.Android
 					viewPager.Adapter.NotifyDataSetChanged();
 
 				// Call position selected when inserting first page
-				if (Element.ItemsSource.Count() == 1)
+				if (Element.ItemsSource.GetCount() == 1)
 					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 			}
 		}
@@ -358,7 +358,7 @@ namespace CarouselView.FormsPlugin.Android
 
 		void SetCurrentPage(int position)
 		{
-			if (viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.Count() > 0) {
+			if (viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0) {
 
 				viewPager.SetCurrentItem (position, Element.AnimateTransition);
 
@@ -382,7 +382,7 @@ namespace CarouselView.FormsPlugin.Android
 			public PageAdapter(CarouselViewControl element)
 			{
 				Element = element;
-				Source = Element.ItemsSource != null ? new List<object>(Element.ItemsSource.ToList()) : null;
+				Source = Element.ItemsSource != null ? new List<object>(Element.ItemsSource.GetList()) : null;
 			}
 
 			public override int Count {

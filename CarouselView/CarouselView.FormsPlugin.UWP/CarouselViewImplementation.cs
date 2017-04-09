@@ -207,8 +207,8 @@ namespace CarouselView.FormsPlugin.UWP
             isSwiping = true;
             if (Element.ItemsSource != null)
             {
-                if (Element.Position > Element.ItemsSource.Count() - 1)
-                    Element.Position = Element.ItemsSource.Count() - 1;
+                if (Element.Position > Element.ItemsSource.GetCount() - 1)
+                    Element.Position = Element.ItemsSource.GetCount() - 1;
 
                 if (Element.Position == -1)
                     Element.Position = 0;
@@ -231,9 +231,9 @@ namespace CarouselView.FormsPlugin.UWP
             flipView = nativeView.FindName("flipView") as FlipView;
 
             var source = new List<FrameworkElement>();
-            if (Element.ItemsSource != null && Element.ItemsSource?.Count() > 0)
+            if (Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
             {
-                for (int j = 0; j <= Element.ItemsSource.Count() - 1; j++)
+                for (int j = 0; j <= Element.ItemsSource.GetCount() - 1; j++)
                 {
                     source.Add(CreateView(Element.ItemsSource.GetItem(j)));
                 }
@@ -280,7 +280,7 @@ namespace CarouselView.FormsPlugin.UWP
         {
             var dots = new List<Shape>();
 
-            if (Element.ItemsSource != null && Element.ItemsSource?.Count() > 0)
+            if (Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
             {
                 int i = 0;
                 foreach (var item in Element.ItemsSource)
@@ -314,7 +314,7 @@ namespace CarouselView.FormsPlugin.UWP
                 Source.Insert(position, CreateView(item));
                 Dots.Insert(position, CreateDot(position, position));
 
-                if (Element.ItemsSource.Count() == 1)
+                if (Element.ItemsSource.GetCount() == 1)
 					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 			}
 		}
@@ -372,7 +372,7 @@ namespace CarouselView.FormsPlugin.UWP
 
         void SetCurrentPage(int position)
         {
-            if (flipView != null && Element.ItemsSource != null && Element.ItemsSource?.Count() > 0)
+            if (flipView != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
             {
                 flipView.SelectedIndex = position;
             }

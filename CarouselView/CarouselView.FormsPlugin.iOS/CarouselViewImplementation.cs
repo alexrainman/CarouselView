@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -186,8 +186,8 @@ namespace CarouselView.FormsPlugin.iOS
 			isSwiping = true;
 			if (Element.ItemsSource != null)
 			{
-				if (Element.Position > Element.ItemsSource.Count() - 1)
-					Element.Position = Element.ItemsSource.Count() - 1;
+				if (Element.Position > Element.ItemsSource.GetCount() - 1)
+					Element.Position = Element.ItemsSource.GetCount() - 1;
 				if (Element.Position == -1)
 					Element.Position = 0;
 			}
@@ -210,7 +210,7 @@ namespace CarouselView.FormsPlugin.iOS
 			pageController = new UIPageViewController(UIPageViewControllerTransitionStyle.Scroll,
 													  orientation, UIPageViewControllerSpineLocation.None, interPageSpacing);
 
-			Source = Element.ItemsSource != null ? new List<object>(Element.ItemsSource.ToList()) : null;
+			Source = Element.ItemsSource != null ? new List<object>(Element.ItemsSource.GetList()) : null;
 
 			// InterPageSpacingColor BP
 			pageController.View.BackgroundColor = Element.InterPageSpacingColor.ToUIColor();
@@ -354,7 +354,7 @@ namespace CarouselView.FormsPlugin.iOS
 					SetIndicators();
 
                     // Call position selected when inserting first page
-					if (Element.ItemsSource.Count() == 1)
+					if (Element.ItemsSource.GetCount() == 1)
 						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 				});
 			}
@@ -421,7 +421,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 		void SetCurrentPage(int position)
 		{
-			if (pageController != null && Element.ItemsSource != null && Element.ItemsSource?.Count() > 0)
+			if (pageController != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
 			{
 				// Transition direction based on prevPosition
 				var direction = position >= prevPosition ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
