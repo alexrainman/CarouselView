@@ -56,7 +56,9 @@ namespace Demo.UWP
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                Xamarin.Forms.Forms.Init(e);
+				List<Assembly> assembliesToInclude = new List<Assembly>();
+				assembliesToInclude.Add(typeof(CarouselViewRenderer).GetTypeInfo().Assembly);
+				Xamarin.Forms.Forms.Init(e, assembliesToInclude);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
