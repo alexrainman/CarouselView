@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>3.1.1</version>
+        <version>4.0.0</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
@@ -12,6 +12,14 @@
         <description>Create Horizontal and Vertical carousels, add page indicators, render one page at a time moving back and fort programmatically and much more. “How to” at Github repository.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
+        4.0.0
+        [Update] Code refactoring.
+        [Update] ItemsSource changed to IEnumerable.
+        [Update] ObservableCollections now supported as ItemsSource.
+        [Update] InsertPage and RemovePage deprecated  (you can add/remove pages using ObservableCollection as ItemsSource).
+        [Update] PageIndicatorTintColor property renamed to IndicatorsTintColor.
+        [Update] All bindable property-changed implemented.
+        [UWP] Arrows property renamed to ShowArrows.
         3.1.1
         [iOS] Fix for issues after recreating the control #86
         3.1.0
@@ -95,6 +103,7 @@
 
         <!-- UWP -->
         <file src="lib/CarouselView.FormsPlugin.UWP.dll" target="lib/UAP10/CarouselView.FormsPlugin.UWP.dll" />
+        <file src="lib/CarouselView.FormsPlugin.UWP.pdb" target="lib/UAP10/CarouselView.FormsPlugin.UWP.pdb" />
         <file src="lib/CarouselView.FormsPlugin.UWP.pri" target="lib/UAP10/CarouselView.FormsPlugin.UWP.pri" />
         <file src="lib/CarouselView.FormsPlugin.UWP.xr.xml" target="lib/UAP10/CarouselView.FormsPlugin.UWP/CarouselView.FormsPlugin.UWP.xr.xml" />
         <file src="lib/FlipViewControl.xbf" target="lib/UAP10/FlipViewControl.xbf" />

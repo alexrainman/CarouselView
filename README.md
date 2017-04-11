@@ -25,11 +25,11 @@ CarouselViewRenderer.Init();
 
 ```
 var myCarousel = new CarouselViewControl();
-myCarousel.ItemsSource = new List<int> { 1, 2, 3, 4, 5 };
+myCarousel.ItemsSource = new ObservableCollection<int> { 1, 2, 3, 4, 5 }; // ADD/REMOVE PAGES FROM CAROUSEL ADDING/REMOVING ELEMENTS FROM THE COLLECTION
 myCarousel.ItemTemplate = new MyTemplateSelector (); //new DataTemplate (typeof(MyView));
 myCarousel.Position = 0; //default
 myCarousel.InterPageSpacing = 10;
-myCarousel.Orientation = Orientation.Horizontal;
+myCarousel.Orientation = CarouselViewOrientation.Horizontal;
 ```
 
 **XAML:**
@@ -78,73 +78,56 @@ Or, template selector in your ViewModel:
 
 ```Orientation```: Vertical or Horizontal swipe/scroll (default horizontal).
 
-```ItemsSource```: List of objects used as BindingContext of each view.
+```InterPageSpacing```: add a margin/space between pages (Android and iOS only).
 
-* You can use an Observable collection as ItemsSource and use CollectionChanged events in your end for your own business logic.
+```InterPageSpacingColor```: color for the margin/space between pages (default #FFFFFF).
+
+```IsSwipingEnabled```: use this property to disable swipe to scroll (Android and iOS only, default true).
+
+```IndicatorsTintColor```: page dot indicators fill color (default #C0C0C0).
+
+```CurrentPageIndicatorTintColor```: selected page dot indicator fill color (default #808080).
+
+```IndicatorsShape```: Indicators shape (default Circle).
+
+```ShowIndicators```: hide/show page indicators (default false).
+
+```ItemsSource```: IEnumerable. List of objects used as BindingContext of each view.
+
+* You can use an Observable collection as ItemsSource to dynamically add/remove pages from the carousel.
 
 * If you want to display different Views for the same data, you can provide a DataTemplate List as ItemsSource.
 
 ```
-<controls:CarouselViewControl BindingContext="{Binding Person}">
-	<controls:CarouselViewControl.ItemsSource>
-       <x:Array Type="{x:Type DataTemplate}">
+myCarousel.ItemsSource = new List<DataTemplate>()
+{
+	new DataTemplate(() => { return new PhotoUrl(); }),
+	new DataTemplate(() => { return new Bio(); }),
+	new DataTemplate(() => { return new ContactInfo(); })
+};
 
-                <DataTemplate>
-				    <StackLayout>
-                        <Image Source="{Binding PhotoUrl}" Aspect="AspectFill"/>
-					</StackLayout>
-                </DataTemplate>
-
-                <DataTemplate>
-				    <StackLayout>
-                        <Label Text="{Binding Bio}"/>
-					</StackLayout>
-                </DataTemplate>
-
-                <DataTemplate>
-                    <StackLayout>
-                        <Label Text="{Binding ContactInfo}"/>
-					</StackLayout>
-                </DataTemplate>
-
-       </x:Array>
-    </controls:CarouselViewControl.ItemsSource>
-</controls:CarouselViewControl>
+myCarousel.BindingContext = new Person()
+{
+	PhotoUrl = "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAefAAAAJDJkNGNiOTU4LWI4ZTQtNDY5My1hZWJhLTE3ZGQ5Y2I1MzRmMQ.jpg",
+	Bio = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi.",
+	ContactInfo = "alexrainman1975@gmail.com"
+};
 ```
+
+```ItemTemplate```: supports DataTemplate and DataTemplateSelector.
 
 ```Position```: the desired selected view when Carousel starts.
 
 * Change position in code behind or binding to set current page/swipe programmatically.
 
-```InterPageSpacing```: add a margin/space between pages (Android and iOS only).
-
-```InterPageSpacingColor```: color for the margin/space between pages (default #FFFFFF).
-
-```ShowIndicators```: hide/show page indicators (default false).
-
-```IndicatorsShape```: Indicators shape (default Circle).
-
-```PageIndicatorTintColor```: page dot indicators fill color (default #C0C0C0).
-
-```CurrentPageIndicatorTintColor```: selected page dot indicator fill color (default #808080).
-
-```ItemTemplate```: supports DataTemplate and DataTemplateSelector.
-
-```Bounces```: use this property to disable bounces when you will render one page at a time and move back and fort programmatically (iOS only, default true).
-
-```Arrows```: disable arrows navigation (UWP only, default true).
 
 ```AnimateTransition```: enables transition animation when swiping programmatically (Android and iOS only, default true).
+
+```ShowArrows```: disable arrows navigation (UWP only, default true).
 
 **Event Handlers**
 
 ```PositionSelected```: called when position changes.
-
-**Methods**
-
-```InsertPage (item, position)```: insert a view at a given position (if position parameter is not provided, item will be added at the end).
-
-```RemovePage (position)```: remove a view at given position (when you remove the current view it will slide to the previous one). This method will also remove the related item from the ItemsSource.
 
 #### Render one page at a time, no swiping, move back and fort programmatically:
 
@@ -199,6 +182,22 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 * [alexrainman](https://github.com/alexrainman)
 
 #### Release Notes
+
+4.0.0
+
+[Update] Code refactoring.
+
+[Update] ItemsSource changed to IEnumerable.
+
+[Update] ObservableCollections now supported as ItemsSource.
+
+[Update] InsertPage and RemovePage deprecated  (you can add/remove pages using ObservableCollection as ItemsSource).
+
+[Update] PageIndicatorTintColor property renamed to IndicatorsTintColor.
+
+[Update] All bindable property-changed implemented.
+
+[UWP] Arrows property renamed to ShowArrows.
 
 3.1.1
 
