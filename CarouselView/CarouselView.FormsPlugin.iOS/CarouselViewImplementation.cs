@@ -166,12 +166,13 @@ namespace CarouselView.FormsPlugin.iOS
         // To avoid triggering Position changed more than once
 		bool isSwiping;
 
+#region adapter callbacks
 		void PageController_DidFinishAnimating(object sender, UIPageViewFinishedAnimationEventArgs e)
 		{
 			if (e.Finished)
 			{
 				var controller = (ViewContainer)pageController.ViewControllers[0];
-				var position = controller.Tag;
+				var position = Source.IndexOf(controller.Tag);
 				isSwiping = true;
 				Element.Position = position;
 				prevPosition = position;
@@ -180,6 +181,7 @@ namespace CarouselView.FormsPlugin.iOS
 				Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 			}
 		}
+#endregion
 
 		void SetPosition()
 		{
@@ -238,6 +240,7 @@ namespace CarouselView.FormsPlugin.iOS
 				pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:|[pageControl]|", NSLayoutFormatOptions.AlignAllTop, new NSDictionary(), viewsDictionary));
 			}
 
+#region adapter
 			pageController.DidFinishAnimating += PageController_DidFinishAnimating;
 
 			pageController.GetPreviousViewController = (pageViewController, referenceViewController) =>
@@ -246,7 +249,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 				if (controller != null)
 				{
-					var position = controller.Tag;
+					var position = Source.IndexOf(controller.Tag);
 
 					// Determine if we are on the first page
 					if (position == 0)
@@ -270,7 +273,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 				if (controller != null)
 				{
-					var position = controller.Tag;
+					var position = Source.IndexOf(controller.Tag);
 
 					// Determine if we are on the last page
 					if (position == Count - 1)
@@ -287,6 +290,7 @@ namespace CarouselView.FormsPlugin.iOS
 					return null;
 				}
 			};
+#endregion
 
 			if (Source != null && Source?.Count > 0)
 			{
@@ -353,9 +357,7 @@ namespace CarouselView.FormsPlugin.iOS
 				{
 					SetIndicators();
 
-                    // Call position selected when inserting first page
-					if (Element.ItemsSource.GetCount() == 1)
-						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+                    Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 				});
 			}
 		}
@@ -438,6 +440,7 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 		}
 
+#region adapter
 		UIViewController CreateViewController(int index)
 		{
 			View formsView = null;
@@ -473,11 +476,12 @@ namespace CarouselView.FormsPlugin.iOS
 			var nativeConverted = FormsViewToNativeiOS.ConvertFormsToNative(formsView, rect);
 
 			var viewController = new ViewContainer();
-			viewController.Tag = index;
+			viewController.Tag = bindingContext;
 			viewController.View = nativeConverted;
 
 			return viewController;
 		}
+#endregion
 
 		protected override void Dispose(bool disposing)
 		{

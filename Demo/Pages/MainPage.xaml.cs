@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using CarouselView.FormsPlugin.Abstractions;
+using System.Linq;
 
 namespace Demo
 {
@@ -33,9 +34,7 @@ namespace Demo
 				Text = "Reset",
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() => {
-					//myCarousel.Orientation = CarouselViewOrientation.Vertical;
-                    //_vm.ItemsSource = new ObservableCollection<int>() { 0, 1, 2, 3, 4 };
-					myCarousel.ItemTemplate = new DataTemplate(typeof(MySecondView));
+                    _vm.ItemsSource = new ObservableCollection<int>() { 0, 1, 2, 3, 4 };
 				})
 			});
 
@@ -81,7 +80,7 @@ namespace Demo
 		{
 			if (_vm.ItemsSource != null)
 			{
-				_vm.ItemsSource.Add(_vm.ItemsSource.Count);
+				_vm.ItemsSource.Add(_vm.ItemsSource.Max() + 1);
 
 				if (_vm.ItemsSource.Count > 1)
 					_vm.Position = _vm.ItemsSource.Count - 1;

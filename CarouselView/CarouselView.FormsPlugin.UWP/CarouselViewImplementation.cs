@@ -244,7 +244,7 @@ namespace CarouselView.FormsPlugin.UWP
             //flipView.ItemsSource = Element.ItemsSource;
             //flipView.ItemTemplateSelector = new MyTemplateSelector(Element); (the way it should be)
 
-            // IsSwipingEnabled BP (not working)
+            //IsSwipingEnabled BP (not working)
             //flipView.ManipulationMode = Element.IsSwipingEnabled ? ManipulationModes.All : ManipulationModes.None;
 
             converter = new ColorConverter();
@@ -312,10 +312,13 @@ namespace CarouselView.FormsPlugin.UWP
 			if (flipView != null && Source != null)
 			{
                 Source.Insert(position, CreateView(item));
-                Dots.Insert(position, CreateDot(position, position));
+                Dots.Insert(position, CreateDot(position, Element.Position));
 
-                if (Element.ItemsSource.GetCount() == 1)
-					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+                if (position == Element.Position)
+                    flipView.SelectedIndex = position;
+
+                //if (Element.ItemsSource.GetCount() == 1)
+                Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
 			}
 		}
 
@@ -508,7 +511,7 @@ namespace CarouselView.FormsPlugin.UWP
         }
     }
 
-    // UWP DataTemplateSelector SelectTemplateCore doesn't support loadTemplate function
+    // UWP DataTemplate doesn't support loadTemplate function as parameter
     // Having that, to render all the views ahead of time is not needed
 
     /*public class MyTemplateSelector : DataTemplateSelector
@@ -525,38 +528,32 @@ namespace CarouselView.FormsPlugin.UWP
             Xamarin.Forms.View formsView = null;
             var bindingContext = item;
 
-            var selector = Element.ItemTemplate as Xamarin.Forms.DataTemplateSelector;
-            if (selector != null)
-                formsView = (Xamarin.Forms.View)selector.SelectTemplate(bindingContext, Element).CreateContent();
-            else
-                formsView = (Xamarin.Forms.View)Element.ItemTemplate.CreateContent();
+            var dt = bindingContext as Xamarin.Forms.DataTemplate;
 
-            formsView.BindingContext = bindingContext;
-            formsView.Parent = this.Element;
+            // Support for List<DataTemplate> as ItemsSource
+            if (dt != null)
+			{
+				formsView = (Xamarin.Forms.View)dt.CreateContent();
+			}
+			else {
 
-            var element = FormsViewToNativeUWP.ConvertFormsToNative(formsView, new Xamarin.Forms.Rectangle(0, 0, 300, 300));
+				var selector = Element.ItemTemplate as Xamarin.Forms.DataTemplateSelector;
+				if (selector != null)
+					formsView = (Xamarin.Forms.View)selector.SelectTemplate(bindingContext, Element).CreateContent();
+				else
+					formsView = (Xamarin.Forms.View)Element.ItemTemplate.CreateContent();
 
-            var template = CreateDateTemplate();
-            var content = (StackPanel)template.LoadContent();
-            
-            content.Children.Add(element);
+				formsView.BindingContext = bindingContext;
+			}
+
+			formsView.Parent = this.Element;
+
+
+			var element = FormsViewToNativeUWP.ConvertFormsToNative(formsView, new Xamarin.Forms.Rectangle(0, 0, ElementWidth, ElementHeight));
+
+            var template = new DataTemplate(() => return element; ); // THIS IS NOT SUPPORTED :(
 
             return template;
-        }
-
-        DataTemplate CreateDateTemplate()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append("<DataTemplate xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\">");
-            sb.Append("<StackPanel>");
-            sb.Append("<StackPanel Orientation=\"Horizontal\" Margin=\"3,3,0,3\"><TextBlock Text=\"Name:\" Margin=\"0,0,5,0\"/><TextBlock Text=\"Name\"/></StackPanel>");
-            sb.Append("<StackPanel Orientation=\"Horizontal\" Margin=\"3,3,0,3\"><TextBlock Text=\"Price:\" Margin=\"0,0,5,0\"/><TextBlock Text=\"Price\"/></StackPanel>");
-            sb.Append("<StackPanel Orientation=\"Horizontal\" Margin=\"3,3,0,3\"><TextBlock Text=\"Author:\" Margin=\"0,0,5,0\"/><TextBlock Text=\"Author\"/></StackPanel>");
-            sb.Append("</StackPanel>");
-            sb.Append("</DataTemplate>");
-
-            return  (DataTemplate)XamlReader.Load(sb.ToString());
         }
     }*/
 }

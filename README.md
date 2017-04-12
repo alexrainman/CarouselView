@@ -142,8 +142,8 @@ public async void OnNext(object sender, TappedEventArgs e)
 {
 	if (myCarousel.ItemsSource[0] < 4)
 	{
-		await myCarousel.InsertPage(myCarousel.ItemsSource[0] + 1);
-		await myCarousel.RemovePage(0);
+		myCarousel.ItemsSource.Add(myCarousel.ItemsSource[0] + 1);
+		myCarousel.ItemsSource.RemoveAt(0);
 	}
 }
 ```
@@ -160,7 +160,7 @@ public async void OnPrev(object sender, TappedEventArgs e)
 		myCarousel.AnimateTransition = false;
 		myCarousel.Position = 1;
 		myCarousel.AnimateTransition = true;
-		await myCarousel.RemovePage(1);
+		myCarousel.ItemsSource.RemoveAt(1);
 	}
 }
 ```
@@ -182,6 +182,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 * [alexrainman](https://github.com/alexrainman)
 
 #### Release Notes
+
+4.1.0
+
+[Update] Fixing position property when adding/removing from ItemsSource collection.
 
 4.0.0
 

@@ -11,7 +11,7 @@ namespace Demo
 		public MainViewModel()
 		{
 			Position = 0;
-			ItemsSource = new ObservableCollection<int>() { 0 };
+			ItemsSource = new ObservableCollection<int>() { 0, 1, 2, 3, 4 };
 			TemplateSelector = new MyTemplateSelector(); //new DataTemplate (typeof(MyView));
 		}
 
