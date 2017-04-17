@@ -183,6 +183,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+4.1.1
+
+[iOS] Content not getting rendered in iOS because ElementWidth is 0 (+ fix) #96
+
 4.1.0
 
 [Update] Fixing position property when adding/removing from ItemsSource collection.

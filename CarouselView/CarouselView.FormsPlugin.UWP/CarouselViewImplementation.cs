@@ -406,7 +406,7 @@ namespace CarouselView.FormsPlugin.UWP
 
 			formsView.Parent = this.Element;
 
-            var element = FormsViewToNativeUWP.ConvertFormsToNative(formsView, new Xamarin.Forms.Rectangle(0, 0, ElementWidth, ElementHeight));
+            var element = formsView.ToWindows(new Xamarin.Forms.Rectangle(0, 0, ElementWidth, ElementHeight));
 
             return element;
         }

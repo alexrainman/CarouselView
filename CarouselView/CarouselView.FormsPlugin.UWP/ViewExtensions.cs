@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
 
 namespace CarouselView.FormsPlugin.UWP
 {
-    public static class FormsViewToNativeUWP
+    public static class ViewExtensions
     {
-        public static FrameworkElement ConvertFormsToNative(Xamarin.Forms.View view, Rectangle size)
+        public static FrameworkElement ToWindows(this Xamarin.Forms.View view, Rectangle size)
         {
             //var vRenderer = RendererFactory.GetRenderer (view);
 

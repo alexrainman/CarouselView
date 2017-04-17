@@ -5,9 +5,9 @@ using Xamarin.Forms.Platform.Android;
 
 namespace CarouselView.FormsPlugin.Android
 {
-    public static class FormsToNativeDroid
+    public static class ViewExtensions
     {
-        public static ViewGroup ConvertFormsToNative(Xamarin.Forms.View view, Rectangle size)
+        public static ViewGroup ToAndroid(this Xamarin.Forms.View view, Rectangle size)
         {
 			//var vRenderer = RendererFactory.GetRenderer (view);
 

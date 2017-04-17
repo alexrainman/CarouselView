@@ -7,9 +7,9 @@ using System.Collections.ObjectModel;
 
 namespace CarouselView.FormsPlugin.iOS
 {
-    public static class FormsViewToNativeiOS
+    public static class ViewExtensions
     {
-        public static UIView ConvertFormsToNative(Xamarin.Forms.View view, CGRect size)
+        public static UIView ToiOS(this Xamarin.Forms.View view, CGRect size)
         {
             //var vRenderer = RendererFactory.GetRenderer (view);
 
