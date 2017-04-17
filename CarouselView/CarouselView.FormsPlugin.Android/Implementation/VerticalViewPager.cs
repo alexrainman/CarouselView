@@ -21,19 +21,6 @@ namespace CarouselView.FormsPlugin.Android
 			OverScrollMode = OverScrollMode.Never;
 		}
 
-		private MotionEvent SwapTouchEvent(MotionEvent ev)
-		{
-			float width = Width;
-			float height = Height;
-
-			float swappedX = (ev.GetY() / height) * width;
-			float swappedY = (ev.GetX() / width) * height;
-
-		    ev.SetLocation(swappedX, swappedY);
-
-			return ev;
-		}
-
 		public override bool OnTouchEvent(MotionEvent ev)
 		{
 			if (this.isSwipingEnabled)
@@ -54,6 +41,19 @@ namespace CarouselView.FormsPlugin.Android
 			}
 
 			return false;
+		}
+
+		private MotionEvent SwapTouchEvent(MotionEvent ev)
+		{
+			float width = Width;
+			float height = Height;
+
+			float swappedX = (ev.GetY() / height) * width;
+			float swappedY = (ev.GetX() / width) * height;
+
+			ev.SetLocation(swappedX, swappedY);
+
+			return ev;
 		}
 
 		public void SetPagingEnabled(bool enabled)
