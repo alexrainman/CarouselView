@@ -17,7 +17,7 @@ namespace CarouselView.FormsPlugin.Android
 		public VerticalViewPager(Context context, IAttributeSet attrs) : base(context, attrs)
 		{
 			SetPageTransformer(false, new DefaultTransformer());
-			// get rid of the overscroll drawing that happens on the left and right
+			// Remove left and right overscroll drawing
 			OverScrollMode = OverScrollMode.Never;
 		}
 
@@ -49,7 +49,6 @@ namespace CarouselView.FormsPlugin.Android
 			if (this.isSwipingEnabled)
 			{
 				bool intercept = base.OnInterceptTouchEvent(SwapTouchEvent(ev));
-				//If not intercept, touch event should not be swapped.
 				SwapTouchEvent(ev);
 				return intercept;
 			}
