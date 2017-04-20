@@ -82,7 +82,7 @@ namespace CarouselView.FormsPlugin.Android
 					if (!Element.Height.Equals(-1))
 					{
 						SetNativeView();
-						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+						Element.PositionSelected?.Invoke(Element, Element.Position);
 					}
 					break;
 				case "Width":
@@ -94,12 +94,12 @@ namespace CarouselView.FormsPlugin.Android
 					{
 						ElementHeight = rect.Height;
 						SetNativeView();
-						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+						Element.PositionSelected?.Invoke(Element, Element.Position);
 					}
 					break;
 				case "Orientation":
 					SetNativeView();
-					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+					Element.PositionSelected?.Invoke(Element, Element.Position);
 					break;
 				case "InterPageSpacing":
 					//var metrics = Resources.DisplayMetrics;
@@ -132,7 +132,7 @@ namespace CarouselView.FormsPlugin.Android
 						viewPager.Adapter = new PageAdapter(Element);
 						viewPager.SetCurrentItem(Element.Position, false);
 						indicators?.SetViewPager(viewPager);
-						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+						Element.PositionSelected?.Invoke(Element, Element.Position);
 						if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
 						    ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
 					}
@@ -143,7 +143,7 @@ namespace CarouselView.FormsPlugin.Android
 						viewPager.Adapter = new PageAdapter(Element);
 						viewPager.SetCurrentItem(Element.Position, false);
 						indicators?.SetViewPager(viewPager);
-						Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+						Element.PositionSelected?.Invoke(Element, Element.Position);
 					}
 					break;
 				case "Position":
@@ -165,7 +165,7 @@ namespace CarouselView.FormsPlugin.Android
 			Element.Position = e.Position;
 			// Call PositionSelected from here when 0
 			if (e.Position == 0)
-				Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+				Element.PositionSelected?.Invoke(Element, e.Position);
 			isSwiping = false;
 		}
 
@@ -174,7 +174,7 @@ namespace CarouselView.FormsPlugin.Android
 		{
 			// Call PositionSelected when scroll finish, after swiping finished and position > 0
 			if (e.State == 0 && !isSwiping && Element.Position > 0) {
-				Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+				Element.PositionSelected?.Invoke(Element, Element.Position);
 			}
 		}
 #endregion
@@ -262,13 +262,11 @@ namespace CarouselView.FormsPlugin.Android
 				Source.Insert(position, item);
 
 				var prevPos = Element.Position;
+
 				viewPager.Adapter.NotifyDataSetChanged();
 
-				// Keep current position
-				if (position == prevPos)
-				    viewPager.SetCurrentItem(position, false);
-
-				Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+				if (position <= prevPos)
+				    Element.PositionSelected?.Invoke(Element, Element.Position);
 			}
 		}
 
@@ -319,7 +317,7 @@ namespace CarouselView.FormsPlugin.Android
 
 				// Invoke PositionSelected when AnimateTransition is disabled
 				if (!Element.AnimateTransition)
-					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+					Element.PositionSelected?.Invoke(Element, position);
 			}
 		}
 

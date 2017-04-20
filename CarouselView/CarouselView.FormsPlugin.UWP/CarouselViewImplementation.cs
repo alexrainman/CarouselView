@@ -102,11 +102,11 @@ namespace CarouselView.FormsPlugin.UWP
                     if (ElementHeight == 0)
                         ElementHeight = rect.Height;
                     SetNativeView();
-					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+					Element.PositionSelected?.Invoke(Element, Element.Position);
                     break;
                 case "Orientation":
                     SetNativeView();
-					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+					Element.PositionSelected?.Invoke(Element, Element.Position);
                     break;
                 case "IsSwipingEnabled":
                     //flipView.ManipulationMode = Element.IsSwipingEnabled ? ManipulationModes.All : ManipulationModes.None;
@@ -129,13 +129,13 @@ namespace CarouselView.FormsPlugin.UWP
                 case "ItemsSource":
                     SetPosition();
                     SetNativeView();
-					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+					Element.PositionSelected?.Invoke(Element, Element.Position);
                     if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
                         ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
                     break;
                 case "ItemTemplate":
                     SetNativeView();
-					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+					Element.PositionSelected?.Invoke(Element, Element.Position);
                     break;
                 case "Position":
 					if (!isSwiping)
@@ -165,7 +165,7 @@ namespace CarouselView.FormsPlugin.UWP
             Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
             {
                 SetNativeView();
-				Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+				Element.PositionSelected?.Invoke(Element, Element.Position);
             });
         }
 
@@ -185,7 +185,7 @@ namespace CarouselView.FormsPlugin.UWP
                 Element.Position = flipView.SelectedIndex;
                 UpdateIndicators();
 
-                Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+                Element.PositionSelected?.Invoke(Element, flipView.SelectedIndex);
             }
         }
 
@@ -311,14 +311,20 @@ namespace CarouselView.FormsPlugin.UWP
 		{
 			if (flipView != null && Source != null)
 			{
+                if (position <= Element.Position)
+                {
+                    isSwiping = true;
+                    Element.Position++;
+                    isSwiping = false;
+                }
+
                 Source.Insert(position, CreateView(item));
                 Dots.Insert(position, CreateDot(position, Element.Position));
 
-                if (position == Element.Position)
-                    flipView.SelectedIndex = position;
+                flipView.SelectedIndex = Element.Position;
 
-                //if (Element.ItemsSource.GetCount() == 1)
-                Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+                if (position <= Element.Position)
+                    Element.PositionSelected?.Invoke(Element, flipView.SelectedIndex);
 			}
 		}
 
@@ -368,7 +374,7 @@ namespace CarouselView.FormsPlugin.UWP
 
                     isSwiping = false;
 
-                    Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+                    Element.PositionSelected?.Invoke(Element, Element.Position);
 				}
             }
         }

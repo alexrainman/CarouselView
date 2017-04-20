@@ -31,7 +31,7 @@ namespace Demo
 			nextBtn.IsVisible = _vm.ItemsSource[0] < 4;
 		}
 
-		public void PositionSelected(object sender, EventArgs e)
+		public void PositionSelected(object sender, int position)
 		{
 			ConfigureButtons();
 		}

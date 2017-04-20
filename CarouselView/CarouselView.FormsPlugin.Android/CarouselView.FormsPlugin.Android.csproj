@@ -111,11 +111,10 @@
     <Compile Include="ViewExtensions.cs" />
     <Compile Include="Implementation\CirclePageIndicator.cs" />
     <Compile Include="Implementation\PageIndicator.cs" />
-    <Compile Include="Implementation\DefaultPageTransformer.cs" />
-    <Compile Include="Implementation\VerticalViewPager.cs" />
     <Compile Include="Implementation\CustomViewPager.cs" />
     <Compile Include="Implementation\IViewPager.cs" />
     <Compile Include="Tag.cs" />
+    <Compile Include="Implementation\VerticalViewPager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

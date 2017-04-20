@@ -118,6 +118,6 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(ShowArrowsProperty, value); }
 		}
 
-		public EventHandler PositionSelected;
+		public EventHandler<int> PositionSelected;
 	}
 }

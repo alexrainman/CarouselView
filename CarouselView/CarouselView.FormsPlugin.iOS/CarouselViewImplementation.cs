@@ -100,12 +100,12 @@ namespace CarouselView.FormsPlugin.iOS
 					ElementHeight = rect.Height;
 					SetNativeView();
 					SetIndicators();
-					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+					Element.PositionSelected?.Invoke(Element, Element.Position);
 					break;
 				case "Orientation":
 					SetNativeView();
 					SetIndicators();
-					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+					Element.PositionSelected?.Invoke(Element, Element.Position);
 					break;
 				case "InterPageSpacing":
 					// InterPageSpacing not exposed as a property in UIPageViewController :(
@@ -136,14 +136,14 @@ namespace CarouselView.FormsPlugin.iOS
 					SetPosition();
 					SetNativeView();
 					SetIndicators();
-					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+					Element.PositionSelected?.Invoke(Element, Element.Position);
 					if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
 						((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
 					break;
 				case "ItemTemplate":
 					SetNativeView();
 					SetIndicators();
-					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+					Element.PositionSelected?.Invoke(Element, Element.Position);
 					break;
                 case "Position":
 					if (!isSwiping)
@@ -179,7 +179,7 @@ namespace CarouselView.FormsPlugin.iOS
 				prevPosition = position;
 				isSwiping = false;
 				SetIndicators();
-				Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+				Element.PositionSelected?.Invoke(Element, position);
 			}
 		}
 #endregion
@@ -352,13 +352,29 @@ namespace CarouselView.FormsPlugin.iOS
 			{
 				Source.Insert(position, item);
 
-				var firstViewController = CreateViewController(Element.Position);
-
+				UIViewController firstViewController;
+				if (pageController.ViewControllers.Count() > 0)
+                    firstViewController = pageController.ViewControllers[0];
+				else
+                    firstViewController = CreateViewController(Element.Position);
+				
 				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
 				{
+					var prevPos = Element.Position;
+
+					// To keep the same view visible when inserting in a position <= current (like Android ViewPager)
+					isSwiping = true;
+					if (position <= Element.Position && Source.Count > 1)
+					{
+						Element.Position++;
+						prevPosition = Element.Position;
+					}
+					isSwiping = false;
+
 					SetIndicators();
 
-                    Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+					if (position <= prevPos)
+					    Element.PositionSelected?.Invoke(Element, Element.Position);
 				});
 			}
 		}
@@ -400,7 +416,7 @@ namespace CarouselView.FormsPlugin.iOS
 							SetIndicators();
 
                             // Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
-							Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+							Element.PositionSelected?.Invoke(Element, Element.Position);
 						});
 					}
 					else {
@@ -411,7 +427,7 @@ namespace CarouselView.FormsPlugin.iOS
 							SetIndicators();
 
                             // Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
-							Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+							Element.PositionSelected?.Invoke(Element, Element.Position);
 						});
 					}
 				}
@@ -436,7 +452,7 @@ namespace CarouselView.FormsPlugin.iOS
 					SetIndicators();
 
                     // Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
-					Element.PositionSelected?.Invoke(Element, EventArgs.Empty);
+					Element.PositionSelected?.Invoke(Element, position);
 				});
 			}
 		}

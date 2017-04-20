@@ -34,7 +34,7 @@ namespace Demo
 				Text = "Reset",
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() => {
-                    _vm.ItemsSource = new ObservableCollection<int>() { 0, 1, 2, 3, 4 };
+                    _vm.ItemsSource = new ObservableCollection<int>() { };
 				})
 			});
 
@@ -58,10 +58,10 @@ namespace Demo
 			nextBtn.IsVisible = _vm.Position < _vm.ItemsSource?.Count - 1;
 		}
 
-		public void PositionSelected (object sender, EventArgs e)
+		public void PositionSelected (object sender, int position)
 		{
 			ConfigureButtons();
-			Debug.WriteLine ("Position " + myCarousel.Position + " selected");
+			Debug.WriteLine("Position " + myCarousel.Position + " selected");
 		}
 
 		public void OnPrev (object sender, TappedEventArgs e)
@@ -80,10 +80,14 @@ namespace Demo
 		{
 			if (_vm.ItemsSource != null)
 			{
-				_vm.ItemsSource.Add(_vm.ItemsSource.Max() + 1);
+				_vm.ItemsSource.Add(_vm.ItemsSource.Count + 1);
 
-				if (_vm.ItemsSource.Count > 1)
-					_vm.Position = _vm.ItemsSource.Count - 1;
+				// Do this to trigger PositionSelected
+				if (_vm.ItemsSource.Count > 0)
+				   _vm.Position = _vm.ItemsSource.Count - 1;
+
+				// Do this to refresh Prev/Next visibility
+                //ConfigureButtons();
 		    }
 		}
 	}

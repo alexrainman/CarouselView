@@ -183,6 +183,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+4.1.2
+
+[Update] When a page is inserted in a position minor or equal than current position, keep current page selected updating position.
+
 4.1.1
 
 [iOS] Content not getting rendered in iOS because ElementWidth is 0 (+ fix) #96
