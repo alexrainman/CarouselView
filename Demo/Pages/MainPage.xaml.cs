@@ -20,6 +20,8 @@ namespace Demo
 
 			BindingContext = _vm = new MainViewModel();
 
+			//myCarousel.ItemsSource = _vm.ItemsSource;
+
 			myCarousel.PositionSelected += PositionSelected;
 			//myCarousel.ItemTemplate = new DataTemplate(typeof(MyFirstView));
 

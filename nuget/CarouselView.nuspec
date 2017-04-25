@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>4.1.2</version>
+        <version>4.132</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
@@ -12,6 +12,8 @@
         <description>Create Horizontal and Vertical carousels, add page indicators, render one page at a time moving back and fort programmatically and much more. “How to” at Github repository.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
+        4.1.3
+        [Android] Matching Xamarin.Forms Android Support v4 package version dependency (23.3.0).
         4.1.2
         [Update] When a page is inserted in a position minor or equal than current position, keep current page selected updating position.
         4.1.1
@@ -85,7 +87,7 @@
         <dependencies>
 			 <group targetFramework="MonoAndroid10">
 			    <dependency id="Xamarin.Forms" version="2.3.3.193"/>
-	            <dependency id="Xamarin.Android.Support.v4" version="24.2.1"/>
+	            <dependency id="Xamarin.Android.Support.v4" version="23.3.0"/>
 	        </group>
 	        <group targetFramework="Xamarin.iOS10">
 	            <dependency id="Xamarin.Forms" version="2.3.3.193"/>
