@@ -80,8 +80,6 @@ Or, template selector in your ViewModel:
 
 ```InterPageSpacing```: add a margin/space between pages (Android and iOS only).
 
-```InterPageSpacingColor```: color for the margin/space between pages (default #FFFFFF).
-
 ```IsSwipingEnabled```: use this property to disable swipe to scroll (Android and iOS only, default true).
 
 ```IndicatorsTintColor```: page dot indicators fill color (default #C0C0C0).
@@ -182,6 +180,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 * [alexrainman](https://github.com/alexrainman)
 
 #### Release Notes
+
+4.2.0
+
+[Update] InterPageSpacingColor deprecated. Using BcakgroundColor instead.
 
 4.1.2
 

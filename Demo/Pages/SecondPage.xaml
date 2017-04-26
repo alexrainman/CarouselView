@@ -10,7 +10,7 @@
                                   AnimateTransition="true"
                                   IndicatorsShape="Circle"
                                   InterPageSpacing="10"
-                                  InterPageSpacingColor="Red"
+                                  BackgroundColor="Red"
                                   Orientation="Horizontal"
                                   Position="1"
                                   ShowIndicators="true"/>

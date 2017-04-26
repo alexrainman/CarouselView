@@ -108,6 +108,10 @@ namespace CarouselView.FormsPlugin.UWP
                     SetNativeView();
 					Element.PositionSelected?.Invoke(Element, Element.Position);
                     break;
+				case "BackgroundColor":
+					if (flipView != null)
+					    flipView.Background = (SolidColorBrush)converter.Convert(Element.BackgroundColor, null, null, null);
+                    break;
                 case "IsSwipingEnabled":
                     //flipView.ManipulationMode = Element.IsSwipingEnabled ? ManipulationModes.All : ManipulationModes.None;
                     break;
@@ -244,10 +248,13 @@ namespace CarouselView.FormsPlugin.UWP
             //flipView.ItemsSource = Element.ItemsSource;
             //flipView.ItemTemplateSelector = new MyTemplateSelector(Element); (the way it should be)
 
+            converter = new ColorConverter();
+
+            // BackgroundColor BP
+            flipView.Background = (SolidColorBrush)converter.Convert(Element.BackgroundColor, null, null, null);
+
             //IsSwipingEnabled BP (not working)
             //flipView.ManipulationMode = Element.IsSwipingEnabled ? ManipulationModes.All : ManipulationModes.None;
-
-            converter = new ColorConverter();
 
             // IndicatorsTintColor BP
             fillColor = (SolidColorBrush)converter.Convert(Element.IndicatorsTintColor, null, null, null);

@@ -106,8 +106,8 @@ namespace CarouselView.FormsPlugin.Android
 					//var interPageSpacing = Element.InterPageSpacing * metrics.Density;
 					//viewPager.PageMargin = (int)interPageSpacing;
 					break;
-				case "InterPageSpacingColor":
-					viewPager?.SetBackgroundColor(Element.InterPageSpacingColor.ToAndroid());
+				case "BackgroundColor":
+					viewPager?.SetBackgroundColor(Element.BackgroundColor.ToAndroid());
 					break;
 				case "IsSwipingEnabled":
 					SetIsSwipingEnabled();
@@ -222,8 +222,8 @@ namespace CarouselView.FormsPlugin.Android
 			var interPageSpacing = Element.InterPageSpacing * metrics.Density;
 			viewPager.PageMargin = (int)interPageSpacing;
 
-			// InterPageSpacingColor BP
-			viewPager.SetBackgroundColor(Element.InterPageSpacingColor.ToAndroid());
+            // BackgroundColor BP
+			viewPager.SetBackgroundColor(Element.BackgroundColor.ToAndroid());
 
 			// IsSwipingEnabled BP
 			SetIsSwipingEnabled();

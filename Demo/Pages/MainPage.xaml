@@ -21,7 +21,7 @@
                                       AnimateTransition="true"
                                       IndicatorsShape="Square"
                                       InterPageSpacing="10"
-                                      InterPageSpacingColor="Red"
+                                      BackgroundColor="Red"
                                       IsSwipingEnabled="true"
                                       ItemTemplate="{Binding TemplateSelector}"
                                       ItemsSource="{Binding ItemsSource}"

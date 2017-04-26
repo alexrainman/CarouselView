@@ -11,7 +11,7 @@
                                       AnimateTransition="true"
                                       IndicatorsShape="Circle"
                                       InterPageSpacing="10"
-                                      InterPageSpacingColor="Red"
+                                      BackgroundColor="Red"
                                       Orientation="Horizontal"
                                       ShowIndicators="true"/>
 	</ContentPage>
