@@ -3,11 +3,11 @@
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
-
+	
     <Grid RowSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="56" />
+            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -28,6 +28,7 @@
                                       Orientation="Horizontal"
                                       Position="{Binding Position}"
                                       ShowIndicators="true" />
+		
 
         <Grid Grid.Row="1"
               Grid.Column="0"

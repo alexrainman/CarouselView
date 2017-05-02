@@ -61,6 +61,12 @@ namespace CarouselView.FormsPlugin.UWP
                     flipView.SelectionChanged -= FlipView_SelectionChanged;
                     flipView.SizeChanged -= FlipView_SizeChanged;
                 }
+
+				if (Element != null)
+                {
+                    if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
+                        ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
+                }
             }
 
             if (e.NewElement != null)
@@ -75,7 +81,7 @@ namespace CarouselView.FormsPlugin.UWP
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                InsertPage(Element.ItemsSource.GetItem(e.NewStartingIndex), e.NewStartingIndex);
+                InsertPage(Element?.ItemsSource.GetItem(e.NewStartingIndex), e.NewStartingIndex);
             }
 
             if (e.Action == NotifyCollectionChangedAction.Remove)
@@ -253,9 +259,6 @@ namespace CarouselView.FormsPlugin.UWP
             // BackgroundColor BP
             flipView.Background = (SolidColorBrush)converter.Convert(Element.BackgroundColor, null, null, null);
 
-            //IsSwipingEnabled BP (not working)
-            //flipView.ManipulationMode = Element.IsSwipingEnabled ? ManipulationModes.All : ManipulationModes.None;
-
             // IndicatorsTintColor BP
             fillColor = (SolidColorBrush)converter.Convert(Element.IndicatorsTintColor, null, null, null);
 
@@ -274,6 +277,9 @@ namespace CarouselView.FormsPlugin.UWP
             flipView.Loaded += FlipView_Loaded;
             flipView.SelectionChanged += FlipView_SelectionChanged;
             flipView.SizeChanged += FlipView_SizeChanged;
+
+			//IsSwipingEnabled BP (not working)
+			//flipView.ManipulationMode = Element.IsSwipingEnabled ? ManipulationModes.All : ManipulationModes.None;
 
             if (Source.Count > 0)
             {
@@ -316,7 +322,7 @@ namespace CarouselView.FormsPlugin.UWP
 
         void InsertPage(object item, int position)
 		{
-			if (flipView != null && Source != null)
+			if (Element != null && flipView != null && Source != null)
 			{
                 if (position <= Element.Position)
                 {
@@ -337,7 +343,7 @@ namespace CarouselView.FormsPlugin.UWP
 
         public async Task RemovePage(int position)
         {
-            if (flipView != null && Source != null && Source?.Count > 0)
+            if (Element != null && flipView != null && Source != null && Source?.Count > 0)
             {
                 // To remove latest page, rebuild flipview or the page wont disappear
                 if (Source.Count == 1)
@@ -388,7 +394,7 @@ namespace CarouselView.FormsPlugin.UWP
 
         void SetCurrentPage(int position)
         {
-            if (flipView != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
+            if (Element != null && flipView != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
             {
                 flipView.SelectedIndex = position;
             }
@@ -496,6 +502,12 @@ namespace CarouselView.FormsPlugin.UWP
                 {
                     flipView.SelectionChanged -= FlipView_SelectionChanged;
                     flipView = null;
+                }
+
+                if (Element != null)
+                {
+                    if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
+                        ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
                 }
 
                 indicators = null;

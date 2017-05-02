@@ -25,7 +25,8 @@ namespace CarouselView.FormsPlugin.Android
 		CirclePageIndicator indicators;
 		bool _disposed;
 
-        double ElementHeight;
+		//double ElementWidth;
+        //double ElementHeight;
 
 		protected override void OnElementChanged(ElementChangedEventArgs<CarouselViewControl> e)
 		{
@@ -46,10 +47,19 @@ namespace CarouselView.FormsPlugin.Android
 					viewPager.PageSelected -= ViewPager_PageSelected;
 					viewPager.PageScrollStateChanged -= ViewPager_PageScrollStateChanged;
 				}
+
+				if (Element != null)
+				{
+					Element.SizeChanged -= Element_SizeChanged;
+					if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
+					    ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
+				}
 			}
 
 			if (e.NewElement != null)
 			{
+				Element.SizeChanged += Element_SizeChanged;
+
 				// Configure the control and subscribe to event handlers
 				if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
 					((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
@@ -60,13 +70,22 @@ namespace CarouselView.FormsPlugin.Android
 		{
 			if (e.Action == NotifyCollectionChangedAction.Add)
 			{
-				InsertPage(Element.ItemsSource.GetItem(e.NewStartingIndex), e.NewStartingIndex);
+				InsertPage(Element?.ItemsSource.GetItem(e.NewStartingIndex), e.NewStartingIndex);
 			}
 
 			if (e.Action == NotifyCollectionChangedAction.Remove)
 			{
 				await RemovePage(e.OldStartingIndex);
 			}
+		}
+
+		void Element_SizeChanged(object sender, EventArgs e)
+		{
+			//var rect = this.Element.Bounds;
+			//ElementWidth = rect.Width;
+			//ElementHeight = rect.Height;
+			SetNativeView();
+			Element.PositionSelected?.Invoke(Element, Element.Position);
 		}
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -77,26 +96,6 @@ namespace CarouselView.FormsPlugin.Android
 
 			switch (e.PropertyName)
 			{
-				case "Renderer":
-					// Fix for NullReferenceException on Android tabbed page #59
-					if (!Element.Height.Equals(-1))
-					{
-						SetNativeView();
-						Element.PositionSelected?.Invoke(Element, Element.Position);
-					}
-					break;
-				case "Width":
-                    //ElementWidth = rect.Width;
-					break;
-				case "Height":
-					// To avoid calling ConfigureViewPager twice on launch;
-					if (ElementHeight.Equals(0))
-					{
-						ElementHeight = rect.Height;
-						SetNativeView();
-						Element.PositionSelected?.Invoke(Element, Element.Position);
-					}
-					break;
 				case "Orientation":
 					SetNativeView();
 					Element.PositionSelected?.Invoke(Element, Element.Position);
@@ -225,9 +224,6 @@ namespace CarouselView.FormsPlugin.Android
             // BackgroundColor BP
 			viewPager.SetBackgroundColor(Element.BackgroundColor.ToAndroid());
 
-			// IsSwipingEnabled BP
-			SetIsSwipingEnabled();
-
 			// INDICATORS
 			indicators = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
 
@@ -250,6 +246,9 @@ namespace CarouselView.FormsPlugin.Android
 			viewPager.PageSelected += ViewPager_PageSelected;
 			viewPager.PageScrollStateChanged += ViewPager_PageScrollStateChanged;
 
+			// IsSwipingEnabled BP
+			SetIsSwipingEnabled();
+
 			SetNativeControl(nativeView);
 		}
 
@@ -257,7 +256,7 @@ namespace CarouselView.FormsPlugin.Android
 		{
 			var Source = ((PageAdapter)viewPager?.Adapter).Source;
 
-			if (viewPager != null && Source != null)
+			if (Element != null && viewPager != null && Source != null)
 			{
 				Source.Insert(position, item);
 
@@ -275,7 +274,7 @@ namespace CarouselView.FormsPlugin.Android
 		{
 			var Source = ((PageAdapter)viewPager?.Adapter).Source;
 
-			if (viewPager != null && Source != null && Source?.Count > 0) {
+			if (Element != null && viewPager != null && Source != null && Source?.Count > 0) {
 				
 				isSwiping = true;
 
@@ -311,7 +310,7 @@ namespace CarouselView.FormsPlugin.Android
 
 		void SetCurrentPage(int position)
 		{
-			if (viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0) {
+			if (Element != null && viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0) {
 
 				viewPager.SetCurrentItem (position, Element.AnimateTransition);
 
@@ -449,6 +448,13 @@ namespace CarouselView.FormsPlugin.Android
 						viewPager.Adapter.Dispose ();
 					viewPager.Dispose ();
 					viewPager = null;
+				}
+
+				if (Element != null)
+				{
+					Element.SizeChanged -= Element_SizeChanged;
+					if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
+					    ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
 				}
 
 				_disposed = true;

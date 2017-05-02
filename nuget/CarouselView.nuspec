@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>4.2.0</version>
+        <version>4.2.1</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
@@ -12,6 +12,9 @@
         <description>Create Horizontal and Vertical carousels, add page indicators, render one page at a time moving back and fort programmatically and much more. “How to” at Github repository.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
+        4.2.1
+        [Update] Does IsSwipingEnabled only work on Android? #112
+        [Update] ItemsSource_CollectionChanged() listener never gets removed from INotifyCollectionChanged #113
         4.2.0
         [Update] InterPageSpacingColor deprecated. Using BcakgroundColor instead.
         4.1.3

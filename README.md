@@ -181,6 +181,12 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+4.2.1
+
+[Update] Does IsSwipingEnabled only work on Android? #112
+
+[Update] ItemsSource_CollectionChanged() listener never gets removed from INotifyCollectionChanged #113
+
 4.2.0
 
 [Update] InterPageSpacingColor deprecated. Using BcakgroundColor instead.
