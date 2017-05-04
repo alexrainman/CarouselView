@@ -181,6 +181,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+4.2.2
+
+[iOS] Rotation bug #115 (fixed)
+
 4.2.1
 
 [Update] Does IsSwipingEnabled only work on Android? #112
