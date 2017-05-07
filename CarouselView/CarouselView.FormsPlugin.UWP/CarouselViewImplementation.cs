@@ -94,25 +94,34 @@ namespace CarouselView.FormsPlugin.UWP
         {
             base.OnElementPropertyChanged(sender, e);
 
-            var rect = this.Element.Bounds;
+            var rect = this.Element?.Bounds;
 
             switch (e.PropertyName)
             {
                 case "Width":
                     // Save width only the first time to enable SizeChanged
-                    if (ElementWidth == 0)
-                        ElementWidth = rect.Width;
+                    if (Element != null)
+                    {
+                        if (ElementWidth == 0)
+                            ElementWidth = ((Xamarin.Forms.Rectangle)rect).Width;
+                    }
                     break;
                 case "Height":
-                    // Save height only the first time to enable SizeChanged
-                    if (ElementHeight == 0)
-                        ElementHeight = rect.Height;
-                    SetNativeView();
-					Element.PositionSelected?.Invoke(Element, Element.Position);
+					// Save height only the first time to enable SizeChanged
+					if (Element != null)
+					{
+						if (ElementHeight == 0)
+							ElementHeight = ((Xamarin.Forms.Rectangle)rect).Height;
+						SetNativeView();
+						Element.PositionSelected?.Invoke(Element, Element.Position);
+					}
                     break;
                 case "Orientation":
-                    SetNativeView();
-					Element.PositionSelected?.Invoke(Element, Element.Position);
+					if (Element != null)
+					{
+						SetNativeView();
+						Element.PositionSelected?.Invoke(Element, Element.Position);
+					}
                     break;
 				case "BackgroundColor":
 					if (flipView != null)
@@ -137,18 +146,24 @@ namespace CarouselView.FormsPlugin.UWP
                         indicators.Visibility = Element.ShowIndicators ? Visibility.Visible : Visibility.Collapsed;
                     break;
                 case "ItemsSource":
-                    SetPosition();
-                    SetNativeView();
-					Element.PositionSelected?.Invoke(Element, Element.Position);
-                    if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-                        ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+					if (Element != null)
+					{
+						SetPosition();
+						SetNativeView();
+						Element.PositionSelected?.Invoke(Element, Element.Position);
+						if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
+							((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+					}
                     break;
                 case "ItemTemplate":
-                    SetNativeView();
-					Element.PositionSelected?.Invoke(Element, Element.Position);
+					if (Element != null)
+					{
+						SetNativeView();
+						Element.PositionSelected?.Invoke(Element, Element.Position);
+					}
                     break;
                 case "Position":
-					if (!isSwiping)
+					if (Element != null && !isSwiping)
 					    SetCurrentPage(Element.Position);
 					break;
                 case "ShowArrows":
@@ -161,24 +176,6 @@ namespace CarouselView.FormsPlugin.UWP
         // To avoid triggering Position changed more than once
         bool isSwiping;
 
-        private void OnTick(object args)
-        {
-            timer.Dispose();
-            timer = null;
-
-            // Save new dimensions when resize completes
-            var size = (Windows.Foundation.Size)args;
-            ElementWidth = size.Width;
-            ElementHeight = size.Height;
-
-            // Refresh UI
-            Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
-            {
-                SetNativeView();
-				Element.PositionSelected?.Invoke(Element, Element.Position);
-            });
-        }
-
         // Arrows visibility
         private void FlipView_Loaded(object sender, RoutedEventArgs e)
         {
@@ -190,7 +187,7 @@ namespace CarouselView.FormsPlugin.UWP
 
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!isSwiping)
+            if (Element != null && !isSwiping)
             {
                 Element.Position = flipView.SelectedIndex;
                 UpdateIndicators();
@@ -210,6 +207,27 @@ namespace CarouselView.FormsPlugin.UWP
 
                 timer = new Timer(OnTick, e.NewSize, 100, 100);
             }
+        }
+
+        private void OnTick(object args)
+        {
+            timer.Dispose();
+            timer = null;
+
+            // Save new dimensions when resize completes
+            var size = (Windows.Foundation.Size)args;
+            ElementWidth = size.Width;
+            ElementHeight = size.Height;
+
+            // Refresh UI
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+            {
+                if (Element != null)
+                {
+                    SetNativeView();
+                    Element.PositionSelected?.Invoke(Element, Element.Position);
+                }
+            });
         }
 
         void SetPosition()
@@ -291,22 +309,25 @@ namespace CarouselView.FormsPlugin.UWP
 
         void SetIndicators()
         {
-            var dots = new List<Shape>();
+			if (Element != null)
+			{
+				var dots = new List<Shape>();
 
-            if (Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
-            {
-                int i = 0;
-                foreach (var item in Element.ItemsSource)
-                {
-                    dots.Add(CreateDot(i, Element.Position));
-                    i++;
-                }
-            }
+				if (Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
+				{
+					int i = 0;
+					foreach (var item in Element.ItemsSource)
+					{
+						dots.Add(CreateDot(i, Element.Position));
+						i++;
+					}
+				}
 
-            Dots = new ObservableCollection<Shape>(dots);
+				Dots = new ObservableCollection<Shape>(dots);
 
-            var dotsPanel = nativeView.FindName("dotsPanel") as ItemsControl;
-            dotsPanel.ItemsSource = Dots;
+				var dotsPanel = nativeView.FindName("dotsPanel") as ItemsControl;
+				dotsPanel.ItemsSource = Dots;
+			}
         }
 
         void UpdateIndicators()

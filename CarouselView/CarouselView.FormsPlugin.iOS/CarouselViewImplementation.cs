@@ -91,12 +91,15 @@ namespace CarouselView.FormsPlugin.iOS
 
 		void Element_SizeChanged(object sender, EventArgs e)
 		{
-			var rect = this.Element.Bounds;
-			ElementWidth = rect.Width;
-			ElementHeight = rect.Height;
-			SetNativeView();
-			SetIndicators();
-			Element.PositionSelected?.Invoke(Element, Element.Position);
+			if (Element != null)
+			{
+				var rect = this.Element.Bounds;
+				ElementWidth = rect.Width;
+				ElementHeight = rect.Height;
+				SetNativeView();
+				SetIndicators();
+				Element.PositionSelected?.Invoke(Element, Element.Position);
+			}
 		}	
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -107,12 +110,16 @@ namespace CarouselView.FormsPlugin.iOS
 			{
 				case "Renderer":
 					// Fix for issues after recreating the control #86
-					prevPosition = Element.Position;
+					if (Element != null)
+					    prevPosition = Element.Position;
 					break;
 				case "Orientation":
-					SetNativeView();
-					SetIndicators();
-					Element.PositionSelected?.Invoke(Element, Element.Position);
+					if (Element != null)
+					{
+						SetNativeView();
+						SetIndicators();
+						Element.PositionSelected?.Invoke(Element, Element.Position);
+					}
 					break;
 				case "InterPageSpacing":
 					// InterPageSpacing not exposed as a property in UIPageViewController :(
@@ -140,20 +147,26 @@ namespace CarouselView.FormsPlugin.iOS
 					    pageControl.Hidden = !Element.ShowIndicators;
 					break;
 				case "ItemsSource":
-					SetPosition();
-					SetNativeView();
-					SetIndicators();
-					Element.PositionSelected?.Invoke(Element, Element.Position);
-					if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-						((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+					if (Element != null)
+					{
+						SetPosition();
+						SetNativeView();
+						SetIndicators();
+						Element.PositionSelected?.Invoke(Element, Element.Position);
+						if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
+							((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+					}
 					break;
 				case "ItemTemplate":
-					SetNativeView();
-					SetIndicators();
-					Element.PositionSelected?.Invoke(Element, Element.Position);
+					if (Element != null)
+					{
+						SetNativeView();
+						SetIndicators();
+						Element.PositionSelected?.Invoke(Element, Element.Position);
+					}
 					break;
                 case "Position":
-					if (!isSwiping)
+					if (Element != null && !isSwiping)
 					    SetCurrentPage(Element.Position);
 					break;
 			}
@@ -453,7 +466,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 		void SetCurrentPage(int position)
 		{
-			if (Element != null && pageController != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
+			if (pageController != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
 			{
 				// Transition direction based on prevPosition
 				var direction = position >= prevPosition ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;

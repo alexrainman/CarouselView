@@ -81,11 +81,14 @@ namespace CarouselView.FormsPlugin.Android
 
 		void Element_SizeChanged(object sender, EventArgs e)
 		{
-			//var rect = this.Element.Bounds;
-			//ElementWidth = rect.Width;
-			//ElementHeight = rect.Height;
-			SetNativeView();
-			Element.PositionSelected?.Invoke(Element, Element.Position);
+			if (Element != null)
+			{
+				//var rect = this.Element.Bounds;
+				//ElementWidth = rect.Width;
+				//ElementHeight = rect.Height;
+				SetNativeView();
+				Element.PositionSelected?.Invoke(Element, Element.Position);
+			}
 		}
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -97,8 +100,11 @@ namespace CarouselView.FormsPlugin.Android
 			switch (e.PropertyName)
 			{
 				case "Orientation":
-					SetNativeView();
-					Element.PositionSelected?.Invoke(Element, Element.Position);
+					if (Element != null)
+					{
+						SetNativeView();
+						Element.PositionSelected?.Invoke(Element, Element.Position);
+					}
 					break;
 				case "InterPageSpacing":
 					//var metrics = Resources.DisplayMetrics;
@@ -125,7 +131,7 @@ namespace CarouselView.FormsPlugin.Android
 					    indicators.Visibility = Element.ShowIndicators ? AViews.ViewStates.Visible : AViews.ViewStates.Gone;
 					break;
 				case "ItemsSource":
-					if (viewPager != null)
+					if (Element != null && viewPager != null)
 					{
 						SetPosition();
 						viewPager.Adapter = new PageAdapter(Element);
@@ -137,7 +143,7 @@ namespace CarouselView.FormsPlugin.Android
 					}
 					break;
 				case "ItemTemplate":
-					if (viewPager != null)
+					if (Element != null && viewPager != null)
 					{
 						viewPager.Adapter = new PageAdapter(Element);
 						viewPager.SetCurrentItem(Element.Position, false);
@@ -146,7 +152,7 @@ namespace CarouselView.FormsPlugin.Android
 					}
 					break;
 				case "Position":
-					if (!isSwiping)
+					if (Element != null && !isSwiping)
 					    SetCurrentPage(Element.Position);
 					break;
 			}
@@ -310,7 +316,7 @@ namespace CarouselView.FormsPlugin.Android
 
 		void SetCurrentPage(int position)
 		{
-			if (Element != null && viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0) {
+			if (viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0) {
 
 				viewPager.SetCurrentItem (position, Element.AnimateTransition);
 

@@ -41,7 +41,7 @@ namespace Demo
 			if (_vm.ItemsSource[0] > 0)
 			{
 				_vm.ItemsSource = new ObservableCollection<int>() { _vm.ItemsSource[0] - 1, _vm.ItemsSource[0] };
-				await Task.Delay(100);
+				await System.Threading.Tasks.Task.Delay(100);
 				myCarousel.AnimateTransition = false;
 				myCarousel.Position = 1;
 				myCarousel.AnimateTransition = true;

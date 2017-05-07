@@ -181,6 +181,14 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+4.2.4
+
+[Update] Checking for null Element to avoid crashes.
+
+4.2.3
+
+[iOS] iOS crashes sometimes if page is removed while position change has not finished #116 fixed.
+
 4.2.2
 
 [iOS] Rotation bug #115 (fixed)
