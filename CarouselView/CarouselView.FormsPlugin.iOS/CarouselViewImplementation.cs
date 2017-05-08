@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CarouselView.FormsPlugin.Abstractions;
 using CarouselView.FormsPlugin.iOS;
+using CoreFoundation;
 using CoreGraphics;
 using Foundation;
 using UIKit;
@@ -73,6 +74,7 @@ namespace CarouselView.FormsPlugin.iOS
                 // Configure the control and subscribe to event handlers
                 if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
                     ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+                Element_SizeChanged(Element, null);
             }
         }
 
@@ -477,7 +479,6 @@ namespace CarouselView.FormsPlugin.iOS
         }
 
         int prevPosition;
-        int pendingPosition = -1;
 
         void SetCurrentPage(int position)
         {
@@ -485,64 +486,62 @@ namespace CarouselView.FormsPlugin.iOS
             {
                 return;
             }
-            var correctedPosition = position;
-            if (position >= Source.Count)
-            {
-                if (Element.IsInfinite)
+            DispatchQueue.MainQueue.DispatchAsync(() =>
                 {
-                    correctedPosition = Count == 0 ? 0 : position % Count;
-                }
-                else
-                {
-                    Element.Position = Source.Count - 1;
-                    return;
-                }
-            }
-            else if (position < 0)
-            {
-                if (Element.IsInfinite)
-                {
-                    correctedPosition = Count == 0 ? 0 : (position % Count + Count) % Count;
-                }
-                else
-                {
-                    Element.Position = 0;
-                    return;
-                }
-            }
-
-            if (pageController != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
-            {
-                // Transition direction based on prevPosition
-                var direction = position >= prevPosition ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
-                prevPosition = correctedPosition;
-                var firstViewController = CreateViewController(prevPosition);
-                var isAnimated = Element.AnimateTransition && (firstViewController != pageController.ViewControllers.FirstOrDefault());
-                pageController.SetViewControllers(new[] { firstViewController }, direction, isAnimated, s =>
-                {
-                    if (correctedPosition != position)
+                    var correctedPosition = position;
+                    if (position >= Source.Count)
                     {
-                        Element.Position = correctedPosition;
+                        if (Element.IsInfinite)
+                        {
+                            correctedPosition = Count == 0 ? 0 : position % Count;
+                        }
+                        else
+                        {
+                            Element.Position = Source.Count - 1;
+                            return;
+                        }
                     }
-                    SetIndicators();
-
-                    // Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
-                    Element.PositionSelected?.Invoke(Element, correctedPosition);
-                    if (pendingPosition != -1)
-
+                    else if (position < 0)
                     {
-                        var temp = pendingPosition;
-                        pendingPosition = -1;
-                        SetCurrentPage(temp);
+                        if (Element.IsInfinite)
+                        {
+                            correctedPosition = Count == 0 ? 0 : (position % Count + Count) % Count;
+                        }
+                        else
+                        {
+                            Element.Position = 0;
+                            return;
+                        }
+                    }
+
+
+                    if (pageController != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
+                    {
+                        // Transition direction based on prevPosition
+                        var direction = position >= prevPosition ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
+                        prevPosition = correctedPosition;
+                        var firstViewController = CreateViewController(prevPosition);
+                        var isAnimated = Element.AnimateTransition && (firstViewController != pageController.ViewControllers.FirstOrDefault());
+
+                        pageController.SetViewControllers(new[] { firstViewController }, direction, isAnimated, s =>
+                        {
+                            if (correctedPosition != position)
+
+                            {
+                                Element.Position = correctedPosition;
+                            }
+                            SetIndicators();
+                            Element.PositionSelected?.Invoke(Element, correctedPosition);
+                        });
+
                     }
                 });
-            }
         }
+
 
         #region adapter
         UIViewController CreateViewController(int index)
         {
-            System.Diagnostics.Debug.WriteLine(index);
             View formsView = null;
 
             object bindingContext = null;
