@@ -27,7 +27,9 @@
                                       ItemsSource="{Binding ItemsSource}"
                                       Orientation="Horizontal"
                                       Position="{Binding Position}"
-                                      ShowIndicators="true" />
+                                      ShowIndicators="true" 
+                                      IsInfinite="true"
+		/>
 		
 
         <Grid Grid.Row="1"

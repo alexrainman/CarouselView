@@ -55,9 +55,9 @@ namespace Demo
 
 		void ConfigureButtons()
 		{
-			prevBtn.IsVisible = _vm.Position > 0;
+            prevBtn.IsVisible = myCarousel.IsInfinite || _vm.Position > 0;
 			addPageBtn.IsVisible = _vm.ItemsSource != null;
-			nextBtn.IsVisible = _vm.Position < _vm.ItemsSource?.Count - 1;
+			nextBtn.IsVisible = myCarousel.IsInfinite || _vm.Position < _vm.ItemsSource?.Count - 1;
 		}
 
 		public void PositionSelected (object sender, int position)
@@ -68,13 +68,13 @@ namespace Demo
 
 		public void OnPrev (object sender, TappedEventArgs e)
 		{
-			if (_vm.Position > 0)
+            if (myCarousel.IsInfinite || _vm.Position > 0 )
 				_vm.Position--;
 		}
 
 		public void OnNext(object sender, TappedEventArgs e)
 		{
-			if (_vm.Position < _vm.ItemsSource?.Count - 1)
+            if (myCarousel.IsInfinite || _vm.Position < _vm.ItemsSource?.Count - 1)
 				_vm.Position++;
 		}
 
