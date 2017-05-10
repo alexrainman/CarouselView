@@ -203,7 +203,7 @@ namespace CarouselView.FormsPlugin.Android
             // To avoid calling SetCurrentPage
             isSwiping = true;
 
-            Element.Position = e.Position % Element.ItemsSource.GetCount();
+            Element.Position = Element.ItemsSource.GetCount() > 0 ? e.Position % Element.ItemsSource.GetCount() : 0;
 
             pos = e.Position;
             // Call PositionSelected from here when 0
