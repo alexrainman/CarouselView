@@ -344,4 +344,4 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 Thanks!
 
 #### License
-Licensed under repo license
+Licensed under MIT
