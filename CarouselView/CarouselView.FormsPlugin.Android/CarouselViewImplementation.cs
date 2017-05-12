@@ -15,408 +15,480 @@ using System.Collections.Generic;
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.Android
 {
-	/// <summary>
-	/// CarouselView Renderer
-	/// </summary>
-	public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, AViews.View>
-	{
-		AViews.View nativeView;
-		ViewPager viewPager;
-		CirclePageIndicator indicators;
-		bool _disposed;
+    /// <summary>
+    /// CarouselView Renderer
+    /// </summary>
+    public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, AViews.View>
+    {
+        AViews.View nativeView;
+        ViewPager viewPager;
+        CirclePageIndicator indicators;
+        bool _disposed;
+        int pos;
+        public static int loop;
 
-		//double ElementWidth;
+        //double ElementWidth;
         //double ElementHeight;
 
-		protected override void OnElementChanged(ElementChangedEventArgs<CarouselViewControl> e)
-		{
-			base.OnElementChanged(e);
+        protected override void OnElementChanged(ElementChangedEventArgs<CarouselViewControl> e)
+        {
+            base.OnElementChanged(e);
 
-			if (Control == null)
-			{
-				// Instantiate the native control and assign it to the Control property with
-				// the SetNativeControl method (called when Height BP changes)
-			}
+            if (viewPager != null)
+            {
+                viewPager.PageSelected -= ViewPager_PageSelected;
+                viewPager.PageScrollStateChanged -= ViewPager_PageScrollStateChanged;
+            }
 
-			if (e.OldElement != null)
-			{
-				// Unsubscribe from event handlers and cleanup any resources
+            if (e.OldElement != null)
+            {
+                // Unsubscribe from event handlers and cleanup any resources
+                if (e.OldElement != null)
+                {
+                    e.OldElement.SizeChanged -= Element_SizeChanged;
+                    if (e.OldElement.ItemsSource != null && e.OldElement.ItemsSource is INotifyCollectionChanged)
+                    {
+                        ((INotifyCollectionChanged)e.OldElement.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
+                    }
+                }
+            }
 
-				if (viewPager != null)
-				{
-					viewPager.PageSelected -= ViewPager_PageSelected;
-					viewPager.PageScrollStateChanged -= ViewPager_PageScrollStateChanged;
-				}
+            if (e.NewElement != null)
+            {
+                Element_SizeChanged(Element, EventArgs.Empty);
+                Element.SizeChanged += Element_SizeChanged;
 
-				if (Element != null)
-				{
-					Element.SizeChanged -= Element_SizeChanged;
-					if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-					    ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
-				}
-			}
+                // Configure the control and subscribe to event handlers
+                if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
+                {
+                    ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+                }
+            }
+        }
 
-			if (e.NewElement != null)
-			{
-				Element.SizeChanged += Element_SizeChanged;
+        async void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    InsertPage(Element?.ItemsSource.GetItem(e.NewStartingIndex), e.NewStartingIndex);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    await RemovePage(e.OldStartingIndex);
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    viewPager.Adapter.NotifyDataSetChanged();
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    await RemovePage(e.NewStartingIndex);
+                    InsertPage(Element?.ItemsSource.GetItem(e.NewStartingIndex), e.NewStartingIndex);
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    await RemovePage(e.NewStartingIndex);
+                    InsertPage(Element?.ItemsSource.GetItem(e.OldStartingIndex), e.NewStartingIndex);
+                    await RemovePage(e.OldStartingIndex);
+                    InsertPage(Element?.ItemsSource.GetItem(e.NewStartingIndex), e.OldStartingIndex);
+                    break;
+            }
 
-				// Configure the control and subscribe to event handlers
-				if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-					((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
-			}
-		}
+            indicators?.SetCount(Element.ItemsSource.GetCount());
+            indicators?.SetViewPager(viewPager);
+        }
 
-		async void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-		{
-			if (e.Action == NotifyCollectionChangedAction.Add)
-			{
-				InsertPage(Element?.ItemsSource.GetItem(e.NewStartingIndex), e.NewStartingIndex);
-			}
+        void Element_SizeChanged(object sender, EventArgs e)
+        {
+            if (Element != null)
+            {
+                SetNativeView();
+                Element.PositionSelected?.Invoke(Element, Element.Position);
+            }
+        }
 
-			if (e.Action == NotifyCollectionChangedAction.Remove)
-			{
-				await RemovePage(e.OldStartingIndex);
-			}
-		}
-
-		void Element_SizeChanged(object sender, EventArgs e)
-		{
-			if (Element != null)
-			{
-				//var rect = this.Element.Bounds;
-				//ElementWidth = rect.Width;
-				//ElementHeight = rect.Height;
-				SetNativeView();
-				Element.PositionSelected?.Invoke(Element, Element.Position);
-			}
-		}
-
-		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			base.OnElementPropertyChanged(sender, e);
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
 
             var rect = this.Element.Bounds;
 
-			switch (e.PropertyName)
-			{
-				case "Orientation":
-					if (Element != null)
-					{
-						SetNativeView();
-						Element.PositionSelected?.Invoke(Element, Element.Position);
-					}
-					break;
-				case "InterPageSpacing":
-					//var metrics = Resources.DisplayMetrics;
-					//var interPageSpacing = Element.InterPageSpacing * metrics.Density;
-					//viewPager.PageMargin = (int)interPageSpacing;
-					break;
-				case "BackgroundColor":
-					viewPager?.SetBackgroundColor(Element.BackgroundColor.ToAndroid());
-					break;
-				case "IsSwipingEnabled":
-					SetIsSwipingEnabled();
-					break;
-				case "IndicatorsTintColor":
-					indicators?.SetFillColor(Element.IndicatorsTintColor.ToAndroid());
-					break;
-				case "CurrentPageIndicatorTintColor":
-					indicators?.SetPageColor(Element.CurrentPageIndicatorTintColor.ToAndroid());
-					break;
-				case "IndicatorsShape":
-					indicators?.SetStyle(Element.IndicatorsShape);
-					break;
-				case "ShowIndicators":
-					if (indicators != null)
-					    indicators.Visibility = Element.ShowIndicators ? AViews.ViewStates.Visible : AViews.ViewStates.Gone;
-					break;
-				case "ItemsSource":
-					if (Element != null && viewPager != null)
-					{
-						SetPosition();
-						viewPager.Adapter = new PageAdapter(Element);
-						viewPager.SetCurrentItem(Element.Position, false);
-						indicators?.SetViewPager(viewPager);
-						Element.PositionSelected?.Invoke(Element, Element.Position);
-						if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-						    ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
-					}
-					break;
-				case "ItemTemplate":
-					if (Element != null && viewPager != null)
-					{
-						viewPager.Adapter = new PageAdapter(Element);
-						viewPager.SetCurrentItem(Element.Position, false);
-						indicators?.SetViewPager(viewPager);
-						Element.PositionSelected?.Invoke(Element, Element.Position);
-					}
-					break;
-				case "Position":
-					if (Element != null && !isSwiping)
-					    SetCurrentPage(Element.Position);
-					break;
-			}
-		}
+            switch (e.PropertyName)
+            {
+                case "Orientation":
+                    if (Element != null)
+                    {
+                        SetNativeView();
+                        Element.PositionSelected?.Invoke(Element, Element.Position);
+                    }
+                    break;
+                case "InterPageSpacing":
+                    //var metrics = Resources.DisplayMetrics;
+                    //var interPageSpacing = Element.InterPageSpacing * metrics.Density;
+                    //viewPager.PageMargin = (int)interPageSpacing;
+                    break;
+                case "BackgroundColor":
+                    viewPager?.SetBackgroundColor(Element.BackgroundColor.ToAndroid());
+                    break;
+                case "IsSwipingEnabled":
+                    SetIsSwipingEnabled();
+                    break;
+                case "IndicatorsTintColor":
+                    indicators?.SetFillColor(Element.IndicatorsTintColor.ToAndroid());
+                    break;
+                case "CurrentPageIndicatorTintColor":
+                    indicators?.SetPageColor(Element.CurrentPageIndicatorTintColor.ToAndroid());
+                    break;
+                case "IndicatorsShape":
+                    indicators?.SetStyle(Element.IndicatorsShape);
+                    break;
+                case "ShowIndicators":
+                    if (indicators != null)
+                        indicators.Visibility = Element.ShowIndicators ? AViews.ViewStates.Visible : AViews.ViewStates.Gone;
+                    break;
+                case "ItemsSource":
+                    if (Element != null && viewPager != null)
+                    {
+                        SetPosition();
+                        viewPager.Adapter = new PageAdapter(Element);
+                        viewPager.SetCurrentItem(Element.Position, false);
+                        indicators?.SetViewPager(viewPager);
+                        indicators?.SetCount(Element.ItemsSource?.GetCount() ?? 0);
+                        Element.PositionSelected?.Invoke(Element, Element.Position);
+                        if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
+                        {
+                            ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+                        }
+                    }
+                    break;
+                case "ItemTemplate":
+                    if (Element != null && viewPager != null)
+                    {
+                        viewPager.Adapter = new PageAdapter(Element);
+                        viewPager.SetCurrentItem(Element.Position, false);
+                        indicators?.SetViewPager(viewPager);
+                        Element.PositionSelected?.Invoke(Element, Element.Position);
+                    }
+                    break;
+                case "Position":
+                    if (!isSwiping)
+                    {
+                        if (!Element.IsInfinite)
+                        {
+                            SetPosition();
+                        }
+                        SetCurrentPage(Element.Position);
+                    }
+                    break;
+                case "IsInfinite":
+                    if (viewPager != null)
+                    {
+                        viewPager.Adapter = new PageAdapter(Element);
+                        if (Element.IsInfinite)
+                            viewPager.SetCurrentItem(Element.ItemsSource.GetCount() * loop, false);
+                        else
+                            viewPager.SetCurrentItem(0, false);
+                        indicators?.SetCount(Element.ItemsSource.GetCount());
+                        indicators?.SetViewPager(viewPager);
+                        Element.PositionSelected?.Invoke(Element, Element.Position);
+                    }
+                    break;
+            }
+        }
 
-		// To avoid triggering Position changed more than once
-		bool isSwiping;
+        // To avoid triggering Position changed more than once
+        bool isSwiping;
 
-#region adapter callbacks
-		// To assign position when page selected
-		void ViewPager_PageSelected (object sender, ViewPager.PageSelectedEventArgs e)
-		{
-			// To avoid calling SetCurrentPage
-			isSwiping = true;
-			Element.Position = e.Position;
-			// Call PositionSelected from here when 0
-			if (e.Position == 0)
-				Element.PositionSelected?.Invoke(Element, e.Position);
-			isSwiping = false;
-		}
+        #region adapter callbacks
+        // To assign position when page selected
+        void ViewPager_PageSelected(object sender, ViewPager.PageSelectedEventArgs e)
+        {
+            // To avoid calling SetCurrentPage
+            isSwiping = true;
+
+            Element.Position = Element.ItemsSource.GetCount() > 0 ? e.Position % Element.ItemsSource.GetCount() : 0;
+
+            pos = e.Position;
+            // Call PositionSelected from here when 0
+            if (e.Position == 0)
+                Element.PositionSelected?.Invoke(Element, e.Position);
+            isSwiping = false;
+        }
 
         // To invoke PositionSelected
-		void ViewPager_PageScrollStateChanged (object sender, ViewPager.PageScrollStateChangedEventArgs e)
-		{
-			// Call PositionSelected when scroll finish, after swiping finished and position > 0
-			if (e.State == 0 && !isSwiping && Element.Position > 0) {
-				Element.PositionSelected?.Invoke(Element, Element.Position);
-			}
-		}
-#endregion
+        void ViewPager_PageScrollStateChanged(object sender, ViewPager.PageScrollStateChangedEventArgs e)
+        {
+            // Call PositionSelected when scroll finish, after swiping finished and position > 0
+            if (e.State == 0 && !isSwiping && Element.Position > 0)
+            {
+                Element.PositionSelected?.Invoke(Element, Element.Position);
+            }
+        }
+        #endregion
 
-		void SetIsSwipingEnabled()
-		{
-			((IViewPager)viewPager)?.SetPagingEnabled(Element.IsSwipingEnabled);
-		}
+        void SetIsSwipingEnabled()
+        {
+            ((IViewPager)viewPager)?.SetPagingEnabled(Element.IsSwipingEnabled);
+        }
 
-		void SetPosition()
-		{
-			isSwiping = true;
-			if (Element.ItemsSource != null)
-			{
-				if (Element.Position > Element.ItemsSource.GetCount() - 1)
-					Element.Position = Element.ItemsSource.GetCount() - 1;
-				if (Element.Position == -1)
-					Element.Position = 0;
-			}
-			else {
-				Element.Position = 0;
-			}
-			isSwiping = false;
+        void SetPosition()
+        {
+            isSwiping = true;
+            if (Element.ItemsSource != null)
+            {
+                if (Element.Position > Element.ItemsSource.GetCount() - 1)
+                    Element.Position = Element.ItemsSource.GetCount() - 1;
+                if (Element.Position == -1)
+                    Element.Position = 0;
+            }
+            else
+            {
+                Element.Position = 0;
+            }
+            isSwiping = false;
 
-			indicators.mSnapPage = Element.Position;
-		}
+            var itemsCount = Element.ItemsSource.GetCount();
+            indicators.mSnapPage = itemsCount > 0 ? Element.Position % Element.ItemsSource.GetCount() : 0;
+        }
 
-		void SetNativeView()
-		{
-			var inflater = AViews.LayoutInflater.From(Forms.Context);
+        void SetNativeView()
+        {
+            var inflater = AViews.LayoutInflater.From(Forms.Context);
 
-			// Orientation BP
-			if (Element.Orientation == CarouselViewOrientation.Horizontal)
-				nativeView = inflater.Inflate(Resource.Layout.horizontal_viewpager, null);
-			else
-				nativeView = inflater.Inflate(Resource.Layout.vertical_viewpager, null);
+            // Orientation BP
+            if (Element.Orientation == CarouselViewOrientation.Horizontal)
+                nativeView = inflater.Inflate(Resource.Layout.horizontal_viewpager, null);
+            else
+                nativeView = inflater.Inflate(Resource.Layout.vertical_viewpager, null);
 
-			viewPager = nativeView.FindViewById<ViewPager>(Resource.Id.pager);
+            viewPager = nativeView.FindViewById<ViewPager>(Resource.Id.pager);
 
-			viewPager.Adapter = new PageAdapter(Element);
-			viewPager.SetCurrentItem(Element.Position, false);
+            viewPager.Adapter = new PageAdapter(Element);
+            if (Element.IsInfinite)
+            {
+                viewPager.SetCurrentItem(Element.Position + Element.ItemsSource.GetCount() * loop, false);
+            }
+            else
+            {
+                viewPager.SetCurrentItem(Element.Position, false);
+            }
 
-			// InterPageSpacing BP
-			var metrics = Resources.DisplayMetrics;
-			var interPageSpacing = Element.InterPageSpacing * metrics.Density;
-			viewPager.PageMargin = (int)interPageSpacing;
+
+            // InterPageSpacing BP
+            var metrics = Resources.DisplayMetrics;
+            var interPageSpacing = Element.InterPageSpacing * metrics.Density;
+            viewPager.PageMargin = (int)interPageSpacing;
 
             // BackgroundColor BP
-			viewPager.SetBackgroundColor(Element.BackgroundColor.ToAndroid());
+            viewPager.SetBackgroundColor(Element.BackgroundColor.ToAndroid());
 
-			// INDICATORS
-			indicators = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
+            // INDICATORS
+            indicators = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
 
-			SetPosition();
+            SetPosition();
 
-			indicators.SetViewPager(viewPager);
 
-			// IndicatorsTintColor BP
-			indicators.SetFillColor(Element.IndicatorsTintColor.ToAndroid());
+            indicators?.SetCount(Element.ItemsSource.GetCount());
+            indicators?.SetViewPager(viewPager);
 
-			// CurrentPageIndicatorTintColor BP
-			indicators.SetPageColor(Element.CurrentPageIndicatorTintColor.ToAndroid());
+            // IndicatorsTintColor BP
+            indicators.SetFillColor(Element.IndicatorsTintColor.ToAndroid());
 
-			// IndicatorsShape BP
-			indicators.SetStyle(Element.IndicatorsShape); // Rounded or Squared
+            // CurrentPageIndicatorTintColor BP
+            indicators.SetPageColor(Element.CurrentPageIndicatorTintColor.ToAndroid());
 
-			// ShowIndicators BP
-			indicators.Visibility = Element.ShowIndicators ? AViews.ViewStates.Visible : AViews.ViewStates.Gone;
+            // IndicatorsShape BP
+            indicators.SetStyle(Element.IndicatorsShape); // Rounded or Squared
 
-			viewPager.PageSelected += ViewPager_PageSelected;
-			viewPager.PageScrollStateChanged += ViewPager_PageScrollStateChanged;
+            // ShowIndicators BP
+            indicators.Visibility = Element.ShowIndicators ? AViews.ViewStates.Visible : AViews.ViewStates.Gone;
 
-			// IsSwipingEnabled BP
-			SetIsSwipingEnabled();
+            viewPager.PageSelected += ViewPager_PageSelected;
+            viewPager.PageScrollStateChanged += ViewPager_PageScrollStateChanged;
 
-			SetNativeControl(nativeView);
-		}
+            // IsSwipingEnabled BP
+            SetIsSwipingEnabled();
 
-		void InsertPage(object item, int position)
-		{
-			var Source = ((PageAdapter)viewPager?.Adapter).Source;
+            SetNativeControl(nativeView);
+        }
 
-			if (Element != null && viewPager != null && Source != null)
-			{
-				Source.Insert(position, item);
+        void InsertPage(object item, int position)
+        {
+            var Source = ((PageAdapter)viewPager?.Adapter).Source;
 
-				var prevPos = Element.Position;
+            if (Element != null && viewPager != null && Source != null)
+            {
+                Source.Insert(position, item);
 
-				viewPager.Adapter.NotifyDataSetChanged();
+                var prevPos = Element.Position;
 
-				if (position <= prevPos)
-				    Element.PositionSelected?.Invoke(Element, Element.Position);
-			}
-		}
+                viewPager.Adapter.NotifyDataSetChanged();
 
-		// Android ViewPager is the most complicated piece of code ever :)
-		async Task RemovePage(int position)
-		{
-			var Source = ((PageAdapter)viewPager?.Adapter).Source;
+                if (position <= prevPos)
+                    Element.PositionSelected?.Invoke(Element, Element.Position);
+            }
+        }
 
-			if (Element != null && viewPager != null && Source != null && Source?.Count > 0) {
-				
-				isSwiping = true;
+        // Android ViewPager is the most complicated piece of code ever :)
+        async Task RemovePage(int position)
+        {
+            var Source = ((PageAdapter)viewPager?.Adapter).Source;
 
-				// To remove current page
-				if (position == Element.Position)
-				{
-					var newPos = position - 1;
-					if (newPos == -1)
-						newPos = 0;
+            if (Element != null && viewPager != null && Source != null && Source?.Count > 0)
+            {
 
-					if (position == 0)
-						// Move to next page
-						viewPager.SetCurrentItem(1, Element.AnimateTransition);
-					else
-						// Move to previous page
-						viewPager.SetCurrentItem(newPos, Element.AnimateTransition);
+                isSwiping = true;
 
-					// With a swipe transition
-					if (Element.AnimateTransition)
-						await Task.Delay(100);
+                // To remove current page
+                if (position == Element.Position)
+                {
+                    var newPos = position - 1;
+                    if (newPos == -1)
+                        newPos = 0;
 
-					Element.Position = newPos;
-				}
+                    viewPager.SetCurrentItem(
+                        position == 0 ? 1 : newPos,
+                        Element.AnimateTransition);
 
-				Source.RemoveAt(position);
+                    // With a swipe transition
+                    if (Element.AnimateTransition)
+                        await Task.Delay(100);
 
-				viewPager.Adapter.NotifyDataSetChanged();
-				indicators?.SetViewPager(viewPager);
+                    Element.Position = newPos;
+                }
 
-				isSwiping = false;
-			}
-		}
+                Source.RemoveAt(position);
 
-		void SetCurrentPage(int position)
-		{
-			if (viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0) {
+                viewPager.Adapter.NotifyDataSetChanged();
+                indicators?.SetViewPager(viewPager);
 
-				viewPager.SetCurrentItem (position, Element.AnimateTransition);
+                isSwiping = false;
+            }
+        }
 
-				// Invoke PositionSelected when AnimateTransition is disabled
-				if (!Element.AnimateTransition)
-					Element.PositionSelected?.Invoke(Element, position);
-			}
-		}
+        void SetCurrentPage(int position)
+        {
+            var itemsCount = Element.ItemsSource?.GetCount() ?? 0;
+            if (viewPager != null && itemsCount > 0)
+            {
+                if (pos == 0 && Element.IsInfinite)
+                {
+                    pos = loop * itemsCount;
+                }
 
-#region adapter
-		class PageAdapter : PagerAdapter
-		{
-			CarouselViewControl Element;
+                int epos = pos % itemsCount;
 
-			// A local copy of ItemsSource so we can use CollectionChanged events
-			public List<object> Source;
+                // Invoke PositionSelected when AnimateTransition is disabled
+                viewPager.SetCurrentItem(pos + position - epos, Element.AnimateTransition);
+                if (!Element.AnimateTransition)
+                {
+                    Element.PositionSelected?.Invoke(Element, position);
+                }
+            }
+        }
 
-			//string TAG_VIEWS = "TAG_VIEWS";
-			//SparseArray<Parcelable> mViewStates = new SparseArray<Parcelable>();
-			//ViewPager mViewPager;
+        #region adapter
+        class PageAdapter : PagerAdapter
+        {
+            CarouselViewControl Element;
 
-			public PageAdapter(CarouselViewControl element)
-			{
-				Element = element;
-				Source = Element.ItemsSource != null ? new List<object>(Element.ItemsSource.GetList()) : null;
-			}
+            // A local copy of ItemsSource so we can use CollectionChanged events
+            public List<object> Source;
 
-			public override int Count {
-				get {
-					return Source?.Count ?? 0;
-				}
-			}
+            //string TAG_VIEWS = "TAG_VIEWS";
+            //SparseArray<Parcelable> mViewStates = new SparseArray<Parcelable>();
+            //ViewPager mViewPager;
 
-			public override bool IsViewFromObject (AViews.View view, Java.Lang.Object @object)
-			{
-				return view == @object;
-			} 
+            public PageAdapter(CarouselViewControl element)
+            {
+                Element = element;
+                Source = Element.ItemsSource != null ? new List<object>(Element.ItemsSource.GetList()) : null;
+            }
 
-			public override Java.Lang.Object InstantiateItem (AViews.ViewGroup container, int position)
-			{
-				View formsView = null;
+            public override int Count
+            {
+                get
+                {
+                    if (Source.Count > 0)
+                    {
+                        loop = 5000000 / Source.Count;
+                    }
 
-				object bindingContext = null;
+                    return Element.IsInfinite ? Source.Count * loop * 2 : Source.Count;
+                }
+            }
 
-				if (Source != null && Source?.Count > 0)
-				    bindingContext = Source.Cast<object> ().ElementAt (position);
-				
-				var dt = bindingContext as DataTemplate;
+            public override bool IsViewFromObject(AViews.View view, Java.Lang.Object @object)
+            {
+                return view == @object;
+            }
+
+            public override Java.Lang.Object InstantiateItem(AViews.ViewGroup container, int position)
+            {
+                View formsView = null;
+
+                object bindingContext = null;
+
+                if (Source?.Count > 0)
+                {
+                    bindingContext = Source.Cast<object>().ElementAt(position % Source.Count);
+                }
+
+                var dt = bindingContext as DataTemplate;
 
                 // Support for List<DataTemplate> as ItemsSource
-				if (dt != null)
-				{
-					formsView = (View)dt.CreateContent();
-				}
-				else {
+                if (dt != null)
+                {
+                    formsView = (View)dt.CreateContent();
+                }
+                else
+                {
 
-					var selector = Element.ItemTemplate as DataTemplateSelector;
-					if (selector != null)
-						formsView = (View)selector.SelectTemplate(bindingContext, Element).CreateContent();
-					else
-						formsView = (View)Element.ItemTemplate.CreateContent();
+                    var selector = Element.ItemTemplate as DataTemplateSelector;
+                    if (selector != null)
+                    {
+                        formsView = (View)selector.SelectTemplate(bindingContext, Element).CreateContent();
+                    }
+                    else
+                    {
+                        formsView = (View)Element.ItemTemplate.CreateContent();
+                    }
 
-					formsView.BindingContext = bindingContext;
-				}
+                    formsView.BindingContext = bindingContext;
+                }
 
                 // HeightRequest fix
-				formsView.Parent = this.Element;
+                formsView.Parent = this.Element;
 
-				var nativeConverted = formsView.ToAndroid(new Rectangle (0, 0, Element.Width, Element.Height));
-				nativeConverted.Tag = new Tag() { BindingContext = bindingContext }; //position;
+                var nativeConverted = formsView.ToAndroid(new Rectangle(0, 0, Element.Width, Element.Height));
+                nativeConverted.Tag = new Tag() { BindingContext = bindingContext }; //position;
 
-				var pager = (ViewPager)container;
+                var pager = (ViewPager)container;
 
-				//nativeConverted.RestoreHierarchyState(mViewStates);
+                //nativeConverted.RestoreHierarchyState(mViewStates);
 
-				pager.AddView (nativeConverted);
+                pager.AddView(nativeConverted);
 
-				return nativeConverted;
-			}
+                return nativeConverted;
+            }
 
-			public override void DestroyItem (AViews.ViewGroup container, int position, Java.Lang.Object objectValue)
-			{
-				var pager = (ViewPager)container;
-				var view = (AViews.ViewGroup)objectValue;
-				//view.SaveHierarchyState(mViewStates);
-				pager.RemoveView (view);
-			}
+            public override void DestroyItem(AViews.ViewGroup container, int position, Java.Lang.Object objectValue)
+            {
+                var pager = (ViewPager)container;
+                var view = (AViews.ViewGroup)objectValue;
+                //view.SaveHierarchyState(mViewStates);
+                pager.RemoveView(view);
+            }
 
-			public override int GetItemPosition (Java.Lang.Object objectValue)
-			{
-				/*var tag = int.Parse(((AViews.View)objectValue).Tag.ToString());
+            public override int GetItemPosition(Java.Lang.Object objectValue)
+            {
+                /*var tag = int.Parse(((AViews.View)objectValue).Tag.ToString());
 				if (tag == Element.Position)
 					return tag;
 				return PositionNone;*/
-				var tag = (Tag)((AViews.View)objectValue).Tag;
+                var tag = (Tag)((AViews.View)objectValue).Tag;
                 var position = Source.IndexOf(tag.BindingContext);
-				return position != -1 ? position : PositionNone;
-			}
+                return position != -1 ? position : PositionNone;
+            }
 
-			/*public override IParcelable SaveState()
+            /*public override IParcelable SaveState()
 			{
 				var count = mViewPager.ChildCount;
 				for (int i = 0; i < count; i++)
@@ -438,50 +510,54 @@ namespace CarouselView.FormsPlugin.Android
 				bundle.SetClassLoader(loader);
 				mViewStates = (SparseArray<Parcelable>)bundle.GetSparseParcelableArray(TAG_VIEWS);
 			}*/
-		}
-#endregion
+        }
+        #endregion
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && !_disposed)
-			{
-				if (viewPager != null) {
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && !_disposed)
+            {
+                if (viewPager != null)
+                {
 
-					viewPager.PageSelected -= ViewPager_PageSelected;
+                    viewPager.PageSelected -= ViewPager_PageSelected;
                     viewPager.PageScrollStateChanged -= ViewPager_PageScrollStateChanged;
 
                     if (viewPager.Adapter != null)
-						viewPager.Adapter.Dispose ();
-					viewPager.Dispose ();
-					viewPager = null;
-				}
+                        viewPager.Adapter.Dispose();
+                    viewPager.Dispose();
+                    viewPager = null;
+                }
 
-				if (Element != null)
-				{
-					Element.SizeChanged -= Element_SizeChanged;
-					if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-					    ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
-				}
+                if (Element != null)
+                {
+                    Element.SizeChanged -= Element_SizeChanged;
+                    if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
+                    {
+                        ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
+                    }
+                }
 
-				_disposed = true;
-			}
+                _disposed = true;
+            }
 
-			try
-			{
-				base.Dispose(disposing);
-			}
-			catch(Exception ex)
-			{
-				Console.WriteLine(ex.Message);
-				return;
-			}
-		}
+            try
+            {
+                base.Dispose(disposing);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
+        }
 
-		/// <summary>
-		/// Used for registration with dependency service
-		/// </summary>
-		public static void Init() {
-			var temp = DateTime.Now;
-		}
+        /// <summary>
+        /// Used for registration with dependency service
+        /// </summary>
+        public static void Init()
+        {
+            var temp = DateTime.Now;
+        }
     }
 }

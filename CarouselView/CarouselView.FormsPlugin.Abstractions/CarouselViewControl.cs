@@ -6,109 +6,129 @@ using System.Collections.Generic;
 
 namespace CarouselView.FormsPlugin.Abstractions
 {
-	/// <summary>
-	/// CarouselView Interface
-	/// </summary>
-	public class CarouselViewControl : View
-	{
-		public static readonly BindableProperty OrientationProperty = BindableProperty.Create("Orientation", typeof(CarouselViewOrientation), typeof(CarouselViewControl), CarouselViewOrientation.Horizontal);
+    /// <summary>
+    /// CarouselView Interface
+    /// </summary>
+    public class CarouselViewControl : View
+    {
+        public static readonly BindableProperty OrientationProperty = BindableProperty.Create("Orientation", typeof(CarouselViewOrientation), typeof(CarouselViewControl), CarouselViewOrientation.Horizontal);
 
-		public CarouselViewOrientation Orientation
-		{
-			get { return (CarouselViewOrientation)GetValue(OrientationProperty); }
-			set { SetValue(OrientationProperty, value); }
-		}
+        public CarouselViewOrientation Orientation
+        {
+            get { return (CarouselViewOrientation)GetValue(OrientationProperty); }
+            set { SetValue(OrientationProperty, value); }
+        }
 
-		// Android and iOS only
-		public static readonly BindableProperty InterPageSpacingProperty = BindableProperty.Create("InterPageSpacing", typeof(int), typeof(CarouselViewControl), 0);
+        // Android and iOS only
 
-		public int InterPageSpacing
-		{
-			get { return (int)GetValue(InterPageSpacingProperty); }
-			set { SetValue(InterPageSpacingProperty, value); }
-		}
+        public static readonly BindableProperty IsInfiniteProperty = BindableProperty.Create(
+                   nameof(IsInfinite),
+                   typeof(bool),
+                   typeof(CarouselViewControl),
+                   default(bool),
+                   BindingMode.TwoWay);
 
-		public static readonly BindableProperty IsSwipingEnabledProperty = BindableProperty.Create("IsSwipingEnabled", typeof(bool), typeof(CarouselViewControl), true);
+        public bool IsInfinite
+        {
+            get
+            {
+                return (bool)GetValue(IsInfiniteProperty);
+            }
+            set
+            {
+                SetValue(IsInfiniteProperty, (bool)value);
+            }
+        }
 
-		public bool IsSwipingEnabled
-		{
-			get { return (bool)GetValue(IsSwipingEnabledProperty); }
-			set { SetValue(IsSwipingEnabledProperty, value); }
-		}
+        public static readonly BindableProperty InterPageSpacingProperty = BindableProperty.Create("InterPageSpacing", typeof(int), typeof(CarouselViewControl), 0);
 
-		public static readonly BindableProperty IndicatorsTintColorProperty = BindableProperty.Create("IndicatorsTintColor", typeof(Color), typeof(CarouselViewControl), Color.Silver);
+        public int InterPageSpacing
+        {
+            get { return (int)GetValue(InterPageSpacingProperty); }
+            set { SetValue(InterPageSpacingProperty, value); }
+        }
 
-		public Color IndicatorsTintColor
-		{
-			get { return (Color)GetValue(IndicatorsTintColorProperty); }
-			set { SetValue(IndicatorsTintColorProperty, value); }
-		}
+        public static readonly BindableProperty IsSwipingEnabledProperty = BindableProperty.Create("IsSwipingEnabled", typeof(bool), typeof(CarouselViewControl), true);
 
-		public static readonly BindableProperty CurrentPageIndicatorTintColorProperty = BindableProperty.Create("CurrentPageIndicatorTintColor", typeof(Color), typeof(CarouselViewControl), Color.Gray);
+        public bool IsSwipingEnabled
+        {
+            get { return (bool)GetValue(IsSwipingEnabledProperty); }
+            set { SetValue(IsSwipingEnabledProperty, value); }
+        }
 
-		public Color CurrentPageIndicatorTintColor
-		{
-			get { return (Color)GetValue(CurrentPageIndicatorTintColorProperty); }
-			set { SetValue(CurrentPageIndicatorTintColorProperty, value); }
-		}
+        public static readonly BindableProperty IndicatorsTintColorProperty = BindableProperty.Create("IndicatorsTintColor", typeof(Color), typeof(CarouselViewControl), Color.Silver);
 
-		public static readonly BindableProperty IndicatorsShapeProperty = BindableProperty.Create("IndicatorsShape", typeof(IndicatorsShape), typeof(CarouselViewControl), IndicatorsShape.Circle);
+        public Color IndicatorsTintColor
+        {
+            get { return (Color)GetValue(IndicatorsTintColorProperty); }
+            set { SetValue(IndicatorsTintColorProperty, value); }
+        }
 
-		public IndicatorsShape IndicatorsShape
-		{
-			get { return (IndicatorsShape)GetValue(IndicatorsShapeProperty); }
-			set { SetValue(IndicatorsShapeProperty, value); }
-		}
+        public static readonly BindableProperty CurrentPageIndicatorTintColorProperty = BindableProperty.Create("CurrentPageIndicatorTintColor", typeof(Color), typeof(CarouselViewControl), Color.Gray);
 
-		public static readonly BindableProperty ShowIndicatorsProperty = BindableProperty.Create("ShowIndicators", typeof(bool), typeof(CarouselViewControl), false);
+        public Color CurrentPageIndicatorTintColor
+        {
+            get { return (Color)GetValue(CurrentPageIndicatorTintColorProperty); }
+            set { SetValue(CurrentPageIndicatorTintColorProperty, value); }
+        }
 
-		public bool ShowIndicators
-		{
-			get { return (bool)GetValue(ShowIndicatorsProperty); }
-			set { SetValue(ShowIndicatorsProperty, value); }
-		}
+        public static readonly BindableProperty IndicatorsShapeProperty = BindableProperty.Create("IndicatorsShape", typeof(IndicatorsShape), typeof(CarouselViewControl), IndicatorsShape.Circle);
 
-		public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create("ItemsSource", typeof(IEnumerable), typeof(CarouselViewControl), null);
+        public IndicatorsShape IndicatorsShape
+        {
+            get { return (IndicatorsShape)GetValue(IndicatorsShapeProperty); }
+            set { SetValue(IndicatorsShapeProperty, value); }
+        }
 
-		public IEnumerable ItemsSource
-		{
-			get { return (IEnumerable)GetValue(ItemsSourceProperty); }
-			set { SetValue(ItemsSourceProperty, value); }
-		}
+        public static readonly BindableProperty ShowIndicatorsProperty = BindableProperty.Create("ShowIndicators", typeof(bool), typeof(CarouselViewControl), false);
 
-		public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create("ItemTemplate", typeof(DataTemplate), typeof(CarouselViewControl), null);
+        public bool ShowIndicators
+        {
+            get { return (bool)GetValue(ShowIndicatorsProperty); }
+            set { SetValue(ShowIndicatorsProperty, value); }
+        }
 
-		public DataTemplate ItemTemplate
-		{
-			get { return (DataTemplate)GetValue(ItemTemplateProperty); }
-			set { SetValue(ItemTemplateProperty, value); }
-		}
+        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create("ItemsSource", typeof(IEnumerable), typeof(CarouselViewControl), null);
 
-		public static readonly BindableProperty PositionProperty = BindableProperty.Create("Position", typeof(int), typeof(CarouselViewControl), 0, BindingMode.TwoWay);
+        public IEnumerable ItemsSource
+        {
+            get { return (IEnumerable)GetValue(ItemsSourceProperty); }
+            set { SetValue(ItemsSourceProperty, value); }
+        }
 
-		public int Position
-		{
-			get { return (int)GetValue(PositionProperty); }
-			set { SetValue(PositionProperty, value); }
-		}
+        public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create("ItemTemplate", typeof(DataTemplate), typeof(CarouselViewControl), null);
 
-		public static readonly BindableProperty AnimateTransitionProperty = BindableProperty.Create("AnimateTransition", typeof(bool), typeof(CarouselViewControl), true);
+        public DataTemplate ItemTemplate
+        {
+            get { return (DataTemplate)GetValue(ItemTemplateProperty); }
+            set { SetValue(ItemTemplateProperty, value); }
+        }
 
-		public bool AnimateTransition
-		{
-			get { return (bool)GetValue(AnimateTransitionProperty); }
-			set { SetValue(AnimateTransitionProperty, value); }
-		}
+        public static readonly BindableProperty PositionProperty = BindableProperty.Create("Position", typeof(int), typeof(CarouselViewControl), 0, BindingMode.TwoWay);
 
-		// UWP only
-		public static readonly BindableProperty ShowArrowsProperty = BindableProperty.Create("ShowArrows", typeof(bool), typeof(CarouselViewControl), false);
+        public int Position
+        {
+            get { return (int)GetValue(PositionProperty); }
+            set { SetValue(PositionProperty, value); }
+        }
 
-		public bool ShowArrows
-		{
-			get { return (bool)GetValue(ShowArrowsProperty); }
-			set { SetValue(ShowArrowsProperty, value); }
-		}
+        public static readonly BindableProperty AnimateTransitionProperty = BindableProperty.Create("AnimateTransition", typeof(bool), typeof(CarouselViewControl), true);
 
-		public EventHandler<int> PositionSelected;
-	}
+        public bool AnimateTransition
+        {
+            get { return (bool)GetValue(AnimateTransitionProperty); }
+            set { SetValue(AnimateTransitionProperty, value); }
+        }
+
+        // UWP only
+        public static readonly BindableProperty ShowArrowsProperty = BindableProperty.Create("ShowArrows", typeof(bool), typeof(CarouselViewControl), false);
+
+        public bool ShowArrows
+        {
+            get { return (bool)GetValue(ShowArrowsProperty); }
+            set { SetValue(ShowArrowsProperty, value); }
+        }
+
+        public EventHandler<int> PositionSelected;
+    }
 }

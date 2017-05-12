@@ -11,14 +11,14 @@ namespace Demo
 		public MyTemplateSelector ()
 		{
 			this.templateOne = new DataTemplate (typeof(MyFirstView));
-			this.templateTwo = new DataTemplate (typeof(MySecondView));
+            this.templateTwo = new DataTemplate (typeof(LongView));
 		}
 
 		protected override DataTemplate OnSelectTemplate (object item, BindableObject container)
 		{
 			//if ((int)item % 2 == 0)
 				//return templateTwo;
-			return templateOne;
+            return templateTwo;
 		}
 	}
 }

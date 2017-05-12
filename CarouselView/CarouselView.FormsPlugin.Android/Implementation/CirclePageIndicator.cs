@@ -48,6 +48,12 @@ namespace CarouselView.FormsPlugin.Android
 		private bool mCentered;
 		private bool mSnap;
 		private IndicatorsShape indicatorsStyle = IndicatorsShape.Circle;
+		private int count;
+
+        public void SetCount(int c)
+        {
+            this.count = c;
+        }
 
 		public CirclePageIndicator(Context context) : this(context, null)
 		{
@@ -121,7 +127,7 @@ namespace CarouselView.FormsPlugin.Android
 				return;
 			}
 			// Fix for NullReferenceException on Android tabbed page #67
-			int count = mViewPager?.Adapter?.Count ?? 0;
+			//int count = mViewPager?.Adapter?.Count ?? 0;
 			if (count == 0)
 			{
 				return;
@@ -270,7 +276,7 @@ namespace CarouselView.FormsPlugin.Android
 			{
 				throw new IllegalStateException("ViewPager has not been bound.");
 			}
-			mViewPager.CurrentItem = item;
+			//mViewPager.CurrentItem = item;
 			mCurrentPage = item;
 			Invalidate();
 		}
@@ -292,6 +298,7 @@ namespace CarouselView.FormsPlugin.Android
 
 		public void OnPageScrolled(int position, float positionOffset, int positionOffsetPixels)
 		{
+			position = count > 0 ? position % count : 0;
 			mCurrentPage = position;
 			mCurrentOffset = positionOffsetPixels;
 			UpdatePageSize();
@@ -305,6 +312,7 @@ namespace CarouselView.FormsPlugin.Android
 
 		public void OnPageSelected(int position)
 		{
+            position = count > 0 ? position % count : 0;
 			if (mSnap || mScrollState == ViewPager.ScrollStateIdle)
 			{
 				mCurrentPage = position;
@@ -354,7 +362,7 @@ namespace CarouselView.FormsPlugin.Android
 			}
 			else {
 				//Calculate the width according the views count
-				int count = mViewPager.Adapter.Count;
+				//int count = mViewPager.Adapter.Count;
 				result = (int)(PaddingLeft + PaddingRight
 						+ (count * 2 * mRadius) + (count - 1) * mRadius + 1);
 				//Respect AT_MOST value if that was what is called for by measureSpec
