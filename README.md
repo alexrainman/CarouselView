@@ -181,6 +181,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+4.2.5
+
+[Update] Implementing ItemsSource CollectionChanged Clear, Move and Replace actions.
+
 4.2.4
 
 [Update] Checking for null Element to avoid crashes.

@@ -78,14 +78,69 @@ namespace CarouselView.FormsPlugin.iOS
 
 		async void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
+			// NewItems contains the item that was added.
+			// If NewStartingIndex is not -1, then it contains the index where the new item was added.
 			if (e.Action == NotifyCollectionChangedAction.Add)
 			{
 				InsertPage(Element?.ItemsSource.GetItem(e.NewStartingIndex), e.NewStartingIndex);
 			}
 
+			// OldItems contains the item that was removed.
+			// If OldStartingIndex is not -1, then it contains the index where the old item was removed.
 			if (e.Action == NotifyCollectionChangedAction.Remove)
 			{
 				await RemovePage(e.OldStartingIndex);
+			}
+
+			// OldItems contains the moved item.
+			// OldStartingIndex contains the index where the item was moved from.
+			// NewStartingIndex contains the index where the item was moved to.
+			if (e.Action == NotifyCollectionChangedAction.Move)
+			{
+				if (Element != null && pageController != null && Source != null)
+				{
+					Source.RemoveAt(e.OldStartingIndex);
+					Source.Insert(e.NewStartingIndex, e.OldItems[e.OldStartingIndex]);
+
+					var firstViewController = CreateViewController(e.NewStartingIndex);
+
+					pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
+					{
+						isSwiping = true;
+						Element.Position = e.NewStartingIndex;
+						isSwiping = false;
+						SetIndicators();
+					});
+				}
+            }
+
+			// NewItems contains the replacement item.
+			// NewStartingIndex and OldStartingIndex are equal, and if they are not -1,
+			// then they contain the index where the item was replaced.
+			if (e.Action == NotifyCollectionChangedAction.Replace)
+			{
+				if (Element != null && pageController != null && Source != null)
+				{
+					Source[e.OldStartingIndex] = e.NewItems[e.NewStartingIndex];
+
+					var firstViewController = CreateViewController(Element.Position);
+
+					pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
+					{
+					});
+				}
+            }
+
+			// No other properties are valid.
+			if (e.Action == NotifyCollectionChangedAction.Reset)
+			{
+				if (Element != null)
+				{
+                    SetPosition();
+					SetNativeView();
+					SetIndicators();
+					Element.PositionSelected?.Invoke(Element, Element.Position);
+				}
 			}
 		}
 

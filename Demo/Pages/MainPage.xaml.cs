@@ -36,7 +36,9 @@ namespace Demo
 				Text = "Reset",
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() => {
-                    _vm.ItemsSource = new ObservableCollection<int>() { };
+					_vm.ItemsSource.Clear();
+					//_vm.ItemsSource.Move(0, 4);
+					//_vm.ItemsSource[0] = 5;
 				})
 			});
 

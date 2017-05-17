@@ -68,14 +68,60 @@ namespace CarouselView.FormsPlugin.Android
 
 		async void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
+            // NewItems contains the item that was added.
+			// If NewStartingIndex is not -1, then it contains the index where the new item was added.
 			if (e.Action == NotifyCollectionChangedAction.Add)
 			{
 				InsertPage(Element?.ItemsSource.GetItem(e.NewStartingIndex), e.NewStartingIndex);
 			}
 
+			// OldItems contains the item that was removed.
+			// If OldStartingIndex is not -1, then it contains the index where the old item was removed.
 			if (e.Action == NotifyCollectionChangedAction.Remove)
 			{
 				await RemovePage(e.OldStartingIndex);
+			}
+
+			// OldItems contains the moved item.
+            // OldStartingIndex contains the index where the item was moved from.
+			// NewStartingIndex contains the index where the item was moved to.
+			if (e.Action == NotifyCollectionChangedAction.Move)
+			{
+                var Source = ((PageAdapter)viewPager?.Adapter).Source;
+
+				if (Element != null && viewPager != null && Source != null)
+				{
+					Source.RemoveAt(e.OldStartingIndex);
+					Source.Insert(e.NewStartingIndex, e.OldItems[e.OldStartingIndex]);
+					viewPager.Adapter?.NotifyDataSetChanged();
+				}
+            }
+
+			// NewItems contains the replacement item.
+			// NewStartingIndex and OldStartingIndex are equal, and if they are not -1,
+			// then they contain the index where the item was replaced.
+			if (e.Action == NotifyCollectionChangedAction.Replace)
+			{
+                var Source = ((PageAdapter)viewPager?.Adapter).Source;
+
+				if (Element != null && viewPager != null && Source != null)
+				{
+					Source[e.OldStartingIndex] = e.NewItems[e.NewStartingIndex];
+					viewPager.Adapter?.NotifyDataSetChanged();
+				}
+            }
+
+			// No other properties are valid.
+			if (e.Action == NotifyCollectionChangedAction.Reset)
+			{
+				if (Element != null && viewPager != null)
+				{
+                    SetPosition();
+					viewPager.Adapter = new PageAdapter(Element);
+					viewPager.SetCurrentItem(Element.Position, false);
+					indicators?.SetViewPager(viewPager);
+					Element.PositionSelected?.Invoke(Element, Element.Position);
+				}
 			}
 		}
 
