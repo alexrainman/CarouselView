@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Demo.LeakPage"
+	xmlns:local="clr-namespace:Demo"
+    xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions" >
+	
+	 <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add Page" Command="{Binding AddPage}" Order="Primary" Priority="0"/>
+        <ToolbarItem Text="Shrink" Command="{Binding Shrink}" Order="Primary" Priority="0"/>
+    </ContentPage.ToolbarItems>
+	
+	<!--<cv:CarouselViewControl 
+        ItemsSource="{Binding Pages}"
+        ShowIndicators="true"
+        VerticalOptions="FillAndExpand" 
+        HorizontalOptions="FillAndExpand">
+        <cv:CarouselViewControl.ItemTemplate>
+            <DataTemplate>
+                <local:MyStackLayout Orientation="Vertical">
+                    <Label BackgroundColor="Red" HeightRequest="{Binding Height}" />
+                    <Label BackgroundColor="Blue" HeightRequest="{Binding Height}" />
+                    <Label BackgroundColor="Green" HeightRequest="{Binding Height}" />
+                </local:MyStackLayout>
+            </DataTemplate>
+        </cv:CarouselViewControl.ItemTemplate>
+    </cv:CarouselViewControl>-->
+
+	<ContentPage.Resources>
+        <ResourceDictionary>
+            <ControlTemplate x:Key="carousel">
+                <cv:CarouselViewControl 
+			        ItemsSource="{Binding Pages}"
+			        ShowIndicators="true"
+			        VerticalOptions="FillAndExpand" 
+			        HorizontalOptions="FillAndExpand">
+			        <cv:CarouselViewControl.ItemTemplate>
+			            <DataTemplate>
+			                <local:MyStackLayout Orientation="Vertical">
+			                    <Label BackgroundColor="Red" HeightRequest="{Binding Height}" />
+			                    <Label BackgroundColor="Blue" HeightRequest="{Binding Height}" />
+			                    <Label BackgroundColor="Green" HeightRequest="{Binding Height}" />
+			                </local:MyStackLayout>
+			            </DataTemplate>
+			        </cv:CarouselViewControl.ItemTemplate>
+			    </cv:CarouselViewControl>
+            </ControlTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+	
+    <ContentView ControlTemplate="{StaticResource carousel}" 
+                 HorizontalOptions="FillAndExpand" 
+                 VerticalOptions="FillAndExpand" />
+	
+</ContentPage>

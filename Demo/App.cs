@@ -12,6 +12,14 @@ namespace Demo
 		{
 			// The root page of your application
 			MainPage = new NavigationPage (new MainPage ());
+
+			/*var viewModel = new MyViewModel();
+			var carouselPage = new LeakPage()
+			{
+				BindingContext = viewModel
+			};
+
+			MainPage = new NavigationPage(carouselPage);*/
 		}
 
 		protected override void OnStart ()

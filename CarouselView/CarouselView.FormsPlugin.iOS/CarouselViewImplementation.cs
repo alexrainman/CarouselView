@@ -339,7 +339,7 @@ namespace CarouselView.FormsPlugin.iOS
 					else {
 						int previousPageIndex = position - 1;
 						return CreateViewController(previousPageIndex);
-					}
+				    }
 				}
 				else {
 					return null;

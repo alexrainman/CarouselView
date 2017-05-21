@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage x:Class="Demo.DetailPage"
              xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <ListView x:Name="MyList"/>
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	 xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
+    <!--<ListView x:Name="MyList"/>-->
+
+    <Grid x:Name="LayoutRoot"
+          Padding="0"
+          RowSpacing="0"
+          ColumnSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+            <cv:CarouselViewControl x:Name="CardCarousel" 
+                                          ItemsSource="{Binding ItemsSource}"
+                                          Margin="8"
+                                          BackgroundColor="Aqua"
+                                          HorizontalOptions="FillAndExpand"
+                                          VerticalOptions="FillAndExpand">
+                <cv:CarouselViewControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Text="hello world 4"
+                                BackgroundColor="Blue" />
+                    </DataTemplate>
+                </cv:CarouselViewControl.ItemTemplate>
+
+            </cv:CarouselViewControl>
+
+        <Button Text="NEW RIDE"
+                VerticalOptions="Center"
+                Margin="16,32,16,16"
+                Grid.Row="1" />
+    </Grid>
+	
 </ContentPage>
