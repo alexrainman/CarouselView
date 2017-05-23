@@ -181,6 +181,14 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+4.2.7
+
+[iOS] Significant Memory Leak for iOS when using custom layout for page content #125 (refactored)
+
+4.2.6
+
+[iOS] Significant Memory Leak for iOS when using custom layout for page content #125 (fixed)
+
 4.2.5
 
 [Update] Implementing ItemsSource CollectionChanged Clear, Move and Replace actions.

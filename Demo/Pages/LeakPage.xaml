@@ -8,7 +8,7 @@
         <ToolbarItem Text="Shrink" Command="{Binding Shrink}" Order="Primary" Priority="0"/>
     </ContentPage.ToolbarItems>
 	
-	<!--<cv:CarouselViewControl 
+<cv:CarouselViewControl 
         ItemsSource="{Binding Pages}"
         ShowIndicators="true"
         VerticalOptions="FillAndExpand" 
@@ -22,9 +22,9 @@
                 </local:MyStackLayout>
             </DataTemplate>
         </cv:CarouselViewControl.ItemTemplate>
-    </cv:CarouselViewControl>-->
+    </cv:CarouselViewControl>
 
-	<ContentPage.Resources>
+	<!--<ContentPage.Resources>
         <ResourceDictionary>
             <ControlTemplate x:Key="carousel">
                 <cv:CarouselViewControl 
@@ -48,6 +48,6 @@
 	
     <ContentView ControlTemplate="{StaticResource carousel}" 
                  HorizontalOptions="FillAndExpand" 
-                 VerticalOptions="FillAndExpand" />
+                 VerticalOptions="FillAndExpand" />-->
 	
 </ContentPage>

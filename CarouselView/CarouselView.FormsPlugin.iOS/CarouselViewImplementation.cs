@@ -110,6 +110,8 @@ namespace CarouselView.FormsPlugin.iOS
 						Element.Position = e.NewStartingIndex;
 						isSwiping = false;
 						SetIndicators();
+
+						CleanupChildViewControllers();
 					});
 				}
             }
@@ -127,6 +129,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 					pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
 					{
+						CleanupChildViewControllers();
 					});
 				}
             }
@@ -155,7 +158,7 @@ namespace CarouselView.FormsPlugin.iOS
 				SetIndicators();
 				Element.PositionSelected?.Invoke(Element, Element.Position);
 			}
-		}	
+		}
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
@@ -255,6 +258,8 @@ namespace CarouselView.FormsPlugin.iOS
 				isSwiping = false;
 				SetIndicators();
 				Element.PositionSelected?.Invoke(Element, position);
+
+                CleanupChildViewControllers();
 			}
 		}
 #endregion
@@ -377,7 +382,9 @@ namespace CarouselView.FormsPlugin.iOS
 			if (Source != null && Source?.Count > 0)
 			{
 				var firstViewController = CreateViewController(Element.Position);
-				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => { });
+				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {
+                    CleanupChildViewControllers();
+				});
 			}
 
 			SetNativeControl(pageController.View);
@@ -456,6 +463,8 @@ namespace CarouselView.FormsPlugin.iOS
 
 					if (position <= prevPos)
 					    Element.PositionSelected?.Invoke(Element, Element.Position);
+
+                    CleanupChildViewControllers();
 				});
 			}
 		}
@@ -498,6 +507,8 @@ namespace CarouselView.FormsPlugin.iOS
 
                             // Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 							Element.PositionSelected?.Invoke(Element, Element.Position);
+
+                            CleanupChildViewControllers();
 						});
 					}
 					else {
@@ -509,6 +520,8 @@ namespace CarouselView.FormsPlugin.iOS
 
                             // Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 							Element.PositionSelected?.Invoke(Element, Element.Position);
+
+                            CleanupChildViewControllers();
 						});
 					}
 				}
@@ -534,7 +547,25 @@ namespace CarouselView.FormsPlugin.iOS
 
                     // Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 					Element.PositionSelected?.Invoke(Element, position);
+
+                    CleanupChildViewControllers();
 				});
+			}
+		}
+
+		// Significant Memory Leak for iOS when using custom layout for page content #125
+		// Thanks to johnnysbug for the help!
+		void CleanupChildViewControllers()
+		{
+			//Cleanup non adjacent controllers
+			var childControllers = pageController.ChildViewControllers;
+			foreach (var childController in childControllers)
+			{
+				var index = Element.ItemsSource.GetList().IndexOf(((ViewContainer)childController).Tag);
+				if (index < (Element.Position - 1) || index > (Element.Position + 1))
+				{
+					childController.Dispose();
+				}
 			}
 		}
 
