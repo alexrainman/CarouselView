@@ -227,6 +227,9 @@ namespace CarouselView.FormsPlugin.iOS
 					if (Element != null && !isSwiping)
 					    SetCurrentPage(Element.Position);
 					break;
+				case "Parent":
+					if (Element?.Parent == null)
+						CleanUpPageController();
 			}
 		}
 
@@ -286,7 +289,7 @@ namespace CarouselView.FormsPlugin.iOS
 		{
             // Rotation bug(iOS) #115 Fix
 			if (pageController != null)
-				pageController.View.RemoveFromSuperview();
+				CleanUpPageController();
 			
 			var interPageSpacing = (float)Element.InterPageSpacing;
 
@@ -569,6 +572,28 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 		}
 
+		void CleanUpPageController()
+		{
+			if (pageController != null)
+			{
+				pageController.DidFinishAnimating -= PageController_DidFinishAnimating;
+				pageController.GetPreviousViewController = null;
+				pageController.GetNextViewController = null;
+
+				foreach (var child in pageController.ChildViewControllers)
+					child.Dispose(); 
+
+				foreach (var child in pageController.ViewControllers)
+					child.Dispose();
+
+				pageController.View.RemoveFromSuperview();
+				pageController.View.Dispose();
+
+				pageController.Dispose();
+				pageController = null;
+			}
+		}
+
 #region adapter
 		UIViewController CreateViewController(int index)
 		{
@@ -616,18 +641,7 @@ namespace CarouselView.FormsPlugin.iOS
 		{
 			if (disposing && !_disposed)
 			{
-				if (pageController != null)
-				{
-					pageController.DidFinishAnimating -= PageController_DidFinishAnimating;
-					pageController.GetPreviousViewController = null;
-					pageController.GetNextViewController = null;
-
-					foreach (var child in pageController.ViewControllers)
-						child.Dispose();
-
-					pageController.Dispose();
-					pageController = null;
-				}
+				CleanUpPageController();
 
 				if (pageControl != null)
 				{
