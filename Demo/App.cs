@@ -20,6 +20,10 @@ namespace Demo
 			};
 
 			MainPage = new NavigationPage(carouselPage);*/
+
+			//MainPage = new RootPage();
+
+			//MainPage = new NavigationPage(new HeightIssuePage ());
 		}
 
 		protected override void OnStart ()

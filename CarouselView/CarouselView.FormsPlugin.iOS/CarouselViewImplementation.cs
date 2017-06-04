@@ -24,7 +24,7 @@ namespace CarouselView.FormsPlugin.iOS
 		UIPageControl pageControl;
 		bool _disposed;
 
-        // A local copy of ItemsSource so we can use CollectionChanged events
+		// A local copy of ItemsSource so we can use CollectionChanged events
 		List<object> Source;
 
 		int Count
@@ -109,12 +109,12 @@ namespace CarouselView.FormsPlugin.iOS
 						isSwiping = true;
 						Element.Position = e.NewStartingIndex;
 						isSwiping = false;
-						SetIndicators();
+						SetIndicatorsCurrentPage();
 
-						CleanupChildViewControllers();
+						//CleanupChildViewControllers();
 					});
 				}
-            }
+			}
 
 			// NewItems contains the replacement item.
 			// NewStartingIndex and OldStartingIndex are equal, and if they are not -1,
@@ -129,19 +129,18 @@ namespace CarouselView.FormsPlugin.iOS
 
 					pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
 					{
-						CleanupChildViewControllers();
+						//CleanupChildViewControllers();
 					});
 				}
-            }
+			}
 
 			// No other properties are valid.
 			if (e.Action == NotifyCollectionChangedAction.Reset)
 			{
 				if (Element != null)
 				{
-                    SetPosition();
+					SetPosition();
 					SetNativeView();
-					SetIndicators();
 					Element.PositionSelected?.Invoke(Element, Element.Position);
 				}
 			}
@@ -155,7 +154,6 @@ namespace CarouselView.FormsPlugin.iOS
 				ElementWidth = rect.Width;
 				ElementHeight = rect.Height;
 				SetNativeView();
-				SetIndicators();
 				Element.PositionSelected?.Invoke(Element, Element.Position);
 			}
 		}
@@ -169,47 +167,44 @@ namespace CarouselView.FormsPlugin.iOS
 				case "Renderer":
 					// Fix for issues after recreating the control #86
 					if (Element != null)
-					    prevPosition = Element.Position;
+						prevPosition = Element.Position;
 					break;
 				case "Orientation":
 					if (Element != null)
 					{
 						SetNativeView();
-						SetIndicators();
 						Element.PositionSelected?.Invoke(Element, Element.Position);
 					}
 					break;
 				case "InterPageSpacing":
 					// InterPageSpacing not exposed as a property in UIPageViewController :(
-				    //ConfigurePageController();
+					//ConfigurePageController();
 					//ConfigurePageControl();
 					break;
 				case "BackgroundColor":
 					if (pageController != null)
-					    pageController.View.BackgroundColor = Element.BackgroundColor.ToUIColor();
+						pageController.View.BackgroundColor = Element.BackgroundColor.ToUIColor();
 					break;
 				case "IsSwipingEnabled":
 					SetIsSwipingEnabled();
 					break;
 				case "IndicatorsTintColor":
-					SetIndicators();
+					SetIndicatorsTintColor();
 					break;
 				case "CurrentPageIndicatorTintColor":
-					SetIndicators();
+					SetCurrentPageIndicatorTintColor();
 					break;
 				case "IndicatorsShape":
-					SetIndicators();
+					SetIndicatorsShape();
 					break;
 				case "ShowIndicators":
-					if (pageControl != null)
-					    pageControl.Hidden = !Element.ShowIndicators;
+					SetIndicators();
 					break;
 				case "ItemsSource":
 					if (Element != null)
 					{
 						SetPosition();
 						SetNativeView();
-						SetIndicators();
 						Element.PositionSelected?.Invoke(Element, Element.Position);
 						if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
 							((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
@@ -219,13 +214,12 @@ namespace CarouselView.FormsPlugin.iOS
 					if (Element != null)
 					{
 						SetNativeView();
-						SetIndicators();
 						Element.PositionSelected?.Invoke(Element, Element.Position);
 					}
 					break;
-                case "Position":
+				case "Position":
 					if (Element != null && !isSwiping)
-					    SetCurrentPage(Element.Position);
+						SetCurrentPage(Element.Position);
 					break;
 			}
 		}
@@ -242,10 +236,10 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 		}
 
-        // To avoid triggering Position changed more than once
+		// To avoid triggering Position changed more than once
 		bool isSwiping;
 
-#region adapter callbacks
+		#region adapter callbacks
 		void PageController_DidFinishAnimating(object sender, UIPageViewFinishedAnimationEventArgs e)
 		{
 			if (e.Finished)
@@ -256,13 +250,13 @@ namespace CarouselView.FormsPlugin.iOS
 				Element.Position = position;
 				prevPosition = position;
 				isSwiping = false;
-				SetIndicators();
+				SetIndicatorsCurrentPage();
 				Element.PositionSelected?.Invoke(Element, position);
 
-                CleanupChildViewControllers();
+				//CleanupChildViewControllers();
 			}
 		}
-#endregion
+		#endregion
 
 		void SetPosition()
 		{
@@ -284,10 +278,9 @@ namespace CarouselView.FormsPlugin.iOS
 
 		void SetNativeView()
 		{
-            // Rotation bug(iOS) #115 Fix
-			if (pageController != null)
-				pageController.View.RemoveFromSuperview();
-			
+			// Rotation bug(iOS) #115 Fix
+			CleanUpPageController();
+
 			var interPageSpacing = (float)Element.InterPageSpacing;
 
 			// Orientation BP
@@ -301,30 +294,10 @@ namespace CarouselView.FormsPlugin.iOS
 
 			Source = Element.ItemsSource != null ? new List<object>(Element.ItemsSource.GetList()) : null;
 
-            // BackgroundColor BP
+			// BackgroundColor BP
 			pageController.View.BackgroundColor = Element.BackgroundColor.ToUIColor();
 
-			// INDICATORS
-			pageControl = new UIPageControl();
-			pageControl.TranslatesAutoresizingMaskIntoConstraints = false;
-			pageControl.Enabled = false;
-			pageController.View.AddSubview(pageControl);
-			var viewsDictionary = NSDictionary.FromObjectsAndKeys(new NSObject[] { pageControl }, new NSObject[] { new NSString("pageControl") });
-			if (Element.Orientation == CarouselViewOrientation.Horizontal)
-			{
-				pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("H:|[pageControl]|", NSLayoutFormatOptions.AlignAllCenterX, new NSDictionary(), viewsDictionary));
-				pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:[pageControl]|", 0, new NSDictionary(), viewsDictionary));
-			}
-			else
-			{
-				pageControl.Transform = CGAffineTransform.MakeRotation(3.14159265f / 2);
-
-				pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("[pageControl(==36)]", 0, new NSDictionary(), viewsDictionary));
-				pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("H:[pageControl]|", 0, new NSDictionary(), viewsDictionary));
-				pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:|[pageControl]|", NSLayoutFormatOptions.AlignAllTop, new NSDictionary(), viewsDictionary));
-			}
-
-#region adapter
+			#region adapter
 			pageController.DidFinishAnimating += PageController_DidFinishAnimating;
 
 			pageController.GetPreviousViewController = (pageViewController, referenceViewController) =>
@@ -341,12 +314,14 @@ namespace CarouselView.FormsPlugin.iOS
 						// We are on the first page, so there is no need for a controller before that
 						return null;
 					}
-					else {
+					else
+					{
 						int previousPageIndex = position - 1;
 						return CreateViewController(previousPageIndex);
-				    }
+					}
 				}
-				else {
+				else
+				{
 					return null;
 				}
 			};
@@ -365,16 +340,18 @@ namespace CarouselView.FormsPlugin.iOS
 						// We are on the last page, so there is no need for a controller after that
 						return null;
 					}
-					else {
+					else
+					{
 						int nextPageIndex = position + 1;
 						return CreateViewController(nextPageIndex);
 					}
 				}
-				else {
+				else
+				{
 					return null;
 				}
 			};
-#endregion
+			#endregion
 
 			// IsSwipingEnabled BP
 			SetIsSwipingEnabled();
@@ -382,28 +359,95 @@ namespace CarouselView.FormsPlugin.iOS
 			if (Source != null && Source?.Count > 0)
 			{
 				var firstViewController = CreateViewController(Element.Position);
-				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s => {
-                    CleanupChildViewControllers();
+				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
+				{
+					//CleanupChildViewControllers();
 				});
 			}
 
 			SetNativeControl(pageController.View);
+
+			// INDICATORS
+            SetIndicators();
 		}
 
+#region indicators
+
 		void SetIndicators()
+		{
+			if (Element.ShowIndicators)
+			{
+				pageControl = new UIPageControl();
+				pageControl.TranslatesAutoresizingMaskIntoConstraints = false;
+				pageControl.Enabled = false;
+				pageController.View.AddSubview(pageControl);
+				var viewsDictionary = NSDictionary.FromObjectsAndKeys(new NSObject[] { pageControl }, new NSObject[] { new NSString("pageControl") });
+				if (Element.Orientation == CarouselViewOrientation.Horizontal)
+				{
+					pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("H:|[pageControl]|", NSLayoutFormatOptions.AlignAllCenterX, new NSDictionary(), viewsDictionary));
+					pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:[pageControl]|", 0, new NSDictionary(), viewsDictionary));
+				}
+				else
+				{
+					pageControl.Transform = CGAffineTransform.MakeRotation(3.14159265f / 2);
+
+					pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("[pageControl(==36)]", 0, new NSDictionary(), viewsDictionary));
+					pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("H:[pageControl]|", 0, new NSDictionary(), viewsDictionary));
+					pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:|[pageControl]|", NSLayoutFormatOptions.AlignAllTop, new NSDictionary(), viewsDictionary));
+				}
+
+				pageControl.Pages = Count;
+				pageControl.PageIndicatorTintColor = Element.IndicatorsTintColor.ToUIColor();
+				pageControl.CurrentPageIndicatorTintColor = Element.CurrentPageIndicatorTintColor.ToUIColor();
+				pageControl.CurrentPage = Element.Position;
+				SetIndicatorsShape();
+			}
+			else
+			{
+				CleanUpPageControl();
+			}
+		}
+
+		void SetIndicatorsCount()
 		{
 			if (pageControl != null)
 			{
 				pageControl.Pages = Count;
-				pageControl.CurrentPage = Element.Position;
+				SetIndicatorsShape();
+			}
+		}
 
-				// IndicatorsTintColor BP
+		void SetIndicatorsTintColor()
+		{
+			if (pageControl != null)
+			{
 				pageControl.PageIndicatorTintColor = Element.IndicatorsTintColor.ToUIColor();
+				SetIndicatorsShape();
+			}
+		}
 
-				// CurrentPageIndicatorTintColor BP
+		void SetCurrentPageIndicatorTintColor()
+		{
+			if (pageControl != null)
+			{
 				pageControl.CurrentPageIndicatorTintColor = Element.CurrentPageIndicatorTintColor.ToUIColor();
+				SetIndicatorsShape();
+			}
+		}
 
-				// IndicatorsShape BP
+		void SetIndicatorsCurrentPage()
+		{
+			if (pageControl != null)
+			{
+				pageControl.CurrentPage = Element.Position;
+				SetIndicatorsShape();
+			}
+		}
+
+		void SetIndicatorsShape()
+		{
+			if (pageControl != null)
+			{
 				if (Element.IndicatorsShape == IndicatorsShape.Square)
 				{
 					foreach (var view in pageControl.Subviews)
@@ -428,11 +472,10 @@ namespace CarouselView.FormsPlugin.iOS
 						}
 					}
 				}
-
-				// ShowIndicators BP
-				pageControl.Hidden = !Element.ShowIndicators;
 			}
 		}
+
+#endregion
 
 		void InsertPage(object item, int position)
 		{
@@ -442,10 +485,10 @@ namespace CarouselView.FormsPlugin.iOS
 
 				UIViewController firstViewController;
 				if (pageController.ViewControllers.Count() > 0)
-                    firstViewController = pageController.ViewControllers[0];
+					firstViewController = pageController.ViewControllers[0];
 				else
-                    firstViewController = CreateViewController(Element.Position);
-				
+					firstViewController = CreateViewController(Element.Position);
+
 				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
 				{
 					var prevPos = Element.Position;
@@ -459,12 +502,12 @@ namespace CarouselView.FormsPlugin.iOS
 					}
 					isSwiping = false;
 
-					SetIndicators();
+					SetIndicatorsCount();
 
 					if (position <= prevPos)
-					    Element.PositionSelected?.Invoke(Element, Element.Position);
+						Element.PositionSelected?.Invoke(Element, Element.Position);
 
-                    CleanupChildViewControllers();
+					//CleanupChildViewControllers();
 				});
 			}
 		}
@@ -473,27 +516,27 @@ namespace CarouselView.FormsPlugin.iOS
 		{
 			if (Element != null && pageController != null && Source != null && Source?.Count > 0)
 			{
-                // To remove latest page, rebuild pageController or the page wont disappear
+				// To remove latest page, rebuild pageController or the page wont disappear
 				if (Source.Count == 1)
 				{
 					Source.RemoveAt(position);
 					SetNativeView();
-					SetIndicators();
 				}
-				else {
+				else
+				{
 
 					Source.RemoveAt(position);
 
-                    // To remove current page
+					// To remove current page
 					if (position == Element.Position)
 					{
 						var newPos = position - 1;
 						if (newPos == -1)
 							newPos = 0;
 
-                        // With a swipe transition
+						// With a swipe transition
 						if (Element.AnimateTransition)
-						    await Task.Delay(100);
+							await Task.Delay(100);
 
 						var direction = position == 0 ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
 						var firstViewController = CreateViewController(newPos);
@@ -503,25 +546,26 @@ namespace CarouselView.FormsPlugin.iOS
 							Element.Position = newPos;
 							isSwiping = false;
 
-							SetIndicators();
+							SetIndicatorsCount();
 
-                            // Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
+							// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 							Element.PositionSelected?.Invoke(Element, Element.Position);
 
-                            CleanupChildViewControllers();
+							//CleanupChildViewControllers();
 						});
 					}
-					else {
+					else
+					{
 
 						var firstViewController = pageController.ViewControllers[0];
 						pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
 						{
-							SetIndicators();
+							SetIndicatorsCount();
 
-                            // Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
+							// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 							Element.PositionSelected?.Invoke(Element, Element.Position);
 
-                            CleanupChildViewControllers();
+							//CleanupChildViewControllers();
 						});
 					}
 				}
@@ -536,6 +580,7 @@ namespace CarouselView.FormsPlugin.iOS
 		{
 			if (pageController != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
 			{
+				Console.WriteLine(pageController.ChildViewControllers.Count());
 				// Transition direction based on prevPosition
 				var direction = position >= prevPosition ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
 				prevPosition = position;
@@ -543,19 +588,20 @@ namespace CarouselView.FormsPlugin.iOS
 				var firstViewController = CreateViewController(position);
 				pageController.SetViewControllers(new[] { firstViewController }, direction, Element.AnimateTransition, s =>
 				{
-					SetIndicators();
+					SetIndicatorsCurrentPage();
 
-                    // Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
+					// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 					Element.PositionSelected?.Invoke(Element, position);
 
-                    CleanupChildViewControllers();
+					//CleanupChildViewControllers();
 				});
 			}
 		}
 
+		// TODO: this is causing a crash in fast scrolling :( https://github.com/alexrainman/CarouselView/issues/134
 		// Significant Memory Leak for iOS when using custom layout for page content #125
 		// Thanks to johnnysbug for the help!
-		void CleanupChildViewControllers()
+		/*void CleanupChildViewControllers()
 		{
 			//Cleanup non adjacent controllers
 			var childControllers = pageController.ChildViewControllers;
@@ -567,9 +613,9 @@ namespace CarouselView.FormsPlugin.iOS
 					childController.Dispose();
 				}
 			}
-		}
+		}*/
 
-#region adapter
+		#region adapter
 		UIViewController CreateViewController(int index)
 		{
 			View formsView = null;
@@ -586,7 +632,8 @@ namespace CarouselView.FormsPlugin.iOS
 			{
 				formsView = (View)dt.CreateContent();
 			}
-			else {
+			else
+			{
 
 				var selector = Element.ItemTemplate as DataTemplateSelector;
 				if (selector != null)
@@ -610,30 +657,47 @@ namespace CarouselView.FormsPlugin.iOS
 
 			return viewController;
 		}
-#endregion
+		#endregion
+
+		void CleanUpPageControl()
+		{
+			if (pageControl != null)
+			{
+				pageControl.RemoveFromSuperview();
+				pageControl.Dispose();
+				pageControl = null;
+			}
+		}
+
+		void CleanUpPageController()
+		{
+			CleanUpPageControl();
+
+			if (pageController != null)
+			{
+				pageController.DidFinishAnimating -= PageController_DidFinishAnimating;
+				pageController.GetPreviousViewController = null;
+				pageController.GetNextViewController = null;
+
+				foreach (var child in pageController.ChildViewControllers)
+					child.Dispose();
+
+				foreach (var child in pageController.ViewControllers)
+					child.Dispose();
+
+				pageController.View.RemoveFromSuperview();
+				pageController.View.Dispose();
+
+				pageController.Dispose();
+				pageController = null;
+			}
+		}
 
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && !_disposed)
 			{
-				if (pageController != null)
-				{
-					pageController.DidFinishAnimating -= PageController_DidFinishAnimating;
-					pageController.GetPreviousViewController = null;
-					pageController.GetNextViewController = null;
-
-					foreach (var child in pageController.ViewControllers)
-						child.Dispose();
-
-					pageController.Dispose();
-					pageController = null;
-				}
-
-				if (pageControl != null)
-				{
-					pageControl.Dispose();
-					pageControl = null;
-				}
+				CleanUpPageController();
 
 				if (Element != null)
 				{

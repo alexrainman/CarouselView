@@ -2,37 +2,43 @@
 <ContentPage x:Class="Demo.DetailPage"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	 xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
+             xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
     <!--<ListView x:Name="MyList"/>-->
 
     <Grid x:Name="LayoutRoot"
+          ColumnSpacing="0"
           Padding="0"
-          RowSpacing="0"
-          ColumnSpacing="0">
+          RowSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-            <cv:CarouselViewControl x:Name="CardCarousel" 
-                                          ItemsSource="{Binding ItemsSource}"
-                                          Margin="8"
-                                          BackgroundColor="Aqua"
-                                          HorizontalOptions="FillAndExpand"
-                                          VerticalOptions="FillAndExpand">
-                <cv:CarouselViewControl.ItemTemplate>
-                    <DataTemplate>
-                        <Button Text="hello world 4"
-                                BackgroundColor="Blue" />
-                    </DataTemplate>
-                </cv:CarouselViewControl.ItemTemplate>
+        <!--<StackLayout
+                     VerticalOptions="FillAndExpand"
+                     Grid.Row="0">-->
 
-            </cv:CarouselViewControl>
+        <cv:CarouselViewControl x:Name="CardCarousel"
+                                Grid.Row="0"
+                                Margin="8"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand"
+                                BackgroundColor="Aqua"
+                                ItemsSource="{Binding ItemsSource}">
+            <cv:CarouselViewControl.ItemTemplate>
+                <DataTemplate>
+                    <Button BackgroundColor="Blue" Text="hello world 4" />
+                </DataTemplate>
+            </cv:CarouselViewControl.ItemTemplate>
 
-        <Button Text="NEW RIDE"
-                VerticalOptions="Center"
+        </cv:CarouselViewControl>
+
+        <!--</StackLayout>-->
+
+        <Button Grid.Row="1"
                 Margin="16,32,16,16"
-                Grid.Row="1" />
+                VerticalOptions="Center"
+                Text="NEW RIDE" />
     </Grid>
-	
+
 </ContentPage>

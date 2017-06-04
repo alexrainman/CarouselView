@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>4.2.7</version>
+        <version>4.2.8</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
@@ -12,8 +12,11 @@
         <description>Create Horizontal and Vertical carousels, add page indicators, render one page at a time moving back and fort programmatically and much more. “How to” at Github repository.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
+        4.2.8
+        [iOS] Version 4.2.7 - Fast scrolling is causing crash bug #134 (going back to 4.2.6 memory leak fix)
+        [Update] Significant performance step backwards bug duplicate #141 (fixed, related to page indicators)
         4.2.7
-        [iOS] Significant Memory Leak for iOS when using custom layout for page content #125 (refactored)
+        [iOS] Significfant Memory Leak for iOS when using custom layout for page content #125 (refactored)
         4.2.6
         [iOS] Significant Memory Leak for iOS when using custom layout for page content #125 (fixed)
         4.2.5

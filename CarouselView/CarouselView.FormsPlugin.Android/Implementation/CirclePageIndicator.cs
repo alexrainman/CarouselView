@@ -7,6 +7,7 @@ using Android.Util;
 using Java.Lang;
 using CarouselView.FormsPlugin.Abstractions;
 using Android.Support.V4.Content;
+using System;
 
 /*
  * Copyright 2013 Tomasz Cielecki
@@ -29,7 +30,7 @@ using Android.Support.V4.Content;
 
 namespace CarouselView.FormsPlugin.Android
 {
-	public class CirclePageIndicator : View, PageIndicator
+	public class CirclePageIndicator : ViewGroup, PageIndicator
 	{
 		const int HORIZONTAL = 0;
 		const int VERTICAL = 1;
@@ -97,7 +98,6 @@ namespace CarouselView.FormsPlugin.Android
 		{
 			mPaintPageFill.Color = fillColor;
 			Invalidate();
-
 		}
 
 		public void SetPageColor(Color pageColor)
@@ -427,6 +427,11 @@ namespace CarouselView.FormsPlugin.Android
 			state.PutInt("mCurrentPage", mCurrentPage);
 
 			return state;
+		}
+
+		protected override void OnLayout(bool changed, int l, int t, int r, int b)
+		{
+			//throw new NotImplementedException();
 		}
 	}
 }

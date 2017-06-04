@@ -21,6 +21,14 @@ Xamarin.Forms.Init();
 CarouselViewRenderer.Init();
 ```
 
+In UWP platform:
+
+```
+List<Assembly> assembliesToInclude = new List<Assembly>();
+assembliesToInclude.Add(typeof(CarouselViewRenderer).GetTypeInfo().Assembly);
+Xamarin.Forms.Forms.Init(e, assembliesToInclude);
+```
+
 **C#:**
 
 ```
@@ -88,7 +96,7 @@ Or, template selector in your ViewModel:
 
 ```IndicatorsShape```: Indicators shape (default Circle).
 
-```ShowIndicators```: hide/show page indicators (default false).
+```ShowIndicators```: hide/show page indicators (default false, set to false when ItemsSource is too long to avoid loading issues in iOS and UWP).
 
 ```ItemsSource```: IEnumerable. List of objects used as BindingContext of each view.
 
@@ -165,6 +173,8 @@ public async void OnPrev(object sender, TappedEventArgs e)
 
 #### Tips
 
+- When using the control with a long list of items, set ShowIndicators to false to avoid loading issues in iOS and UWP.
+
 - If you have memory leaks in Android when using the Carousel with images, it's not the control itself. It's Xamarin Android not handling images correctly. To solve the problem you can use [FFImageLoading](https://github.com/luberda-molinet/FFImageLoading) making sure that you set this properties:
 
 ```
@@ -180,6 +190,12 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 * [alexrainman](https://github.com/alexrainman)
 
 #### Release Notes
+
+4.2.8
+
+[iOS] Version 4.2.7 - Fast scrolling is causing crash bug #134 (going back to 4.2.6 memory leak fix)
+
+[Update] Significant performance step backwards bug duplicate #141 (fixed, related to page indicators)
 
 4.2.7
 

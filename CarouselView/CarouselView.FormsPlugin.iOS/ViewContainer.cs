@@ -11,8 +11,10 @@ namespace CarouselView.FormsPlugin.iOS
 
 		protected override void Dispose(bool disposing)
 		{
-			if (disposing)
-			{
+			// because this runs in the finalizer thread and disposing is equal false
+            InvokeOnMainThread( () => {
+			//if (disposing)
+			//{
 				// Significant Memory Leak for iOS when using custom layout for page content #125
 				// Thanks to johnnysbug for the help!
 				foreach (var view in View.Subviews)
@@ -24,7 +26,8 @@ namespace CarouselView.FormsPlugin.iOS
 				View.RemoveFromSuperview();
 				View.Dispose();
 				View = null;
-			}
+			//}
+			});
 
 			base.Dispose(disposing);
 		}

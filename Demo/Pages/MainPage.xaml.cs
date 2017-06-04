@@ -39,6 +39,8 @@ namespace Demo
 					_vm.ItemsSource.Clear();
 					//_vm.ItemsSource.Move(0, 4);
 					//_vm.ItemsSource[0] = 5;
+					//myCarousel.IndicatorsShape = IndicatorsShape.Circle;
+					//myCarousel.ShowIndicators = !myCarousel.ShowIndicators;
 				})
 			});
 
@@ -84,11 +86,16 @@ namespace Demo
 		{
 			if (_vm.ItemsSource != null)
 			{
-				_vm.ItemsSource.Add(_vm.ItemsSource.Count + 1);
-
 				// Do this to trigger PositionSelected
 				if (_vm.ItemsSource.Count > 0)
-				   _vm.Position = _vm.ItemsSource.Count - 1;
+				{
+					_vm.ItemsSource.Add(_vm.ItemsSource.Max() + 1);
+					_vm.Position = _vm.ItemsSource.Count - 1;
+				}
+				else
+				{
+					_vm.ItemsSource.Add(0);
+				}
 
 				// Do this to refresh Prev/Next visibility
                 //ConfigureButtons();

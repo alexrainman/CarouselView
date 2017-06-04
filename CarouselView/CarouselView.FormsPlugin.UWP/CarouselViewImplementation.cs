@@ -171,18 +171,17 @@ namespace CarouselView.FormsPlugin.UWP
                     break;
                 case "IndicatorsTintColor":
                     fillColor = (SolidColorBrush)converter.Convert(Element.IndicatorsTintColor, null, null, null);
-                    SetIndicators();
+                    UpdateIndicatorsTint();
                     break;
                 case "CurrentPageIndicatorTintColor":
                     selectedColor = (SolidColorBrush)converter.Convert(Element.CurrentPageIndicatorTintColor, null, null, null);
-                    SetIndicators();
+                    UpdateIndicatorsTint();
                     break;
                 case "IndicatorsShape":
                     SetIndicators();
                     break;
                 case "ShowIndicators":
-                    if (indicators != null)
-                        indicators.Visibility = Element.ShowIndicators ? Visibility.Visible : Visibility.Collapsed;
+                    SetIndicators();
                     break;
                 case "ItemsSource":
 					if (Element != null)
@@ -229,7 +228,7 @@ namespace CarouselView.FormsPlugin.UWP
             if (Element != null && !isSwiping)
             {
                 Element.Position = flipView.SelectedIndex;
-                UpdateIndicators();
+                UpdateIndicatorsTint();
 
                 Element.PositionSelected?.Invoke(Element, flipView.SelectedIndex);
             }
@@ -289,6 +288,8 @@ namespace CarouselView.FormsPlugin.UWP
 
         public void SetNativeView()
         {
+            CleanUpFlipView();
+
             // Orientation BP
             if (Element.Orientation == CarouselViewOrientation.Horizontal)
                 nativeView = new FlipViewControl();
@@ -322,15 +323,6 @@ namespace CarouselView.FormsPlugin.UWP
             // CurrentPageIndicatorTintColor BP
             selectedColor = (SolidColorBrush)converter.Convert(Element.CurrentPageIndicatorTintColor, null, null, null);
 
-            // INDICATORS
-            indicators = nativeView.FindName("indicators") as StackPanel;
-
-            // IndicatorsShape BP
-            SetIndicators();
-
-            // ShowIndicators BP
-            indicators.Visibility = Element.ShowIndicators ? Visibility.Visible : Visibility.Collapsed;
-
             flipView.Loaded += FlipView_Loaded;
             flipView.SelectionChanged += FlipView_SelectionChanged;
             flipView.SizeChanged += FlipView_SizeChanged;
@@ -344,32 +336,45 @@ namespace CarouselView.FormsPlugin.UWP
             }
 
             SetNativeControl(nativeView);
+
+            // INDICATORS
+            indicators = nativeView.FindName("indicators") as StackPanel;
+            SetIndicators();
         }
+
+#region indicators
 
         void SetIndicators()
         {
-			if (Element != null)
-			{
-				var dots = new List<Shape>();
+            var dotsPanel = nativeView.FindName("dotsPanel") as ItemsControl;
 
-				if (Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
-				{
-					int i = 0;
-					foreach (var item in Element.ItemsSource)
-					{
-						dots.Add(CreateDot(i, Element.Position));
-						i++;
-					}
-				}
+            if (Element.ShowIndicators)
+            {
+                var dots = new List<Shape>();
 
-				Dots = new ObservableCollection<Shape>(dots);
+                if (Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
+                {
+                    int i = 0;
+                    foreach (var item in Element.ItemsSource)
+                    {
+                        dots.Add(CreateDot(i, Element.Position));
+                        i++;
+                    }
+                }
 
-				var dotsPanel = nativeView.FindName("dotsPanel") as ItemsControl;
-				dotsPanel.ItemsSource = Dots;
-			}
+                Dots = new ObservableCollection<Shape>(dots);
+                dotsPanel.ItemsSource = Dots;
+            }
+            else
+            {
+                dotsPanel.ItemsSource = new List<Shape>();
+            }
+
+            // ShowIndicators BP
+            indicators.Visibility = Element.ShowIndicators ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        void UpdateIndicators()
+        void UpdateIndicatorsTint()
         {
             var dotsPanel = nativeView.FindName("dotsPanel") as ItemsControl;
             int i = 0;
@@ -379,6 +384,8 @@ namespace CarouselView.FormsPlugin.UWP
                 i++;
             }
         }
+
+#endregion
 
         void InsertPage(object item, int position)
 		{
@@ -443,7 +450,7 @@ namespace CarouselView.FormsPlugin.UWP
 					Element.Position = flipView.SelectedIndex;
 
 					Dots.RemoveAt(position);
-					UpdateIndicators();
+					UpdateIndicatorsTint();
 
                     isSwiping = false;
 
@@ -554,23 +561,31 @@ namespace CarouselView.FormsPlugin.UWP
             return _list;
         }*/
 
+        void CleanUpFlipView()
+        {
+            if (indicators != null)
+            {
+                indicators = null;
+            }
+
+            if (flipView != null)
+            {
+                flipView.SelectionChanged -= FlipView_SelectionChanged;
+                flipView = null;
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && !_disposed)
             {
-                if (flipView != null)
-                {
-                    flipView.SelectionChanged -= FlipView_SelectionChanged;
-                    flipView = null;
-                }
+                CleanUpFlipView();
 
                 if (Element != null)
                 {
                     if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
                         ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
                 }
-
-                indicators = null;
 
                 nativeView = null;
 
