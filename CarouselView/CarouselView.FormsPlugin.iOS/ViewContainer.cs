@@ -9,7 +9,8 @@ namespace CarouselView.FormsPlugin.iOS
 		// To save current position
 		public object Tag { get; set; }
 
-		protected override void Dispose(bool disposing)
+		// Commented because Crash due to disposed objects when jumping back and forth #143
+		/*protected override void Dispose(bool disposing)
 		{
 			// because this runs in the finalizer thread and disposing is equal false
             InvokeOnMainThread( () => {
@@ -30,7 +31,7 @@ namespace CarouselView.FormsPlugin.iOS
 			});
 
 			base.Dispose(disposing);
-		}
+		}*/
 	}
 }
 

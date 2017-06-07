@@ -36,11 +36,12 @@ namespace Demo
 				Text = "Reset",
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() => {
-					_vm.ItemsSource.Clear();
+					//_vm.ItemsSource.Clear();
 					//_vm.ItemsSource.Move(0, 4);
 					//_vm.ItemsSource[0] = 5;
 					//myCarousel.IndicatorsShape = IndicatorsShape.Circle;
 					//myCarousel.ShowIndicators = !myCarousel.ShowIndicators;
+					_vm.Position = _vm.Position == 0 ? 3 : 0;
 				})
 			});
 
@@ -67,7 +68,9 @@ namespace Demo
 		public void PositionSelected (object sender, int position)
 		{
 			ConfigureButtons();
+			Debug.WriteLine("Position parameter " + position + " selected");
 			Debug.WriteLine("Position " + myCarousel.Position + " selected");
+
 		}
 
 		public void OnPrev (object sender, TappedEventArgs e)

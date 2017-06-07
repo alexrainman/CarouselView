@@ -191,6 +191,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+4.2.9
+
+[iOS] Crash due to disposed objects when jumping back and forth #143 (removing version 4.2.6 memory leak fix)
+
 4.2.8
 
 [iOS] Version 4.2.7 - Fast scrolling is causing crash bug #134 (going back to 4.2.6 memory leak fix)
