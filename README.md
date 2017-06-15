@@ -191,6 +191,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+4.3.0
+
+[iOS] Finally a fix that works to avoid memory leaks with custom views.
+
 4.2.9
 
 [iOS] Crash due to disposed objects when jumping back and forth #143 (removing version 4.2.6 memory leak fix)
