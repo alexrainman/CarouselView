@@ -10,20 +10,16 @@ namespace Demo
 	{
 		public App ()
 		{
-			// The root page of your application
-			MainPage = new NavigationPage (new MainPage ());
+            // The root page of your application
+            MainPage = new NavigationPage (new MainPage ());
 
-			/*var viewModel = new MyViewModel();
-			var carouselPage = new LeakPage()
-			{
-				BindingContext = viewModel
-			};
-
-			MainPage = new NavigationPage(carouselPage);*/
+			//MainPage = new NavigationPage(new LeakPage());
 
 			//MainPage = new RootPage();
 
 			//MainPage = new NavigationPage(new HeightIssuePage ());
+
+            //MainPage = new NavigationPage(new Pages.ListViewCarousel());
 		}
 
 		protected override void OnStart ()

@@ -18,8 +18,8 @@ namespace Demo.Droid
 	{
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
-			FormsAppCompatActivity.ToolbarResource = Resource.Layout.Toolbar;
-			FormsAppCompatActivity.TabLayoutResource = Resource.Layout.TabLayout;
+			ToolbarResource = Resource.Layout.Toolbar;
+			TabLayoutResource = Resource.Layout.TabLayout;
 
 			base.OnCreate (savedInstanceState);
 

@@ -12,6 +12,26 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
+/*
+ * Significant Memory Leak for iOS when using custom layout for page content #125
+ * 
+ * The problem:
+ * 
+ * To facilitate smooth swiping, UIPageViewController keeps a ghost copy of the pages in a collection named
+ * ChildViewControllers.
+ * This collection is handled internally by UIPageViewController to keep a maximun of 3 items, but
+ * when a custom view is used from Xamarin.Forms side, the views hang in memory and are not collected no matter if
+ * internally the UIViewController is disposed by UIPageViewController.
+ * 
+ * Fix explained:
+ * 
+ * Some code has been added to GetPreviousViewController and GetNextViewController to return
+ * a child controller of exists in ChildViewController.
+ * Also Dispose has been implemented in ViewContainer to release the custom views.
+ * Dispose is called in the finalizer thread (UI) so the code to release the views from memory has been
+ * wrapped in InvokeOnMainThread.
+ */
+
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.iOS
 {
@@ -110,8 +130,6 @@ namespace CarouselView.FormsPlugin.iOS
 						Element.Position = e.NewStartingIndex;
 						isSwiping = false;
 						SetIndicatorsCurrentPage();
-
-						//CleanupChildViewControllers();
 					});
 				}
 			}
@@ -129,7 +147,6 @@ namespace CarouselView.FormsPlugin.iOS
 
 					pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
 					{
-						//CleanupChildViewControllers();
 					});
 				}
 			}
@@ -242,7 +259,7 @@ namespace CarouselView.FormsPlugin.iOS
 		#region adapter callbacks
 		void PageController_DidFinishAnimating(object sender, UIPageViewFinishedAnimationEventArgs e)
 		{
-			if (e.Finished)
+            if (e.Completed)
 			{
 				var controller = (ViewContainer)pageController.ViewControllers[0];
 				var position = Source.IndexOf(controller.Tag);
@@ -252,8 +269,6 @@ namespace CarouselView.FormsPlugin.iOS
 				isSwiping = false;
 				SetIndicatorsCurrentPage();
 				Element.PositionSelected?.Invoke(Element, position);
-
-				//CleanupChildViewControllers();
 			}
 		}
 		#endregion
@@ -316,7 +331,16 @@ namespace CarouselView.FormsPlugin.iOS
 					}
 					else
 					{
-						int previousPageIndex = position - 1;
+                        int previousPageIndex = position - 1;
+
+						// Significant Memory Leak for iOS when using custom layout for page content #125
+						var newTag = Source[previousPageIndex];
+                        foreach (ViewContainer child in pageController.ChildViewControllers)
+                        {
+                            if (child.Tag == newTag)
+                                return child;
+                        }
+						
 						return CreateViewController(previousPageIndex);
 					}
 				}
@@ -343,6 +367,15 @@ namespace CarouselView.FormsPlugin.iOS
 					else
 					{
 						int nextPageIndex = position + 1;
+
+						// Significant Memory Leak for iOS when using custom layout for page content #125
+						var newTag = Source[nextPageIndex];
+                        foreach (ViewContainer child in pageController.ChildViewControllers)
+						{
+							if (child.Tag == newTag)
+								return child;
+						}
+
 						return CreateViewController(nextPageIndex);
 					}
 				}
@@ -359,9 +392,9 @@ namespace CarouselView.FormsPlugin.iOS
 			if (Source != null && Source?.Count > 0)
 			{
 				var firstViewController = CreateViewController(Element.Position);
+
 				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
 				{
-					//CleanupChildViewControllers();
 				});
 			}
 
@@ -506,8 +539,6 @@ namespace CarouselView.FormsPlugin.iOS
 
 					if (position <= prevPos)
 						Element.PositionSelected?.Invoke(Element, Element.Position);
-
-					//CleanupChildViewControllers();
 				});
 			}
 		}
@@ -540,6 +571,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 						var direction = position == 0 ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
 						var firstViewController = CreateViewController(newPos);
+
 						pageController.SetViewControllers(new[] { firstViewController }, direction, Element.AnimateTransition, s =>
 						{
 							isSwiping = true;
@@ -550,22 +582,19 @@ namespace CarouselView.FormsPlugin.iOS
 
 							// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 							Element.PositionSelected?.Invoke(Element, Element.Position);
-
-							//CleanupChildViewControllers();
 						});
 					}
 					else
 					{
 
 						var firstViewController = pageController.ViewControllers[0];
+
 						pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
 						{
 							SetIndicatorsCount();
 
 							// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 							Element.PositionSelected?.Invoke(Element, Element.Position);
-
-							//CleanupChildViewControllers();
 						});
 					}
 				}
@@ -580,40 +609,21 @@ namespace CarouselView.FormsPlugin.iOS
 		{
 			if (pageController != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
 			{
-				Console.WriteLine(pageController.ChildViewControllers.Count());
 				// Transition direction based on prevPosition
 				var direction = position >= prevPosition ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
 				prevPosition = position;
 
-				var firstViewController = CreateViewController(position);
+                var firstViewController = CreateViewController(position);
+
 				pageController.SetViewControllers(new[] { firstViewController }, direction, Element.AnimateTransition, s =>
 				{
 					SetIndicatorsCurrentPage();
 
 					// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 					Element.PositionSelected?.Invoke(Element, position);
-
-					//CleanupChildViewControllers();
 				});
 			}
 		}
-
-		// TODO: this is causing a crash in fast scrolling :( https://github.com/alexrainman/CarouselView/issues/134
-		// Significant Memory Leak for iOS when using custom layout for page content #125
-		// Thanks to johnnysbug for the help!
-		/*void CleanupChildViewControllers()
-		{
-			//Cleanup non adjacent controllers
-			var childControllers = pageController.ChildViewControllers;
-			foreach (var childController in childControllers)
-			{
-				var index = Element.ItemsSource.GetList().IndexOf(((ViewContainer)childController).Tag);
-				if (index < (Element.Position - 1) || index > (Element.Position + 1))
-				{
-					childController.Dispose();
-				}
-			}
-		}*/
 
 		#region adapter
 		UIViewController CreateViewController(int index)

@@ -14,12 +14,11 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!--<StackLayout
+        <StackLayout
                      VerticalOptions="FillAndExpand"
-                     Grid.Row="0">-->
+                     Grid.Row="0">
 
         <cv:CarouselViewControl x:Name="CardCarousel"
-                                Grid.Row="0"
                                 Margin="8"
                                 HorizontalOptions="FillAndExpand"
                                 VerticalOptions="FillAndExpand"
@@ -33,7 +32,7 @@
 
         </cv:CarouselViewControl>
 
-        <!--</StackLayout>-->
+        </StackLayout>
 
         <Button Grid.Row="1"
                 Margin="16,32,16,16"

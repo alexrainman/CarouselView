@@ -8,13 +8,29 @@ namespace Demo
 {
 	public partial class LeakPage : ContentPage
 	{
+        MyViewModel _vm;
+
 		public LeakPage()
 		{
 			InitializeComponent();
+
+            BindingContext = _vm = new MyViewModel();
+		}
+
+		public void OnPrev(object sender, TappedEventArgs e)
+		{
+			if (myCarousel.Position > 0)
+				myCarousel.Position--;
+		}
+
+		public void OnNext(object sender, TappedEventArgs e)
+		{
+            if (myCarousel.Position < _vm.Pages?.Count - 1)
+				myCarousel.Position++;
 		}
 	}
 
-	[ImplementPropertyChanged]
+    [AddINotifyPropertyChangedInterface]
 	public class MyViewModel
 	{
 		public ObservableCollection<PageViewModel> Pages { get; set; }
@@ -38,7 +54,7 @@ namespace Demo
 		}
 	}
 
-	[ImplementPropertyChanged]
+    [AddINotifyPropertyChangedInterface]
 	public class PageViewModel
 	{
 		public string Text { get; set; }
@@ -50,7 +66,7 @@ namespace Demo
 		}
 	}
 
-	[ImplementPropertyChanged]
+    [AddINotifyPropertyChangedInterface]
 	public class ItemViewModel
 	{
 		public double Height { get; set; }

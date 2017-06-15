@@ -17,7 +17,7 @@
 			<SearchBar/>
 			<Slider/>
 			<Stepper/>
-			<Switch/>
+			<Switch />
 			<TimePicker/>
 
 			<StackLayout Orientation="Horizontal">

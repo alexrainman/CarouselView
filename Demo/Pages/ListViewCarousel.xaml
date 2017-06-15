@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Demo.Pages.ListViewCarousel"
+    xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
+	
+    <ListView x:Name="list" ItemsSource="{Binding Items}">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <cv:CarouselViewControl HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand"
+                                ItemsSource="{Binding .}">
+              <cv:CarouselViewControl.ItemTemplate>
+                <DataTemplate>
+                    <Button BackgroundColor="Blue" Text="hello world 4" />
+                </DataTemplate>
+              </cv:CarouselViewControl.ItemTemplate>
+            </cv:CarouselViewControl>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+    
+</ContentPage>

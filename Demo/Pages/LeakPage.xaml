@@ -8,7 +8,7 @@
         <ToolbarItem Text="Shrink" Command="{Binding Shrink}" Order="Primary" Priority="0"/>
     </ContentPage.ToolbarItems>
 	
-<cv:CarouselViewControl 
+    <!--<cv:CarouselViewControl 
         ItemsSource="{Binding Pages}"
         ShowIndicators="true"
         VerticalOptions="FillAndExpand" 
@@ -22,7 +22,7 @@
                 </local:MyStackLayout>
             </DataTemplate>
         </cv:CarouselViewControl.ItemTemplate>
-    </cv:CarouselViewControl>
+    </cv:CarouselViewControl>-->
 
 	<!--<ContentPage.Resources>
         <ResourceDictionary>
@@ -49,5 +49,66 @@
     <ContentView ControlTemplate="{StaticResource carousel}" 
                  HorizontalOptions="FillAndExpand" 
                  VerticalOptions="FillAndExpand" />-->
+
+    <Grid RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <cv:CarouselViewControl x:Name="myCarousel"
+            ItemsSource="{Binding Pages}"
+            ShowIndicators="true"
+            VerticalOptions="FillAndExpand" 
+            HorizontalOptions="FillAndExpand">
+            <cv:CarouselViewControl.ItemTemplate>
+                <DataTemplate>
+                    <local:MyStackLayout Orientation="Vertical">
+                        <Label BackgroundColor="Red" HeightRequest="{Binding Height}" />
+                        <Label BackgroundColor="Blue" HeightRequest="{Binding Height}" />
+                        <Label BackgroundColor="Green" HeightRequest="{Binding Height}" />
+                    </local:MyStackLayout>
+                </DataTemplate>
+            </cv:CarouselViewControl.ItemTemplate>
+        </cv:CarouselViewControl>
+        
+
+        <Grid Grid.Row="1"
+              Grid.Column="0"
+              BackgroundColor="Silver"
+              Padding="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="80" />
+            </Grid.ColumnDefinitions>
+            <Label x:Name="prevBtn"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   HorizontalTextAlignment="Start"
+                   Text="Prev"
+                   VerticalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnPrev" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label x:Name="nextBtn"
+                   Grid.Row="0"
+                   Grid.Column="2"
+                   HorizontalTextAlignment="End"
+                   Text="Next"
+                   VerticalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNext" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+    </Grid>
 	
 </ContentPage>

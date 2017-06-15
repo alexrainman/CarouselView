@@ -2,14 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Demo.HeightIssuePage"
 	xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
 
-	<!--<Grid x:Name="LayoutRoot"
+	<Grid x:Name="LayoutRoot"
           Padding="0"
           RowSpacing="0"
           ColumnSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>-->
+        </Grid.RowDefinitions>
 
         <StackLayout
                      VerticalOptions="FillAndExpand"
@@ -29,15 +29,14 @@
                 </cv:CarouselViewControl.ItemTemplate>
 
             </cv:CarouselViewControl>
-
-		    <Button Text="NEW RIDE"
-                VerticalOptions="Center"
-                Margin="16,32,16,16"
-                Grid.Row="1" />
 		
         </StackLayout>
 
-
-    <!--</Grid>-->
+        <Button Text="NEW RIDE"
+                VerticalOptions="Center"
+                Margin="16,32,16,16"
+                Grid.Row="1" />
+        
+    </Grid>
 	
 </ContentPage>

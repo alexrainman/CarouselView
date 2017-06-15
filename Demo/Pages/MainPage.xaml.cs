@@ -68,7 +68,6 @@ namespace Demo
 		public void PositionSelected (object sender, int position)
 		{
 			ConfigureButtons();
-			Debug.WriteLine("Position parameter " + position + " selected");
 			Debug.WriteLine("Position " + myCarousel.Position + " selected");
 
 		}

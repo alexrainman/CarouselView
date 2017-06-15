@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace Demo
 {
-	[ImplementPropertyChanged]
+    [AddINotifyPropertyChangedInterface]
 	public class NoSwipeViewModel
 	{
 		public NoSwipeViewModel()
