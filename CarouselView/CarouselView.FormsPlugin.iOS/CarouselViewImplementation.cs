@@ -636,11 +636,16 @@ namespace CarouselView.FormsPlugin.iOS
 				bindingContext = Source.Cast<object>().ElementAt(index);
 
 			var dt = bindingContext as DataTemplate;
+			var view = bindingContext as View;
 
 			// Support for List<DataTemplate> as ItemsSource
 			if (dt != null)
 			{
 				formsView = (View)dt.CreateContent();
+			}
+			else if (view != null)
+			{
+				formsView = view;
 			}
 			else
 			{
