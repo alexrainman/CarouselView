@@ -473,11 +473,16 @@ namespace CarouselView.FormsPlugin.UWP
             var bindingContext = item;
 
 			var dt = bindingContext as Xamarin.Forms.DataTemplate;
+			var view = bindingContext as Xamarin.Forms.View;
 
-            // Support for List<DataTemplate> as ItemsSource
-            if (dt != null)
+			// Support for List<DataTemplate> as ItemsSource
+			if (dt != null)
 			{
 				formsView = (Xamarin.Forms.View)dt.CreateContent();
+			}
+			else if (view != null)
+			{
+				formsView = view;
 			}
 			else {
 

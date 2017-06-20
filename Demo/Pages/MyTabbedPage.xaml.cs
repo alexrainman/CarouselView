@@ -11,9 +11,9 @@ namespace Demo
 		{
 			InitializeComponent();
 
-			myCarousel.ItemsSource = new List<DataTemplate>()
+			myCarousel.ItemsSource = new List<object>()
 			{
-				new DataTemplate(() => { return new PhotoUrl(); }),
+				new PhotoUrl(),
 				new DataTemplate(() => { return new Bio(); }),
 				new DataTemplate(() => { return new ContactInfo(); })
 			};
