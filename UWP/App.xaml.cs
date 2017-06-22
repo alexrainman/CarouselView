@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using CarouselView.FormsPlugin.Abstractions;
 
 namespace Demo.UWP
 {
@@ -59,7 +60,7 @@ namespace Demo.UWP
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
 				List<Assembly> assembliesToInclude = new List<Assembly>();
-				assembliesToInclude.Add(typeof(CarouselViewRenderer).GetTypeInfo().Assembly);
+				assembliesToInclude.Add(typeof(CarouselViewRenderer<CarouselViewControl>).GetTypeInfo().Assembly);
 				Xamarin.Forms.Forms.Init(e, assembliesToInclude);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)

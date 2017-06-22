@@ -32,13 +32,13 @@ using Xamarin.Forms.Platform.iOS;
  * wrapped in InvokeOnMainThread.
  */
 
-[assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
+[assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer<CarouselViewControl>))]
 namespace CarouselView.FormsPlugin.iOS
 {
 	/// <summary>
 	/// CarouselView Renderer
 	/// </summary>
-	public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, UIView>
+	public class CarouselViewRenderer<T> : ViewRenderer<T, UIView> where T : View, ICarouselView
 	{
 		UIPageViewController pageController;
 		UIPageControl pageControl;
@@ -58,7 +58,7 @@ namespace CarouselView.FormsPlugin.iOS
 		double ElementWidth;
 		double ElementHeight;
 
-		protected override void OnElementChanged(ElementChangedEventArgs<CarouselViewControl> e)
+		protected override void OnElementChanged(ElementChangedEventArgs<T> e)
 		{
 			base.OnElementChanged(e);
 

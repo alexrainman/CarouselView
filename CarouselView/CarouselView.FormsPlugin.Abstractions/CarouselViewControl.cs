@@ -6,10 +6,10 @@ using System.Collections.Generic;
 
 namespace CarouselView.FormsPlugin.Abstractions
 {
-	/// <summary>
+    /// <summary>
 	/// CarouselView Interface
 	/// </summary>
-	public class CarouselViewControl : View
+	public class CarouselViewControl : View, ICarouselView
 	{
 		public static readonly BindableProperty OrientationProperty = BindableProperty.Create("Orientation", typeof(CarouselViewOrientation), typeof(CarouselViewControl), CarouselViewOrientation.Horizontal);
 
@@ -109,6 +109,6 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(ShowArrowsProperty, value); }
 		}
 
-		public EventHandler<int> PositionSelected;
+		public EventHandler<int> PositionSelected { get; set; }
 	}
 }

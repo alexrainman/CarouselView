@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CarouselViewControl.cs" />
+    <Compile Include="ICarouselView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CarouselViewOrientation.cs" />
     <Compile Include="IndicatorsShape.cs" />
