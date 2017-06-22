@@ -17,6 +17,7 @@ using Rectangle = Windows.UI.Xaml.Shapes.Rectangle;
 using Thickness = Windows.UI.Xaml.Thickness;
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer<CarouselViewControl>))]
+[assembly: ExportRenderer(typeof(CarouselViewLayout), typeof(CarouselViewRenderer<CarouselViewLayout>))]
 namespace CarouselView.FormsPlugin.UWP
 {
     /// <summary>

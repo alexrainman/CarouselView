@@ -27,6 +27,7 @@ using System.Collections.Generic;
  */
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer<CarouselViewControl>))]
+[assembly: ExportRenderer(typeof(CarouselViewLayout), typeof(CarouselViewRenderer<CarouselViewLayout>))]
 namespace CarouselView.FormsPlugin.Android
 {
 	/// <summary>
@@ -465,8 +466,15 @@ namespace CarouselView.FormsPlugin.Android
 				var nativeConverted = formsView.ToAndroid(new Rectangle (0, 0, Element.Width, Element.Height));
 				nativeConverted.Tag = new Tag() { BindingContext = bindingContext }; //position;
 
-                //nativeConverted.SaveEnabled = true;
-                //nativeConverted.RestoreHierarchyState(mViewStates);
+				//nativeConverted.SaveEnabled = true;
+				//nativeConverted.RestoreHierarchyState(mViewStates);
+
+				if (nativeConverted.Parent != null)
+				{
+					var viewPagerParent = nativeConverted.Parent as AViews.IViewManager;
+
+					viewPagerParent.RemoveView(nativeConverted);
+				}
 
 				var pager = (ViewPager)container;
 				pager.AddView (nativeConverted);

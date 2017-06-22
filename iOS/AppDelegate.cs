@@ -15,8 +15,8 @@ namespace Demo.iOS
 		{
 			global::Xamarin.Forms.Forms.Init ();
 
-			//  Is this still needed?  If so do for layout as well.
 			CarouselViewRenderer<CarouselViewControl>.Init ();
+			CarouselViewRenderer<CarouselViewLayout>.Init();
 
 			LoadApplication (new App ());
 

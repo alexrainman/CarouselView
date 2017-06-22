@@ -33,6 +33,7 @@ using Xamarin.Forms.Platform.iOS;
  */
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer<CarouselViewControl>))]
+[assembly: ExportRenderer(typeof(CarouselViewLayout), typeof(CarouselViewRenderer<CarouselViewLayout>))]
 namespace CarouselView.FormsPlugin.iOS
 {
 	/// <summary>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:abstractions="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+             x:Class="Demo.Pages.CarouselLayoutTest">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Testing CarouselViewLayout" />
+
+            <abstractions:CarouselViewLayout 
+                ShowArrows="true" 
+                ShowIndicators="true"   
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+                
+                <Label Text="First pane"></Label>
+                <Label Text="Second pane"></Label>
+                <Label Text="Third pane"></Label>
+            </abstractions:CarouselViewLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

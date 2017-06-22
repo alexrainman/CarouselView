@@ -25,7 +25,8 @@ namespace Demo.Droid
 
 			global::Xamarin.Forms.Forms.Init (this, savedInstanceState);
 
-			CarouselViewRenderer.Init ();
+			CarouselViewRenderer<CarouselViewControl>.Init ();
+			CarouselViewRenderer<CarouselViewLayout>.Init();
 
 			LoadApplication (new App ());
 		}

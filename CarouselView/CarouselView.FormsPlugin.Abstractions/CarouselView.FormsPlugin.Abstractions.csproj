@@ -38,6 +38,7 @@
     <DocumentationFile>bin\Release\CarouselView.FormsPlugin.Abstractions.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CarouselViewLayout.cs" />
     <Compile Include="CarouselViewControl.cs" />
     <Compile Include="ICarouselView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

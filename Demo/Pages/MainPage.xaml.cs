@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using CarouselView.FormsPlugin.Abstractions;
 using System.Linq;
+using Demo.Pages;
 
 namespace Demo
 {
@@ -54,6 +55,16 @@ namespace Demo
 					//Navigation.PushAsync(new NoSwipePage());
 					//Navigation.PushAsync(new SecondPage());
 					Navigation.PushAsync(new MyTabbedPage());
+				})
+			});
+
+			ToolbarItems.Add(new ToolbarItem
+			{
+				Text = "Layout Test",
+				Order = ToolbarItemOrder.Primary,
+				Command = new Command(() =>
+				{
+					Navigation.PushAsync(new CarouselLayoutTest());
 				})
 			});
 		}
