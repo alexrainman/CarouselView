@@ -32,13 +32,14 @@ using Xamarin.Forms.Platform.iOS;
  * wrapped in InvokeOnMainThread.
  */
 
-[assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
+[assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer<CarouselViewControl>))]
+[assembly: ExportRenderer(typeof(CarouselViewLayout), typeof(CarouselViewRenderer<CarouselViewLayout>))]
 namespace CarouselView.FormsPlugin.iOS
 {
 	/// <summary>
 	/// CarouselView Renderer
 	/// </summary>
-	public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, UIView>
+	public class CarouselViewRenderer<T> : ViewRenderer<T, UIView> where T : View, ICarouselView
 	{
 		UIPageViewController pageController;
 		UIPageControl pageControl;
@@ -58,7 +59,7 @@ namespace CarouselView.FormsPlugin.iOS
 		double ElementWidth;
 		double ElementHeight;
 
-		protected override void OnElementChanged(ElementChangedEventArgs<CarouselViewControl> e)
+		protected override void OnElementChanged(ElementChangedEventArgs<T> e)
 		{
 			base.OnElementChanged(e);
 
@@ -636,11 +637,16 @@ namespace CarouselView.FormsPlugin.iOS
 				bindingContext = Source.Cast<object>().ElementAt(index);
 
 			var dt = bindingContext as DataTemplate;
+			var view = bindingContext as View;
 
 			// Support for List<DataTemplate> as ItemsSource
 			if (dt != null)
 			{
 				formsView = (View)dt.CreateContent();
+			}
+			else if (view != null)
+			{
+				formsView = view;
 			}
 			else
 			{

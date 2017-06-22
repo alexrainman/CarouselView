@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using CarouselView.FormsPlugin.Abstractions;
 using Foundation;
 using UIKit;
 using CarouselView.FormsPlugin.iOS;
@@ -15,7 +15,8 @@ namespace Demo.iOS
 		{
 			global::Xamarin.Forms.Forms.Init ();
 
-			CarouselViewRenderer.Init ();
+			CarouselViewRenderer<CarouselViewControl>.Init ();
+			CarouselViewRenderer<CarouselViewLayout>.Init();
 
 			LoadApplication (new App ());
 

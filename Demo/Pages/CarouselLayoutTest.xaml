@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:abstractions="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+             xmlns:views="clr-namespace:Demo.Views;assembly=Demo"
+             x:Class="Demo.Pages.CarouselLayoutTest">
+    <ContentPage.Content>
+        <StackLayout>
+            <views:ViewWithBindingContextData x:Name="ANameWithBoundData"></views:ViewWithBindingContextData>
+            
+            <abstractions:CarouselViewLayout 
+                ShowArrows="true" 
+                ShowIndicators="true"   
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+                
+                <StackLayout>
+                    <Label Text="First pane"></Label>
+                    <Label Text="{Binding BindingContext.First, Source={x:Reference ANameWithBoundData}}"></Label>
+                </StackLayout>
+                <Label Text="{Binding BindingContext.Second, Source={x:Reference ANameWithBoundData}}"></Label>
+                <Label Text="{Binding BindingContext.Third, Source={x:Reference ANameWithBoundData}}"></Label>
+            </abstractions:CarouselViewLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

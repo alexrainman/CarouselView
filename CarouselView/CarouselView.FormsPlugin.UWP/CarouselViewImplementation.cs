@@ -11,19 +11,24 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Shapes;
 using System.Collections.Specialized;
+using Xamarin.Forms;
+using Button = Windows.UI.Xaml.Controls.Button;
+using Rectangle = Windows.UI.Xaml.Shapes.Rectangle;
+using Thickness = Windows.UI.Xaml.Thickness;
 
-[assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
+[assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer<CarouselViewControl>))]
+[assembly: ExportRenderer(typeof(CarouselViewLayout), typeof(CarouselViewRenderer<CarouselViewLayout>))]
 namespace CarouselView.FormsPlugin.UWP
 {
     /// <summary>
-    /// CarouselView Renderer
+    /// CarouselView Rendererab
     /// </summary>
-    public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, UserControl>
+    public class CarouselViewRenderer<T> : ViewRenderer<T, UserControl> where T : View, ICarouselView
     {
         UserControl nativeView;
         FlipView flipView;
         StackPanel indicators;
-
+            
         ColorConverter converter;
         SolidColorBrush selectedColor;
         SolidColorBrush fillColor;
@@ -42,7 +47,7 @@ namespace CarouselView.FormsPlugin.UWP
 
         bool _disposed;
 
-        protected override void OnElementChanged(ElementChangedEventArgs<CarouselViewControl> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<T> e)
         {
             base.OnElementChanged(e);
 
@@ -473,11 +478,16 @@ namespace CarouselView.FormsPlugin.UWP
             var bindingContext = item;
 
 			var dt = bindingContext as Xamarin.Forms.DataTemplate;
+			var view = bindingContext as Xamarin.Forms.View;
 
-            // Support for List<DataTemplate> as ItemsSource
-            if (dt != null)
+			// Support for List<DataTemplate> as ItemsSource
+			if (dt != null)
 			{
 				formsView = (Xamarin.Forms.View)dt.CreateContent();
+			}
+			else if (view != null)
+			{
+				formsView = view;
 			}
 			else {
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using Android.Content;
+using Android.Runtime;
 using Android.Support.V4.View;
 using Android.Util;
 using Android.Views;
@@ -16,6 +17,11 @@ namespace CarouselView.FormsPlugin.Android
 
 		public CustomViewPager(Context context, IAttributeSet attrs) : base(context, attrs)
 		{
+		}
+
+		public CustomViewPager(IntPtr intPtr, JniHandleOwnership jni) : base(intPtr, jni)
+		{
+		    //  I am a bit worried this is a clone constructor and we are not cloning isSwipingEnabled
 		}
 
 		public override bool OnTouchEvent(MotionEvent ev)

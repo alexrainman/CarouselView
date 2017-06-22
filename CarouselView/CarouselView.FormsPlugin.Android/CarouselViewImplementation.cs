@@ -26,13 +26,14 @@ using System.Collections.Generic;
  * 
  */
 
-[assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
+[assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer<CarouselViewControl>))]
+[assembly: ExportRenderer(typeof(CarouselViewLayout), typeof(CarouselViewRenderer<CarouselViewLayout>))]
 namespace CarouselView.FormsPlugin.Android
 {
 	/// <summary>
 	/// CarouselView Renderer
 	/// </summary>
-	public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, AViews.View>
+	public class CarouselViewRenderer<T> : ViewRenderer<T, AViews.View> where T : View, ICarouselView
 	{
 		AViews.View nativeView;
 		ViewPager viewPager;
@@ -42,7 +43,7 @@ namespace CarouselView.FormsPlugin.Android
 		//double ElementWidth;
         //double ElementHeight;
 
-		protected override void OnElementChanged(ElementChangedEventArgs<CarouselViewControl> e)
+		protected override void OnElementChanged(ElementChangedEventArgs<T> e)
 		{
 			base.OnElementChanged(e);
 
@@ -101,7 +102,7 @@ namespace CarouselView.FormsPlugin.Android
 			// NewStartingIndex contains the index where the item was moved to.
 			if (e.Action == NotifyCollectionChangedAction.Move)
 			{
-                var Source = ((PageAdapter)viewPager?.Adapter).Source;
+				var Source = ((PageAdapter<T>)viewPager?.Adapter).Source;
 
 				if (Element != null && viewPager != null && Source != null)
 				{
@@ -116,7 +117,7 @@ namespace CarouselView.FormsPlugin.Android
 			// then they contain the index where the item was replaced.
 			if (e.Action == NotifyCollectionChangedAction.Replace)
 			{
-                var Source = ((PageAdapter)viewPager?.Adapter).Source;
+				var Source = ((PageAdapter<T>)viewPager?.Adapter).Source;
 
 				if (Element != null && viewPager != null && Source != null)
 				{
@@ -131,7 +132,7 @@ namespace CarouselView.FormsPlugin.Android
 				if (Element != null && viewPager != null)
 				{
                     SetPosition();
-					viewPager.Adapter = new PageAdapter(Element);
+					viewPager.Adapter = new PageAdapter<T>(Element);
 					viewPager.SetCurrentItem(Element.Position, false);
 					indicators?.SetViewPager(viewPager);
 					Element.PositionSelected?.Invoke(Element, Element.Position);
@@ -193,7 +194,7 @@ namespace CarouselView.FormsPlugin.Android
 					if (Element != null && viewPager != null)
 					{
 						SetPosition();
-						viewPager.Adapter = new PageAdapter(Element);
+						viewPager.Adapter = new PageAdapter<T>(Element);
 						viewPager.SetCurrentItem(Element.Position, false);
 						indicators?.SetViewPager(viewPager);
 						Element.PositionSelected?.Invoke(Element, Element.Position);
@@ -204,7 +205,7 @@ namespace CarouselView.FormsPlugin.Android
 				case "ItemTemplate":
 					if (Element != null && viewPager != null)
 					{
-						viewPager.Adapter = new PageAdapter(Element);
+						viewPager.Adapter = new PageAdapter<T>(Element);
 						viewPager.SetCurrentItem(Element.Position, false);
 						indicators?.SetViewPager(viewPager);
 						Element.PositionSelected?.Invoke(Element, Element.Position);
@@ -280,7 +281,7 @@ namespace CarouselView.FormsPlugin.Android
 
 			viewPager = nativeView.FindViewById<ViewPager>(Resource.Id.pager);
 
-			viewPager.Adapter = new PageAdapter(Element);
+			viewPager.Adapter = new PageAdapter<T>(Element);
 			viewPager.SetCurrentItem(Element.Position, false);
 
 			// InterPageSpacing BP
@@ -332,7 +333,7 @@ namespace CarouselView.FormsPlugin.Android
 
 		void InsertPage(object item, int position)
 		{
-			var Source = ((PageAdapter)viewPager?.Adapter).Source;
+			var Source = ((PageAdapter<T>)viewPager?.Adapter).Source;
 
 			if (Element != null && viewPager != null && Source != null)
 			{
@@ -350,7 +351,7 @@ namespace CarouselView.FormsPlugin.Android
 		// Android ViewPager is the most complicated piece of code ever :)
 		async Task RemovePage(int position)
 		{
-			var Source = ((PageAdapter)viewPager?.Adapter).Source;
+			var Source = ((PageAdapter<T>)viewPager?.Adapter).Source;
 
 			if (Element != null && viewPager != null && Source != null && Source?.Count > 0) {
 				
@@ -399,9 +400,9 @@ namespace CarouselView.FormsPlugin.Android
 		}
 
 #region adapter
-		class PageAdapter : PagerAdapter
+		class PageAdapter<T> : PagerAdapter where T : View, ICarouselView
 		{
-			CarouselViewControl Element;
+			T Element;
 
 			// A local copy of ItemsSource so we can use CollectionChanged events
 			public List<object> Source;
@@ -410,7 +411,7 @@ namespace CarouselView.FormsPlugin.Android
 			//SparseArray<Parcelable> mViewStates = new SparseArray<Parcelable>();
 			//ViewPager mViewPager;
 
-			public PageAdapter(CarouselViewControl element)
+			public PageAdapter(T element)
 			{
 				Element = element;
 				Source = Element.ItemsSource != null ? new List<object>(Element.ItemsSource.GetList()) : null;
@@ -437,11 +438,16 @@ namespace CarouselView.FormsPlugin.Android
 				    bindingContext = Source.Cast<object> ().ElementAt (position);
 				
 				var dt = bindingContext as DataTemplate;
+				var view = bindingContext as View;
 
                 // Support for List<DataTemplate> as ItemsSource
 				if (dt != null)
 				{
 					formsView = (View)dt.CreateContent();
+				}
+				else if (view != null)
+				{
+					formsView = view;
 				}
 				else {
 
@@ -460,8 +466,15 @@ namespace CarouselView.FormsPlugin.Android
 				var nativeConverted = formsView.ToAndroid(new Rectangle (0, 0, Element.Width, Element.Height));
 				nativeConverted.Tag = new Tag() { BindingContext = bindingContext }; //position;
 
-                //nativeConverted.SaveEnabled = true;
-                //nativeConverted.RestoreHierarchyState(mViewStates);
+				//nativeConverted.SaveEnabled = true;
+				//nativeConverted.RestoreHierarchyState(mViewStates);
+
+				if (nativeConverted.Parent != null)
+				{
+					var viewPagerParent = nativeConverted.Parent as AViews.IViewManager;
+
+					viewPagerParent.RemoveView(nativeConverted);
+				}
 
 				var pager = (ViewPager)container;
 				pager.AddView (nativeConverted);

@@ -13,7 +13,8 @@
                                       InterPageSpacing="10"
                                       BackgroundColor="Red"
                                       Orientation="Horizontal"
-                                      ShowIndicators="true"/>
+                                      ShowIndicators="true"
+                                      ShowArrows="true"/>
 	</ContentPage>
 
 	<ContentPage Title="Second">
