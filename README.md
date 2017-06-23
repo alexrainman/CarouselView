@@ -183,8 +183,12 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Roadmap
 
+* Infinite scrolling
+* Events: Down, Up, Swiping, Scrolled
+* Indicators position
+* Transition animation speed
+* Indicators tap event
 * Load more event
-* Page indicators tap event
 
 #### Contributors
 * [alexrainman](https://github.com/alexrainman)
