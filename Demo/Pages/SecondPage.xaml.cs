@@ -13,12 +13,12 @@ namespace Demo
 
 			Title = "Data Templates";
 
-			myCarousel.ItemsSource = new List<DataTemplate>()
+			/*myCarousel.ItemsSource = new List<DataTemplate>()
 			{
 				new DataTemplate(() => { return new PhotoUrl(); }),
 				new DataTemplate(() => { return new Bio(); }),
 				new DataTemplate(() => { return new ContactInfo(); })
-			};
+			};*/
 
 			myCarousel.BindingContext = new Person()
 			{

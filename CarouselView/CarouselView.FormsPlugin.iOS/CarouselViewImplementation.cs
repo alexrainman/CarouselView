@@ -25,8 +25,8 @@ using Xamarin.Forms.Platform.iOS;
  * 
  * Fix explained:
  * 
- * Some code has been added to GetPreviousViewController and GetNextViewController to return
- * a child controller of exists in ChildViewController.
+ * Some code has been added to CreateViewController to return
+ * a child controller if exists in ChildViewControllers.
  * Also Dispose has been implemented in ViewContainer to release the custom views.
  * Dispose is called in the finalizer thread (UI) so the code to release the views from memory has been
  * wrapped in InvokeOnMainThread.
@@ -46,6 +46,9 @@ namespace CarouselView.FormsPlugin.iOS
 
 		// A local copy of ItemsSource so we can use CollectionChanged events
 		List<object> Source;
+
+        // Used only when ItemsSource is a List<View>
+        List<ViewContainer> ChildViewControllers;
 
 		int Count
 		{
@@ -130,6 +133,8 @@ namespace CarouselView.FormsPlugin.iOS
 						Element.Position = e.NewStartingIndex;
 						isSwiping = false;
 						SetIndicatorsCurrentPage();
+
+                        Element.PositionSelected?.Invoke(Element, Element.Position);
 					});
 				}
 			}
@@ -141,6 +146,10 @@ namespace CarouselView.FormsPlugin.iOS
 			{
 				if (Element != null && pageController != null && Source != null)
 				{
+					// Remove controller from ChildViewControllers
+					if (ChildViewControllers != null)
+						ChildViewControllers.RemoveAll(c => c.Tag == Source[e.OldStartingIndex]);
+                    
 					Source[e.OldStartingIndex] = e.NewItems[e.NewStartingIndex];
 
 					var firstViewController = CreateViewController(Element.Position);
@@ -165,13 +174,17 @@ namespace CarouselView.FormsPlugin.iOS
 
 		void Element_SizeChanged(object sender, EventArgs e)
 		{
-			if (Element != null)
-			{
-				var rect = this.Element.Bounds;
-				ElementWidth = rect.Width;
-				ElementHeight = rect.Height;
-				SetNativeView();
-				Element.PositionSelected?.Invoke(Element, Element.Position);
+            if (Element != null)
+            {
+                var rect = this.Element.Bounds;
+				// To avoid extra DataTemplate instantiations #158
+				if (rect.Height > 0)
+                { 
+	                ElementWidth = rect.Width;
+	                ElementHeight = rect.Height;
+	                SetNativeView();
+	                Element.PositionSelected?.Invoke(Element, Element.Position);
+	            }
 			}
 		}
 
@@ -259,7 +272,7 @@ namespace CarouselView.FormsPlugin.iOS
 		#region adapter callbacks
 		void PageController_DidFinishAnimating(object sender, UIPageViewFinishedAnimationEventArgs e)
 		{
-            if (e.Completed)
+			if (e.Completed)
 			{
 				var controller = (ViewContainer)pageController.ViewControllers[0];
 				var position = Source.IndexOf(controller.Tag);
@@ -269,6 +282,8 @@ namespace CarouselView.FormsPlugin.iOS
 				isSwiping = false;
 				SetIndicatorsCurrentPage();
 				Element.PositionSelected?.Invoke(Element, position);
+
+                Console.WriteLine("pageController.ChildViewControllers count = " + pageController.ChildViewControllers.Count());
 			}
 		}
 		#endregion
@@ -331,16 +346,7 @@ namespace CarouselView.FormsPlugin.iOS
 					}
 					else
 					{
-                        int previousPageIndex = position - 1;
-
-						// Significant Memory Leak for iOS when using custom layout for page content #125
-						var newTag = Source[previousPageIndex];
-                        foreach (ViewContainer child in pageController.ChildViewControllers)
-                        {
-                            if (child.Tag == newTag)
-                                return child;
-                        }
-						
+						int previousPageIndex = position - 1;
 						return CreateViewController(previousPageIndex);
 					}
 				}
@@ -367,15 +373,6 @@ namespace CarouselView.FormsPlugin.iOS
 					else
 					{
 						int nextPageIndex = position + 1;
-
-						// Significant Memory Leak for iOS when using custom layout for page content #125
-						var newTag = Source[nextPageIndex];
-                        foreach (ViewContainer child in pageController.ChildViewControllers)
-						{
-							if (child.Tag == newTag)
-								return child;
-						}
-
 						return CreateViewController(nextPageIndex);
 					}
 				}
@@ -401,10 +398,10 @@ namespace CarouselView.FormsPlugin.iOS
 			SetNativeControl(pageController.View);
 
 			// INDICATORS
-            SetIndicators();
+			SetIndicators();
 		}
 
-#region indicators
+		#region indicators
 
 		void SetIndicators()
 		{
@@ -508,7 +505,7 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 		}
 
-#endregion
+		#endregion
 
 		void InsertPage(object item, int position)
 		{
@@ -516,6 +513,7 @@ namespace CarouselView.FormsPlugin.iOS
 			{
 				Source.Insert(position, item);
 
+                // Because we maybe inserting into an empty PageController
 				UIViewController firstViewController;
 				if (pageController.ViewControllers.Count() > 0)
 					firstViewController = pageController.ViewControllers[0];
@@ -555,8 +553,11 @@ namespace CarouselView.FormsPlugin.iOS
 				}
 				else
 				{
+					// Remove controller from ChildViewControllers
+					if (ChildViewControllers != null)
+						ChildViewControllers.RemoveAll(c => c.Tag == Source[position]);
 
-					Source.RemoveAt(position);
+                    Source.RemoveAt(position);
 
 					// To remove current page
 					if (position == Element.Position)
@@ -586,7 +587,6 @@ namespace CarouselView.FormsPlugin.iOS
 					}
 					else
 					{
-
 						var firstViewController = pageController.ViewControllers[0];
 
 						pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
@@ -610,7 +610,7 @@ namespace CarouselView.FormsPlugin.iOS
 			if (pageController != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
 			{
 				// Transition direction based on prevPosition
-				var direction = position >= prevPosition ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
+                var direction = position >= prevPosition ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
 				prevPosition = position;
 
                 var firstViewController = CreateViewController(position);
@@ -621,6 +621,8 @@ namespace CarouselView.FormsPlugin.iOS
 
 					// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 					Element.PositionSelected?.Invoke(Element, position);
+
+                    Console.WriteLine("pageController.ChildViewControllers count = " + pageController.ChildViewControllers.Count());
 				});
 			}
 		}
@@ -628,13 +630,21 @@ namespace CarouselView.FormsPlugin.iOS
 		#region adapter
 		UIViewController CreateViewController(int index)
 		{
+			// Significant Memory Leak for iOS when using custom layout for page content #125
+			var newTag = Source[index];
+			foreach (ViewContainer child in pageController.ChildViewControllers)
+			{
+				if (child.Tag == newTag)
+					return child;
+			}
+
 			View formsView = null;
 
 			object bindingContext = null;
 
 			if (Source != null && Source?.Count > 0)
 				bindingContext = Source.Cast<object>().ElementAt(index);
-
+            
 			var dt = bindingContext as DataTemplate;
 
 			// Support for List<DataTemplate> as ItemsSource
@@ -644,14 +654,35 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 			else
 			{
+				// Support for List<View> as ItemsSource
+				var view = bindingContext as View;
 
-				var selector = Element.ItemTemplate as DataTemplateSelector;
-				if (selector != null)
-					formsView = (View)selector.SelectTemplate(bindingContext, Element).CreateContent();
-				else
-					formsView = (View)Element.ItemTemplate.CreateContent();
+                if (view != null)
+                {
+                    if (ChildViewControllers == null)
+                        ChildViewControllers = new List<ViewContainer>();
 
-				formsView.BindingContext = bindingContext;
+                    // Return from the local copy of controllers
+                    foreach(ViewContainer controller in ChildViewControllers)
+                    {
+                        if (controller.Tag == view)
+                        {
+                            return controller;
+                        }
+                    }
+
+                    formsView = view;
+                }
+                else
+                {
+                    var selector = Element.ItemTemplate as DataTemplateSelector;
+                    if (selector != null)
+                        formsView = (View)selector.SelectTemplate(bindingContext, Element).CreateContent();
+                    else
+                        formsView = (View)Element.ItemTemplate.CreateContent();
+
+                    formsView.BindingContext = bindingContext;
+                }
 			}
 
 			// HeightRequest fix
@@ -663,7 +694,14 @@ namespace CarouselView.FormsPlugin.iOS
 
 			var viewController = new ViewContainer();
 			viewController.Tag = bindingContext;
-			viewController.View = nativeConverted;
+            viewController.View = nativeConverted;
+
+            // Only happens when ItemsSource is List<View>
+            if (ChildViewControllers != null)
+            {
+                ChildViewControllers.Add(viewController);
+                Console.WriteLine("ChildViewControllers count = " + ChildViewControllers.Count());
+            }
 
 			return viewController;
 		}
@@ -694,6 +732,17 @@ namespace CarouselView.FormsPlugin.iOS
 
 				foreach (var child in pageController.ViewControllers)
 					child.Dispose();
+
+                // Cleanup ChildViewControllers
+				if (ChildViewControllers != null)
+				{
+                    foreach (var child in ChildViewControllers)
+					{
+						child.Dispose();
+					}
+
+					ChildViewControllers = null;
+				}
 
 				pageController.View.RemoveFromSuperview();
 				pageController.View.Dispose();

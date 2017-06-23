@@ -4,6 +4,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
 
+    <!--<controls:CarouselViewControl x:Name="myCarousel"
+                                  HorizontalOptions="FillAndExpand"
+                                  VerticalOptions="FillAndExpand"
+                                  AnimateTransition="true"
+                                  IndicatorsShape="Circle"
+                                  InterPageSpacing="10"
+                                  BackgroundColor="Red"
+                                  Orientation="Horizontal"
+                                  Position="1"
+                                  ShowIndicators="true"/>-->
+
     <controls:CarouselViewControl x:Name="myCarousel"
                                   HorizontalOptions="FillAndExpand"
                                   VerticalOptions="FillAndExpand"
@@ -13,6 +24,26 @@
                                   BackgroundColor="Red"
                                   Orientation="Horizontal"
                                   Position="1"
-                                  ShowIndicators="true"/>
+                                  ShowIndicators="true">
+
+        <controls:CarouselViewControl.ItemsSource>
+           <x:Array Type="{x:Type View}">
+
+                <StackLayout BackgroundColor="White" Padding="12">
+                    <Image Aspect="AspectFill" Source="{Binding PhotoUrl}" />
+                </StackLayout>
+
+                <StackLayout BackgroundColor="White" Padding="12">
+                    <Label Text="{Binding Bio}" />
+                </StackLayout>
+
+                <StackLayout BackgroundColor="White" Padding="12">
+                    <Label Text="{Binding ContactInfo}" />
+                </StackLayout>
+
+           </x:Array>
+        </controls:CarouselViewControl.ItemsSource>
+
+    </controls:CarouselViewControl>
 
 </ContentPage>

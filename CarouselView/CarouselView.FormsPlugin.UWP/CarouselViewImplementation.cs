@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Shapes;
 using System.Collections.Specialized;
+using Xamarin.Forms;
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.UWP
@@ -103,6 +104,8 @@ namespace CarouselView.FormsPlugin.UWP
                     var obj = Source[e.OldStartingIndex];
                     Source.RemoveAt(e.OldStartingIndex);
 					Source.Insert(e.NewStartingIndex, obj);
+
+                    SetCurrentPage(Element.Position);
 				}
             }
 
@@ -480,14 +483,23 @@ namespace CarouselView.FormsPlugin.UWP
 				formsView = (Xamarin.Forms.View)dt.CreateContent();
 			}
 			else {
+                
+				var view = bindingContext as View;
 
-				var selector = Element.ItemTemplate as Xamarin.Forms.DataTemplateSelector;
-				if (selector != null)
-					formsView = (Xamarin.Forms.View)selector.SelectTemplate(bindingContext, Element).CreateContent();
-				else
-					formsView = (Xamarin.Forms.View)Element.ItemTemplate.CreateContent();
+                if (view != null)
+                {
+                    formsView = view;
+                }
+                else
+                {
+                    var selector = Element.ItemTemplate as Xamarin.Forms.DataTemplateSelector;
+                    if (selector != null)
+                        formsView = (Xamarin.Forms.View)selector.SelectTemplate(bindingContext, Element).CreateContent();
+                    else
+                        formsView = (Xamarin.Forms.View)Element.ItemTemplate.CreateContent();
 
-				formsView.BindingContext = bindingContext;
+                    formsView.BindingContext = bindingContext;
+                }
 			}
 
 			formsView.Parent = this.Element;
@@ -506,24 +518,24 @@ namespace CarouselView.FormsPlugin.UWP
                     Fill = i == position ? selectedColor : fillColor,
                     Height = 7,
                     Width = 7,
-                    Margin = new Thickness(4, 12, 4, 12)
+                    Margin = new Windows.UI.Xaml.Thickness(4, 12, 4, 12)
                 };
             }
             else
             {
-                return new Rectangle()
+                return new Windows.UI.Xaml.Shapes.Rectangle()
                 {
                     Fill = i == position ? selectedColor : fillColor,
                     Height = 6,
                     Width = 6,
-                    Margin = new Thickness(4, 12, 4, 12)
+                    Margin = new Windows.UI.Xaml.Thickness(4, 12, 4, 12)
                 };
             }
         }
 
         private void ButtonHide(FlipView f, string name)
         {
-            var b = FindVisualChild<Button>(f, name);
+            var b = FindVisualChild<Windows.UI.Xaml.Controls.Button>(f, name);
 			if (b != null)
 			{
 				b.Opacity = Element.ShowArrows ? 1.0 : 0.0;

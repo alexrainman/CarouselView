@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>4.3.0</version>
+        <version>4.4.0</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
@@ -12,6 +12,10 @@
         <description>Create Horizontal and Vertical carousels, add page indicators, render one page at a time moving back and fort programmatically and much more. “How to” at Github repository.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
+        4.4.0
+        [Android] Fixing #136 (Page recreation caused by entry focus)
+        [iOS] Fixing #158 (Extra DataTemplate instantiations on iOS)
+        [Update] Adding support for a List of View as ItemsSource (Now the control can be declared entirely in XAML)
         4.3.0
         [iOS] Finally a fix that works to avoid memory leaks with custom views.
         4.2.9

@@ -5,16 +5,16 @@
 		xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
 
 	<ContentPage Title="First">
-		<controls:CarouselViewControl x:Name="myCarousel"
-                                      HorizontalOptions="FillAndExpand"
-                                      VerticalOptions="FillAndExpand"
-                                      AnimateTransition="true"
-                                      IndicatorsShape="Circle"
-                                      InterPageSpacing="10"
-                                      BackgroundColor="Red"
-                                      Orientation="Horizontal"
-                                      ShowIndicators="true"/>
-	</ContentPage>
+        <controls:CarouselViewControl x:Name="myCarousel"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="CenterAndExpand" 
+                AnimateTransition="true"
+                IndicatorsShape="Circle"
+                InterPageSpacing="10"
+                BackgroundColor="Red"
+                Orientation="Horizontal"
+                ShowIndicators="true"/>
+    </ContentPage>
 
 	<ContentPage Title="Second">
 		<Label Text="Second tab" />

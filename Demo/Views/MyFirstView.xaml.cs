@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Diagnostics;
 using CarouselView.FormsPlugin.Abstractions;
+using Demo;
 
 namespace Demo
 {

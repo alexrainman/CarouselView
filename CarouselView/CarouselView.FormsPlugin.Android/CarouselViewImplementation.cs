@@ -39,7 +39,7 @@ namespace CarouselView.FormsPlugin.Android
 		CirclePageIndicator indicators;
 		bool _disposed;
 
-		//double ElementWidth;
+		double ElementWidth;
         //double ElementHeight;
 
 		protected override void OnElementChanged(ElementChangedEventArgs<CarouselViewControl> e)
@@ -108,6 +108,8 @@ namespace CarouselView.FormsPlugin.Android
 					Source.RemoveAt(e.OldStartingIndex);
 					Source.Insert(e.NewStartingIndex, e.OldItems[e.OldStartingIndex]);
 					viewPager.Adapter?.NotifyDataSetChanged();
+
+                    Element.PositionSelected?.Invoke(Element, Element.Position);
 				}
             }
 
@@ -143,9 +145,13 @@ namespace CarouselView.FormsPlugin.Android
 		{
 			if (Element != null)
 			{
-				//var rect = this.Element.Bounds;
-				//ElementWidth = rect.Width;
+                // To avoid page recreation caused by entry focus #136 (fix)
+				var rect = this.Element.Bounds;
+				if (ElementWidth.Equals(rect.Width))
+					return;
+				ElementWidth = rect.Width;
 				//ElementHeight = rect.Height;
+
 				SetNativeView();
 				Element.PositionSelected?.Invoke(Element, Element.Position);
 			}
@@ -445,13 +451,22 @@ namespace CarouselView.FormsPlugin.Android
 				}
 				else {
 
-					var selector = Element.ItemTemplate as DataTemplateSelector;
-					if (selector != null)
-						formsView = (View)selector.SelectTemplate(bindingContext, Element).CreateContent();
-					else
-						formsView = (View)Element.ItemTemplate.CreateContent();
+                    var view = bindingContext as View;
 
-					formsView.BindingContext = bindingContext;
+                    if (view != null)
+                    {
+                        formsView = view;
+                    }
+                    else
+                    {
+                        var selector = Element.ItemTemplate as DataTemplateSelector;
+                        if (selector != null)
+                            formsView = (View)selector.SelectTemplate(bindingContext, Element).CreateContent();
+                        else
+                            formsView = (View)Element.ItemTemplate.CreateContent();
+
+                        formsView.BindingContext = bindingContext;
+                    }
 				}
 
                 // HeightRequest fix

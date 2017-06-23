@@ -13,6 +13,8 @@ namespace Demo
             // The root page of your application
             MainPage = new NavigationPage (new MainPage ());
 
+            //MainPage = new NavigationPage(new MyTabbedPage());
+
 			//MainPage = new NavigationPage(new LeakPage());
 
 			//MainPage = new RootPage();

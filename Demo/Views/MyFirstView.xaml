@@ -11,7 +11,7 @@
 			<Button x:Name="myButton" Text="{Binding .}" Clicked="Handle_Clicked"/>
 			<DatePicker/>
 			<Editor BackgroundColor="Silver"/>
-			<Entry/>
+			<Entry Keyboard="Numeric"/>
 			<Picker/>
 			<ProgressBar Progress="0.5"/>
 			<SearchBar/>
