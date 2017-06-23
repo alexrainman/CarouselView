@@ -102,7 +102,7 @@ Or, template selector in your ViewModel:
 
 * You can use an Observable collection as ItemsSource to dynamically add/remove pages from the carousel.
 
-* If you want to display different Views for the same data, you can provide a DataTemplate List as ItemsSource.
+* If you want to display different Views for the same data, you can provide a DataTemplate List as ItemsSource:
 
 ```
 myCarousel.ItemsSource = new List<DataTemplate>()
@@ -118,6 +118,27 @@ myCarousel.BindingContext = new Person()
 	Bio = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi.",
 	ContactInfo = "alexrainman1975@gmail.com"
 };
+```
+
+* But also, ItemsSource supports a List of Views, giving you the option to declare the Carousel entirely in XAML:
+
+```
+<cv:CarouselViewControl BindingContext="{Binding Person}">
+    <cv:CarouselViewControl.ItemsSource>
+           <x:Array Type="{x:Type View}>
+
+                <!-- Page1 Display Photo -->
+                <Image Source="{Binding PhotoUrl}"/>
+
+                <!-- Page2 Display Bio -->
+                <Label FormattedString="{Binding Bio}"/>
+
+                <!-- Page2 Display contact information -->
+                <Label FormattedString="{Binding Info}"/>
+
+           </x:Array>
+    </cv:CarouselViewControl.ItemsSource>
+</cv:CarouselViewControl>
 ```
 
 ```ItemTemplate```: supports DataTemplate and DataTemplateSelector.
@@ -194,6 +215,14 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 * [alexrainman](https://github.com/alexrainman)
 
 #### Release Notes
+
+4.4.0
+
+[Android] Fixing #136 (Page recreation caused by entry focus)
+
+[iOS] Fixing #158 (Extra DataTemplate instantiations on iOS)
+
+[Update] Adding support for a List of View as ItemsSource (Now the control can be declared entirely in XAML)
 
 4.3.0
 
