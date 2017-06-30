@@ -8,7 +8,13 @@
     mc:Ignorable="d">
 
     <Grid>
-        <FlipView x:Name="flipView"/>
+        <FlipView x:Name="flipView">
+            <FlipView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" AreScrollSnapPointsRegular="True" />
+                </ItemsPanelTemplate>
+            </FlipView.ItemsPanel>
+        </FlipView>
         <StackPanel x:Name="indicators" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="32">
             <ItemsControl x:Name="dotsPanel" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                 <ItemsControl.ItemsPanel>

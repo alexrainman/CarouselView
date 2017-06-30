@@ -16,6 +16,7 @@
       <RootProperty Name="Height" />
       <RootProperty Name="Children" />
       <RootProperty Name="Orientation" />
+      <RootProperty Name="AreScrollSnapPointsRegular" />
       <RootProperty Name="Width" />
       <RootProperty Name="Visibility" />
     </RootType>
@@ -28,9 +29,6 @@
       <RootProperty Name="Template" />
     </RootType>
     <RootType FullName="CarouselView.FormsPlugin.UWP.FlipViewControl" />
-    <RootType FullName="Windows.UI.Xaml.Controls.VirtualizingStackPanel">
-      <RootProperty Name="Orientation" />
-    </RootType>
     <RootType FullName="CarouselView.FormsPlugin.UWP.VerticalFlipViewControl" />
   </Roots.RootTypes>
 </Roots>

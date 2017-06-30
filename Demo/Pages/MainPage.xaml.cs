@@ -22,7 +22,7 @@ namespace Demo
 
 			//myCarousel.ItemsSource = _vm.ItemsSource;
 
-			myCarousel.PositionSelected += PositionSelected;
+			myCarousel.PositionSelected +=  PositionSelected;
 			//myCarousel.ItemTemplate = new DataTemplate(typeof(MyFirstView));
 
 			MessagingCenter.Subscribe<MyFirstView> (this, "RemoveMe", (sender) => {

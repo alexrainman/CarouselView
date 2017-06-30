@@ -11,7 +11,7 @@
         <FlipView x:Name="flipView">
             <FlipView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <VirtualizingStackPanel Orientation="Vertical"/>
+                    <StackPanel Orientation="Vertical" AreScrollSnapPointsRegular="True" />
                 </ItemsPanelTemplate>
             </FlipView.ItemsPanel>
         </FlipView>
