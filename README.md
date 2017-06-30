@@ -216,6 +216,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+4.4.1
+
+[UWP] Windows 10 mobile Entry virtual keybord not pushing up bug #138 (fixed)
+
 4.4.0
 
 [Android] Fixing #136 (Page recreation caused by entry focus)
