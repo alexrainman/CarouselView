@@ -274,7 +274,7 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 4.2.0
 
-[Update] InterPageSpacingColor deprecated. Using BcakgroundColor instead.
+[Update] InterPageSpacingColor deprecated. Using BackgroundColor instead.
 
 4.1.2
 
