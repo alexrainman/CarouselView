@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Demo.Bug129"
+    xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
+	<StackLayout x:Name="stackLayout">
+
+        <Button Clicked="MoveCarouselView" Text="Move CarouselView" />
+        <Button Clicked="ShowInSecondPage" Text="Show CarouselView in another page" />
+        
+        <ContentView x:Name="contentView1">
+            <cv:CarouselViewControl BackgroundColor="Red" x:Name="carousel" HeightRequest="200" HorizontalOptions="Fill">
+                <cv:CarouselViewControl.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="Hello I'm a lovely CarouselView" />
+                    </DataTemplate>
+                </cv:CarouselViewControl.ItemTemplate>
+            </cv:CarouselViewControl>
+        </ContentView>
+        
+        <ContentView x:Name="contentView2">
+
+            <!-- Clicking the first button moves CarouselView here -->
+            
+        </ContentView>
+
+    </StackLayout>
+</ContentPage>

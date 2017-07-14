@@ -39,7 +39,7 @@ namespace CarouselView.FormsPlugin.Android
 		CirclePageIndicator indicators;
 		bool _disposed;
 
-		double ElementWidth;
+		double ElementWidth = -1;
         //double ElementHeight;
 
 		protected override void OnElementChanged(ElementChangedEventArgs<CarouselViewControl> e)
@@ -149,6 +149,7 @@ namespace CarouselView.FormsPlugin.Android
 				var rect = this.Element.Bounds;
 				if (ElementWidth.Equals(rect.Width))
 					return;
+                
 				ElementWidth = rect.Width;
 				//ElementHeight = rect.Height;
 
@@ -156,6 +157,16 @@ namespace CarouselView.FormsPlugin.Android
 				Element.PositionSelected?.Invoke(Element, Element.Position);
 			}
 		}
+
+		// Fix #129 CarouselViewControl not rendered when loading a page from memory bug
+		// Fix #157 CarouselView Binding breaks when returning to Page bug duplicate
+		protected override void OnAttachedToWindow()
+        {
+			if (Control == null)
+				Element_SizeChanged(Element, null);
+            
+            base.OnAttachedToWindow();
+        }
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
@@ -338,7 +349,8 @@ namespace CarouselView.FormsPlugin.Android
 
 		void InsertPage(object item, int position)
 		{
-			var Source = ((PageAdapter)viewPager?.Adapter).Source;
+            // Fix for #168 Android NullReferenceException
+			var Source = ((PageAdapter)viewPager?.Adapter)?.Source;
 
 			if (Element != null && viewPager != null && Source != null)
 			{

@@ -216,6 +216,12 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+4.4.2
+
+[Update] Fix #129 CarouselViewControl not rendered when loading a page from memory bug
+
+[Update] Fix #157 CarouselView Binding breaks when returning to Page bug duplicate
+
 4.4.1
 
 [UWP] Windows 10 mobile Entry virtual keybord not pushing up bug #138 (fixed)

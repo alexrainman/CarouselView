@@ -1,5 +1,6 @@
 ﻿using System;
 using Android.Content;
+using Android.Runtime;
 using Android.Support.V4.View;
 using Android.Util;
 using Android.Views;
@@ -9,6 +10,11 @@ namespace CarouselView.FormsPlugin.Android
 	public class CustomViewPager : ViewPager, IViewPager
 	{
 		private bool isSwipingEnabled = true;
+
+		// Fix for #171 System.MissingMethodException: No constructor found
+		public CustomViewPager(IntPtr intPtr, JniHandleOwnership jni) : base(intPtr, jni)
+        {
+        }
 
 		public CustomViewPager(Context context) : base(context, null)
 		{

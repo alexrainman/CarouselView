@@ -11,7 +11,7 @@ namespace Demo
 		public App ()
 		{
             // The root page of your application
-            MainPage = new NavigationPage (new MainPage ());
+            //MainPage = new NavigationPage (new MainPage ());
 
             //MainPage = new NavigationPage(new MyTabbedPage());
 
@@ -22,6 +22,9 @@ namespace Demo
 			//MainPage = new NavigationPage(new HeightIssuePage ());
 
             //MainPage = new NavigationPage(new Pages.ListViewCarousel());
+
+            //MainPage = new NavigationPage(new Bug129());
+            MainPage = new NavigationPage(new Bug168());
 		}
 
 		protected override void OnStart ()

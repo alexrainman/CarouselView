@@ -19,6 +19,7 @@
 
 using System;
 using Android.Content;
+using Android.Runtime;
 using Android.Support.V4.View;
 using Android.Util;
 using Android.Views;
@@ -29,6 +30,11 @@ namespace CarouselView.FormsPlugin.Android
 	public class VerticalViewPager : ViewPager, IViewPager
 	{
         private bool isSwipingEnabled = true;
+
+		// Fix for #171 System.MissingMethodException: No constructor found
+		public VerticalViewPager(IntPtr intPtr, JniHandleOwnership jni) : base(intPtr, jni)
+        {
+        }
 
 		public VerticalViewPager(Context context) : base(context, null)
 		{

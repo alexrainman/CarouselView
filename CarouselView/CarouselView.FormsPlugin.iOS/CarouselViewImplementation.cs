@@ -188,6 +188,24 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 		}
 
+		// Fix #129 CarouselViewControl not rendered when loading a page from memory bug
+		// Fix #157 CarouselView Binding breaks when returning to Page bug duplicate
+		public override void MovedToSuperview()
+        {
+            if (Control == null)
+                Element_SizeChanged(Element, null);
+
+            base.MovedToSuperview();
+        }
+
+		public override void MovedToWindow()
+        {
+            if (Control == null)
+                Element_SizeChanged(Element, null);
+
+            base.MovedToWindow();
+        }
+
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			base.OnElementPropertyChanged(sender, e);
