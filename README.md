@@ -98,6 +98,8 @@ Or, template selector in your ViewModel:
 
 ```ShowIndicators```: hide/show page indicators (default false, set to false when ItemsSource is too long to avoid loading issues in iOS and UWP).
 
+```Position```: the desired selected view when Carousel starts. Assign this property before assigning ItemsSource at startup.
+
 ```ItemsSource```: IEnumerable. List of objects used as BindingContext of each view.
 
 * You can use an Observable collection as ItemsSource to dynamically add/remove pages from the carousel.
@@ -142,8 +144,6 @@ myCarousel.BindingContext = new Person()
 ```
 
 ```ItemTemplate```: supports DataTemplate and DataTemplateSelector.
-
-```Position```: the desired selected view when Carousel starts.
 
 * Change position in code behind or binding to set current page/swipe programmatically.
 
@@ -193,6 +193,8 @@ public async void OnPrev(object sender, TappedEventArgs e)
 ```
 
 #### Tips
+
+- At startup assign Position property before assigning ItemsSource (it may cause unexpected issues in iOS if you don't).
 
 - When using the control with a long list of items, set ShowIndicators to false to avoid loading issues in iOS and UWP.
 
