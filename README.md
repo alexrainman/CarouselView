@@ -124,10 +124,10 @@ myCarousel.BindingContext = new Person()
 
 * But also, ItemsSource supports a List of Views, giving you the option to declare the Carousel entirely in XAML:
 
-```
+```xml
 <cv:CarouselViewControl BindingContext="{Binding Person}">
     <cv:CarouselViewControl.ItemsSource>
-           <x:Array Type="{x:Type View}>
+           <x:Array Type="{x:Type View}">
 
                 <!-- Page1 Display Photo -->
                 <Image Source="{Binding PhotoUrl}"/>
