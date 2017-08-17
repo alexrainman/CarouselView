@@ -53,9 +53,9 @@ Then add the xaml:
 ```xml
 <controls:CarouselViewControl Orientation="Horizontal" InterPageSpacing="10" Position="{Binding myPosition}" ItemsSource="{Binding myItemsSource}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
     <controls:CarouselViewControl.ItemTemplate>
-        <DataTemplate>
-            <local:MyView />
-	    </DataTemplate>
+		<DataTemplate>
+			<local:MyView />
+		</DataTemplate>
     </controls:CarouselViewControl.ItemTemplate>
 </controls:CarouselViewControl>
 ```
