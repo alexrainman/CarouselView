@@ -53,9 +53,9 @@ Then add the xaml:
 ```xml
 <controls:CarouselViewControl Orientation="Horizontal" InterPageSpacing="10" Position="{Binding myPosition}" ItemsSource="{Binding myItemsSource}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
     <controls:CarouselViewControl.ItemTemplate>
-        <DataTemplate>
-            <local:MyView />
-	    </DataTemplate>
+		<DataTemplate>
+			<local:MyView />
+		</DataTemplate>
     </controls:CarouselViewControl.ItemTemplate>
 </controls:CarouselViewControl>
 ```
@@ -124,10 +124,10 @@ myCarousel.BindingContext = new Person()
 
 * But also, ItemsSource supports a List of Views, giving you the option to declare the Carousel entirely in XAML:
 
-```
+```xml
 <cv:CarouselViewControl BindingContext="{Binding Person}">
     <cv:CarouselViewControl.ItemsSource>
-           <x:Array Type="{x:Type View}>
+           <x:Array Type="{x:Type View}">
 
                 <!-- Page1 Display Photo -->
                 <Image Source="{Binding PhotoUrl}"/>
