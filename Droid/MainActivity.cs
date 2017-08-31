@@ -13,7 +13,7 @@ using CarouselView.FormsPlugin.Abstractions;
 
 namespace Demo.Droid
 {
-	[Activity (Label = "Demo.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity (Label = "Demo.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, WindowSoftInputMode = SoftInput.AdjustPan)] //, WindowSoftInputMode = SoftInput.AdjustPan
 	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
 	{
 		protected override void OnCreate (Bundle savedInstanceState)
@@ -24,6 +24,10 @@ namespace Demo.Droid
 			base.OnCreate (savedInstanceState);
 
 			global::Xamarin.Forms.Forms.Init (this, savedInstanceState);
+
+            //AndroidBug5497WorkaroundForXamarinAndroid.assistActivity(this);
+
+            Window.DecorView.SystemUiVisibility = 0;
 
 			CarouselViewRenderer.Init ();
 

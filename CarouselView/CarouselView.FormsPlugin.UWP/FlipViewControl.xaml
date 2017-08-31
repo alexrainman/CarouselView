@@ -7,22 +7,29 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <ItemsPanelTemplate x:Key="HPanel" >
+            <VirtualizingStackPanel Orientation="Horizontal"/>
+        </ItemsPanelTemplate>
+
+        <ItemsPanelTemplate x:Key="VPanel">
+            <VirtualizingStackPanel Orientation="Vertical"/>
+        </ItemsPanelTemplate>
+
+        <ItemsPanelTemplate x:Key="dotsHPanel">
+            <StackPanel Orientation="Horizontal"/>
+        </ItemsPanelTemplate>
+
+        <ItemsPanelTemplate x:Key="dotsVPanel">
+            <StackPanel Orientation="Vertical"/>
+        </ItemsPanelTemplate>
+
+    </UserControl.Resources>
+
     <Grid>
-        <FlipView x:Name="flipView">
-            <FlipView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" AreScrollSnapPointsRegular="True" />
-                </ItemsPanelTemplate>
-            </FlipView.ItemsPanel>
-        </FlipView>
+        <FlipView x:Name="flipView"/>
         <StackPanel x:Name="indicators" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="32">
-            <ItemsControl x:Name="dotsPanel" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+            <ItemsControl x:Name="dotsPanel" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
         </StackPanel>
     </Grid>
 </UserControl>

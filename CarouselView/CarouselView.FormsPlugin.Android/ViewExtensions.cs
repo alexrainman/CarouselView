@@ -11,7 +11,7 @@ namespace CarouselView.FormsPlugin.Android
         {
 			//var vRenderer = RendererFactory.GetRenderer (view);
 
-			if (Platform.GetRenderer(view) == null)
+			//if (Platform.GetRenderer(view) == null)
 				Platform.SetRenderer(view, Platform.CreateRenderer(view));
 			var vRenderer = Platform.GetRenderer(view);
             
@@ -22,7 +22,7 @@ namespace CarouselView.FormsPlugin.Android
             viewGroup.LayoutParameters = layoutParams;
             view.Layout (size);
             viewGroup.Layout (0, 0, (int)view.WidthRequest, (int)view.HeightRequest);
-            return viewGroup; 
+            return viewGroup;
         }
     }
 }

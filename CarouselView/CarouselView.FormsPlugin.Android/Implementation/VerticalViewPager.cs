@@ -18,11 +18,13 @@
 // https://android.googlesource.com/platform/packages/apps/DeskClock/+/master/src/com/android/deskclock/VerticalViewPager.java
 
 using System;
+using System.Linq;
 using Android.Content;
 using Android.Runtime;
 using Android.Support.V4.View;
 using Android.Util;
 using Android.Views;
+using CarouselView.FormsPlugin.Abstractions;
 
 namespace CarouselView.FormsPlugin.Android
 {
@@ -30,6 +32,7 @@ namespace CarouselView.FormsPlugin.Android
 	public class VerticalViewPager : ViewPager, IViewPager
 	{
         private bool isSwipingEnabled = true;
+        private CarouselViewControl Element;
 
 		// Fix for #171 System.MissingMethodException: No constructor found
 		public VerticalViewPager(IntPtr intPtr, JniHandleOwnership jni) : base(intPtr, jni)
@@ -71,6 +74,16 @@ namespace CarouselView.FormsPlugin.Android
 
 		public override bool OnInterceptTouchEvent(MotionEvent ev)
 		{
+			if (ev.Action == MotionEventActions.Up)
+			{
+				if (Element?.GestureRecognizers.GetCount() > 0)
+				{
+					var gesture = Element.GestureRecognizers.First() as Xamarin.Forms.TapGestureRecognizer;
+					if (gesture != null)
+						gesture.Command?.Execute(gesture.CommandParameter);
+				}
+			}
+
 			if (this.isSwipingEnabled)
 			{
 				var toIntercept = base.OnInterceptTouchEvent(flipXY(ev));
@@ -108,6 +121,11 @@ namespace CarouselView.FormsPlugin.Android
 		public void SetPagingEnabled(bool enabled)
 		{
 			this.isSwipingEnabled = enabled;
+		}
+
+		public void SetElement(CarouselViewControl element)
+		{
+			this.Element = element;
 		}
 
 		private class VerticalPageTransformer : Java.Lang.Object, ViewPager.IPageTransformer

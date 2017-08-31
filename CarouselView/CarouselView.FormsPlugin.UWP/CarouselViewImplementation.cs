@@ -21,6 +21,8 @@ namespace CarouselView.FormsPlugin.UWP
     /// </summary>
     public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, UserControl>
     {
+        bool orientationChanged;
+
         UserControl nativeView;
         FlipView flipView;
         StackPanel indicators;
@@ -51,6 +53,7 @@ namespace CarouselView.FormsPlugin.UWP
             {
                 // Instantiate the native control and assign it to the Control property with
                 // the SetNativeControl method
+                orientationChanged = true;
             }
 
             if (e.OldElement != null)
@@ -154,13 +157,18 @@ namespace CarouselView.FormsPlugin.UWP
 					{
 						if (ElementHeight == 0)
 							ElementHeight = ((Xamarin.Forms.Rectangle)rect).Height;
-						SetNativeView();
-						Element.PositionSelected?.Invoke(Element, Element.Position);
+
+                        if (nativeView == null)
+                        {
+                            SetNativeView();
+                            Element.PositionSelected?.Invoke(Element, Element.Position);
+                        }
 					}
                     break;
                 case "Orientation":
 					if (Element != null)
 					{
+                        orientationChanged = true;
 						SetNativeView();
 						Element.PositionSelected?.Invoke(Element, Element.Position);
 					}
@@ -291,15 +299,22 @@ namespace CarouselView.FormsPlugin.UWP
 
         public void SetNativeView()
         {
-            CleanUpFlipView();
-
-            // Orientation BP
-            if (Element.Orientation == CarouselViewOrientation.Horizontal)
+            if (nativeView == null)
+            {
                 nativeView = new FlipViewControl();
-            else
-                nativeView = new VerticalFlipViewControl();
+                flipView = nativeView.FindName("flipView") as FlipView;
+            }
 
-            flipView = nativeView.FindName("flipView") as FlipView;
+            if (orientationChanged)
+            {
+                // Orientation BP
+                if (Element.Orientation == CarouselViewOrientation.Horizontal)
+                    flipView.ItemsPanel = nativeView.Resources["HPanel"] as ItemsPanelTemplate;
+                else
+                    flipView.ItemsPanel = nativeView.Resources["VPanel"] as ItemsPanelTemplate;
+
+                orientationChanged = false;
+            }
 
             var source = new List<FrameworkElement>();
             if (Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
@@ -309,6 +324,7 @@ namespace CarouselView.FormsPlugin.UWP
                     source.Add(CreateView(Element.ItemsSource.GetItem(j)));
                 }
             }
+
             Source = new ObservableCollection<FrameworkElement>(source);
             flipView.ItemsSource = Source;
 
@@ -353,6 +369,27 @@ namespace CarouselView.FormsPlugin.UWP
 
             if (Element.ShowIndicators)
             {
+                if (Element.Orientation == CarouselViewOrientation.Horizontal)
+                {
+                    indicators.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    indicators.VerticalAlignment = VerticalAlignment.Bottom;
+                    indicators.Width = Double.NaN;
+                    indicators.Height = 32;
+                    dotsPanel.HorizontalAlignment = HorizontalAlignment.Center;
+                    dotsPanel.VerticalAlignment = VerticalAlignment.Bottom;
+                    dotsPanel.ItemsPanel = nativeView.Resources["dotsHPanel"] as ItemsPanelTemplate;
+                }
+                else
+                {
+                    indicators.HorizontalAlignment = HorizontalAlignment.Right;
+                    indicators.VerticalAlignment = VerticalAlignment.Center;
+                    indicators.Width = 32;
+                    indicators.Height = Double.NaN;
+                    dotsPanel.HorizontalAlignment = HorizontalAlignment.Center;
+                    dotsPanel.VerticalAlignment = VerticalAlignment.Center;
+                    dotsPanel.ItemsPanel = nativeView.Resources["dotsVPanel"] as ItemsPanelTemplate;
+                }
+
                 var dots = new List<Shape>();
 
                 if (Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
@@ -402,11 +439,11 @@ namespace CarouselView.FormsPlugin.UWP
                 }
 
                 Source.Insert(position, CreateView(item));
-                Dots.Insert(position, CreateDot(position, Element.Position));
+                Dots?.Insert(position, CreateDot(position, Element.Position));
 
                 flipView.SelectedIndex = Element.Position;
 
-                if (position <= Element.Position)
+                //if (position <= Element.Position)
                     Element.PositionSelected?.Invoke(Element, flipView.SelectedIndex);
 			}
 		}
@@ -452,7 +489,7 @@ namespace CarouselView.FormsPlugin.UWP
                     
 					Element.Position = flipView.SelectedIndex;
 
-					Dots.RemoveAt(position);
+					Dots?.RemoveAt(position);
 					UpdateIndicatorsTint();
 
                     isSwiping = false;
@@ -573,25 +610,17 @@ namespace CarouselView.FormsPlugin.UWP
             return _list;
         }*/
 
-        void CleanUpFlipView()
-        {
-            if (indicators != null)
-            {
-                indicators = null;
-            }
-
-            if (flipView != null)
-            {
-                flipView.SelectionChanged -= FlipView_SelectionChanged;
-                flipView = null;
-            }
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && !_disposed)
             {
-                CleanUpFlipView();
+                indicators = null;
+
+                if (flipView != null)
+                {
+                    flipView.SelectionChanged -= FlipView_SelectionChanged;
+                    flipView = null;
+                }
 
                 if (Element != null)
                 {

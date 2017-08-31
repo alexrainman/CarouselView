@@ -17,7 +17,7 @@ namespace CarouselView.FormsPlugin.UWP
 
             view.Layout(new Rectangle(0, 0, size.Width, size.Height));
 
-            //vRenderer.ContainerElement.Arrange(new Rect(0, 0, size.Width, size.Height));
+            //vRenderer.ContainerElement.Arrange(new Windows.Foundation.Rect(0, 0, size.Width, size.Height));
 
             return vRenderer.ContainerElement;
         }

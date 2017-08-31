@@ -207,16 +207,23 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 #### Roadmap
 
 * Infinite scrolling
-* Events: Down, Up, Swiping, Scrolled
-* Indicators position
-* Transition animation speed
+* Indicators UI position
 * Indicators tap event
+* Transition animation speed
 * Load more event
 
 #### Contributors
 * [alexrainman](https://github.com/alexrainman)
 
 #### Release Notes
+
+4.4.3 
+[Android] TapGestureRecognizer doesn't work when added to CarouselViewControl #200 
+[iOS] PositionSelected not called when adding a new item. 
+[UWP] Adding an Item to the CarouselView Causes Exception when ShowIndicators = False #198 
+[UWP] Crash on window resize #199 
+[UWP] Adding back VirtualizationStackPanel as FlipView.ItemsPanelTemplate 
+[UWP] Overall staibility and improvements. 
 
 4.4.2
 
