@@ -365,7 +365,7 @@ namespace CarouselView.FormsPlugin.Android
             // Fix for #168 Android NullReferenceException
             var Source = ((PageAdapter)viewPager?.Adapter)?.Source;
 
-            if (Element != null && viewPager != null && Source != null)
+            if (Element != null && viewPager?.Adapter != null && Source != null)
             {
                 Source.Insert(position, item);
 
@@ -381,9 +381,9 @@ namespace CarouselView.FormsPlugin.Android
         // Android ViewPager is the most complicated piece of code ever :)
         async Task RemovePage(int position)
         {
-            var Source = ((PageAdapter)viewPager?.Adapter).Source;
+            var Source = ((PageAdapter)viewPager?.Adapter)?.Source;
 
-            if (Element != null && viewPager != null && Source != null && Source?.Count > 0)
+            if (Element != null && viewPager?.Adapter != null && Source != null && Source?.Count > 0)
             {
 
                 isSwiping = true;
