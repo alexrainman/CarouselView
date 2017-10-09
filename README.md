@@ -217,12 +217,28 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+4.4.4
+
+[Update] XF 2.4.0 now supported
+
+[Update] Position Selected can now be declared from XAML
+
+[Android] Does not re-measure its layout on Height Changed #184
+
+[Android] Content bleeds into Indicator position due to height miscalculation #185
+
 4.4.3 
-[Android] TapGestureRecognizer doesn't work when added to CarouselViewControl #200 
+
+[Android] TapGestureRecognizer doesn't work when added to CarouselViewControl #200
+ 
 [iOS] PositionSelected not called when adding a new item. 
-[UWP] Adding an Item to the CarouselView Causes Exception when ShowIndicators = False #198 
+
+[UWP] Adding an Item to the CarouselView Causes Exception when ShowIndicators = False #198
+ 
 [UWP] Crash on window resize #199 
+
 [UWP] Adding back VirtualizationStackPanel as FlipView.ItemsPanelTemplate 
+
 [UWP] Overall staibility and improvements. 
 
 4.4.2

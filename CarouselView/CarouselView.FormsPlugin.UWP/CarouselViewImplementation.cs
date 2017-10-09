@@ -130,7 +130,7 @@ namespace CarouselView.FormsPlugin.UWP
 				{
                     SetPosition();
 					SetNativeView();
-					Element.PositionSelected?.Invoke(Element, Element.Position);
+					Element.SendPositionSelected();
 				}
 			}
         }
@@ -161,7 +161,7 @@ namespace CarouselView.FormsPlugin.UWP
                         if (nativeView == null)
                         {
                             SetNativeView();
-                            Element.PositionSelected?.Invoke(Element, Element.Position);
+                            Element.SendPositionSelected();
                         }
 					}
                     break;
@@ -170,7 +170,7 @@ namespace CarouselView.FormsPlugin.UWP
 					{
                         orientationChanged = true;
 						SetNativeView();
-						Element.PositionSelected?.Invoke(Element, Element.Position);
+						Element.SendPositionSelected();
 					}
                     break;
 				case "BackgroundColor":
@@ -199,7 +199,7 @@ namespace CarouselView.FormsPlugin.UWP
 					{
 						SetPosition();
 						SetNativeView();
-						Element.PositionSelected?.Invoke(Element, Element.Position);
+						Element.SendPositionSelected();
 						if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
 							((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
 					}
@@ -208,7 +208,7 @@ namespace CarouselView.FormsPlugin.UWP
 					if (Element != null)
 					{
 						SetNativeView();
-						Element.PositionSelected?.Invoke(Element, Element.Position);
+						Element.SendPositionSelected();
 					}
                     break;
                 case "Position":
@@ -241,7 +241,7 @@ namespace CarouselView.FormsPlugin.UWP
                 Element.Position = flipView.SelectedIndex;
                 UpdateIndicatorsTint();
 
-                Element.PositionSelected?.Invoke(Element, flipView.SelectedIndex);
+                Element.SendPositionSelected();
             }
         }
 
@@ -274,7 +274,7 @@ namespace CarouselView.FormsPlugin.UWP
                 if (Element != null)
                 {
                     SetNativeView();
-                    Element.PositionSelected?.Invoke(Element, Element.Position);
+                    Element.SendPositionSelected();
                 }
             });
         }
@@ -444,7 +444,7 @@ namespace CarouselView.FormsPlugin.UWP
                 flipView.SelectedIndex = Element.Position;
 
                 //if (position <= Element.Position)
-                    Element.PositionSelected?.Invoke(Element, flipView.SelectedIndex);
+                    Element.SendPositionSelected();
 			}
 		}
 
@@ -494,7 +494,7 @@ namespace CarouselView.FormsPlugin.UWP
 
                     isSwiping = false;
 
-                    Element.PositionSelected?.Invoke(Element, Element.Position);
+                    Element.SendPositionSelected();
 				}
             }
         }

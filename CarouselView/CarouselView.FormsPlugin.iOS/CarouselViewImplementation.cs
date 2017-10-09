@@ -137,7 +137,7 @@ namespace CarouselView.FormsPlugin.iOS
 						isSwiping = false;
 						SetIndicatorsCurrentPage();
 
-                        Element.PositionSelected?.Invoke(Element, Element.Position);
+                        Element.SendPositionSelected();
 					});
 				}
 			}
@@ -170,7 +170,7 @@ namespace CarouselView.FormsPlugin.iOS
 				{
 					SetPosition();
 					SetNativeView();
-					Element.PositionSelected?.Invoke(Element, Element.Position);
+					Element.SendPositionSelected();
 				}
 			}
 		}
@@ -186,7 +186,7 @@ namespace CarouselView.FormsPlugin.iOS
 	                ElementWidth = rect.Width;
 	                ElementHeight = rect.Height;
 	                SetNativeView();
-	                Element.PositionSelected?.Invoke(Element, Element.Position);
+	                Element.SendPositionSelected();
 	            }
 			}
 		}
@@ -225,7 +225,7 @@ namespace CarouselView.FormsPlugin.iOS
 					{
                         orientationChanged = true;
 						SetNativeView();
-						Element.PositionSelected?.Invoke(Element, Element.Position);
+						Element.SendPositionSelected();
 					}
 					break;
 				case "InterPageSpacing":
@@ -257,7 +257,7 @@ namespace CarouselView.FormsPlugin.iOS
 					{
 						SetPosition();
 						SetNativeView();
-						Element.PositionSelected?.Invoke(Element, Element.Position);
+						Element.SendPositionSelected();
 						if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
 							((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
 					}
@@ -266,7 +266,7 @@ namespace CarouselView.FormsPlugin.iOS
 					if (Element != null)
 					{
 						SetNativeView();
-						Element.PositionSelected?.Invoke(Element, Element.Position);
+						Element.SendPositionSelected();
 					}
 					break;
 				case "Position":
@@ -303,7 +303,7 @@ namespace CarouselView.FormsPlugin.iOS
 				prevPosition = position;
 				isSwiping = false;
 				SetIndicatorsCurrentPage();
-				Element.PositionSelected?.Invoke(Element, position);
+				Element.SendPositionSelected();
 
                 Console.WriteLine("pageController.ChildViewControllers count = " + pageController.ChildViewControllers.Count());
 			}
@@ -553,7 +553,7 @@ namespace CarouselView.FormsPlugin.iOS
                     SetIndicatorsCurrentPage();
 
 					//if (position != prevPos)
-						Element.PositionSelected?.Invoke(Element, Element.Position);
+						Element.SendPositionSelected();
 				});
 			}
 		}
@@ -599,7 +599,7 @@ namespace CarouselView.FormsPlugin.iOS
 							SetIndicatorsCurrentPage();
 
 							// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
-							Element.PositionSelected?.Invoke(Element, Element.Position);
+							Element.SendPositionSelected();
 						});
 					}
 					else
@@ -611,7 +611,7 @@ namespace CarouselView.FormsPlugin.iOS
 							SetIndicatorsCurrentPage();
 
 							// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
-							Element.PositionSelected?.Invoke(Element, Element.Position);
+							Element.SendPositionSelected();
 						});
 					}
 				}
@@ -637,7 +637,7 @@ namespace CarouselView.FormsPlugin.iOS
 					SetIndicatorsCurrentPage();
 
 					// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
-					Element.PositionSelected?.Invoke(Element, position);
+					Element.SendPositionSelected();
 
                     Console.WriteLine("pageController.ChildViewControllers count = " + pageController.ChildViewControllers.Count());
 				});

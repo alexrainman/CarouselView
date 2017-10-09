@@ -22,7 +22,6 @@ namespace Demo
 
 			//myCarousel.ItemsSource = _vm.ItemsSource;
 
-			myCarousel.PositionSelected +=  PositionSelected;
 			//myCarousel.ItemTemplate = new DataTemplate(typeof(MyFirstView));
 
 			MessagingCenter.Subscribe<MyFirstView> (this, "RemoveMe", (sender) => {
@@ -74,12 +73,11 @@ namespace Demo
 			nextBtn.IsVisible = _vm.Position < _vm.ItemsSource?.Count - 1;
 		}
 
-		public void PositionSelected (object sender, int position)
-		{
+        void Handle_PositionSelected(object sender, PositionSelectedEventArgs e)
+        {
 			ConfigureButtons();
 			Debug.WriteLine("Position " + myCarousel.Position + " selected");
-
-		}
+        }
 
 		public void OnPrev (object sender, TappedEventArgs e)
 		{

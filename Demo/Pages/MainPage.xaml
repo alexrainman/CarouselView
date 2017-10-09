@@ -27,7 +27,7 @@
                                       ItemsSource="{Binding ItemsSource}"
                                       Orientation="Horizontal"
                                       Position="{Binding Position}"
-                                      ShowIndicators="true" />
+                                      ShowIndicators="true" PositionSelected="Handle_PositionSelected" />
 		
 
         <Grid Grid.Row="1"

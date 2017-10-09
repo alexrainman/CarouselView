@@ -2,19 +2,24 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
 		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 		x:Class="Demo.MyTabbedPage"
-		xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
+		xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+    xmlns:local="clr-namespace:Demo;assembly=Demo">
 
 	<ContentPage Title="First">
-        <controls:CarouselViewControl x:Name="myCarousel"
+
+            <controls:CarouselViewControl x:Name="myCarousel"
                 HorizontalOptions="FillAndExpand"
-                VerticalOptions="CenterAndExpand" 
+                VerticalOptions="FillAndExpand" 
                 AnimateTransition="true"
                 IndicatorsShape="Circle"
                 InterPageSpacing="10"
                 BackgroundColor="Red"
                 Orientation="Horizontal"
                 ShowIndicators="true"/>
+
     </ContentPage>
+
+    <!--<local:MainPage />-->
 
 	<ContentPage Title="Second">
 		<Label Text="Second tab" />
@@ -27,6 +32,5 @@
 	<ContentPage Title="Four">
 		<Label Text="Third tab" />
 	</ContentPage>
-
-	
+    
 </TabbedPage>

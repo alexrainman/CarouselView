@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>4.4.3</version>
+        <version>4.4.4</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
@@ -12,13 +12,18 @@
         <description>Create Horizontal and Vertical carousels, add page indicators, render one page at a time moving back and fort programmatically and much more. “How to” at Github repository.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
+4.4.4
+[Update] XF 2.4.0 now supported
+[Update] Position Selected can now be declared from XAML
+[Android] Does not re-measure its layout on Height Changed #184
+[Android] Content bleeds into Indicator position due to height miscalculation #185
 4.4.3
 [Android] TapGestureRecognizer doesn't work when added to CarouselViewControl #200 
 [iOS] PositionSelected not called when adding a new item.
 [UWP] Adding an Item to the CarouselView Causes Exception when ShowIndicators = False #198
 [UWP] Crash on window resize #199
 [UWP] Adding back VirtualizationStackPanel as FlipView.ItemsPanelTemplate 
-[UWP] Overall staibility and improvements.
+[UWP] Overall stability and improvements.
 4.4.2
 [Update] Fix #129 CarouselViewControl not rendered when loading a page from memory bug
 [Update] Fix #157 CarouselView Binding breaks when returning to Page bug duplicate
@@ -126,14 +131,14 @@
         <tags>carouselview carousel pageslider slider viewpager uipageviewcontroller flipview ios android uwp xamarin forms monotouch monodroid</tags>
         <dependencies>
 			 <group targetFramework="MonoAndroid10">
-			    <dependency id="Xamarin.Forms" version="2.3.3.193"/>
+			    <dependency id="Xamarin.Forms" version="2.4.0.280"/>
 	            <dependency id="Xamarin.Android.Support.v4" version="23.3.0"/>
 	        </group>
 	        <group targetFramework="Xamarin.iOS10">
-	            <dependency id="Xamarin.Forms" version="2.3.3.193"/>
+	            <dependency id="Xamarin.Forms" version="2.4.0.280"/>
 	        </group>
 	        <group targetFramework="UAP10">
-	            <dependency id="Xamarin.Forms" version="2.3.3.193"/>
+	            <dependency id="Xamarin.Forms" version="2.4.0.280"/>
 	        </group>
 		</dependencies>
     </metadata>
@@ -151,7 +156,6 @@
 
         <!-- UWP -->
         <file src="lib/CarouselView.FormsPlugin.UWP.dll" target="lib/UAP10/CarouselView.FormsPlugin.UWP.dll" />
-        <file src="lib/CarouselView.FormsPlugin.UWP.pdb" target="lib/UAP10/CarouselView.FormsPlugin.UWP.pdb" />
         <file src="lib/CarouselView.FormsPlugin.UWP.pri" target="lib/UAP10/CarouselView.FormsPlugin.UWP.pri" />
         <file src="lib/CarouselView.FormsPlugin.UWP.xr.xml" target="lib/UAP10/CarouselView.FormsPlugin.UWP/CarouselView.FormsPlugin.UWP.xr.xml" />
         <file src="lib/FlipViewControl.xbf" target="lib/UAP10/FlipViewControl.xbf" />

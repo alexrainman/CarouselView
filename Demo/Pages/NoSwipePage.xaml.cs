@@ -20,8 +20,6 @@ namespace Demo
 
 			myCarousel.ItemTemplate = new DataTemplate(typeof(MySecondView));
 
-			myCarousel.PositionSelected += PositionSelected;
-
 			ConfigureButtons();
 		}
 
@@ -31,10 +29,10 @@ namespace Demo
 			nextBtn.IsVisible = _vm.ItemsSource[0] < 4;
 		}
 
-		public void PositionSelected(object sender, int position)
-		{
-			ConfigureButtons();
-		}
+        void Handle_PositionSelected(object sender, PositionSelectedEventArgs e)
+        {
+            ConfigureButtons();
+        }
 
 		public async void OnPrev(object sender, TappedEventArgs e)
 		{

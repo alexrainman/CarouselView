@@ -24,7 +24,7 @@
                                       IsSwipingEnabled="false"
                                       ItemsSource="{Binding ItemsSource}"
                                       Orientation="Horizontal"
-                                      ShowIndicators="false" />
+                                      ShowIndicators="false" PositionSelected="Handle_PositionSelected" />
 
         <Grid Grid.Row="1"
               Grid.Column="0"

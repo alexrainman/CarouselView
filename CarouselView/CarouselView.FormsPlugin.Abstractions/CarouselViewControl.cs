@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace CarouselView.FormsPlugin.Abstractions
 {
@@ -109,6 +110,17 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(ShowArrowsProperty, value); }
 		}
 
-		public EventHandler<int> PositionSelected;
+		public event EventHandler<PositionSelectedEventArgs> PositionSelected;
+
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public void SendPositionSelected()
+		{
+            PositionSelected?.Invoke(this, new PositionSelectedEventArgs { NewValue = this.Position });
+		}
+	}
+
+	public class PositionSelectedEventArgs : EventArgs
+	{
+		public int NewValue { get; set; }
 	}
 }
