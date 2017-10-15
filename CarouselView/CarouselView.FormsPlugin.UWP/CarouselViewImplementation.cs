@@ -501,6 +501,9 @@ namespace CarouselView.FormsPlugin.UWP
 
         void SetCurrentPage(int position)
         {
+            if (position < 0 || position > Element.ItemsSource?.GetCount() - 1)
+                return;
+            
             if (Element != null && flipView != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
             {
                 flipView.SelectedIndex = position;
@@ -513,6 +516,7 @@ namespace CarouselView.FormsPlugin.UWP
             var bindingContext = item;
 
 			var dt = bindingContext as Xamarin.Forms.DataTemplate;
+            var view = bindingContext as View;
 
             // Support for List<DataTemplate> as ItemsSource
             if (dt != null)
@@ -521,8 +525,6 @@ namespace CarouselView.FormsPlugin.UWP
 			}
 			else {
                 
-				var view = bindingContext as View;
-
                 if (view != null)
                 {
                     formsView = view;
@@ -542,6 +544,9 @@ namespace CarouselView.FormsPlugin.UWP
 			formsView.Parent = this.Element;
 
             var element = formsView.ToWindows(new Xamarin.Forms.Rectangle(0, 0, ElementWidth, ElementHeight));
+
+            if (dt == null && view == null)
+                formsView.Parent = null;
 
             return element;
         }

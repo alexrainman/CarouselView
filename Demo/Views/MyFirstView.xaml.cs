@@ -19,6 +19,13 @@ namespace Demo
 		{
 			MessagingCenter.Send<MyFirstView>(this, "RemoveMe");
 		}
+
+        protected override void OnParentSet()
+        {
+            if (this.Parent == null)
+                Debug.WriteLine("Parent setup.");
+            base.OnParentSet();
+        }
 	}
 }
 

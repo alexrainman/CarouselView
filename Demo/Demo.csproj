@@ -46,13 +46,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="Pages\NoSwipePage.xaml.cs">
-      <DependentUpon>NoSwipePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\NoSwipeViewModel.cs" />
-    <Compile Include="Pages\SecondPage.xaml.cs">
-      <DependentUpon>SecondPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\PhotoUrl.xaml.cs">
       <DependentUpon>PhotoUrl.xaml</DependentUpon>
     </Compile>
@@ -65,43 +59,59 @@
     <Compile Include="Pages\MyTabbedPage.xaml.cs">
       <DependentUpon>MyTabbedPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\RootPage.cs" />
-    <Compile Include="Pages\MasterPage.xaml.cs">
-      <DependentUpon>MasterPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\DetailPage.xaml.cs">
-      <DependentUpon>DetailPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ListViewHeader.xaml.cs">
       <DependentUpon>ListViewHeader.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Column.cs" />
     <Compile Include="ViewModels\ColumnsViewModel.cs" />
     <Compile Include="ViewModels\Task.cs" />
-    <Compile Include="Pages\ColumnPage.xaml.cs">
-      <DependentUpon>ColumnPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\MyStackLayout.cs" />
-    <Compile Include="Pages\LeakPage.xaml.cs">
-      <DependentUpon>LeakPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\HeightIssuePage.xaml.cs">
-      <DependentUpon>HeightIssuePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\ListViewCarousel.xaml.cs">
-      <DependentUpon>ListViewCarousel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Bug129.xaml.cs">
-      <DependentUpon>Bug129.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Bug168.xaml.cs">
-      <DependentUpon>Bug168.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Bug169.xaml.cs">
-      <DependentUpon>Bug169.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\AlertDetailPageViewModel.cs" />
     <Compile Include="ViewModels\StringConverter.cs" />
+    <Compile Include="Views\MyView.xaml.cs">
+      <DependentUpon>MyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\NestedCarouselPage.xaml.cs">
+      <DependentUpon>NestedCarouselPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Other\Bug129.xaml.cs">
+      <DependentUpon>Bug129.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Other\Bug168.xaml.cs">
+      <DependentUpon>Bug168.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Other\Bug169.xaml.cs">
+      <DependentUpon>Bug169.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Other\Bug223.xaml.cs">
+      <DependentUpon>Bug223.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Other\HeightIssuePage.xaml.cs">
+      <DependentUpon>HeightIssuePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Other\LeakPage.xaml.cs">
+      <DependentUpon>LeakPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Other\NoSwipePage.xaml.cs">
+      <DependentUpon>NoSwipePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Other\ColumnPage.xaml.cs">
+      <DependentUpon>ColumnPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Other\ListViewCarousel.xaml.cs">
+      <DependentUpon>ListViewCarousel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Other\SecondPage.xaml.cs">
+      <DependentUpon>SecondPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Other\CarouselTemplateSelector.cs" />
+    <Compile Include="Pages\Other\DetailPage.xaml.cs">
+      <DependentUpon>DetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Other\MasterPage.xaml.cs">
+      <DependentUpon>MasterPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Other\RootPage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.2.0.31\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.2.0.31\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -122,12 +132,6 @@
     <EmbeddedResource Include="Pages\MainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\NoSwipePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Pages\SecondPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\PhotoUrl.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -140,40 +144,56 @@
     <EmbeddedResource Include="Pages\MyTabbedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\MasterPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Pages\DetailPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\ListViewHeader.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\ColumnPage.xaml">
+    <EmbeddedResource Include="Views\MyView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\LeakPage.xaml">
+    <EmbeddedResource Include="Pages\NestedCarouselPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\HeightIssuePage.xaml">
+    <EmbeddedResource Include="Pages\Other\Bug129.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\ListViewCarousel.xaml">
+    <EmbeddedResource Include="Pages\Other\Bug168.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\Bug129.xaml">
+    <EmbeddedResource Include="Pages\Other\Bug169.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\Bug168.xaml">
+    <EmbeddedResource Include="Pages\Other\Bug223.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\Bug169.xaml">
+    <EmbeddedResource Include="Pages\Other\HeightIssuePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Other\LeakPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Other\NoSwipePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Other\ColumnPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Other\ListViewCarousel.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Other\SecondPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Other\DetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Other\MasterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Pages\Other\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PropertyChanged">

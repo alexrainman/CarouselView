@@ -624,6 +624,9 @@ namespace CarouselView.FormsPlugin.iOS
 
 		void SetCurrentPage(int position)
 		{
+            if (position < 0 || position > Element.ItemsSource?.GetCount() - 1)
+                return;
+            
 			if (pageController != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
 			{
 				// Transition direction based on prevPosition
@@ -663,6 +666,8 @@ namespace CarouselView.FormsPlugin.iOS
 				bindingContext = Source.Cast<object>().ElementAt(index);
             
 			var dt = bindingContext as DataTemplate;
+			// Support for List<View> as ItemsSource
+			var view = bindingContext as View;
 
 			// Support for List<DataTemplate> as ItemsSource
 			if (dt != null)
@@ -671,9 +676,6 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 			else
 			{
-				// Support for List<View> as ItemsSource
-				var view = bindingContext as View;
-
                 if (view != null)
                 {
                     if (ChildViewControllers == null)
@@ -708,6 +710,9 @@ namespace CarouselView.FormsPlugin.iOS
 			// UIScreen.MainScreen.Bounds.Width, UIScreen.MainScreen.Bounds.Height
 			var rect = new CGRect(Element.X, Element.Y, ElementWidth, ElementHeight);
 			var nativeConverted = formsView.ToiOS(rect);
+
+            if (dt == null && view == null)
+                formsView.Parent = null;
 
 			var viewController = new ViewContainer();
 			viewController.Tag = bindingContext;

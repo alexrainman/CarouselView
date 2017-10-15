@@ -11,6 +11,8 @@ namespace Demo
 		{
 			InitializeComponent();
 
+            Title = "DataTemplates as ItemsSource";
+
 			myCarousel.ItemsSource = new List<DataTemplate>()
 			{
 				new DataTemplate(() => { return new PhotoUrl(); }),

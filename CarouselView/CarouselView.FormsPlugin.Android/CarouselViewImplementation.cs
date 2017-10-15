@@ -423,6 +423,9 @@ namespace CarouselView.FormsPlugin.Android
 
         void SetCurrentPage(int position)
         {
+            if (position < 0 || position > Element.ItemsSource?.GetCount() - 1)
+                return;
+            
             if (viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
             {
 
@@ -475,6 +478,7 @@ namespace CarouselView.FormsPlugin.Android
                     bindingContext = Source.Cast<object>().ElementAt(position);
 
                 var dt = bindingContext as DataTemplate;
+                var view = bindingContext as View;
 
                 // Support for List<DataTemplate> as ItemsSource
                 if (dt != null)
@@ -483,8 +487,6 @@ namespace CarouselView.FormsPlugin.Android
                 }
                 else
                 {
-                    var view = bindingContext as View;
-
                     if (view != null)
                     {
                         formsView = view;
@@ -509,6 +511,9 @@ namespace CarouselView.FormsPlugin.Android
 
                 //nativeConverted.SaveEnabled = true;
                 //nativeConverted.RestoreHierarchyState(mViewStates);
+
+                if (dt == null && view == null)
+                    formsView.Parent = null;
 
                 var pager = (ViewPager)container;
                 pager.AddView(nativeConverted);

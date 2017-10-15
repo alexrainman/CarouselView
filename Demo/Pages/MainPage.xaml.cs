@@ -20,10 +20,6 @@ namespace Demo
 
 			BindingContext = _vm = new MainViewModel();
 
-			//myCarousel.ItemsSource = _vm.ItemsSource;
-
-			//myCarousel.ItemTemplate = new DataTemplate(typeof(MyFirstView));
-
 			MessagingCenter.Subscribe<MyFirstView> (this, "RemoveMe", (sender) => {
 				_vm.ItemsSource.RemoveAt(myCarousel.Position);
 			});
@@ -36,11 +32,6 @@ namespace Demo
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() => {
                     _vm.ItemsSource.Clear();
-                    //_vm.ItemsSource.Move(0, 4); // Position selected not called
-                    //_vm.ItemsSource[0] = new MySecondView();
-                    //myCarousel.IndicatorsShape = IndicatorsShape.Circle;
-                    //myCarousel.ShowIndicators = !myCarousel.ShowIndicators;
-                    //_vm.Position = _vm.Position == 0 ? 3 : 0;
 				})
 			});
 
@@ -50,9 +41,6 @@ namespace Demo
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() =>
 				{
-					//Navigation.PushAsync(new NoSwipePage());
-					//Navigation.PushAsync(new SecondPage());
-					//Navigation.PushAsync(new MyTabbedPage());
                     myCarousel.Orientation = myCarousel.Orientation == CarouselViewOrientation.Horizontal ? CarouselViewOrientation.Vertical : CarouselViewOrientation.Horizontal;
 				})
 			});
@@ -91,24 +79,11 @@ namespace Demo
 				_vm.Position++;
 		}
 
-		public void OnAdd(object sender, TappedEventArgs e)
+		public async void OnAdd(object sender, TappedEventArgs e)
 		{
 			if (_vm.ItemsSource != null)
 			{
                 _vm.ItemsSource.Add(new MyFirstView() { BindingContext = myCarousel.ItemsSource.GetCount() });
-				// Do this to trigger PositionSelected
-				//if (_vm.ItemsSource.Count > 0)
-				///{
-                    //_vm.ItemsSource.Add(_vm.ItemsSource.Max() + 1);
-					//_vm.Position = _vm.ItemsSource.Count - 1;
-				//}
-				//else
-				//{
-					//_vm.ItemsSource.Add(0);
-				//}
-
-				// Do this to refresh Prev/Next visibility
-                //ConfigureButtons();
 		    }
 		}
 	}
