@@ -217,6 +217,18 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+4.4.6
+
+[iOS] CarouselViewRenderer.Dispose Null reference Unhandled Exception: #210
+
+[iOS] Exception thrown on Dispose #233
+
+[UWP] Changing Width of Carousel View resets back to first item #230
+
+4.4.5
+
+[Update] Performance improvements
+
 4.4.4
 
 [Update] XF 2.4.0 now supported
