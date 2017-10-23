@@ -16,8 +16,9 @@ namespace Demo
 
 		protected override DataTemplate OnSelectTemplate (object item, BindableObject container)
 		{
-            //if ((int)item % 2 == 0)
-            //return templateTwo;
+            if ((int)item % 2 == 0)
+                return templateTwo;
+            
             return templateOne;
 		}
 	}

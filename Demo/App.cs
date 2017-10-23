@@ -10,6 +10,19 @@ namespace Demo
 	{
 		public App ()
 		{
+            /*var main = new ContentPage();
+
+            main.ToolbarItems.Add(new ToolbarItem
+            {
+                Text = "Next",
+                Order = ToolbarItemOrder.Primary,
+                Command = new Command(() => {
+                    Application.Current.MainPage = new NavigationPage(new MainPage());
+                })
+            });
+
+            var nav = new NavigationPage(main);*/
+
             // The root page of your application
             MainPage = new NavigationPage(new MainPage ());
 		}

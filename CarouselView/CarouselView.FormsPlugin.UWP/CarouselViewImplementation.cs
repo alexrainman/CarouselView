@@ -299,6 +299,8 @@ namespace CarouselView.FormsPlugin.UWP
 
         public void SetNativeView()
         {
+            var position = Element.Position;
+
             if (nativeView == null)
             {
                 nativeView = new FlipViewControl();
@@ -351,7 +353,7 @@ namespace CarouselView.FormsPlugin.UWP
 
             if (Source.Count > 0)
             {
-                flipView.SelectedIndex = Element.Position;
+                flipView.SelectedIndex = position;
             }
 
             SetNativeControl(nativeView);

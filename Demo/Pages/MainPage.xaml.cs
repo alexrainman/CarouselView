@@ -32,6 +32,21 @@ namespace Demo
 				Order = ToolbarItemOrder.Primary,
 				Command = new Command(() => {
                     _vm.ItemsSource.Clear();
+
+                    /*var main = new ContentPage();
+
+                    main.ToolbarItems.Add(new ToolbarItem
+                    {
+                        Text = "Next",
+                        Order = ToolbarItemOrder.Primary,
+                        Command = new Command(() => {
+                            Application.Current.MainPage = new NavigationPage(new MainPage());
+                        })
+                    });
+
+                    var nav = new NavigationPage(main);
+
+                    Application.Current.MainPage = nav;*/
 				})
 			});
 

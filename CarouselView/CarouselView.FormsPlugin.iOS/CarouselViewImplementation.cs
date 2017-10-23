@@ -778,17 +778,25 @@ namespace CarouselView.FormsPlugin.iOS
 		{
 			if (disposing && !_disposed)
 			{
-				pageController.DidFinishAnimating -= PageController_DidFinishAnimating;
-				pageController.GetPreviousViewController = null;
-				pageController.GetNextViewController = null;
+                // CarouselViewRenderer.Dispose Null reference Unhandled Exception: #210
+                // Exception thrown on Dispose #233
+				try
+                {
+                    pageController.DidFinishAnimating -= PageController_DidFinishAnimating;
+                    pageController.GetPreviousViewController = null;
+                    pageController.GetNextViewController = null;
 
-				CleanUpPageController();
+                    CleanUpPageController();
 
-				pageController.View.RemoveFromSuperview();
-				pageController.View.Dispose();
+                    pageController.View.RemoveFromSuperview();
+                    pageController.View.Dispose();
 
-				pageController.Dispose();
-				pageController = null;
+                    pageController.Dispose();
+                    pageController = null;
+
+				} catch (Exception ex) {
+                    Console.Write(ex.Message);
+				}
 
 				if (Element != null)
 				{
