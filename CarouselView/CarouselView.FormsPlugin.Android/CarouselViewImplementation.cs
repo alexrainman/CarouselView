@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Android.Support.V4.View;
 using CarouselView.FormsPlugin.Abstractions;
 using CarouselView.FormsPlugin.Android;
+using CarouselView.FormsPlugin.Android.KeyboardService;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ using AViews = Android.Views;
 using AWidget = Android.Widget;
 using System.Collections.Specialized;
 using System.Collections.Generic;
+using Android.App;
 
 /*
  * Save state in Android:
@@ -42,8 +44,15 @@ namespace CarouselView.FormsPlugin.Android
         CirclePageIndicator indicators;
         bool _disposed;
 
-        //double ElementWidth = -1;
-        //double ElementHeight = -1;
+		bool isKeyboardVisible;
+		bool canSetLayout;
+		readonly SoftwareKeyboardService keyboardService;
+
+		public CarouselViewRenderer()
+		{
+			var activity = Forms.Context as Activity;
+			keyboardService = new SoftwareKeyboardService (activity);
+		}
 
         protected override void OnElementChanged(ElementChangedEventArgs<CarouselViewControl> e)
         {
@@ -59,6 +68,10 @@ namespace CarouselView.FormsPlugin.Android
             if (e.OldElement != null)
             {
                 // Unsubscribe from event handlers and cleanup any resources
+
+				Xamarin.Forms.Application.Current.MainPage.SizeChanged -= MainPage_SizeChanged;
+
+				keyboardService.VisibilityChanged -= KeyboardService_VisibilityChanged;
 
                 if (viewPager != null)
                 {
@@ -76,6 +89,10 @@ namespace CarouselView.FormsPlugin.Android
 
             if (e.NewElement != null)
             {
+				Xamarin.Forms.Application.Current.MainPage.SizeChanged += MainPage_SizeChanged;
+
+				keyboardService.VisibilityChanged += KeyboardService_VisibilityChanged;
+
                 Element.SizeChanged += Element_SizeChanged;
 
                 // Configure the control and subscribe to event handlers
@@ -151,10 +168,14 @@ namespace CarouselView.FormsPlugin.Android
         {
             if (Element != null)
             {
-                // To avoid page recreation caused by entry focus #136 (fix)
-                var rect = this.Element.Bounds;
+				// To avoid page recreation caused by entry focus #136 (fix)
+				if (!canSetLayout)
+				{
+					canSetLayout = true;
+					return;
+				}
 
-                if (rect.Height > 0)
+				if (this.Element.Bounds.Height > 0)
                 {
 					//ElementWidth = rect.Width;
 					//ElementHeight = rect.Height;
@@ -164,9 +185,29 @@ namespace CarouselView.FormsPlugin.Android
             }
         }
 
-        // Fix #129 CarouselViewControl not rendered when loading a page from memory bug
-        // Fix #157 CarouselView Binding breaks when returning to Page bug duplicate
-        protected override void OnAttachedToWindow()
+		void MainPage_SizeChanged (object sender, EventArgs e)
+		{
+			canSetLayout = false;
+		}
+
+		void KeyboardService_VisibilityChanged (object sender, SoftwareKeyboardEventArgs e)
+		{
+			// The OnGlobalLayout method is calledd multiple times, so we have to store the previous state
+			// and only do anything if the keyboard visibility is changed
+			if (isKeyboardVisible != e.IsVisible)
+			{
+				isKeyboardVisible = e.IsVisible;
+
+				// Only has to be set when the keyboard becomes visible, because otherwise 
+				// the MainPage_SizeChanged is invoked earlier, so the canSetLayout is already changed
+				if (e.IsVisible)
+					canSetLayout = false;
+			}
+		}
+
+		// Fix #129 CarouselViewControl not rendered when loading a page from memory bug
+		// Fix #157 CarouselView Binding breaks when returning to Page bug duplicate
+		protected override void OnAttachedToWindow()
         {
             if (Control == null)
                 Element_SizeChanged(Element, null);
