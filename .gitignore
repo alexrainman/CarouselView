@@ -16,3 +16,4 @@ UWP/bin
 UWP/obj
 packages
 *.userprefs
+.vs

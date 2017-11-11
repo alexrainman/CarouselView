@@ -644,7 +644,7 @@ namespace CarouselView.FormsPlugin.UWP
             {
                 base.Dispose(disposing);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return;
             }
