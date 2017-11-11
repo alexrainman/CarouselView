@@ -94,7 +94,7 @@ namespace Demo
 				_vm.Position++;
 		}
 
-		public async void OnAdd(object sender, TappedEventArgs e)
+		public void OnAdd(object sender, TappedEventArgs e)
 		{
 			if (_vm.ItemsSource != null)
 			{

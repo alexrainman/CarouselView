@@ -6,7 +6,7 @@ using Xamarin.Forms.Xaml;
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace Demo
 {
-	public class App : Application
+	public partial class App : Application
 	{
 		public App ()
 		{
