@@ -9,11 +9,11 @@
 
     <UserControl.Resources>
         <ItemsPanelTemplate x:Key="HPanel" >
-            <VirtualizingStackPanel Orientation="Horizontal"/>
+            <VirtualizingStackPanel Orientation="Horizontal" PointerWheelChanged="VirtualizingStackPanel_PointerWheelChanged"/>
         </ItemsPanelTemplate>
 
         <ItemsPanelTemplate x:Key="VPanel">
-            <VirtualizingStackPanel Orientation="Vertical"/>
+            <VirtualizingStackPanel Orientation="Vertical" PointerWheelChanged="VirtualizingStackPanel_PointerWheelChanged"/>
         </ItemsPanelTemplate>
 
         <ItemsPanelTemplate x:Key="dotsHPanel">

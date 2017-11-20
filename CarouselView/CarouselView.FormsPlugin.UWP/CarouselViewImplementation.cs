@@ -23,7 +23,7 @@ namespace CarouselView.FormsPlugin.UWP
     {
         bool orientationChanged;
 
-        UserControl nativeView;
+        FlipViewControl nativeView;
         FlipView flipView;
         StackPanel indicators;
 
@@ -59,12 +59,12 @@ namespace CarouselView.FormsPlugin.UWP
             if (e.OldElement != null)
             {
                 // Unsubscribe from event handlers and cleanup any resources
-                if (flipView != null)
+                /*if (flipView != null)
                 {
                     flipView.Loaded -= FlipView_Loaded;
                     flipView.SelectionChanged -= FlipView_SelectionChanged;
                     flipView.SizeChanged -= FlipView_SizeChanged;
-                }
+                }*/
 
 				if (Element != null)
                 {
@@ -178,7 +178,7 @@ namespace CarouselView.FormsPlugin.UWP
 					    flipView.Background = (SolidColorBrush)converter.Convert(Element.BackgroundColor, null, null, null);
                     break;
                 case "IsSwipingEnabled":
-                    //flipView.ManipulationMode = Element.IsSwipingEnabled ? ManipulationModes.All : ManipulationModes.None;
+                    nativeView.IsSwipingEnabled = Element.IsSwipingEnabled;
                     break;
                 case "IndicatorsTintColor":
                     fillColor = (SolidColorBrush)converter.Convert(Element.IndicatorsTintColor, null, null, null);
@@ -303,7 +303,7 @@ namespace CarouselView.FormsPlugin.UWP
 
             if (nativeView == null)
             {
-                nativeView = new FlipViewControl();
+                nativeView = new FlipViewControl(Element.IsSwipingEnabled);
                 flipView = nativeView.FindName("flipView") as FlipView;
             }
 
@@ -547,8 +547,8 @@ namespace CarouselView.FormsPlugin.UWP
 
             var element = formsView.ToWindows(new Xamarin.Forms.Rectangle(0, 0, ElementWidth, ElementHeight));
 
-            if (dt == null && view == null)
-                formsView.Parent = null;
+            //if (dt == null && view == null)
+                //formsView.Parent = null;
 
             return element;
         }

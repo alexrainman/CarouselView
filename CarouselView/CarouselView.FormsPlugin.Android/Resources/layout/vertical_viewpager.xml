@@ -7,6 +7,37 @@
         android:id="@+id/pager"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
+    <LinearLayout
+        android:id="@+id/prev"
+        android:layout_width="36dip"
+        android:layout_height="20dip"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.5"
+        android:visibility="gone"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/prevArrow"
+            android:layout_width="17dip"
+            android:layout_height="17dip"
+            android:src="@drawable/Up" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/next"
+        android:layout_width="36dip"
+        android:layout_height="20dip"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.5"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/nextArrow"
+            android:layout_width="17dip"
+            android:layout_height="17dip"
+            android:src="@drawable/Down" />
+    </LinearLayout>
     <CarouselView.FormsPlugin.Android.CirclePageIndicator
         android:id="@+id/indicator"
         android:paddingLeft="15dip"

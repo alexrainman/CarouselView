@@ -1,46 +1,30 @@
-﻿using System;
-using Demo.Pages;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-[assembly: XamlCompilation (XamlCompilationOptions.Compile)]
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Demo
 {
-	public class App : Application
-	{
-		public App ()
-		{
-            /*var main = new ContentPage();
-
-            main.ToolbarItems.Add(new ToolbarItem
-            {
-                Text = "Next",
-                Order = ToolbarItemOrder.Primary,
-                Command = new Command(() => {
-                    Application.Current.MainPage = new NavigationPage(new MainPage());
-                })
-            });
-
-            var nav = new NavigationPage(main);*/
-
+    public class App : Application
+    {
+        public App()
+        {
             // The root page of your application
-            MainPage = new NavigationPage(new MainPage ());
-		}
+            MainPage = new NavigationPage(new MainPage());
+        }
 
-		protected override void OnStart ()
-		{
-			// Handle when your app starts
-		}
+        protected override void OnStart()
+        {
+            // Handle when your app starts
+        }
 
-		protected override void OnSleep ()
-		{
-			// Handle when your app sleeps
-		}
+        protected override void OnSleep()
+        {
+            // Handle when your app sleeps
+        }
 
-		protected override void OnResume ()
-		{
-			// Handle when your app resumes
-		}
-	}
+        protected override void OnResume()
+        {
+            // Handle when your app resumes
+        }
+    }
 }
-

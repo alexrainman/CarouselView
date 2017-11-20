@@ -1,4 +1,5 @@
 ﻿using CarouselView.FormsPlugin.UWP;
+using FFImageLoading.Forms.WinUWP;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -61,6 +62,8 @@ namespace Demo.UWP
 				List<Assembly> assembliesToInclude = new List<Assembly>();
 				assembliesToInclude.Add(typeof(CarouselViewRenderer).GetTypeInfo().Assembly);
 				Xamarin.Forms.Forms.Init(e, assembliesToInclude);
+
+                CachedImageRenderer.Init();
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {

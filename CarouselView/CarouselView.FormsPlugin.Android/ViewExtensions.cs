@@ -12,7 +12,7 @@ namespace CarouselView.FormsPlugin.Android
         {
 			//var vRenderer = RendererFactory.GetRenderer (view);
 
-			//if (Platform.GetRenderer(view) == null)
+			if (Platform.GetRenderer(view) == null)
 				Platform.SetRenderer(view, Platform.CreateRenderer(view));
 			var vRenderer = Platform.GetRenderer(view);
             

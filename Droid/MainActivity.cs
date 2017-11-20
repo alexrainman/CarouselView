@@ -4,6 +4,7 @@ using Android.Content.PM;
 using Android.Views;
 using Android.OS;
 using CarouselView.FormsPlugin.Android;
+using FFImageLoading.Forms.Droid;
 
 namespace Demo.Droid
 {
@@ -24,6 +25,7 @@ namespace Demo.Droid
             //Window.DecorView.SystemUiVisibility = 0;
 
 			CarouselViewRenderer.Init ();
+            CachedImageRenderer.Init();
 
 			LoadApplication (new App ());
 		}

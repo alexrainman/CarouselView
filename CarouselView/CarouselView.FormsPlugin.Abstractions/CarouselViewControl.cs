@@ -10,9 +10,9 @@ namespace CarouselView.FormsPlugin.Abstractions
 	/// <summary>
 	/// CarouselView Interface
 	/// </summary>
-	public class CarouselViewControl : View
+    public class CarouselViewControl : View
 	{
-		public static readonly BindableProperty OrientationProperty = BindableProperty.Create("Orientation", typeof(CarouselViewOrientation), typeof(CarouselViewControl), CarouselViewOrientation.Horizontal);
+        public static readonly BindableProperty OrientationProperty = BindableProperty.Create("Orientation", typeof(CarouselViewOrientation), typeof(CarouselViewControl), CarouselViewOrientation.Horizontal);
 
 		public CarouselViewOrientation Orientation
 		{
@@ -101,7 +101,6 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(AnimateTransitionProperty, value); }
 		}
 
-		// UWP only
 		public static readonly BindableProperty ShowArrowsProperty = BindableProperty.Create("ShowArrows", typeof(bool), typeof(CarouselViewControl), false);
 
 		public bool ShowArrows
@@ -110,6 +109,32 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(ShowArrowsProperty, value); }
 		}
 
+        public static readonly BindableProperty ArrowsBackgroundColorProperty = BindableProperty.Create("ArrowsBackgroundColor", typeof(Color), typeof(CarouselViewControl), Color.Black);
+
+        public Color ArrowsBackgroundColor
+        {
+            get { return (Color)GetValue(ArrowsBackgroundColorProperty); }
+            set { SetValue(ArrowsBackgroundColorProperty, value); }
+        }
+
+        public static readonly BindableProperty ArrowsTintColorProperty = BindableProperty.Create("ArrowsTintColor", typeof(Color), typeof(CarouselViewControl), Color.White);
+
+        public Color ArrowsTintColor
+        {
+            get { return (Color)GetValue(ArrowsTintColorProperty); }
+            set { SetValue(ArrowsTintColorProperty, value); }
+        }
+
+        public static readonly BindableProperty PositionSelectedCommandProperty = BindableProperty.Create("PositionSelectedCommand", typeof(Command), typeof(CarouselViewControl), null, BindingMode.Default, (bindable, value) => {
+            return true;
+        });
+
+        public Command PositionSelectedCommand
+        {
+            get { return (Command)GetValue(PositionSelectedCommandProperty); }
+            set { SetValue(PositionSelectedCommandProperty, value); }
+        }
+
 		public event EventHandler<PositionSelectedEventArgs> PositionSelected;
 
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -117,7 +142,7 @@ namespace CarouselView.FormsPlugin.Abstractions
 		{
             PositionSelected?.Invoke(this, new PositionSelectedEventArgs { NewValue = this.Position });
 		}
-	}
+    }
 
 	public class PositionSelectedEventArgs : EventArgs
 	{

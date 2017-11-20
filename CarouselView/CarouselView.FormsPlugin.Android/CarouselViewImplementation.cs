@@ -12,6 +12,8 @@ using AViews = Android.Views;
 using AWidget = Android.Widget;
 using System.Collections.Specialized;
 using System.Collections.Generic;
+using AGraphics = Android.Graphics;
+using Android.Content;
 
 /*
  * Save state in Android:
@@ -40,10 +42,18 @@ namespace CarouselView.FormsPlugin.Android
         AViews.View nativeView;
         ViewPager viewPager;
         CirclePageIndicator indicators;
+
+        AWidget.LinearLayout prevBtn;
+        AWidget.LinearLayout nextBtn;
+
         bool _disposed;
 
         //double ElementWidth = -1;
         //double ElementHeight = -1;
+
+        public CarouselViewRenderer(Context context) : base(context)
+        {
+        }
 
         protected override void OnElementChanged(ElementChangedEventArgs<CarouselViewControl> e)
         {
@@ -60,11 +70,11 @@ namespace CarouselView.FormsPlugin.Android
             {
                 // Unsubscribe from event handlers and cleanup any resources
 
-                if (viewPager != null)
+                /*if (viewPager != null)
                 {
                     viewPager.PageSelected -= ViewPager_PageSelected;
                     viewPager.PageScrollStateChanged -= ViewPager_PageScrollStateChanged;
-                }
+                }*/
 
                 if (Element != null)
                 {
@@ -115,6 +125,7 @@ namespace CarouselView.FormsPlugin.Android
                     viewPager.Adapter?.NotifyDataSetChanged();
 
                     Element.SendPositionSelected();
+                    Element.PositionSelectedCommand?.Execute(null);
                 }
             }
 
@@ -143,6 +154,7 @@ namespace CarouselView.FormsPlugin.Android
                     viewPager.SetCurrentItem(Element.Position, false);
                     indicators?.SetViewPager(viewPager);
                     Element.SendPositionSelected();
+                    Element.PositionSelectedCommand?.Execute(null);
                 }
             }
         }
@@ -160,6 +172,7 @@ namespace CarouselView.FormsPlugin.Android
 					//ElementHeight = rect.Height;
 					SetNativeView();
                     Element.SendPositionSelected();
+                    Element.PositionSelectedCommand?.Execute(null);
                 }
             }
         }
@@ -188,6 +201,7 @@ namespace CarouselView.FormsPlugin.Android
                         orientationChanged = true;
                         SetNativeView();
                         Element.SendPositionSelected();
+                        Element.PositionSelectedCommand?.Execute(null);
                     }
                     break;
                 case "InterPageSpacing":
@@ -221,6 +235,7 @@ namespace CarouselView.FormsPlugin.Android
                         viewPager.SetCurrentItem(Element.Position, false);
                         indicators?.SetViewPager(viewPager);
                         Element.SendPositionSelected();
+                        Element.PositionSelectedCommand?.Execute(null);
                         if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
                             ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
                     }
@@ -232,11 +247,37 @@ namespace CarouselView.FormsPlugin.Android
                         viewPager.SetCurrentItem(Element.Position, false);
                         indicators?.SetViewPager(viewPager);
                         Element.SendPositionSelected();
+                        Element.PositionSelectedCommand?.Execute(null);
                     }
                     break;
                 case "Position":
                     if (Element != null && !isSwiping)
+                    {
+                        if (prevBtn != null)
+                            prevBtn.Visibility = Element.Position == 0 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
+                        if (nextBtn != null)
+                            nextBtn.Visibility= Element.Position == Element.ItemsSource.GetCount() - 1 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
                         SetCurrentPage(Element.Position);
+                    }
+                    break;
+                case "ShowArrows":
+                    SetArrows();
+                    break;
+                case "ArrowsBackgroundColor":
+                    if (prevBtn != null && nextBtn != null)
+                    {
+                        prevBtn.SetBackgroundColor(Element.ArrowsBackgroundColor.ToAndroid());
+                        nextBtn.SetBackgroundColor(Element.ArrowsBackgroundColor.ToAndroid());
+                    }
+                    break;
+                case "ArrowsTintColor":
+                    if (prevBtn != null && nextBtn != null)
+                    {
+                        var prevArrow = nativeView.FindViewById<AWidget.ImageView>(Resource.Id.prevArrow);
+                        prevArrow.SetColorFilter(Element.ArrowsTintColor.ToAndroid());
+                        var nextArrow = nativeView.FindViewById<AWidget.ImageView>(Resource.Id.nextArrow);
+                        nextArrow.SetColorFilter(Element.ArrowsTintColor.ToAndroid());
+                    }
                     break;
             }
         }
@@ -253,7 +294,10 @@ namespace CarouselView.FormsPlugin.Android
             Element.Position = e.Position;
             // Call PositionSelected from here when 0
             if (e.Position == 0)
+            {
                 Element.SendPositionSelected();
+                Element.PositionSelectedCommand?.Execute(null);
+            }
             isSwiping = false;
         }
 
@@ -264,6 +308,7 @@ namespace CarouselView.FormsPlugin.Android
             if (e.State == 0 && !isSwiping && Element.Position > 0)
             {
                 Element.SendPositionSelected();
+                Element.PositionSelectedCommand?.Execute(null);
             }
         }
         #endregion
@@ -289,7 +334,8 @@ namespace CarouselView.FormsPlugin.Android
             }
             isSwiping = false;
 
-            indicators.mSnapPage = Element.Position;
+            if (indicators != null)
+                indicators.mSnapPage = Element.Position;
         }
 
         void SetNativeView()
@@ -331,9 +377,57 @@ namespace CarouselView.FormsPlugin.Android
 
             SetNativeControl(nativeView);
 
+            // ARROWS
+            SetArrows();
+
             // INDICATORS
             indicators = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
             SetIndicators();
+        }
+
+        void SetArrows()
+        {
+            if (Element.ShowArrows)
+            {
+                if (prevBtn == null)
+                {
+                    prevBtn = nativeView.FindViewById<AWidget.LinearLayout>(Resource.Id.prev);
+                    prevBtn.SetBackgroundColor(Element.ArrowsBackgroundColor.ToAndroid());
+                    prevBtn.Visibility = Element.Position == 0 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
+
+                    var prevArrow = nativeView.FindViewById<AWidget.ImageView>(Resource.Id.prevArrow);
+                    prevArrow.SetColorFilter(Element.ArrowsTintColor.ToAndroid());
+
+                    prevBtn.Click += delegate
+                    {
+                        if (Element.Position > 0)
+                            Element.Position = Element.Position - 1;
+                    };
+                }
+
+                if (nextBtn == null)
+                {
+                    nextBtn = nativeView.FindViewById<AWidget.LinearLayout>(Resource.Id.next);
+                    nextBtn.SetBackgroundColor(Element.ArrowsBackgroundColor.ToAndroid());
+                    nextBtn.Visibility = Element.Position == Element.ItemsSource.GetCount() - 1 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
+
+                    var nextArrow = nativeView.FindViewById<AWidget.ImageView>(Resource.Id.nextArrow);
+                    nextArrow.SetColorFilter(Element.ArrowsTintColor.ToAndroid());
+
+                    nextBtn.Click += delegate
+                    {
+                        if (Element.Position < Element.ItemsSource.GetCount() - 1)
+                            Element.Position = Element.Position + 1;
+                    };
+                }
+            }
+            else
+            {
+                if (prevBtn != null)
+                    prevBtn.Visibility = AViews.ViewStates.Gone;
+                if (nextBtn != null)
+                    nextBtn.Visibility = AViews.ViewStates.Gone;
+            }
         }
 
         void SetIndicators()
@@ -342,24 +436,25 @@ namespace CarouselView.FormsPlugin.Android
             {
                 SetPosition();
 
-                indicators.SetViewPager(viewPager);
+                indicators?.SetViewPager(viewPager);
 
                 // IndicatorsTintColor BP
-                indicators.SetFillColor(Element.IndicatorsTintColor.ToAndroid());
+                indicators?.SetFillColor(Element.IndicatorsTintColor.ToAndroid());
 
                 // CurrentPageIndicatorTintColor BP
-                indicators.SetPageColor(Element.CurrentPageIndicatorTintColor.ToAndroid());
+                indicators?.SetPageColor(Element.CurrentPageIndicatorTintColor.ToAndroid());
 
                 // IndicatorsShape BP
-                indicators.SetStyle(Element.IndicatorsShape); // Rounded or Squared
+                indicators?.SetStyle(Element.IndicatorsShape); // Rounded or Squared
             }
             else
             {
-                indicators.RemoveAllViews();
+                indicators?.RemoveAllViews();
             }
 
             // ShowIndicators BP
-            indicators.Visibility = Element.ShowIndicators ? AViews.ViewStates.Visible : AViews.ViewStates.Gone;
+            if (indicators != null)
+                indicators.Visibility = Element.ShowIndicators ? AViews.ViewStates.Visible : AViews.ViewStates.Gone;
         }
 
         void InsertPage(object item, int position)
@@ -376,7 +471,10 @@ namespace CarouselView.FormsPlugin.Android
                 viewPager.Adapter.NotifyDataSetChanged();
 
                 //if (position <= prevPos)
+                //{
                     Element.SendPositionSelected();
+                    Element.PositionSelectedCommand?.Execute(null);
+                //}
             }
         }
 
@@ -433,7 +531,10 @@ namespace CarouselView.FormsPlugin.Android
 
                 // Invoke PositionSelected when AnimateTransition is disabled
                 if (!Element.AnimateTransition)
+                {
                     Element.SendPositionSelected();
+                    Element.PositionSelectedCommand?.Execute(null);
+                }
             }
         }
 
@@ -512,8 +613,8 @@ namespace CarouselView.FormsPlugin.Android
                 //nativeConverted.SaveEnabled = true;
                 //nativeConverted.RestoreHierarchyState(mViewStates);
 
-                if (dt == null && view == null)
-                    formsView.Parent = null;
+                //if (dt == null && view == null)
+                    //formsView.Parent = null;
 
                 var pager = (ViewPager)container;
                 pager.AddView(nativeConverted);

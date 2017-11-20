@@ -17,6 +17,7 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.VirtualizingStackPanel">
       <RootProperty Name="Orientation" />
+      <RootEvent Name="PointerWheelChanged" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Grid">
       <RootProperty Name="Children" />

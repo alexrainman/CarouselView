@@ -44,6 +44,10 @@ namespace CarouselView.FormsPlugin.iOS
 
 		UIPageViewController pageController;
 		UIPageControl pageControl;
+
+        UIButton prevBtn;
+        UIButton nextBtn;
+
 		bool _disposed;
 
 		// A local copy of ItemsSource so we can use CollectionChanged events
@@ -77,12 +81,12 @@ namespace CarouselView.FormsPlugin.iOS
 			if (e.OldElement != null)
 			{
 				// Unsubscribe from event handlers and cleanup any resources
-				if (pageController != null)
+				/*if (pageController != null)
 				{
 					pageController.DidFinishAnimating -= PageController_DidFinishAnimating;
 					pageController.GetPreviousViewController = null;
 					pageController.GetNextViewController = null;
-				}
+				}*/
 
 				if (Element != null)
 				{
@@ -138,6 +142,7 @@ namespace CarouselView.FormsPlugin.iOS
 						SetIndicatorsCurrentPage();
 
                         Element.SendPositionSelected();
+                        Element.PositionSelectedCommand?.Execute(null);
 					});
 				}
 			}
@@ -171,6 +176,7 @@ namespace CarouselView.FormsPlugin.iOS
 					SetPosition();
 					SetNativeView();
 					Element.SendPositionSelected();
+                    Element.PositionSelectedCommand?.Execute(null);
 				}
 			}
 		}
@@ -181,12 +187,13 @@ namespace CarouselView.FormsPlugin.iOS
             {
                 var rect = this.Element.Bounds;
 				// To avoid extra DataTemplate instantiations #158
-				if (rect.Height > 0)
+                if (rect.Height > 0)
                 { 
 	                ElementWidth = rect.Width;
 	                ElementHeight = rect.Height;
 	                SetNativeView();
 	                Element.SendPositionSelected();
+                    Element.PositionSelectedCommand?.Execute(null);
 	            }
 			}
 		}
@@ -226,6 +233,7 @@ namespace CarouselView.FormsPlugin.iOS
                         orientationChanged = true;
 						SetNativeView();
 						Element.SendPositionSelected();
+                        Element.PositionSelectedCommand?.Execute(null);
 					}
 					break;
 				case "InterPageSpacing":
@@ -258,6 +266,7 @@ namespace CarouselView.FormsPlugin.iOS
 						SetPosition();
 						SetNativeView();
 						Element.SendPositionSelected();
+                        Element.PositionSelectedCommand?.Execute(null);
 						if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
 							((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
 					}
@@ -267,12 +276,38 @@ namespace CarouselView.FormsPlugin.iOS
 					{
 						SetNativeView();
 						Element.SendPositionSelected();
+                        Element.PositionSelectedCommand?.Execute(null);
 					}
 					break;
 				case "Position":
-					if (Element != null && !isSwiping)
-						SetCurrentPage(Element.Position);
+                    if (Element != null && !isSwiping)
+                    {
+                        if (prevBtn != null)
+                            prevBtn.Hidden = Element.Position == 0;
+                        if (nextBtn != null)
+                            nextBtn.Hidden = Element.Position == Element.ItemsSource.GetCount() - 1;
+                        SetCurrentPage(Element.Position);
+                    }
 					break;
+                case "ShowArrows":
+                    SetArrows();
+                    break;
+                case "ArrowsBackgroundColor":
+                    if (prevBtn != null && nextBtn != null)
+                    {
+                        prevBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
+                        nextBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
+                    }
+                    break;
+                case "ArrowsTintColor":
+                    if (prevBtn != null && nextBtn != null)
+                    {
+                        var prevArrow = (UIImageView)prevBtn.Subviews[0];
+                        prevArrow.TintColor = Element.ArrowsTintColor.ToUIColor();
+                        var nextArrow = (UIImageView)nextBtn.Subviews[0];
+                        nextArrow.TintColor = Element.ArrowsTintColor.ToUIColor();
+                    }
+                    break;
 			}
 		}
 
@@ -304,6 +339,7 @@ namespace CarouselView.FormsPlugin.iOS
 				isSwiping = false;
 				SetIndicatorsCurrentPage();
 				Element.SendPositionSelected();
+                Element.PositionSelectedCommand?.Execute(null);
 
                 Console.WriteLine("pageController.ChildViewControllers count = " + pageController.ChildViewControllers.Count());
 			}
@@ -422,11 +458,96 @@ namespace CarouselView.FormsPlugin.iOS
 
 			SetNativeControl(pageController.View);
 
+            // ARROWS
+            SetArrows();
+
 			// INDICATORS
 			SetIndicators();
 		}
 
 		#region indicators
+
+        void SetArrows()
+        {
+            if (Element.ShowArrows)
+            {
+                var o = Element.Orientation == CarouselViewOrientation.Horizontal ? "H" : "V";
+                var formatOptions = Element.Orientation == CarouselViewOrientation.Horizontal ? NSLayoutFormatOptions.AlignAllCenterY : NSLayoutFormatOptions.AlignAllCenterX;
+
+                prevBtn = new UIButton();
+                prevBtn.Hidden = Element.Position == 0;
+                prevBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
+                prevBtn.Alpha = 0.5f;
+                prevBtn.TranslatesAutoresizingMaskIntoConstraints = false;
+
+                var prevArrow = new UIImageView();
+                var prevArrowImage = new UIImage(Element.Orientation == CarouselViewOrientation.Horizontal ? "Prev.png" : "Up.png");
+                prevArrow.Image = prevArrowImage.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
+                prevArrow.TranslatesAutoresizingMaskIntoConstraints = false;
+                prevArrow.TintColor = Element.ArrowsTintColor.ToUIColor();
+                prevBtn.AddSubview(prevArrow);
+
+                prevBtn.TouchUpInside += delegate
+                {
+                    if (Element.Position > 0)
+                        Element.Position = Element.Position - 1;
+                };
+
+                var prevViewsDictionary = NSDictionary.FromObjectsAndKeys(new NSObject[] { prevBtn, prevArrow }, new NSObject[] { new NSString("superview"), new NSString("prevArrow") });
+                prevBtn.AddConstraints(NSLayoutConstraint.FromVisualFormat("[prevArrow(==17)]", 0, new NSDictionary(), prevViewsDictionary));
+                prevBtn.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:[prevArrow(==17)]", 0, new NSDictionary(), prevViewsDictionary));
+                prevBtn.AddConstraints(NSLayoutConstraint.FromVisualFormat(o + ":[prevArrow]-(2)-|", 0, new NSDictionary(), prevViewsDictionary));
+                prevBtn.AddConstraints(NSLayoutConstraint.FromVisualFormat(o + ":[superview]-(<=1)-[prevArrow]", formatOptions, new NSDictionary(), prevViewsDictionary));
+
+                pageController.View.AddSubview(prevBtn);
+
+                nextBtn = new UIButton();
+                nextBtn.Hidden = Element.Position == Element.ItemsSource.GetCount() - 1;
+                nextBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
+                nextBtn.Alpha = 0.5f;
+                nextBtn.TranslatesAutoresizingMaskIntoConstraints = false;
+
+                var nextArrow = new UIImageView();
+                var nextArrowImage = new UIImage(Element.Orientation == CarouselViewOrientation.Horizontal ? "Next.png" : "Down.png");
+                nextArrow.Image = nextArrowImage.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
+                nextArrow.TranslatesAutoresizingMaskIntoConstraints = false;
+                nextArrow.TintColor = Element.ArrowsTintColor.ToUIColor();
+                nextBtn.AddSubview(nextArrow);
+
+                nextBtn.TouchUpInside += delegate
+                {
+                    if (Element.Position < Element.ItemsSource.GetCount() - 1)
+                        Element.Position = Element.Position + 1;
+                };
+
+                var nextViewsDictionary = NSDictionary.FromObjectsAndKeys(new NSObject[] { nextBtn, nextArrow }, new NSObject[] { new NSString("superview"), new NSString("nextArrow") });
+                nextBtn.AddConstraints(NSLayoutConstraint.FromVisualFormat("[nextArrow(==17)]", 0, new NSDictionary(), nextViewsDictionary));
+                nextBtn.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:[nextArrow(==17)]", 0, new NSDictionary(), nextViewsDictionary));
+                nextBtn.AddConstraints(NSLayoutConstraint.FromVisualFormat(o + ":|-(2)-[nextArrow]", 0, new NSDictionary(), nextViewsDictionary));
+                nextBtn.AddConstraints(NSLayoutConstraint.FromVisualFormat(o + ":[superview]-(<=1)-[nextArrow]", formatOptions, new NSDictionary(), nextViewsDictionary));
+
+                pageController.View.AddSubview(nextBtn);
+
+                var btnsDictionary = NSDictionary.FromObjectsAndKeys(new NSObject[] { pageController.View, prevBtn, nextBtn }, new NSObject[] { new NSString("superview"), new NSString("prevBtn"), new NSString("nextBtn") });
+
+                var w = Element.Orientation == CarouselViewOrientation.Horizontal ? 20 : 36;
+                var h = Element.Orientation == CarouselViewOrientation.Horizontal ? 36 : 20;
+
+                pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("H:[prevBtn(==" + w + ")]", 0, new NSDictionary(), btnsDictionary));
+                pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:[prevBtn(==" + h + ")]", 0, new NSDictionary(), btnsDictionary));
+                pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat(o + ":|[prevBtn]", 0, new NSDictionary(), btnsDictionary));
+                pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat(o + ":[superview]-(<=1)-[prevBtn]", formatOptions, new NSDictionary(), btnsDictionary));
+
+                pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("H:[nextBtn(==" + w + ")]", 0, new NSDictionary(), btnsDictionary));
+                pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:[nextBtn(==" + h + ")]", 0, new NSDictionary(), btnsDictionary));
+                pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat(o + ":[nextBtn]|", 0, new NSDictionary(), btnsDictionary));
+                pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat(o + ":[superview]-(<=1)-[nextBtn]", formatOptions, new NSDictionary(), btnsDictionary));
+            }
+            else
+            {
+                CleanUpArrows();
+            }
+        }
 
 		void SetIndicators()
 		{
@@ -552,8 +673,11 @@ namespace CarouselView.FormsPlugin.iOS
 
                     SetIndicatorsCurrentPage();
 
-					//if (position != prevPos)
-						Element.SendPositionSelected();
+                    //if (position != prevPos)
+                    //{
+                        Element.SendPositionSelected();
+                        Element.PositionSelectedCommand?.Execute(null);
+                    //}
 				});
 			}
 		}
@@ -600,6 +724,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 							// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 							Element.SendPositionSelected();
+                            Element.PositionSelectedCommand?.Execute(null);
 						});
 					}
 					else
@@ -612,6 +737,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 							// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 							Element.SendPositionSelected();
+                            Element.PositionSelectedCommand?.Execute(null);
 						});
 					}
 				}
@@ -641,6 +767,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 					// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 					Element.SendPositionSelected();
+                    Element.PositionSelectedCommand?.Execute(null);
 
                     Console.WriteLine("pageController.ChildViewControllers count = " + pageController.ChildViewControllers.Count());
 				});
@@ -711,8 +838,8 @@ namespace CarouselView.FormsPlugin.iOS
 			var rect = new CGRect(Element.X, Element.Y, ElementWidth, ElementHeight);
 			var nativeConverted = formsView.ToiOS(rect);
 
-            if (dt == null && view == null)
-                formsView.Parent = null;
+            //if (dt == null && view == null)
+                //formsView.Parent = null;
 
 			var viewController = new ViewContainer();
 			viewController.Tag = bindingContext;
@@ -728,6 +855,23 @@ namespace CarouselView.FormsPlugin.iOS
 			return viewController;
 		}
 		#endregion
+
+        void CleanUpArrows()
+        {
+            if (prevBtn != null)
+            {
+                prevBtn.RemoveFromSuperview();
+                prevBtn.Dispose();
+                prevBtn = null;
+            }
+
+            if (nextBtn != null)
+            {
+                nextBtn.RemoveFromSuperview();
+                nextBtn.Dispose();
+                nextBtn = null;
+            }
+        }
 
 		void CleanUpPageControl()
 		{

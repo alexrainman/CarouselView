@@ -6,9 +6,17 @@ namespace CarouselView.FormsPlugin.UWP
 {
     public sealed partial class FlipViewControl : UserControl
     {
-        public FlipViewControl()
+        public bool IsSwipingEnabled;
+
+        public FlipViewControl(bool isSwipingEnabled)
         {
             this.InitializeComponent();
+            this.IsSwipingEnabled = isSwipingEnabled;
+        }
+
+        private void VirtualizingStackPanel_PointerWheelChanged(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            e.Handled = !this.IsSwipingEnabled;
         }
     }
 }

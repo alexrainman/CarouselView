@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>4.4.6</version>
+        <version>5.0.0</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
@@ -12,6 +12,13 @@
         <description>Create Horizontal and Vertical carousels, add page indicators, render one page at a time moving back and fort programmatically and much more. “How to” at Github repository.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
+5.0.0
+[Update] Adding support for netstandard1.4
+[Update] Adding PositionSelectedCommand bindable property
+[Update] Navigation arrows now supported in Android and iOS
+[Android] Fixing ViewRenderer constructor
+[Android] ListView scrolls to the top as you swipe right and left on the CarouselView bug #258
+[Android] On Property changed not fired when carousel view is inside ViewCell (Listview) #183
 4.4.6
 [iOS] CarouselViewRenderer.Dispose Null reference Unhandled Exception: #210
 [iOS] Exception thrown on Dispose #233
@@ -137,18 +144,21 @@
         <tags>carouselview carousel pageslider slider viewpager uipageviewcontroller flipview ios android uwp xamarin forms monotouch monodroid</tags>
         <dependencies>
 			 <group targetFramework="MonoAndroid10">
-			    <dependency id="Xamarin.Forms" version="2.4.0.280"/>
+			    <dependency id="Xamarin.Forms" version="2.5.0.91635"/>
 	            <dependency id="Xamarin.Android.Support.v4" version="23.3.0"/>
 	        </group>
 	        <group targetFramework="Xamarin.iOS10">
-	            <dependency id="Xamarin.Forms" version="2.4.0.280"/>
+	            <dependency id="Xamarin.Forms" version="2.5.0.91635"/>
 	        </group>
 	        <group targetFramework="UAP10">
-	            <dependency id="Xamarin.Forms" version="2.4.0.280"/>
+	            <dependency id="Xamarin.Forms" version="2.5.0.91635"/>
 	        </group>
 		</dependencies>
     </metadata>
     <files>
+        <!-- NetStandard -->
+        <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/netstandard1.4/CarouselView.FormsPlugin.Abstractions.dll" />
+
         <!-- PCL -->
         <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid10+Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll" />
 

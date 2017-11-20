@@ -5,6 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 using CarouselView.FormsPlugin.iOS;
+using FFImageLoading.Forms.Touch;
 
 namespace Demo.iOS
 {
@@ -16,6 +17,7 @@ namespace Demo.iOS
 			global::Xamarin.Forms.Forms.Init ();
 
 			CarouselViewRenderer.Init ();
+            CachedImageRenderer.Init();
 
 			LoadApplication (new App ());
 

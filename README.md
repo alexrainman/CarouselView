@@ -8,6 +8,7 @@
 
 |Platform|Supported|Version|Renderer|
 | ------------------- | :-----------: | :-----------: | :------------------: |
+|NetStandard|Yes|1.4||
 |Xamarin.iOS Unified|Yes|iOS 8.1+|UIPageViewController|
 |Xamarin.Android|Yes|API 15+|ViewPager|
 |UWP|Yes|10+|FlipView|
@@ -207,15 +208,28 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 #### Roadmap
 
 * Infinite scrolling
-* Indicators UI position
+* Indicators UI position and size
 * Indicators tap event
-* Transition animation speed
 * Load more event
 
 #### Contributors
 * [alexrainman](https://github.com/alexrainman)
 
 #### Release Notes
+
+5.0.0
+
+[Update] Adding support for netstandard1.4
+
+[Update] Adding PositionSelectedCommand bindable property
+
+[Update] Navigation arrows now supported in Android and iOS
+
+[Android] Fixing ViewRenderer constructor
+
+[Android] ListView scrolls to the top as you swipe right and left on the CarouselView bug #258
+
+[Android] On Property changed not fired when carousel view is inside ViewCell (Listview) #183
 
 4.4.6
 
