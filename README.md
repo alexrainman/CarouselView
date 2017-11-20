@@ -151,7 +151,13 @@ myCarousel.BindingContext = new Person()
 
 ```AnimateTransition```: enables transition animation when swiping programmatically (Android and iOS only, default true).
 
-```ShowArrows```: disable arrows navigation (UWP only, default true).
+```ShowArrows```: disable arrows navigation (default true).
+
+```ArrowsBackgroundColor```: change navigation arrows background color (default black).
+
+```ArrowsTintColor```: change navigation arrows tint color (default white). 
+
+```PositionSelectedCommand```: a bindable command property to execute when position changes.
 
 **Event Handlers**
 
