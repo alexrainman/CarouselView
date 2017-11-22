@@ -143,11 +143,11 @@
     <AndroidResource Include="Resources\values\vpi__colors.xml" />
     <AndroidResource Include="Resources\values\vpi__defaults.xml" />
     <AndroidResource Include="Resources\values\vpi__styles.xml" />
-    <AndroidResource Include="Resources\layout\vertical_viewpager.xml" />
     <AndroidResource Include="Resources\drawable\Down.png" />
     <AndroidResource Include="Resources\drawable\Next.png" />
     <AndroidResource Include="Resources\drawable\Prev.png" />
     <AndroidResource Include="Resources\drawable\Up.png" />
+    <AndroidResource Include="Resources\layout\vertical_viewpager.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />

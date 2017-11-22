@@ -223,6 +223,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+5.0.1
+
+[Update] Navigation Arrows doesn't disappear when using swipe #265
+
 5.0.0
 
 [Update] Adding support for netstandard1.4

@@ -26,7 +26,7 @@ namespace Demo
                 },
                 ShowIndicators = true,
                 ShowArrows = true,
-                IsSwipingEnabled = false
+                IsSwipingEnabled = true
             };
 
             carousel.SetBinding(CarouselViewControl.PositionSelectedCommandProperty, "MyCommand");

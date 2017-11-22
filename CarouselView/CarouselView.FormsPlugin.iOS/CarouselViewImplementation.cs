@@ -282,10 +282,6 @@ namespace CarouselView.FormsPlugin.iOS
 				case "Position":
                     if (Element != null && !isSwiping)
                     {
-                        if (prevBtn != null)
-                            prevBtn.Hidden = Element.Position == 0;
-                        if (nextBtn != null)
-                            nextBtn.Hidden = Element.Position == Element.ItemsSource.GetCount() - 1;
                         SetCurrentPage(Element.Position);
                     }
 					break;
@@ -337,11 +333,10 @@ namespace CarouselView.FormsPlugin.iOS
 				Element.Position = position;
 				prevPosition = position;
 				isSwiping = false;
+                SetArrowsVisibility();
 				SetIndicatorsCurrentPage();
 				Element.SendPositionSelected();
                 Element.PositionSelectedCommand?.Execute(null);
-
-                Console.WriteLine("pageController.ChildViewControllers count = " + pageController.ChildViewControllers.Count());
 			}
 		}
 		#endregion
@@ -547,6 +542,14 @@ namespace CarouselView.FormsPlugin.iOS
             {
                 CleanUpArrows();
             }
+        }
+
+        void SetArrowsVisibility()
+        {
+            if (prevBtn != null)
+                prevBtn.Hidden = Element.Position == 0;
+            if (nextBtn != null)
+                nextBtn.Hidden = Element.Position == Element.ItemsSource.GetCount() - 1;
         }
 
 		void SetIndicators()
@@ -763,13 +766,12 @@ namespace CarouselView.FormsPlugin.iOS
 
 				pageController.SetViewControllers(new[] { firstViewController }, direction, Element.AnimateTransition, s =>
 				{
+                    SetArrowsVisibility();
 					SetIndicatorsCurrentPage();
 
 					// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
 					Element.SendPositionSelected();
                     Element.PositionSelectedCommand?.Execute(null);
-
-                    Console.WriteLine("pageController.ChildViewControllers count = " + pageController.ChildViewControllers.Count());
 				});
 			}
 		}

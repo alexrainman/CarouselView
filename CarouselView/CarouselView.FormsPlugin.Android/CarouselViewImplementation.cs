@@ -37,6 +37,8 @@ namespace CarouselView.FormsPlugin.Android
     /// </summary>
     public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, AViews.View>
     {
+        Context _context;
+
         bool orientationChanged;
 
         AViews.View nativeView;
@@ -53,6 +55,7 @@ namespace CarouselView.FormsPlugin.Android
 
         public CarouselViewRenderer(Context context) : base(context)
         {
+            _context = context;
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<CarouselViewControl> e)
@@ -253,10 +256,6 @@ namespace CarouselView.FormsPlugin.Android
                 case "Position":
                     if (Element != null && !isSwiping)
                     {
-                        if (prevBtn != null)
-                            prevBtn.Visibility = Element.Position == 0 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
-                        if (nextBtn != null)
-                            nextBtn.Visibility= Element.Position == Element.ItemsSource.GetCount() - 1 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
                         SetCurrentPage(Element.Position);
                     }
                     break;
@@ -295,6 +294,7 @@ namespace CarouselView.FormsPlugin.Android
             // Call PositionSelected from here when 0
             if (e.Position == 0)
             {
+                SetArrowsVisibility();
                 Element.SendPositionSelected();
                 Element.PositionSelectedCommand?.Execute(null);
             }
@@ -307,6 +307,7 @@ namespace CarouselView.FormsPlugin.Android
             // Call PositionSelected when scroll finish, after swiping finished and position > 0
             if (e.State == 0 && !isSwiping && Element.Position > 0)
             {
+                SetArrowsVisibility();
                 Element.SendPositionSelected();
                 Element.PositionSelectedCommand?.Execute(null);
             }
@@ -342,7 +343,7 @@ namespace CarouselView.FormsPlugin.Android
         {
             if (orientationChanged)
             {
-                var inflater = AViews.LayoutInflater.From(Forms.Context);
+                var inflater = AViews.LayoutInflater.From(_context);
 
                 // Orientation BP
                 if (Element.Orientation == CarouselViewOrientation.Horizontal)
@@ -428,6 +429,14 @@ namespace CarouselView.FormsPlugin.Android
                 if (nextBtn != null)
                     nextBtn.Visibility = AViews.ViewStates.Gone;
             }
+        }
+
+        void SetArrowsVisibility()
+        {
+            if (prevBtn != null)
+                prevBtn.Visibility = Element.Position == 0 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
+            if (nextBtn != null)
+                nextBtn.Visibility = Element.Position == Element.ItemsSource.GetCount() - 1 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
         }
 
         void SetIndicators()
@@ -526,8 +535,9 @@ namespace CarouselView.FormsPlugin.Android
             
             if (viewPager != null && Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
             {
-
                 viewPager.SetCurrentItem(position, Element.AnimateTransition);
+
+                SetArrowsVisibility();
 
                 // Invoke PositionSelected when AnimateTransition is disabled
                 if (!Element.AnimateTransition)
