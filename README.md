@@ -223,6 +223,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+5.0.2
+
+[Android] System.InvalidCastException: Specified cast is not valid. Android #272 
+
 5.0.1
 
 [Update] Navigation Arrows doesn't disappear when using swipe #265

@@ -22,6 +22,9 @@ namespace Demo
                 {
                     new CachedImage() { Source = ImageSource.FromFile("c1.jpg"), DownsampleToViewSize = true, Aspect = Aspect.AspectFill },
                     new CachedImage() { Source = ImageSource.FromFile("c2.jpg"), DownsampleToViewSize = true, Aspect = Aspect.AspectFill },
+                    new CachedImage() { Source = ImageSource.FromFile("c3.jpg"), DownsampleToViewSize = true, Aspect = Aspect.AspectFill },
+                    new CachedImage() { Source = ImageSource.FromFile("c1.jpg"), DownsampleToViewSize = true, Aspect = Aspect.AspectFill },
+                    new CachedImage() { Source = ImageSource.FromFile("c2.jpg"), DownsampleToViewSize = true, Aspect = Aspect.AspectFill },
                     new CachedImage() { Source = ImageSource.FromFile("c3.jpg"), DownsampleToViewSize = true, Aspect = Aspect.AspectFill }
                 },
                 ShowIndicators = true,

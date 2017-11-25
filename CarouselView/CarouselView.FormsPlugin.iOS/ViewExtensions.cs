@@ -22,7 +22,7 @@ namespace CarouselView.FormsPlugin.iOS
 			vRenderer.NativeView.AutoresizingMask = UIViewAutoresizing.All;
 			vRenderer.NativeView.ContentMode = UIViewContentMode.ScaleToFill;
 
-			vRenderer.Element.Layout (size.ToRectangle());
+			vRenderer.Element?.Layout (size.ToRectangle());
 
 			var nativeView = vRenderer.NativeView;
 
