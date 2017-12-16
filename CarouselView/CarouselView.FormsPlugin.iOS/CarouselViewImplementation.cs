@@ -282,7 +282,7 @@ namespace CarouselView.FormsPlugin.iOS
 				case "Position":
                     if (Element != null && !isSwiping)
                     {
-                        SetCurrentPage(Element.Position);
+                        await SetCurrentPage(Element.Position);
                     }
 					break;
                 case "ShowArrows":
@@ -755,7 +755,7 @@ namespace CarouselView.FormsPlugin.iOS
 		int prevPosition;
         TaskCompletionSource<bool> _animationTaskCompletionSource;
 
-		void SetCurrentPage(int position)
+		async Task SetCurrentPage(int position)
 		{
             if (position < 0 || position > Element.ItemsSource?.GetCount() - 1)
                 return;
@@ -768,11 +768,10 @@ namespace CarouselView.FormsPlugin.iOS
 
                 var firstViewController = CreateViewController(position);
 
-                if (_animationTaskCompletionSource != null) 
-                {
-                    _animationTaskCompletionSource.TrySetResult(true);    
-                }
+                if (_animationTaskCompletionSource != null) await _animationTaskCompletionSource.Task;
+
                 _animationTaskCompletionSource = new TaskCompletionSource<bool>();
+                
 				pageController.SetViewControllers(new[] { firstViewController }, direction, Element.AnimateTransition, s =>
 				{
                     if(s) 
