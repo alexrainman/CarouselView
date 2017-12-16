@@ -174,14 +174,14 @@ namespace CarouselView.FormsPlugin.iOS
 				if (Element != null)
 				{
 					SetPosition();
-					SetNativeView();
+					await SetNativeView();
 					Element.SendPositionSelected();
                     Element.PositionSelectedCommand?.Execute(null);
 				}
 			}
 		}
 
-		void Element_SizeChanged(object sender, EventArgs e)
+		async void Element_SizeChanged(object sender, EventArgs e)
 		{
             if (Element != null)
             {
@@ -191,7 +191,7 @@ namespace CarouselView.FormsPlugin.iOS
                 { 
 	                ElementWidth = rect.Width;
 	                ElementHeight = rect.Height;
-	                SetNativeView();
+	                await SetNativeView();
 	                Element.SendPositionSelected();
                     Element.PositionSelectedCommand?.Execute(null);
 	            }
@@ -216,7 +216,7 @@ namespace CarouselView.FormsPlugin.iOS
             base.MovedToWindow();
         }
 
-		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+		protected async override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			base.OnElementPropertyChanged(sender, e);
 
@@ -231,7 +231,7 @@ namespace CarouselView.FormsPlugin.iOS
 					if (Element != null)
 					{
                         orientationChanged = true;
-						SetNativeView();
+                        await SetNativeView();
 						Element.SendPositionSelected();
                         Element.PositionSelectedCommand?.Execute(null);
 					}
@@ -264,7 +264,7 @@ namespace CarouselView.FormsPlugin.iOS
 					if (Element != null)
 					{
 						SetPosition();
-						SetNativeView();
+						await SetNativeView();
 						Element.SendPositionSelected();
                         Element.PositionSelectedCommand?.Execute(null);
 						if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
@@ -274,7 +274,7 @@ namespace CarouselView.FormsPlugin.iOS
 				case "ItemTemplate":
 					if (Element != null)
 					{
-						SetNativeView();
+						await SetNativeView();
 						Element.SendPositionSelected();
                         Element.PositionSelectedCommand?.Execute(null);
 					}
@@ -359,8 +359,11 @@ namespace CarouselView.FormsPlugin.iOS
 			isSwiping = false;
 		}
 
-		void SetNativeView()
+		async Task SetNativeView()
 		{
+            if (_animationTaskCompletionSource != null) 
+                await _animationTaskCompletionSource.Task;
+
 			// Rotation bug(iOS) #115 Fix
 			CleanUpPageController();
 
@@ -693,7 +696,7 @@ namespace CarouselView.FormsPlugin.iOS
 				if (Source.Count == 1)
 				{
 					Source.RemoveAt(position);
-					SetNativeView();
+					await SetNativeView();
 				}
 				else
 				{
@@ -750,6 +753,7 @@ namespace CarouselView.FormsPlugin.iOS
 		}
 
 		int prevPosition;
+        TaskCompletionSource<bool> _animationTaskCompletionSource;
 
 		void SetCurrentPage(int position)
 		{
@@ -764,8 +768,18 @@ namespace CarouselView.FormsPlugin.iOS
 
                 var firstViewController = CreateViewController(position);
 
+                if (_animationTaskCompletionSource != null) 
+                {
+                    _animationTaskCompletionSource.TrySetResult(true);    
+                }
+                _animationTaskCompletionSource = new TaskCompletionSource<bool>();
 				pageController.SetViewControllers(new[] { firstViewController }, direction, Element.AnimateTransition, s =>
 				{
+                    if(s) 
+                    {
+                        _animationTaskCompletionSource.TrySetResult(true);
+                        _animationTaskCompletionSource = null;
+                    }
                     SetArrowsVisibility();
 					SetIndicatorsCurrentPage();
 
