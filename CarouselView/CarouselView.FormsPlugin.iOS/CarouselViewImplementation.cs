@@ -769,14 +769,13 @@ namespace CarouselView.FormsPlugin.iOS
                 var firstViewController = CreateViewController(position);
 
                 if (_animationTaskCompletionSource != null) await _animationTaskCompletionSource.Task;
-
                 _animationTaskCompletionSource = new TaskCompletionSource<bool>();
                 
 				pageController.SetViewControllers(new[] { firstViewController }, direction, Element.AnimateTransition, s =>
 				{
                     if(s) 
                     {
-                        _animationTaskCompletionSource.TrySetResult(true);
+                        _animationTaskCompletionSource?.TrySetResult(true);
                         _animationTaskCompletionSource = null;
                     }
                     SetArrowsVisibility();
