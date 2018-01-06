@@ -2,29 +2,30 @@
 using System.Linq;
 using Android.Content;
 using Android.Runtime;
+using Android.Support.V4.View;
 using Android.Util;
 using Android.Views;
 using CarouselView.FormsPlugin.Abstractions;
+using Xamarin.Forms;
 
 namespace CarouselView.FormsPlugin.Android
 {
-    public class VerticalViewPager : Com.Android.DeskClock.VerticalViewPager, IViewPager
-    {
+    public class HorizontalViewPager : ViewPager, IViewPager
+	{
         private bool isSwipeEnabled = true;
         private CarouselViewControl Element;
 
         // Fix for #171 System.MissingMethodException: No constructor found
-        public VerticalViewPager(IntPtr intPtr, JniHandleOwnership jni) : base(intPtr, jni)
+        public HorizontalViewPager(IntPtr intPtr, JniHandleOwnership jni) : base(intPtr, jni)
         {
         }
 
-        public VerticalViewPager(Context context) : base(context, null)
+        public HorizontalViewPager(Context context) : base(context, null)
         {
         }
 
-        public VerticalViewPager(Context context, IAttributeSet attrs) : base(context, attrs)
+        public HorizontalViewPager(Context context, IAttributeSet attrs) : base(context, attrs)
         {
-            base.Init();
         }
 
         public override bool OnInterceptTouchEvent(MotionEvent ev)
@@ -33,7 +34,7 @@ namespace CarouselView.FormsPlugin.Android
             {
                 if (Element?.GestureRecognizers.GetCount() > 0)
                 {
-                    var gesture = Element.GestureRecognizers.First() as Xamarin.Forms.TapGestureRecognizer;
+                    var gesture = Element.GestureRecognizers.First() as TapGestureRecognizer;
                     if (gesture != null)
                         gesture.Command?.Execute(gesture.CommandParameter);
                 }
@@ -66,5 +67,5 @@ namespace CarouselView.FormsPlugin.Android
         {
             this.Element = element;
         }
-    }
+	}
 }

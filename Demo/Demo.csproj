@@ -1,12 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ReleaseVersion>3.1.1</ReleaseVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.91635" />
-    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.2.22" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.3.1" />
+    <PackageReference Include="Xamarin.Forms" Version="2.5.0.121934" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CarouselView\CarouselView.FormsPlugin.Abstractions\CarouselView.FormsPlugin.Abstractions.csproj" />

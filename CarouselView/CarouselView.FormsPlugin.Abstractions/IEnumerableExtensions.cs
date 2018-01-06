@@ -21,7 +21,7 @@ namespace CarouselView.FormsPlugin.Abstractions
 
 		public static int GetCount(this IEnumerable e)
 		{
-			var enumerator = e.GetEnumerator();
+            var enumerator = e.GetEnumerator();
 			int i = 0;
 			while (enumerator.MoveNext())
 			{

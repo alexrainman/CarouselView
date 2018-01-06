@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <CarouselView.FormsPlugin.Android.CustomViewPager
+    <CarouselView.FormsPlugin.Android.HorizontalViewPager
         android:id="@+id/pager"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
@@ -37,7 +37,7 @@
             android:layout_height="17dip"
             android:src="@drawable/Next" />
     </LinearLayout>
-    <CarouselView.FormsPlugin.Android.CirclePageIndicator
+    <Com.ViewPagerIndicator.CirclePageIndicator
         android:id="@+id/indicator"
         android:paddingLeft="20dip"
         android:paddingTop="15dip"

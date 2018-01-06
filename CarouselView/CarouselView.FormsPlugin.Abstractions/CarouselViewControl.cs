@@ -29,13 +29,21 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(InterPageSpacingProperty, value); }
 		}
 
-		public static readonly BindableProperty IsSwipingEnabledProperty = BindableProperty.Create("IsSwipingEnabled", typeof(bool), typeof(CarouselViewControl), true);
+		public static readonly BindableProperty IsSwipeEnabledProperty = BindableProperty.Create("IsSwipeEnabled", typeof(bool), typeof(CarouselViewControl), true);
 
-		public bool IsSwipingEnabled
+		public bool IsSwipeEnabled
 		{
-			get { return (bool)GetValue(IsSwipingEnabledProperty); }
-			set { SetValue(IsSwipingEnabledProperty, value); }
+			get { return (bool)GetValue(IsSwipeEnabledProperty); }
+			set { SetValue(IsSwipeEnabledProperty, value); }
 		}
+
+        public static readonly BindableProperty IsSwipingProperty = BindableProperty.Create("IsSwiping", typeof(bool), typeof(CarouselViewControl), false);
+
+        public bool IsSwiping
+        {
+            get { return (bool)GetValue(IsSwipingProperty); }
+            set { SetValue(IsSwipingProperty, value); }
+        }
 
 		public static readonly BindableProperty IndicatorsTintColorProperty = BindableProperty.Create("IndicatorsTintColor", typeof(Color), typeof(CarouselViewControl), Color.Silver);
 
@@ -125,7 +133,17 @@ namespace CarouselView.FormsPlugin.Abstractions
             set { SetValue(ArrowsTintColorProperty, value); }
         }
 
-        public static readonly BindableProperty PositionSelectedCommandProperty = BindableProperty.Create("PositionSelectedCommand", typeof(Command), typeof(CarouselViewControl), null, BindingMode.Default, (bindable, value) => {
+        // Not working on UWP
+        public static readonly BindableProperty ArrowsTransparencyProperty = BindableProperty.Create("ArrowsTransparency", typeof(float), typeof(CarouselViewControl), 0.5f);
+
+        public float ArrowsTransparency
+        {
+            get { return (float)GetValue(ArrowsTransparencyProperty); }
+            set { SetValue(ArrowsTransparencyProperty, value); }
+        }
+
+        public static readonly BindableProperty PositionSelectedCommandProperty = BindableProperty.Create("PositionSelectedCommand", typeof(Command), typeof(CarouselViewControl), null, BindingMode.Default, (bindable, value) =>
+        {
             return true;
         });
 
@@ -142,10 +160,23 @@ namespace CarouselView.FormsPlugin.Abstractions
 		{
             PositionSelected?.Invoke(this, new PositionSelectedEventArgs { NewValue = this.Position });
 		}
+
+        public event EventHandler<ScrolledEventArgs> Scrolled;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public void SendScrolled(double percent)
+        {
+            Scrolled?.Invoke(this, new ScrolledEventArgs { NewValue = percent });
+        }
     }
 
 	public class PositionSelectedEventArgs : EventArgs
 	{
 		public int NewValue { get; set; }
 	}
+
+    public class ScrolledEventArgs : EventArgs
+    {
+        public double NewValue { get; set; }
+    }
 }

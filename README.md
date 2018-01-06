@@ -8,7 +8,7 @@
 
 |Platform|Supported|Version|Renderer|
 | ------------------- | :-----------: | :-----------: | :------------------: |
-|NetStandard|Yes|1.4||
+|NetStandard|Yes|2.0||
 |Xamarin.iOS Unified|Yes|iOS 8.1+|UIPageViewController|
 |Xamarin.Android|Yes|API 15+|ViewPager|
 |UWP|Yes|10+|FlipView|
@@ -89,7 +89,9 @@ Or, template selector in your ViewModel:
 
 ```InterPageSpacing```: add a margin/space between pages (Android and iOS only).
 
-```IsSwipingEnabled```: use this property to disable swipe to scroll (Android and iOS only, default true).
+```IsSwipeEnabled```: use this property to disable swipe to scroll (Android and iOS only, default true).
+
+```IsSwiping```: its value is true when the carousel is in the middle of a transition.
 
 ```IndicatorsTintColor```: page dot indicators fill color (default #C0C0C0).
 
@@ -157,11 +159,15 @@ myCarousel.BindingContext = new Person()
 
 ```ArrowsTintColor```: change navigation arrows tint color (default white). 
 
+```ArrowsTransparency```: to change the transparency of the navigation arrows (Android and iOS, default 0.5f).
+
 ```PositionSelectedCommand```: a bindable command property to execute when position changes.
 
 **Event Handlers**
 
-```PositionSelected```: called when position changes.
+```PositionSelected```: called when position changes (e.NewValue = position selected).
+
+```Scrolled```: called when the carousel is transitioning from one page to another (e.NewValue = scrolling percent completed).
 
 #### Render one page at a time, no swiping, move back and fort programmatically:
 
@@ -222,6 +228,26 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 * [alexrainman](https://github.com/alexrainman)
 
 #### Release Notes
+
+5.1.0
+
+[Update] Updating to netstandard2.0
+
+[Update] IsSwipingEnabled renamed to IsSwipeEnabled
+
+[Update] Adding Scrolled event callback to report page scrolling percent
+
+[Update] Adding IsSwiping property
+
+[Update] ItemSource update during transition leads to an exception enhancement #294
+
+[Update] Adding ArrowsTransparency property (Android and iOS)
+
+[Android] Moving CirclePageIndicators and VerticalViewPager to separated packages
+
+[Android] Fix for entry focus soft keyboard bug #242
+
+[Android] Out of memories (FFImageLoading + CarouselView) #279
 
 5.0.2
 

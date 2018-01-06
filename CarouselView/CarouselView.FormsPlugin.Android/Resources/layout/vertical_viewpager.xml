@@ -38,7 +38,7 @@
             android:layout_height="17dip"
             android:src="@drawable/Down" />
     </LinearLayout>
-    <CarouselView.FormsPlugin.Android.CirclePageIndicator
+    <Com.ViewPagerIndicator.CirclePageIndicator
         android:id="@+id/indicator"
         android:paddingLeft="15dip"
         android:paddingTop="15dip"

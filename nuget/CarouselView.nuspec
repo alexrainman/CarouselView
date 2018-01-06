@@ -2,16 +2,26 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>5.0.2</version>
+        <version>5.1.0</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
         <licenseUrl>https://github.com/alexrainman/CarouselView/blob/master/README.md</licenseUrl>
         <projectUrl>https://github.com/alexrainman/CarouselView</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Create Horizontal and Vertical carousels, add page indicators, render one page at a time moving back and fort programmatically and much more. “How to” at Github repository.</description>
+        <description>Create Horizontal and Vertical carousels, add page indicators, navigation arrows and much more. “How to” at Github repository.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
+5.1.0
+[Update] Updating to netstandard2.0
+[Update] IsSwipingEnabled renamed to IsSwipeEnabled
+[Update] Adding Scrolled event callback to report page scrolling percent
+[Update] Adding IsSwiping property
+[Update] ItemSource update during transition leads to an exception enhancement #294
+[Update] Adding ArrowsTransparency property (Android and iOS)
+[Android] Moving CirclePageIndicators and VerticalViewPager to separated packages
+[Android] Fix for entry focus soft keyboard bug #242
+[Android] Out of memories (FFImageLoading + CarouselView) #279
 5.0.2
 [Android] System.InvalidCastException: Specified cast is not valid. Android #272 
 5.0.1
@@ -148,20 +158,22 @@
         <tags>carouselview carousel pageslider slider viewpager uipageviewcontroller flipview ios android uwp xamarin forms monotouch monodroid</tags>
         <dependencies>
 			 <group targetFramework="MonoAndroid10">
-			    <dependency id="Xamarin.Forms" version="2.5.0.91635"/>
-	            <dependency id="Xamarin.Android.Support.v4" version="23.3.0"/>
+			    <dependency id="Xamarin.Forms" version="2.5.0.121934"/>
+	            <dependency id="Xamarin.Android.Support.v4" version="25.4.0.2"/>
+                <dependency id="Xamarin.Android.CirclePageIndicator" version="1.0.1"/>
+                <dependency id="Xamarin.Android.VerticalViewPager" version="1.0.1"/>
 	        </group>
 	        <group targetFramework="Xamarin.iOS10">
-	            <dependency id="Xamarin.Forms" version="2.5.0.91635"/>
+	            <dependency id="Xamarin.Forms" version="2.5.0.121934"/>
 	        </group>
 	        <group targetFramework="UAP10">
-	            <dependency id="Xamarin.Forms" version="2.5.0.91635"/>
+	            <dependency id="Xamarin.Forms" version="2.5.0.121934"/>
 	        </group>
 		</dependencies>
     </metadata>
     <files>
         <!-- NetStandard -->
-        <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/netstandard1.4/CarouselView.FormsPlugin.Abstractions.dll" />
+        <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/netstandard2.0/CarouselView.FormsPlugin.Abstractions.dll" />
 
         <!-- PCL -->
         <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid10+Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll" />

@@ -67,6 +67,9 @@ namespace CarouselView.FormsPlugin.iOS
 		double ElementWidth;
 		double ElementHeight;
 
+        // To avoid triggering Position changed more than once
+        bool isChangingPosition;
+
 		protected override void OnElementChanged(ElementChangedEventArgs<CarouselViewControl> e)
 		{
 			base.OnElementChanged(e);
@@ -108,6 +111,13 @@ namespace CarouselView.FormsPlugin.iOS
 
 		async void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
+            // ItemSource update during transition leads to exception #294
+            if (Element.IsSwiping)
+            {
+                ItemsSource_CollectionChanged(sender, e);
+                return;
+            }
+
 			// NewItems contains the item that was added.
 			// If NewStartingIndex is not -1, then it contains the index where the new item was added.
 			if (e.Action == NotifyCollectionChangedAction.Add)
@@ -136,9 +146,9 @@ namespace CarouselView.FormsPlugin.iOS
 
 					pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
 					{
-						isSwiping = true;
+                        isChangingPosition = true;
 						Element.Position = e.NewStartingIndex;
-						isSwiping = false;
+                        isChangingPosition = false;
 						SetIndicatorsCurrentPage();
 
                         Element.SendPositionSelected();
@@ -245,8 +255,8 @@ namespace CarouselView.FormsPlugin.iOS
 					if (pageController != null)
 						pageController.View.BackgroundColor = Element.BackgroundColor.ToUIColor();
 					break;
-				case "IsSwipingEnabled":
-					SetIsSwipingEnabled();
+				case "IsSwipeEnabled":
+                    SetIsSwipeEnabled();
 					break;
 				case "IndicatorsTintColor":
 					SetIndicatorsTintColor();
@@ -280,7 +290,7 @@ namespace CarouselView.FormsPlugin.iOS
 					}
 					break;
 				case "Position":
-                    if (Element != null && !isSwiping)
+                    if (Element != null && !isChangingPosition)
                     {
                         SetCurrentPage(Element.Position);
                     }
@@ -304,46 +314,70 @@ namespace CarouselView.FormsPlugin.iOS
                         nextArrow.TintColor = Element.ArrowsTintColor.ToUIColor();
                     }
                     break;
+                case "ArrowsTransparency":
+                    if (prevBtn != null && nextBtn != null)
+                    {
+                        prevBtn.Alpha = Element.ArrowsTransparency;
+                        nextBtn.Alpha = Element.ArrowsTransparency;
+                    }
+                    break;
 			}
 		}
-
-		void SetIsSwipingEnabled()
-		{
-			foreach (var view in pageController?.View.Subviews)
-			{
-				var scroller = view as UIScrollView;
-				if (scroller != null)
-				{
-					scroller.ScrollEnabled = Element.IsSwipingEnabled;
-				}
-			}
-		}
-
-		// To avoid triggering Position changed more than once
-		bool isSwiping;
 
 		#region adapter callbacks
+
 		void PageController_DidFinishAnimating(object sender, UIPageViewFinishedAnimationEventArgs e)
 		{
 			if (e.Completed)
 			{
 				var controller = (ViewContainer)pageController.ViewControllers[0];
 				var position = Source.IndexOf(controller.Tag);
-				isSwiping = true;
+                isChangingPosition = true;
 				Element.Position = position;
 				prevPosition = position;
-				isSwiping = false;
+                isChangingPosition = false;
                 SetArrowsVisibility();
 				SetIndicatorsCurrentPage();
 				Element.SendPositionSelected();
                 Element.PositionSelectedCommand?.Execute(null);
+
+                Element.IsSwiping = false;
 			}
 		}
-		#endregion
 
-		void SetPosition()
+        void Scroller_Scrolled(object sender, EventArgs e)
+        {
+            Element.IsSwiping = true;
+
+            var scrollView = (UIScrollView)sender;
+            var point = scrollView.ContentOffset;
+
+            var percentCompleted = Math.Floor((Math.Abs(point.X - pageController.View.Frame.Size.Width) / pageController.View.Frame.Size.Width)*100);
+
+            if (percentCompleted > 100)
+                percentCompleted = percentCompleted - 100;
+            
+            Element.SendScrolled(percentCompleted);
+        }
+
+        #endregion
+
+        void SetIsSwipeEnabled()
+        {
+            foreach (var view in pageController?.View.Subviews)
+            {
+                var scroller = view as UIScrollView;
+                if (scroller != null)
+                {
+                    scroller.ScrollEnabled = Element.IsSwipeEnabled;
+                    scroller.Scrolled += Scroller_Scrolled;
+                }
+            }
+        }
+
+        void SetPosition()
 		{
-			isSwiping = true;
+            isChangingPosition = true;
 			if (Element.ItemsSource != null)
 			{
 				if (Element.Position > Element.ItemsSource.GetCount() - 1)
@@ -356,7 +390,7 @@ namespace CarouselView.FormsPlugin.iOS
 				Element.Position = 0;
 			}
 			prevPosition = Element.Position;
-			isSwiping = false;
+            isChangingPosition = false;
 		}
 
 		void SetNativeView()
@@ -384,7 +418,6 @@ namespace CarouselView.FormsPlugin.iOS
 			pageController.View.BackgroundColor = Element.BackgroundColor.ToUIColor();
 
 			#region adapter
-			pageController.DidFinishAnimating += PageController_DidFinishAnimating;
 
 			pageController.GetPreviousViewController = (pageViewController, referenceViewController) =>
 			{
@@ -437,10 +470,13 @@ namespace CarouselView.FormsPlugin.iOS
 					return null;
 				}
 			};
+
+            pageController.DidFinishAnimating += PageController_DidFinishAnimating;
+
 			#endregion
 
-			// IsSwipingEnabled BP
-			SetIsSwipingEnabled();
+			// IsSwipeEnabled BP
+			SetIsSwipeEnabled();
 
 			if (Source != null && Source?.Count > 0)
 			{
@@ -472,7 +508,7 @@ namespace CarouselView.FormsPlugin.iOS
                 prevBtn = new UIButton();
                 prevBtn.Hidden = Element.Position == 0;
                 prevBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
-                prevBtn.Alpha = 0.5f;
+                prevBtn.Alpha = Element.ArrowsTransparency;
                 prevBtn.TranslatesAutoresizingMaskIntoConstraints = false;
 
                 var prevArrow = new UIImageView();
@@ -499,7 +535,7 @@ namespace CarouselView.FormsPlugin.iOS
                 nextBtn = new UIButton();
                 nextBtn.Hidden = Element.Position == Element.ItemsSource.GetCount() - 1;
                 nextBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
-                nextBtn.Alpha = 0.5f;
+                nextBtn.Alpha = Element.ArrowsTransparency;
                 nextBtn.TranslatesAutoresizingMaskIntoConstraints = false;
 
                 var nextArrow = new UIImageView();
@@ -666,13 +702,13 @@ namespace CarouselView.FormsPlugin.iOS
 					//var prevPos = Element.Position;
 
 					// To keep the same view visible when inserting in a position <= current (like Android ViewPager)
-					isSwiping = true;
+                    isChangingPosition = true;
 					if (position <= Element.Position && Source.Count > 1)
 					{
 						Element.Position++;
 						prevPosition = Element.Position;
 					}
-					isSwiping = false;
+                    isChangingPosition = false;
 
                     SetIndicatorsCurrentPage();
 
@@ -719,9 +755,9 @@ namespace CarouselView.FormsPlugin.iOS
 
 						pageController.SetViewControllers(new[] { firstViewController }, direction, Element.AnimateTransition, s =>
 						{
-							isSwiping = true;
+                            isChangingPosition = true;
 							Element.Position = newPos;
-							isSwiping = false;
+                            isChangingPosition = false;
 
 							SetIndicatorsCurrentPage();
 
@@ -777,6 +813,7 @@ namespace CarouselView.FormsPlugin.iOS
 		}
 
 		#region adapter
+
 		UIViewController CreateViewController(int index)
 		{
 			// Significant Memory Leak for iOS when using custom layout for page content #125
@@ -856,6 +893,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 			return viewController;
 		}
+
 		#endregion
 
         void CleanUpArrows()

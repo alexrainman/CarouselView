@@ -19,7 +19,7 @@ namespace CarouselView.FormsPlugin.Android
             var viewGroup = vRenderer.View;
 
             vRenderer.Tracker.UpdateLayout ();
-            var layoutParams = new ViewGroup.LayoutParams ((int)size.Width, (int)size.Height);
+            var layoutParams = new ViewGroup.LayoutParams (ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent);
             viewGroup.LayoutParameters = layoutParams;
             view.Layout (size);
             viewGroup.Layout (0, 0, (int)view.WidthRequest, (int)view.HeightRequest);

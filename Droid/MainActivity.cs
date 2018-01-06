@@ -20,12 +20,8 @@ namespace Demo.Droid
 
 			global::Xamarin.Forms.Forms.Init (this, savedInstanceState);
 
-            //AndroidBug5497WorkaroundForXamarinAndroid.assistActivity(this);
-
-            //Window.DecorView.SystemUiVisibility = 0;
-
 			CarouselViewRenderer.Init ();
-            CachedImageRenderer.Init();
+            CachedImageRenderer.Init(true);
 
 			LoadApplication (new App ());
 		}
