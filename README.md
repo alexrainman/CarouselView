@@ -229,6 +229,12 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+5.1.1
+
+[Update] Fixing portable library support
+
+[Android] Android CirclePageIndicator.SetStyle not found #300
+
 5.1.0
 
 [Update] Updating to netstandard2.0
