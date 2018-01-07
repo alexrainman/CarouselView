@@ -1,0 +1,12 @@
+/Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/CarouselView.FormsPlugin.Abstractions.dll
+/Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Core.dll
+/Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Platform.dll
+/Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Xaml.dll
+/Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Core.pdb
+/Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Core.dll.mdb
+/Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Core.xml
+/Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Xaml.pdb
+/Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Xaml.dll.mdb
+/Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Xaml.xml
+/Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/obj/Release/CarouselView.FormsPlugin.Abstractions.Portable.csproj.CoreCompileInputs.cache
+/Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/obj/Release/CarouselView.FormsPlugin.Abstractions.dll

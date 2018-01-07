@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>5.1.0</version>
+        <version>5.1.1</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
@@ -12,6 +12,9 @@
         <description>Create Horizontal and Vertical carousels, add page indicators, navigation arrows and much more. “How to” at Github repository.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
+5.1.1
+[Update] Fixing portable library support
+[Android] Android CirclePageIndicator.SetStyle not found #300
 5.1.0
 [Update] Updating to netstandard2.0
 [Update] IsSwipingEnabled renamed to IsSwipeEnabled
@@ -160,7 +163,7 @@
 			 <group targetFramework="MonoAndroid10">
 			    <dependency id="Xamarin.Forms" version="2.5.0.121934"/>
 	            <dependency id="Xamarin.Android.Support.v4" version="25.4.0.2"/>
-                <dependency id="Xamarin.Android.CirclePageIndicator" version="1.0.1"/>
+                <dependency id="Xamarin.Android.CirclePageIndicator" version="1.0.2"/>
                 <dependency id="Xamarin.Android.VerticalViewPager" version="1.0.1"/>
 	        </group>
 	        <group targetFramework="Xamarin.iOS10">
@@ -176,7 +179,7 @@
         <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/netstandard2.0/CarouselView.FormsPlugin.Abstractions.dll" />
 
         <!-- PCL -->
-        <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid10+Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll" />
+        <file src="lib/Portable/CarouselView.FormsPlugin.Abstractions.dll" target="lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid10+Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll" />
 
         <!-- Xamarin.iOS (Unified)-->
         <file src="lib/CarouselView.FormsPlugin.iOS.dll" target="lib/Xamarin.iOS10/CarouselView.FormsPlugin.iOS.dll" />
