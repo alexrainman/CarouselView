@@ -2,16 +2,15 @@
 
 #### Setup
 * Available on NuGet: https://www.nuget.org/packages/CarouselView.FormsPlugin/ [![NuGet](https://img.shields.io/nuget/v/CarouselView.FormsPlugin.svg?label=NuGet)](https://www.nuget.org/packages/CarouselView.FormsPlugin/)
-* Install in your PCL project and Client projects.
+* Install in your PCL/.Net Standard 2.0 and client projects.
 
 **Platform Support**
 
 |Platform|Supported|Version|Renderer|
 | ------------------- | :-----------: | :-----------: | :------------------: |
-|NetStandard|Yes|2.0||
 |Xamarin.iOS Unified|Yes|iOS 8.1+|UIPageViewController|
 |Xamarin.Android|Yes|API 15+|ViewPager|
-|UWP|Yes|10+|FlipView|
+|UWP|Yes|10.0.16299.0|FlipView|
 
 #### Usage
 
@@ -161,11 +160,11 @@ myCarousel.BindingContext = new Person()
 
 ```ArrowsTransparency```: to change the transparency of the navigation arrows (Android and iOS, default 0.5f).
 
-```PositionSelectedCommand```: a bindable command property to execute when position changes.
-
 **Event Handlers**
 
 ```PositionSelected```: called when position changes (e.NewValue = position selected).
+
+```PositionSelectedCommand```: a bindable command property to execute when position changes.
 
 ```Scrolled```: called when the carousel is transitioning from one page to another (e.NewValue = scrolling percent completed).
 
@@ -228,6 +227,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 * [alexrainman](https://github.com/alexrainman)
 
 #### Release Notes
+
+5.1.2
+
+[Update] App crashes on dynamic add to ItemSource collection #301
 
 5.1.1
 
