@@ -206,9 +206,7 @@ public async void OnPrev(object sender, TappedEventArgs e)
 
 #### Tips
 
-- At startup assign Position property before assigning ItemsSource (it may cause unexpected issues in iOS if you don't).
-
-- When using the control with a long list of items, set ShowIndicators to false to avoid loading issues in iOS and UWP.
+- When using the control with a long list of items, set ShowIndicators to false in iOS and UWP to avoid loading issues.
 
 - If you have memory leaks in Android when using the Carousel with images, it's not the control itself. It's Xamarin Android not handling images correctly. To solve the problem you can use [FFImageLoading](https://github.com/luberda-molinet/FFImageLoading) making sure that you set this properties:
 
