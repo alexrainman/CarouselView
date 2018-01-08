@@ -2,7 +2,7 @@
 
 #### Setup
 * Available on NuGet: https://www.nuget.org/packages/CarouselView.FormsPlugin/ [![NuGet](https://img.shields.io/nuget/v/CarouselView.FormsPlugin.svg?label=NuGet)](https://www.nuget.org/packages/CarouselView.FormsPlugin/)
-* Install in your PCL/.Net Standard 2.0 project and client projects.
+* Install in your PCL/.Net Standard 2.0 and client projects.
 
 **Platform Support**
 
