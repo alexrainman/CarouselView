@@ -10,7 +10,7 @@
 | ------------------- | :-----------: | :-----------: | :------------------: |
 |Xamarin.iOS Unified|Yes|iOS 8.1+|UIPageViewController|
 |Xamarin.Android|Yes|API 15+|ViewPager|
-|UWP|Yes|10+|FlipView|
+|UWP|Yes|10.0.16299.0|FlipView|
 
 #### Usage
 
