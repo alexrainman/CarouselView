@@ -326,10 +326,28 @@ namespace CarouselView.FormsPlugin.iOS
 
 		#region adapter callbacks
 
+        void Scroller_Scrolled(object sender, EventArgs e)
+        {
+            Element.IsSwiping = true;
+
+            var scrollView = (UIScrollView)sender;
+            var point = scrollView.ContentOffset;
+
+            var percentCompleted = Math.Floor((Math.Abs(point.X - pageController.View.Frame.Size.Width) / pageController.View.Frame.Size.Width) * 100);
+
+            if (percentCompleted > 100)
+                percentCompleted = percentCompleted - 100;
+
+            Element.SendScrolled(percentCompleted);
+        }
+
 		void PageController_DidFinishAnimating(object sender, UIPageViewFinishedAnimationEventArgs e)
 		{
 			if (e.Completed)
 			{
+                // App crashes on dynamic add to ItemSource collection #301
+                Element.IsSwiping = false;
+
 				var controller = (ViewContainer)pageController.ViewControllers[0];
 				var position = Source.IndexOf(controller.Tag);
                 isChangingPosition = true;
@@ -340,58 +358,10 @@ namespace CarouselView.FormsPlugin.iOS
 				SetIndicatorsCurrentPage();
 				Element.SendPositionSelected();
                 Element.PositionSelectedCommand?.Execute(null);
-
-                Element.IsSwiping = false;
 			}
 		}
-
-        void Scroller_Scrolled(object sender, EventArgs e)
-        {
-            Element.IsSwiping = true;
-
-            var scrollView = (UIScrollView)sender;
-            var point = scrollView.ContentOffset;
-
-            var percentCompleted = Math.Floor((Math.Abs(point.X - pageController.View.Frame.Size.Width) / pageController.View.Frame.Size.Width)*100);
-
-            if (percentCompleted > 100)
-                percentCompleted = percentCompleted - 100;
-            
-            Element.SendScrolled(percentCompleted);
-        }
 
         #endregion
-
-        void SetIsSwipeEnabled()
-        {
-            foreach (var view in pageController?.View.Subviews)
-            {
-                var scroller = view as UIScrollView;
-                if (scroller != null)
-                {
-                    scroller.ScrollEnabled = Element.IsSwipeEnabled;
-                    scroller.Scrolled += Scroller_Scrolled;
-                }
-            }
-        }
-
-        void SetPosition()
-		{
-            isChangingPosition = true;
-			if (Element.ItemsSource != null)
-			{
-				if (Element.Position > Element.ItemsSource.GetCount() - 1)
-					Element.Position = Element.ItemsSource.GetCount() - 1;
-				if (Element.Position == -1)
-					Element.Position = 0;
-			}
-			else
-			{
-				Element.Position = 0;
-			}
-			prevPosition = Element.Position;
-            isChangingPosition = false;
-		}
 
 		void SetNativeView()
 		{
@@ -496,7 +466,36 @@ namespace CarouselView.FormsPlugin.iOS
 			SetIndicators();
 		}
 
-		#region indicators
+        void SetIsSwipeEnabled()
+        {
+            foreach (var view in pageController?.View.Subviews)
+            {
+                var scroller = view as UIScrollView;
+                if (scroller != null)
+                {
+                    scroller.ScrollEnabled = Element.IsSwipeEnabled;
+                    scroller.Scrolled += Scroller_Scrolled;
+                }
+            }
+        }
+
+        void SetPosition()
+        {
+            isChangingPosition = true;
+            if (Element.ItemsSource != null)
+            {
+                if (Element.Position > Element.ItemsSource.GetCount() - 1)
+                    Element.Position = Element.ItemsSource.GetCount() - 1;
+                if (Element.Position == -1)
+                    Element.Position = 0;
+            }
+            else
+            {
+                Element.Position = 0;
+            }
+            prevPosition = Element.Position;
+            isChangingPosition = false;
+        }
 
         void SetArrows()
         {
@@ -681,8 +680,6 @@ namespace CarouselView.FormsPlugin.iOS
 				}
 			}
 		}
-
-		#endregion
 
 		void InsertPage(object item, int position)
 		{

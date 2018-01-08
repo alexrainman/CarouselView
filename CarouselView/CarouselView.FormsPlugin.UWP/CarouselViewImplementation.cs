@@ -149,6 +149,61 @@ namespace CarouselView.FormsPlugin.UWP
 			}
         }
 
+        // Arrows visibility
+        private void FlipView_Loaded(object sender, RoutedEventArgs e)
+        {
+            ButtonHide(flipView, "PreviousButtonHorizontal");
+            ButtonHide(flipView, "NextButtonHorizontal");
+            ButtonHide(flipView, "PreviousButtonVertical");
+            ButtonHide(flipView, "NextButtonVertical");
+
+            //var controls = AllChildren(flipView);
+
+            if (ScrollingHost == null)
+            {
+                ScrollingHost = FindVisualChild<Windows.UI.Xaml.Controls.ScrollViewer>(flipView, "ScrollingHost");
+
+                ScrollingHost.ViewChanging += ScrollingHost_ViewChanging;
+                ScrollingHost.ViewChanged += ScrollingHost_ViewChanged;
+            }
+
+            SetArrows();
+        }
+
+        // Reset timer as this is called multiple times
+        private void FlipView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (e.NewSize.Width != ElementWidth || e.NewSize.Height != ElementHeight)
+            {
+                if (timer != null)
+                    timer.Dispose();
+                timer = null;
+
+                timer = new Timer(OnTick, e.NewSize, 100, 100);
+            }
+        }
+
+        private void OnTick(object args)
+        {
+            timer.Dispose();
+            timer = null;
+
+            // Save new dimensions when resize completes
+            var size = (Windows.Foundation.Size)args;
+            ElementWidth = size.Width;
+            ElementHeight = size.Height;
+
+            // Refresh UI
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+            {
+                if (Element != null)
+                {
+                    SetNativeView();
+                    Element.SendPositionSelected();
+                }
+            });
+        }
+
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
@@ -254,25 +309,19 @@ namespace CarouselView.FormsPlugin.UWP
             }
         }
 
-        // Arrows visibility
-        private void FlipView_Loaded(object sender, RoutedEventArgs e)
+        #region adapter callbacks
+
+        private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ButtonHide(flipView, "PreviousButtonHorizontal");
-            ButtonHide(flipView, "NextButtonHorizontal");
-            ButtonHide(flipView, "PreviousButtonVertical");
-            ButtonHide(flipView, "NextButtonVertical");
+            Element.IsSwiping = true;
 
-            //var controls = AllChildren(flipView);
-
-            if (ScrollingHost == null)
+            if (Element != null && !isChangingPosition)
             {
-                ScrollingHost = FindVisualChild<Windows.UI.Xaml.Controls.ScrollViewer>(flipView, "ScrollingHost");
+                Element.Position = flipView.SelectedIndex;
+                UpdateIndicatorsTint();
 
-                ScrollingHost.ViewChanging += ScrollingHost_ViewChanging;
-                ScrollingHost.ViewChanged += ScrollingHost_ViewChanged;
+                Element.SendPositionSelected();
             }
-
-            SetArrows();
         }
 
         double lastOffset;
@@ -306,76 +355,17 @@ namespace CarouselView.FormsPlugin.UWP
         {
             if (!e.IsIntermediate)
             {
+                // App crashes on dynamic add to ItemSource collection. bug working on it #301
+                Element.IsSwiping = false;
+
                 var scrollView = (ScrollViewer)sender;
                 lastOffset = Element.Orientation == CarouselViewOrientation.Horizontal ? scrollView.HorizontalOffset : scrollView.VerticalOffset;
-                Element.IsSwiping = e.IsIntermediate;
+
+                //Element.IsSwiping = false;
             }
         }
 
-        private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Element.IsSwiping = true;
-
-            if (Element != null && !isChangingPosition)
-            {
-                Element.Position = flipView.SelectedIndex;
-                UpdateIndicatorsTint();
-
-                Element.SendPositionSelected();
-            }
-        }
-
-        // Reset timer as this is called multiple times
-        private void FlipView_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (e.NewSize.Width != ElementWidth || e.NewSize.Height != ElementHeight)
-            {
-                if (timer != null)
-                    timer.Dispose();
-                timer = null;
-
-                timer = new Timer(OnTick, e.NewSize, 100, 100);
-            }
-        }
-
-        private void OnTick(object args)
-        {
-            timer.Dispose();
-            timer = null;
-
-            // Save new dimensions when resize completes
-            var size = (Windows.Foundation.Size)args;
-            ElementWidth = size.Width;
-            ElementHeight = size.Height;
-
-            // Refresh UI
-            Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
-            {
-                if (Element != null)
-                {
-                    SetNativeView();
-                    Element.SendPositionSelected();
-                }
-            });
-        }
-
-        void SetPosition()
-        {
-            isChangingPosition = true;
-            if (Element.ItemsSource != null)
-            {
-                if (Element.Position > Element.ItemsSource.GetCount() - 1)
-                    Element.Position = Element.ItemsSource.GetCount() - 1;
-
-                if (Element.Position == -1)
-                    Element.Position = 0;
-            }
-            else
-            {
-                Element.Position = 0;
-            }
-            isChangingPosition = false;
-        }
+        #endregion
 
         public void SetNativeView()
         {
@@ -442,6 +432,24 @@ namespace CarouselView.FormsPlugin.UWP
             SetIndicators();
         }
 
+        void SetPosition()
+        {
+            isChangingPosition = true;
+            if (Element.ItemsSource != null)
+            {
+                if (Element.Position > Element.ItemsSource.GetCount() - 1)
+                    Element.Position = Element.ItemsSource.GetCount() - 1;
+
+                if (Element.Position == -1)
+                    Element.Position = 0;
+            }
+            else
+            {
+                Element.Position = 0;
+            }
+            isChangingPosition = false;
+        }
+
         void SetArrows()
         {
             if (Element.Orientation == CarouselViewOrientation.Horizontal)
@@ -457,8 +465,6 @@ namespace CarouselView.FormsPlugin.UWP
 
             // TODO: Set BackgroundColor, TintColor and Transparency
         }
-
-        #region indicators
 
         void SetIndicators()
         {
@@ -521,8 +527,6 @@ namespace CarouselView.FormsPlugin.UWP
                 i++;
             }
         }
-
-        #endregion
 
         void InsertPage(object item, int position)
 		{

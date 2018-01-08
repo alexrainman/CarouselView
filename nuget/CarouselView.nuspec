@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>5.1.1</version>
+        <version>5.1.2</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
@@ -12,6 +12,8 @@
         <description>Create Horizontal and Vertical carousels, add page indicators, navigation arrows and much more. “How to” at Github repository.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
+5.1.2
+[update] App crashes on dynamic add to ItemSource collection #301
 5.1.1
 [Update] Fixing portable library support
 [Android] Android CirclePageIndicator.SetStyle not found #300

@@ -349,52 +349,11 @@ namespace CarouselView.FormsPlugin.Android
 
         #region adapter callbacks
 
-        // To assign position when page selected
-        void ViewPager_PageSelected(object sender, ViewPager.PageSelectedEventArgs e)
-        {
-            // To avoid calling SetCurrentPage
-            isChangingPosition = true;
-            Element.Position = e.Position;
-            // Call PositionSelected from here when 0
-            if (e.Position == 0)
-            {
-                SetArrowsVisibility();
-                Element.SendPositionSelected();
-                Element.PositionSelectedCommand?.Execute(null);
-            }
-            isChangingPosition = false;
-        }
-
-        int mViewPagerState;
-
-        // To invoke PositionSelected
-        void ViewPager_PageScrollStateChanged(object sender, ViewPager.PageScrollStateChangedEventArgs e)
-        {
-            // ScrollStateIdle = 0 : the pager is in Idle, settled state
-            // ScrollStateDragging = 1 : the pager is currently being dragged by the user
-            // ScrollStateSettling = 2 : the pager is in the process of settling to a final position
-
-            if (mViewPagerState != -1)
-                mViewPagerState = e.State;
-
-            // Call PositionSelected when scroll finish, after swiping finished and position > 0
-            if (e.State == ViewPager.ScrollStateIdle && !isChangingPosition && Element.Position > 0)
-            {
-                SetArrowsVisibility();
-                Element.SendPositionSelected();
-                Element.PositionSelectedCommand?.Execute(null);
-
-                Element.IsSwiping = false;
-            }
-        }
-
         bool setCurrentPageCalled;
         int pageScrolledCount;
 
         void ViewPager_PageScrolled(object sender, ViewPager.PageScrolledEventArgs e)
         {
-            Element.IsSwiping = true;
-
             double percentCompleted;
 
             if (setCurrentPageCalled)
@@ -424,32 +383,41 @@ namespace CarouselView.FormsPlugin.Android
             }
         }
 
-        #endregion
-
-        void SetIsSwipeEnabled()
+        // To assign position when page selected
+        void ViewPager_PageSelected(object sender, ViewPager.PageSelectedEventArgs e)
         {
-            ((IViewPager)viewPager)?.SetPagingEnabled(Element.IsSwipeEnabled);
-        }
-
-        void SetPosition()
-        {
+            // To avoid calling SetCurrentPage
             isChangingPosition = true;
-            if (Element.ItemsSource != null)
-            {
-                if (Element.Position > Element.ItemsSource.GetCount() - 1)
-                    Element.Position = Element.ItemsSource.GetCount() - 1;
-                if (Element.Position == -1)
-                    Element.Position = 0;
-            }
-            else
-            {
-                Element.Position = 0;
-            }
+            Element.Position = e.Position;
             isChangingPosition = false;
-
-            if (indicators != null)
-                indicators.mSnapPage = Element.Position;
         }
+
+        int mViewPagerState;
+
+        // To invoke PositionSelected
+        void ViewPager_PageScrollStateChanged(object sender, ViewPager.PageScrollStateChangedEventArgs e)
+        {
+            Element.IsSwiping = true;
+
+            // ScrollStateIdle = 0 : the pager is in Idle, settled state
+            // ScrollStateDragging = 1 : the pager is currently being dragged by the user
+            // ScrollStateSettling = 2 : the pager is in the process of settling to a final position
+
+            mViewPagerState = e.State;
+
+            // Call PositionSelected when scroll finish, after swiping finished and position > 0
+            if (e.State == ViewPager.ScrollStateIdle)
+            {
+                // App crashes on dynamic add to ItemSource collection #301
+                Element.IsSwiping = false;
+
+                SetArrowsVisibility();
+                Element.SendPositionSelected();
+                Element.PositionSelectedCommand?.Execute(null);
+            }
+        }
+
+        #endregion
 
         void SetNativeView()
         {
@@ -497,6 +465,31 @@ namespace CarouselView.FormsPlugin.Android
             // INDICATORS
             indicators = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
             SetIndicators();
+        }
+
+        void SetIsSwipeEnabled()
+        {
+            ((IViewPager)viewPager)?.SetPagingEnabled(Element.IsSwipeEnabled);
+        }
+
+        void SetPosition()
+        {
+            isChangingPosition = true;
+            if (Element.ItemsSource != null)
+            {
+                if (Element.Position > Element.ItemsSource.GetCount() - 1)
+                    Element.Position = Element.ItemsSource.GetCount() - 1;
+                if (Element.Position == -1)
+                    Element.Position = 0;
+            }
+            else
+            {
+                Element.Position = 0;
+            }
+            isChangingPosition = false;
+
+            if (indicators != null)
+                indicators.mSnapPage = Element.Position;
         }
 
         void SetArrows()
