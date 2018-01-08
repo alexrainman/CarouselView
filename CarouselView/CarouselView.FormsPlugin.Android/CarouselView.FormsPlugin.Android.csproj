@@ -111,11 +111,11 @@
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\..\packages\Xamarin.Forms.2.5.0.121934\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
-    <Reference Include="Com.ViewPagerIndicator">
-      <HintPath>..\..\packages\Xamarin.Android.CirclePageIndicator.1.0.1\lib\MonoAndroid\Com.ViewPagerIndicator.dll</HintPath>
-    </Reference>
     <Reference Include="Com.Android.DeskClock">
       <HintPath>..\..\packages\Xamarin.Android.VerticalViewPager.1.0.1\lib\MonoAndroid\Com.Android.DeskClock.dll</HintPath>
+    </Reference>
+    <Reference Include="Com.ViewPagerIndicator">
+      <HintPath>..\..\packages\Xamarin.Android.CirclePageIndicator.1.0.2\lib\MonoAndroid\Com.ViewPagerIndicator.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
