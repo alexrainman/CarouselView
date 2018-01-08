@@ -228,6 +228,10 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+5.1.2
+
+[Update] App crashes on dynamic add to ItemSource collection #301
+
 5.1.1
 
 [Update] Fixing portable library support
