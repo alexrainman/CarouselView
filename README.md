@@ -160,11 +160,11 @@ myCarousel.BindingContext = new Person()
 
 ```ArrowsTransparency```: to change the transparency of the navigation arrows (Android and iOS, default 0.5f).
 
-```PositionSelectedCommand```: a bindable command property to execute when position changes.
-
 **Event Handlers**
 
 ```PositionSelected```: called when position changes (e.NewValue = position selected).
+
+```PositionSelectedCommand```: a bindable command property to execute when position changes.
 
 ```Scrolled```: called when the carousel is transitioning from one page to another (e.NewValue = scrolling percent completed).
 
