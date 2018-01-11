@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CarouselView.FormsPlugin</id>
-        <version>5.1.2</version>
+        <version>5.1.3</version>
         <title>CarouselView Control for Xamarin Forms</title>
         <authors>Alex Rainman</authors>
         <owners>Alex Rainman</owners>
@@ -12,6 +12,10 @@
         <description>Create Horizontal and Vertical carousels, add page indicators, navigation arrows and much more. “How to” at Github repository.</description>
         <summary>CarouselView Control for Xamarin Forms</summary>
         <releaseNotes>
+5.1.3
+[Update] App crashes with the 5.1.2 version #305
+[update] App crashes on dynamic add to ItemSource collection #301
+[Update] Reseting arrows visibility when ItemsSource change
 5.1.2
 [update] App crashes on dynamic add to ItemSource collection #301
 5.1.1
@@ -21,7 +25,6 @@
 [Update] Updating to netstandard2.0
 [Update] IsSwipingEnabled renamed to IsSwipeEnabled
 [Update] Adding Scrolled event callback to report page scrolling percent
-[Update] Adding IsSwiping property
 [Update] ItemSource update during transition leads to an exception enhancement #294
 [Update] Adding ArrowsTransparency property (Android and iOS)
 [Android] Moving CirclePageIndicators and VerticalViewPager to separated packages

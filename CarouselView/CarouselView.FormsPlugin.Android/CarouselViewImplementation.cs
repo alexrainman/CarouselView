@@ -121,13 +121,6 @@ namespace CarouselView.FormsPlugin.Android
 
         async void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            // ItemSource update during transition leads to exception #294
-            if (Element.IsSwiping)
-            {
-                ItemsSource_CollectionChanged(sender, e);
-                return;
-            }
-
             // NewItems contains the item that was added.
             // If NewStartingIndex is not -1, then it contains the index where the new item was added.
             if (e.Action == NotifyCollectionChangedAction.Add)
@@ -155,6 +148,8 @@ namespace CarouselView.FormsPlugin.Android
                     Source.RemoveAt(e.OldStartingIndex);
                     Source.Insert(e.NewStartingIndex, e.OldItems[e.OldStartingIndex]);
                     viewPager.Adapter?.NotifyDataSetChanged();
+
+                    SetArrowsVisibility();
 
                     Element.SendPositionSelected();
                     Element.PositionSelectedCommand?.Execute(null);
@@ -184,6 +179,7 @@ namespace CarouselView.FormsPlugin.Android
                     SetPosition();
                     viewPager.Adapter = new PageAdapter(Element);
                     viewPager.SetCurrentItem(Element.Position, false);
+                    SetArrowsVisibility();
                     indicators?.SetViewPager(viewPager);
                     Element.SendPositionSelected();
                     Element.PositionSelectedCommand?.Execute(null);
@@ -295,6 +291,7 @@ namespace CarouselView.FormsPlugin.Android
                         SetPosition();
                         viewPager.Adapter = new PageAdapter(Element);
                         viewPager.SetCurrentItem(Element.Position, false);
+                        SetArrowsVisibility();
                         indicators?.SetViewPager(viewPager);
                         Element.SendPositionSelected();
                         Element.PositionSelectedCommand?.Execute(null);
@@ -397,8 +394,6 @@ namespace CarouselView.FormsPlugin.Android
         // To invoke PositionSelected
         void ViewPager_PageScrollStateChanged(object sender, ViewPager.PageScrollStateChangedEventArgs e)
         {
-            Element.IsSwiping = true;
-
             // ScrollStateIdle = 0 : the pager is in Idle, settled state
             // ScrollStateDragging = 1 : the pager is currently being dragged by the user
             // ScrollStateSettling = 2 : the pager is in the process of settling to a final position
@@ -408,9 +403,6 @@ namespace CarouselView.FormsPlugin.Android
             // Call PositionSelected when scroll finish, after swiping finished and position > 0
             if (e.State == ViewPager.ScrollStateIdle)
             {
-                // App crashes on dynamic add to ItemSource collection #301
-                Element.IsSwiping = false;
-
                 SetArrowsVisibility();
                 Element.SendPositionSelected();
                 Element.PositionSelectedCommand?.Execute(null);
@@ -500,7 +492,7 @@ namespace CarouselView.FormsPlugin.Android
                 {
                     prevBtn = nativeView.FindViewById<AWidget.LinearLayout>(Resource.Id.prev);
                     prevBtn.SetBackgroundColor(Element.ArrowsBackgroundColor.ToAndroid());
-                    prevBtn.Visibility = Element.Position == 0 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
+                    prevBtn.Visibility = Element.Position == 0 || Element.ItemsSource.GetCount() == 0 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
                     prevBtn.Alpha = Element.ArrowsTransparency;
 
                     var prevArrow = nativeView.FindViewById<AWidget.ImageView>(Resource.Id.prevArrow);
@@ -517,7 +509,7 @@ namespace CarouselView.FormsPlugin.Android
                 {
                     nextBtn = nativeView.FindViewById<AWidget.LinearLayout>(Resource.Id.next);
                     nextBtn.SetBackgroundColor(Element.ArrowsBackgroundColor.ToAndroid());
-                    nextBtn.Visibility = Element.Position == Element.ItemsSource.GetCount() - 1 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
+                    nextBtn.Visibility = Element.Position == Element.ItemsSource.GetCount() - 1 || Element.ItemsSource.GetCount() == 0 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
                     nextBtn.Alpha = Element.ArrowsTransparency;
 
                     var nextArrow = nativeView.FindViewById<AWidget.ImageView>(Resource.Id.nextArrow);
@@ -542,9 +534,9 @@ namespace CarouselView.FormsPlugin.Android
         void SetArrowsVisibility()
         {
             if (prevBtn != null)
-                prevBtn.Visibility = Element.Position == 0 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
+                prevBtn.Visibility = Element.Position == 0 || Element.ItemsSource.GetCount() == 0 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
             if (nextBtn != null)
-                nextBtn.Visibility = Element.Position == Element.ItemsSource.GetCount() - 1 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
+                nextBtn.Visibility = Element.Position == Element.ItemsSource.GetCount() - 1 || Element.ItemsSource.GetCount() == 0 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
         }
 
         void SetIndicators()
@@ -586,6 +578,8 @@ namespace CarouselView.FormsPlugin.Android
                 //var prevPos = Element.Position;
 
                 viewPager.Adapter.NotifyDataSetChanged();
+
+                SetArrowsVisibility();
                 indicators?.SetViewPager(viewPager);
 
                 //if (position <= prevPos)
@@ -630,6 +624,8 @@ namespace CarouselView.FormsPlugin.Android
                 Source.RemoveAt(position);
 
                 viewPager.Adapter.NotifyDataSetChanged();
+
+                SetArrowsVisibility();
                 indicators?.SetViewPager(viewPager);
 
                 isChangingPosition = false;

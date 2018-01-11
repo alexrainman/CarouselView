@@ -90,8 +90,6 @@ Or, template selector in your ViewModel:
 
 ```IsSwipeEnabled```: use this property to disable swipe to scroll (Android and iOS only, default true).
 
-```IsSwiping```: its value is true when the carousel is in the middle of a transition.
-
 ```IndicatorsTintColor```: page dot indicators fill color (default #C0C0C0).
 
 ```CurrentPageIndicatorTintColor```: selected page dot indicator fill color (default #808080).
@@ -226,6 +224,14 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Release Notes
 
+5.1.3
+
+[Update] App crashes with the 5.1.2 version #305
+
+[Update] App crashes on dynamic add to ItemSource collection #301
+
+[Update] Reseting arrows visibility when ItemsSource change
+
 5.1.2
 
 [Update] App crashes on dynamic add to ItemSource collection #301
@@ -243,8 +249,6 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 [Update] IsSwipingEnabled renamed to IsSwipeEnabled
 
 [Update] Adding Scrolled event callback to report page scrolling percent
-
-[Update] Adding IsSwiping property
 
 [Update] ItemSource update during transition leads to an exception enhancement #294
 

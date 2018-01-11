@@ -111,14 +111,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 		async void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
-            // ItemSource update during transition leads to exception #294
-            if (Element.IsSwiping)
-            {
-                ItemsSource_CollectionChanged(sender, e);
-                return;
-            }
-
-			// NewItems contains the item that was added.
+            // NewItems contains the item that was added.
 			// If NewStartingIndex is not -1, then it contains the index where the new item was added.
 			if (e.Action == NotifyCollectionChangedAction.Add)
 			{
@@ -149,6 +142,8 @@ namespace CarouselView.FormsPlugin.iOS
                         isChangingPosition = true;
 						Element.Position = e.NewStartingIndex;
                         isChangingPosition = false;
+
+                        SetArrowsVisibility();
 						SetIndicatorsCurrentPage();
 
                         Element.SendPositionSelected();
@@ -328,27 +323,20 @@ namespace CarouselView.FormsPlugin.iOS
 
         void Scroller_Scrolled(object sender, EventArgs e)
         {
-            Element.IsSwiping = true;
-
             var scrollView = (UIScrollView)sender;
             var point = scrollView.ContentOffset;
 
             var percentCompleted = Math.Floor((Math.Abs(point.X - pageController.View.Frame.Size.Width) / pageController.View.Frame.Size.Width) * 100);
 
-            if (percentCompleted > 100)
-                percentCompleted = percentCompleted - 100;
-
-            Element.SendScrolled(percentCompleted);
+            if (percentCompleted <= 100)
+                Element.SendScrolled(percentCompleted);
         }
 
 		void PageController_DidFinishAnimating(object sender, UIPageViewFinishedAnimationEventArgs e)
 		{
 			if (e.Completed)
 			{
-                // App crashes on dynamic add to ItemSource collection #301
-                Element.IsSwiping = false;
-
-				var controller = (ViewContainer)pageController.ViewControllers[0];
+                var controller = (ViewContainer)pageController.ViewControllers[0];
 				var position = Source.IndexOf(controller.Tag);
                 isChangingPosition = true;
 				Element.Position = position;
@@ -499,13 +487,15 @@ namespace CarouselView.FormsPlugin.iOS
 
         void SetArrows()
         {
+            CleanUpArrows();
+
             if (Element.ShowArrows)
             {
                 var o = Element.Orientation == CarouselViewOrientation.Horizontal ? "H" : "V";
                 var formatOptions = Element.Orientation == CarouselViewOrientation.Horizontal ? NSLayoutFormatOptions.AlignAllCenterY : NSLayoutFormatOptions.AlignAllCenterX;
 
                 prevBtn = new UIButton();
-                prevBtn.Hidden = Element.Position == 0;
+                prevBtn.Hidden = Element.Position == 0 || Element.ItemsSource.GetCount() == 0;
                 prevBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
                 prevBtn.Alpha = Element.ArrowsTransparency;
                 prevBtn.TranslatesAutoresizingMaskIntoConstraints = false;
@@ -532,7 +522,7 @@ namespace CarouselView.FormsPlugin.iOS
                 pageController.View.AddSubview(prevBtn);
 
                 nextBtn = new UIButton();
-                nextBtn.Hidden = Element.Position == Element.ItemsSource.GetCount() - 1;
+                nextBtn.Hidden = Element.Position == Element.ItemsSource.GetCount() - 1 || Element.ItemsSource.GetCount() == 0;
                 nextBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
                 nextBtn.Alpha = Element.ArrowsTransparency;
                 nextBtn.TranslatesAutoresizingMaskIntoConstraints = false;
@@ -573,18 +563,14 @@ namespace CarouselView.FormsPlugin.iOS
                 pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat(o + ":[nextBtn]|", 0, new NSDictionary(), btnsDictionary));
                 pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat(o + ":[superview]-(<=1)-[nextBtn]", formatOptions, new NSDictionary(), btnsDictionary));
             }
-            else
-            {
-                CleanUpArrows();
-            }
         }
 
         void SetArrowsVisibility()
         {
             if (prevBtn != null)
-                prevBtn.Hidden = Element.Position == 0;
+                prevBtn.Hidden = Element.Position == 0 || Element.ItemsSource.GetCount() == 0;
             if (nextBtn != null)
-                nextBtn.Hidden = Element.Position == Element.ItemsSource.GetCount() - 1;
+                nextBtn.Hidden = Element.Position == Element.ItemsSource.GetCount() - 1 || Element.ItemsSource.GetCount() == 0;
         }
 
 		void SetIndicators()
@@ -707,6 +693,7 @@ namespace CarouselView.FormsPlugin.iOS
 					}
                     isChangingPosition = false;
 
+                    SetArrowsVisibility();
                     SetIndicatorsCurrentPage();
 
                     //if (position != prevPos)
@@ -756,6 +743,7 @@ namespace CarouselView.FormsPlugin.iOS
 							Element.Position = newPos;
                             isChangingPosition = false;
 
+                            SetArrowsVisibility();
 							SetIndicatorsCurrentPage();
 
 							// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
@@ -769,6 +757,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 						pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
 						{
+                            SetArrowsVisibility();
 							SetIndicatorsCurrentPage();
 
 							// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe

@@ -90,14 +90,7 @@ namespace CarouselView.FormsPlugin.UWP
 
         async void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            // ItemSource update during transition leads to exception #294
-            if (Element.IsSwiping)
-            {
-                ItemsSource_CollectionChanged(sender, e);
-                return;
-            }
-
-			// NewItems contains the item that was added.
+            // NewItems contains the item that was added.
 			// If NewStartingIndex is not -1, then it contains the index where the new item was added.
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
@@ -144,7 +137,10 @@ namespace CarouselView.FormsPlugin.UWP
 				{
                     SetPosition();
 					SetNativeView();
-					Element.SendPositionSelected();
+
+                    SetArrowsVisibility();
+
+                    Element.SendPositionSelected();
 				}
 			}
         }
@@ -268,7 +264,8 @@ namespace CarouselView.FormsPlugin.UWP
 					{
 						SetPosition();
 						SetNativeView();
-						Element.SendPositionSelected();
+                        SetArrowsVisibility();
+                        Element.SendPositionSelected();
 						if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
 							((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
 					}
@@ -313,8 +310,6 @@ namespace CarouselView.FormsPlugin.UWP
 
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Element.IsSwiping = true;
-
             if (Element != null && !isChangingPosition)
             {
                 Element.Position = flipView.SelectedIndex;
@@ -345,23 +340,16 @@ namespace CarouselView.FormsPlugin.UWP
                 percentCompleted = Math.Floor((lastOffset - currentOffset) * 100);
             }
 
-            if (percentCompleted > 100)
-                percentCompleted = percentCompleted - 100;
-
-            Element.SendScrolled(percentCompleted);
+            if (percentCompleted <= 100)
+                Element.SendScrolled(percentCompleted);
         }
 
         private void ScrollingHost_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             if (!e.IsIntermediate)
             {
-                // App crashes on dynamic add to ItemSource collection. bug working on it #301
-                Element.IsSwiping = false;
-
                 var scrollView = (ScrollViewer)sender;
                 lastOffset = Element.Orientation == CarouselViewOrientation.Horizontal ? scrollView.HorizontalOffset : scrollView.VerticalOffset;
-
-                //Element.IsSwiping = false;
             }
         }
 
@@ -464,6 +452,14 @@ namespace CarouselView.FormsPlugin.UWP
             }
 
             // TODO: Set BackgroundColor, TintColor and Transparency
+        }
+
+        void SetArrowsVisibility()
+        {
+            if (prevBtn != null)
+                prevBtn.Visibility = Element.Position == 0 || Element.ItemsSource.GetCount() == 0 ? Visibility.Collapsed : Visibility.Visible;
+            if (nextBtn != null)
+                nextBtn.Visibility = Element.Position == Element.ItemsSource.GetCount() - 1 || Element.ItemsSource.GetCount() == 0 ? Visibility.Collapsed : Visibility.Visible;
         }
 
         void SetIndicators()

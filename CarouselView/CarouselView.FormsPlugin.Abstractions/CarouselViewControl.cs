@@ -37,14 +37,6 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(IsSwipeEnabledProperty, value); }
 		}
 
-        public static readonly BindableProperty IsSwipingProperty = BindableProperty.Create("IsSwiping", typeof(bool), typeof(CarouselViewControl), false);
-
-        public bool IsSwiping
-        {
-            get { return (bool)GetValue(IsSwipingProperty); }
-            set { SetValue(IsSwipingProperty, value); }
-        }
-
 		public static readonly BindableProperty IndicatorsTintColorProperty = BindableProperty.Create("IndicatorsTintColor", typeof(Color), typeof(CarouselViewControl), Color.Silver);
 
 		public Color IndicatorsTintColor
