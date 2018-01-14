@@ -204,39 +204,32 @@ namespace CarouselView.FormsPlugin.UWP
         {
             base.OnElementPropertyChanged(sender, e);
 
+            if (flipView == null || Element == null || prevBtn == null && nextBtn == null) return;
+
             var rect = this.Element?.Bounds;
 
             switch (e.PropertyName)
             {
                 case "Width":
                     // Save width only the first time to enable SizeChanged
-                    if (Element != null)
-                    {
-                        if (ElementWidth == 0)
-                            ElementWidth = ((Xamarin.Forms.Rectangle)rect).Width;
-                    }
+                    if (ElementWidth == 0)
+                        ElementWidth = ((Xamarin.Forms.Rectangle)rect).Width;
                     break;
                 case "Height":
 					// Save height only the first time to enable SizeChanged
-					if (Element != null)
-					{
-						if (ElementHeight == 0)
-							ElementHeight = ((Xamarin.Forms.Rectangle)rect).Height;
+					if (ElementHeight == 0)
+						ElementHeight = ((Xamarin.Forms.Rectangle)rect).Height;
 
-                        if (nativeView == null)
-                        {
-                            SetNativeView();
-                            Element.SendPositionSelected();
-                        }
-					}
+                    if (nativeView == null)
+                    {
+                        SetNativeView();
+                        Element.SendPositionSelected();
+                    }
                     break;
                 case "Orientation":
-					if (Element != null)
-					{
-                        orientationChanged = true;
-						SetNativeView();
-						Element.SendPositionSelected();
-					}
+					orientationChanged = true;
+					SetNativeView();
+					Element.SendPositionSelected();
                     break;
 				case "BackgroundColor":
 					if (flipView != null)
@@ -260,48 +253,32 @@ namespace CarouselView.FormsPlugin.UWP
                     SetIndicators();
                     break;
                 case "ItemsSource":
-					if (Element != null)
-					{
-						SetPosition();
-						SetNativeView();
-                        SetArrowsVisibility();
-                        Element.SendPositionSelected();
-						if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-							((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
-					}
+					SetPosition();
+					SetNativeView();
+                    SetArrowsVisibility();
+                    Element.SendPositionSelected();
+					if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
+						((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
                     break;
                 case "ItemTemplate":
-					if (Element != null)
-					{
-						SetNativeView();
-						Element.SendPositionSelected();
-					}
+					SetNativeView();
+					Element.SendPositionSelected();
                     break;
                 case "Position":
-					if (Element != null && !isChangingPosition)
+					if (!isChangingPosition)
 					    SetCurrentPage(Element.Position);
 					break;
                 case "ShowArrows":
-                    if (flipView != null)
-                        FlipView_Loaded(flipView, null);
+                    FlipView_Loaded(flipView, null);
                     break;
                 case "ArrowsBackgroundColor":
-                    if (prevBtn != null && nextBtn != null)
-                    {
-                        
-                    }
+                    
                     break;
                 case "ArrowsTintColor":
-                    if (prevBtn != null && nextBtn != null)
-                    {
-                        
-                    }
+                    
                     break;
                 case "ArrowsTransparency":
-                    if (prevBtn != null && nextBtn != null)
-                    {
-
-                    }
+                    
                     break;
             }
         }

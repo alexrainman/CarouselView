@@ -225,21 +225,19 @@ namespace CarouselView.FormsPlugin.iOS
 		{
 			base.OnElementPropertyChanged(sender, e);
 
+            if (pageController == null || Element == null || prevBtn == null && nextBtn == null) return;
+
 			switch (e.PropertyName)
 			{
 				case "Renderer":
 					// Fix for issues after recreating the control #86
-					if (Element != null)
-						prevPosition = Element.Position;
+					prevPosition = Element.Position;
 					break;
 				case "Orientation":
-					if (Element != null)
-					{
-                        orientationChanged = true;
-						SetNativeView();
-						Element.SendPositionSelected();
-                        Element.PositionSelectedCommand?.Execute(null);
-					}
+					orientationChanged = true;
+					SetNativeView();
+					Element.SendPositionSelected();
+                    Element.PositionSelectedCommand?.Execute(null);
 					break;
 				case "InterPageSpacing":
 					// InterPageSpacing not exposed as a property in UIPageViewController :(
@@ -247,8 +245,7 @@ namespace CarouselView.FormsPlugin.iOS
 					//ConfigurePageControl();
 					break;
 				case "BackgroundColor":
-					if (pageController != null)
-						pageController.View.BackgroundColor = Element.BackgroundColor.ToUIColor();
+					pageController.View.BackgroundColor = Element.BackgroundColor.ToUIColor();
 					break;
 				case "IsSwipeEnabled":
                     SetIsSwipeEnabled();
@@ -266,26 +263,20 @@ namespace CarouselView.FormsPlugin.iOS
 					SetIndicators();
 					break;
 				case "ItemsSource":
-					if (Element != null)
-					{
-						SetPosition();
-						SetNativeView();
-						Element.SendPositionSelected();
-                        Element.PositionSelectedCommand?.Execute(null);
-						if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-							((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
-					}
+					SetPosition();
+					SetNativeView();
+					Element.SendPositionSelected();
+                    Element.PositionSelectedCommand?.Execute(null);
+					if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
+						((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
 					break;
 				case "ItemTemplate":
-					if (Element != null)
-					{
-						SetNativeView();
-						Element.SendPositionSelected();
-                        Element.PositionSelectedCommand?.Execute(null);
-					}
+					SetNativeView();
+					Element.SendPositionSelected();
+                    Element.PositionSelectedCommand?.Execute(null);
 					break;
 				case "Position":
-                    if (Element != null && !isChangingPosition)
+                    if (!isChangingPosition)
                     {
                         SetCurrentPage(Element.Position);
                     }
@@ -294,27 +285,18 @@ namespace CarouselView.FormsPlugin.iOS
                     SetArrows();
                     break;
                 case "ArrowsBackgroundColor":
-                    if (prevBtn != null && nextBtn != null)
-                    {
-                        prevBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
-                        nextBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
-                    }
+                    prevBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
+                    nextBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
                     break;
                 case "ArrowsTintColor":
-                    if (prevBtn != null && nextBtn != null)
-                    {
-                        var prevArrow = (UIImageView)prevBtn.Subviews[0];
-                        prevArrow.TintColor = Element.ArrowsTintColor.ToUIColor();
-                        var nextArrow = (UIImageView)nextBtn.Subviews[0];
-                        nextArrow.TintColor = Element.ArrowsTintColor.ToUIColor();
-                    }
+                    var prevArrow = (UIImageView)prevBtn.Subviews[0];
+                    prevArrow.TintColor = Element.ArrowsTintColor.ToUIColor();
+                    var nextArrow = (UIImageView)nextBtn.Subviews[0];
+                    nextArrow.TintColor = Element.ArrowsTintColor.ToUIColor();
                     break;
                 case "ArrowsTransparency":
-                    if (prevBtn != null && nextBtn != null)
-                    {
-                        prevBtn.Alpha = Element.ArrowsTransparency;
-                        nextBtn.Alpha = Element.ArrowsTransparency;
-                    }
+                    prevBtn.Alpha = Element.ArrowsTransparency;
+                    nextBtn.Alpha = Element.ArrowsTransparency;
                     break;
 			}
 		}

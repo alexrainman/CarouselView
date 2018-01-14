@@ -249,18 +249,17 @@ namespace CarouselView.FormsPlugin.Android
         {
             base.OnElementPropertyChanged(sender, e);
 
+            if (viewPager == null || Element == null || indicators == null || prevBtn == null && nextBtn == null) return;
+
             var rect = this.Element.Bounds;
 
             switch (e.PropertyName)
             {
                 case "Orientation":
-                    if (Element != null)
-                    {
-                        orientationChanged = true;
-                        SetNativeView();
-                        Element.SendPositionSelected();
-                        Element.PositionSelectedCommand?.Execute(null);
-                    }
+                    orientationChanged = true;
+                    SetNativeView();
+                    Element.SendPositionSelected();
+                    Element.PositionSelectedCommand?.Execute(null);
                     break;
                 case "InterPageSpacing":
                     //var metrics = Resources.DisplayMetrics;
@@ -286,31 +285,25 @@ namespace CarouselView.FormsPlugin.Android
                     SetIndicators();
                     break;
                 case "ItemsSource":
-                    if (Element != null && viewPager != null)
-                    {
-                        SetPosition();
-                        viewPager.Adapter = new PageAdapter(Element);
-                        viewPager.SetCurrentItem(Element.Position, false);
-                        SetArrowsVisibility();
-                        indicators?.SetViewPager(viewPager);
-                        Element.SendPositionSelected();
-                        Element.PositionSelectedCommand?.Execute(null);
-                        if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-                            ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
-                    }
+                    SetPosition();
+                    viewPager.Adapter = new PageAdapter(Element);
+                    viewPager.SetCurrentItem(Element.Position, false);
+                    SetArrowsVisibility();
+                    indicators?.SetViewPager(viewPager);
+                    Element.SendPositionSelected();
+                    Element.PositionSelectedCommand?.Execute(null);
+                    if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
+                        ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
                     break;
                 case "ItemTemplate":
-                    if (Element != null && viewPager != null)
-                    {
-                        viewPager.Adapter = new PageAdapter(Element);
-                        viewPager.SetCurrentItem(Element.Position, false);
-                        indicators?.SetViewPager(viewPager);
-                        Element.SendPositionSelected();
-                        Element.PositionSelectedCommand?.Execute(null);
-                    }
+                    viewPager.Adapter = new PageAdapter(Element);
+                    viewPager.SetCurrentItem(Element.Position, false);
+                    indicators?.SetViewPager(viewPager);
+                    Element.SendPositionSelected();
+                    Element.PositionSelectedCommand?.Execute(null);
                     break;
                 case "Position":
-                    if (Element != null && !isChangingPosition)
+                    if (!isChangingPosition)
                     {
                         SetCurrentPage(Element.Position);
                     }
@@ -319,27 +312,18 @@ namespace CarouselView.FormsPlugin.Android
                     SetArrows();
                     break;
                 case "ArrowsBackgroundColor":
-                    if (prevBtn != null && nextBtn != null)
-                    {
-                        prevBtn.SetBackgroundColor(Element.ArrowsBackgroundColor.ToAndroid());
-                        nextBtn.SetBackgroundColor(Element.ArrowsBackgroundColor.ToAndroid());
-                    }
+                    prevBtn.SetBackgroundColor(Element.ArrowsBackgroundColor.ToAndroid());
+                    nextBtn.SetBackgroundColor(Element.ArrowsBackgroundColor.ToAndroid());
                     break;
                 case "ArrowsTintColor":
-                    if (prevBtn != null && nextBtn != null)
-                    {
-                        var prevArrow = nativeView.FindViewById<AWidget.ImageView>(Resource.Id.prevArrow);
-                        prevArrow.SetColorFilter(Element.ArrowsTintColor.ToAndroid());
-                        var nextArrow = nativeView.FindViewById<AWidget.ImageView>(Resource.Id.nextArrow);
-                        nextArrow.SetColorFilter(Element.ArrowsTintColor.ToAndroid());
-                    }
+                    var prevArrow = nativeView.FindViewById<AWidget.ImageView>(Resource.Id.prevArrow);
+                    prevArrow.SetColorFilter(Element.ArrowsTintColor.ToAndroid());
+                    var nextArrow = nativeView.FindViewById<AWidget.ImageView>(Resource.Id.nextArrow);
+                    nextArrow.SetColorFilter(Element.ArrowsTintColor.ToAndroid());
                     break;
                 case "ArrowsTransparency":
-                    if (prevBtn != null && nextBtn != null)
-                    {
-                        prevBtn.Alpha = Element.ArrowsTransparency;
-                        nextBtn.Alpha = Element.ArrowsTransparency;
-                    }
+                    prevBtn.Alpha = Element.ArrowsTransparency;
+                    nextBtn.Alpha = Element.ArrowsTransparency;
                     break;
             }
         }
