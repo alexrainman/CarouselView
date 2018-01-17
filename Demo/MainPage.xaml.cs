@@ -26,6 +26,7 @@ namespace Demo
         void Handle_Scrolled(object sender, CarouselView.FormsPlugin.Abstractions.ScrolledEventArgs e)
         {
             Debug.WriteLine("Scrolled to " + e.NewValue + " percent.");
+            Debug.WriteLine("Direction = " + e.Direction);
         }
     }
 }

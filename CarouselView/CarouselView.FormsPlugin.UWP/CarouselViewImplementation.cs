@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Shapes;
 using System.Collections.Specialized;
 using Xamarin.Forms;
+using System.Diagnostics;
 
 [assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.UWP
@@ -82,6 +83,7 @@ namespace CarouselView.FormsPlugin.UWP
 
             if (e.NewElement != null)
             {
+                Element.SizeChanged += Element_SizeChanged;
                 // Configure the control and subscribe to event handlers
                 if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
                     ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
@@ -166,6 +168,22 @@ namespace CarouselView.FormsPlugin.UWP
             SetArrows();
         }
 
+        private void Element_SizeChanged(object sender, EventArgs e)
+        {
+            if (Element != null)
+            {
+                var rect = Element.Bounds;
+
+                if (nativeView == null)
+                {
+                    ElementWidth = ((Xamarin.Forms.Rectangle)rect).Width;
+                    ElementHeight = ((Xamarin.Forms.Rectangle)rect).Height;
+                    SetNativeView();
+                    Element.SendPositionSelected();
+                }
+            }
+        }
+
         // Reset timer as this is called multiple times
         private void FlipView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -204,28 +222,12 @@ namespace CarouselView.FormsPlugin.UWP
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (flipView == null || Element == null || prevBtn == null && nextBtn == null) return;
+            if (flipView == null || Element == null) return;
 
             var rect = this.Element?.Bounds;
 
             switch (e.PropertyName)
             {
-                case "Width":
-                    // Save width only the first time to enable SizeChanged
-                    if (ElementWidth == 0)
-                        ElementWidth = ((Xamarin.Forms.Rectangle)rect).Width;
-                    break;
-                case "Height":
-					// Save height only the first time to enable SizeChanged
-					if (ElementHeight == 0)
-						ElementHeight = ((Xamarin.Forms.Rectangle)rect).Height;
-
-                    if (nativeView == null)
-                    {
-                        SetNativeView();
-                        Element.SendPositionSelected();
-                    }
-                    break;
                 case "Orientation":
 					orientationChanged = true;
 					SetNativeView();
@@ -303,6 +305,7 @@ namespace CarouselView.FormsPlugin.UWP
             var scrollView = (ScrollViewer)sender;
 
             double percentCompleted;
+            ScrollDirection direction;
 
             // Get Horizontal or Vertical Offset depending on carousel orientation
             var currentOffset = Element.Orientation == CarouselViewOrientation.Horizontal ? scrollView.HorizontalOffset : scrollView.VerticalOffset;
@@ -311,14 +314,16 @@ namespace CarouselView.FormsPlugin.UWP
             if (currentOffset > lastOffset)
             {
                 percentCompleted = Math.Floor((currentOffset - (int)currentOffset)*100);
+                direction = Element.Orientation == CarouselViewOrientation.Horizontal ? ScrollDirection.Right : ScrollDirection.Down;
             }
             else
             {
                 percentCompleted = Math.Floor((lastOffset - currentOffset) * 100);
+                direction = Element.Orientation == CarouselViewOrientation.Horizontal ? ScrollDirection.Left : ScrollDirection.Up;
             }
 
             if (percentCompleted <= 100)
-                Element.SendScrolled(percentCompleted);
+                Element.SendScrolled(percentCompleted, direction);
         }
 
         private void ScrollingHost_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)

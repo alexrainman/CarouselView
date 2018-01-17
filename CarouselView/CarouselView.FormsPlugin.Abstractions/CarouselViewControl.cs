@@ -156,9 +156,9 @@ namespace CarouselView.FormsPlugin.Abstractions
         public event EventHandler<ScrolledEventArgs> Scrolled;
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public void SendScrolled(double percent)
+        public void SendScrolled(double percent, ScrollDirection direction)
         {
-            Scrolled?.Invoke(this, new ScrolledEventArgs { NewValue = percent });
+            Scrolled?.Invoke(this, new ScrolledEventArgs { NewValue = percent, Direction = direction });
         }
     }
 
@@ -170,5 +170,6 @@ namespace CarouselView.FormsPlugin.Abstractions
     public class ScrolledEventArgs : EventArgs
     {
         public double NewValue { get; set; }
+        public ScrollDirection Direction { get; set; }
     }
 }

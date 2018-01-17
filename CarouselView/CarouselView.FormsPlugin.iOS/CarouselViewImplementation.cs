@@ -225,24 +225,19 @@ namespace CarouselView.FormsPlugin.iOS
 		{
 			base.OnElementPropertyChanged(sender, e);
 
-            if (pageController == null || Element == null || prevBtn == null && nextBtn == null) return;
+            if (e.PropertyName == "Renderer")
+                // Fix for issues after recreating the control #86
+                prevPosition = Element.Position;
+
+            if (pageController == null || Element == null) return;
 
 			switch (e.PropertyName)
 			{
-				case "Renderer":
-					// Fix for issues after recreating the control #86
-					prevPosition = Element.Position;
-					break;
 				case "Orientation":
 					orientationChanged = true;
 					SetNativeView();
 					Element.SendPositionSelected();
                     Element.PositionSelectedCommand?.Execute(null);
-					break;
-				case "InterPageSpacing":
-					// InterPageSpacing not exposed as a property in UIPageViewController :(
-					//ConfigurePageController();
-					//ConfigurePageControl();
 					break;
 				case "BackgroundColor":
 					pageController.View.BackgroundColor = Element.BackgroundColor.ToUIColor();
@@ -285,8 +280,10 @@ namespace CarouselView.FormsPlugin.iOS
                     SetArrows();
                     break;
                 case "ArrowsBackgroundColor":
-                    prevBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
-                    nextBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
+                    if (prevBtn != null)
+                        prevBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
+                    if (nextBtn != null)
+                        nextBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
                     break;
                 case "ArrowsTintColor":
                     var prevArrow = (UIImageView)prevBtn.Subviews[0];
@@ -295,23 +292,50 @@ namespace CarouselView.FormsPlugin.iOS
                     nextArrow.TintColor = Element.ArrowsTintColor.ToUIColor();
                     break;
                 case "ArrowsTransparency":
-                    prevBtn.Alpha = Element.ArrowsTransparency;
-                    nextBtn.Alpha = Element.ArrowsTransparency;
+                    if (prevBtn != null)
+                        prevBtn.Alpha = Element.ArrowsTransparency;
+                    if (nextBtn != null)
+                        nextBtn.Alpha = Element.ArrowsTransparency;
                     break;
 			}
 		}
 
-		#region adapter callbacks
+        #region adapter callbacks
+
+        double percentCompleted;
+        nfloat prevPoint;
 
         void Scroller_Scrolled(object sender, EventArgs e)
         {
             var scrollView = (UIScrollView)sender;
             var point = scrollView.ContentOffset;
 
-            var percentCompleted = Math.Floor((Math.Abs(point.X - pageController.View.Frame.Size.Width) / pageController.View.Frame.Size.Width) * 100);
+            double currentPercentCompleted;
+            ScrollDirection direction;
 
-            if (percentCompleted <= 100)
-                Element.SendScrolled(percentCompleted);
+            if (Element.Orientation == CarouselViewOrientation.Horizontal)
+            {
+                currentPercentCompleted = Math.Floor((Math.Abs(point.X - pageController.View.Frame.Size.Width) / pageController.View.Frame.Size.Width) * 100);
+                direction = prevPoint > point.X ? ScrollDirection.Left : ScrollDirection.Right;
+                prevPoint = point.X;
+            }
+            else
+            {
+                currentPercentCompleted = Math.Floor((Math.Abs(point.Y - pageController.View.Frame.Size.Height) / pageController.View.Frame.Size.Height) * 100);
+                direction = prevPoint > point.Y ? ScrollDirection.Up : ScrollDirection.Down;
+                prevPoint = point.Y;
+            }
+
+
+            if (currentPercentCompleted <= 100 && currentPercentCompleted > percentCompleted)
+            {
+                Element.SendScrolled(currentPercentCompleted, direction);
+                percentCompleted = currentPercentCompleted;
+            }
+            else
+            {
+                percentCompleted = 0;
+            }
         }
 
 		void PageController_DidFinishAnimating(object sender, UIPageViewFinishedAnimationEventArgs e)

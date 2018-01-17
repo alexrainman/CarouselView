@@ -15,6 +15,7 @@ namespace CarouselView.FormsPlugin.iOS
 
 			if (Platform.GetRenderer(view) == null)
 				Platform.SetRenderer(view, Platform.CreateRenderer(view));
+            
 			var vRenderer = Platform.GetRenderer(view);
 
 			vRenderer.NativeView.Frame = size;

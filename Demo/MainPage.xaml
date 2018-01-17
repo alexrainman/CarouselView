@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Demo.MainPage"
-    xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
+    xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
 
     <cv:CarouselViewControl x:Name="carousel"
         ItemsSource="{Binding MyItemsSource}"
@@ -10,6 +11,26 @@
         ShowIndicators="true"
         PositionSelectedCommand="{Binding MyCommand}"
         PositionSelected="Handle_PositionSelected"
-        Scrolled="Handle_Scrolled"/>
+        Scrolled="Handle_Scrolled"
+        Orientation="Vertical">
+
+        <!--<cv:CarouselViewControl.ItemsSource>
+           <x:Array Type="{x:Type View}">
+
+                <ScrollView>
+                    <StackLayout>
+                        <ffimageloading:CachedImage DownsampleToViewSize="true" Source = "c1.jpg" Aspect="AspectFill" />
+                        <ffimageloading:CachedImage DownsampleToViewSize="true" Source = "c2.jpg" Aspect="AspectFill" />
+                        <ffimageloading:CachedImage DownsampleToViewSize="true" Source = "c3.jpg" Aspect="AspectFill" />
+                    </StackLayout>
+                </ScrollView>
+                <ffimageloading:CachedImage DownsampleToViewSize="true" Source = "c1.jpg" Aspect="AspectFill" />
+                <ffimageloading:CachedImage DownsampleToViewSize="true" Source = "c2.jpg" Aspect="AspectFill" />
+                <ffimageloading:CachedImage DownsampleToViewSize="true" Source = "c3.jpg" Aspect="AspectFill" />
+
+           </x:Array>
+        </cv:CarouselViewControl.ItemsSource>-->
+
+    </cv:CarouselViewControl>
 
 </ContentPage>

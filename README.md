@@ -164,7 +164,7 @@ myCarousel.BindingContext = new Person()
 
 ```PositionSelectedCommand```: a bindable command property to execute when position changes.
 
-```Scrolled```: called when the carousel is transitioning from one page to another (e.NewValue = scrolling percent completed).
+```Scrolled```: called when the carousel is transitioning from one page to another (e.NewValue = scrolling percent completed, e.Direction = scrolling direction (Left, Right, Up, Down)).
 
 #### Render one page at a time, no swiping, move back and fort programmatically:
 
@@ -223,6 +223,12 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 * [alexrainman](https://github.com/alexrainman)
 
 #### Release Notes
+
+5.2.0
+
+[Android] NullReferenceException during swiping bug #314
+
+[Update] Adding scroll direction property to Scrolled event callback
 
 5.1.3
 

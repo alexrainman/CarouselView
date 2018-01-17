@@ -249,7 +249,7 @@ namespace CarouselView.FormsPlugin.Android
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (viewPager == null || Element == null || indicators == null || prevBtn == null && nextBtn == null) return;
+            if (viewPager == null || Element == null) return;
 
             var rect = this.Element.Bounds;
 
@@ -261,13 +261,8 @@ namespace CarouselView.FormsPlugin.Android
                     Element.SendPositionSelected();
                     Element.PositionSelectedCommand?.Execute(null);
                     break;
-                case "InterPageSpacing":
-                    //var metrics = Resources.DisplayMetrics;
-                    //var interPageSpacing = Element.InterPageSpacing * metrics.Density;
-                    //viewPager.PageMargin = (int)interPageSpacing;
-                    break;
                 case "BackgroundColor":
-                    viewPager?.SetBackgroundColor(Element.BackgroundColor.ToAndroid());
+                    viewPager.SetBackgroundColor(Element.BackgroundColor.ToAndroid());
                     break;
                 case "IsSwipeEnabled":
                     SetIsSwipeEnabled();
@@ -312,8 +307,10 @@ namespace CarouselView.FormsPlugin.Android
                     SetArrows();
                     break;
                 case "ArrowsBackgroundColor":
-                    prevBtn.SetBackgroundColor(Element.ArrowsBackgroundColor.ToAndroid());
-                    nextBtn.SetBackgroundColor(Element.ArrowsBackgroundColor.ToAndroid());
+                    if (prevBtn != null)
+                        prevBtn.SetBackgroundColor(Element.ArrowsBackgroundColor.ToAndroid());
+                    if (nextBtn != null)
+                        nextBtn.SetBackgroundColor(Element.ArrowsBackgroundColor.ToAndroid());
                     break;
                 case "ArrowsTintColor":
                     var prevArrow = nativeView.FindViewById<AWidget.ImageView>(Resource.Id.prevArrow);
@@ -322,8 +319,10 @@ namespace CarouselView.FormsPlugin.Android
                     nextArrow.SetColorFilter(Element.ArrowsTintColor.ToAndroid());
                     break;
                 case "ArrowsTransparency":
-                    prevBtn.Alpha = Element.ArrowsTransparency;
-                    nextBtn.Alpha = Element.ArrowsTransparency;
+                    if (prevBtn != null)
+                        prevBtn.Alpha = Element.ArrowsTransparency;
+                    if (nextBtn != null)
+                        nextBtn.Alpha = Element.ArrowsTransparency;
                     break;
             }
         }
@@ -332,6 +331,7 @@ namespace CarouselView.FormsPlugin.Android
 
         bool setCurrentPageCalled;
         int pageScrolledCount;
+        ScrollDirection direction;
 
         void ViewPager_PageScrolled(object sender, ViewPager.PageScrolledEventArgs e)
         {
@@ -347,14 +347,20 @@ namespace CarouselView.FormsPlugin.Android
                 // e.PositionOffset is the %
                 // if e.Position < currentPosition, it is scrolling to the left
                 if (e.Position < Element.Position)
+                {
                     percentCompleted = Math.Floor((1 - e.PositionOffset) * 100);
+                    direction = Element.Orientation == CarouselViewOrientation.Horizontal ? ScrollDirection.Left : ScrollDirection.Up;
+                }
                 else
+                {
                     percentCompleted = Math.Floor(e.PositionOffset * 100);
+                    direction = Element.Orientation == CarouselViewOrientation.Horizontal ? ScrollDirection.Right : ScrollDirection.Down;
+                }
             }
 
             // report % while the user is dragging or when SetCurrentPage has been called
             if (mViewPagerState == ViewPager.ScrollStateDragging || setCurrentPageCalled)
-                Element.SendScrolled(percentCompleted);
+                Element.SendScrolled(percentCompleted, direction);
 
             // PageScrolled is called 2 times when SetCurrentPage is executed
             if (pageScrolledCount == 2)
@@ -485,7 +491,10 @@ namespace CarouselView.FormsPlugin.Android
                     prevBtn.Click += delegate
                     {
                         if (Element.Position > 0)
+                        {
                             Element.Position = Element.Position - 1;
+                            direction = Element.Orientation == CarouselViewOrientation.Horizontal ? ScrollDirection.Left : ScrollDirection.Up;
+                        }
                     };
                 }
 
@@ -502,7 +511,10 @@ namespace CarouselView.FormsPlugin.Android
                     nextBtn.Click += delegate
                     {
                         if (Element.Position < Element.ItemsSource.GetCount() - 1)
+                        {
                             Element.Position = Element.Position + 1;
+                            direction = Element.Orientation == CarouselViewOrientation.Horizontal ? ScrollDirection.Right : ScrollDirection.Down;
+                        }
                     };
                 }
             }

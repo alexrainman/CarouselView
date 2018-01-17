@@ -12,13 +12,15 @@ namespace CarouselView.FormsPlugin.Android
         {
 			//var vRenderer = RendererFactory.GetRenderer (view);
 
-			if (Platform.GetRenderer(view) == null)
+            // NullReferenceException during swiping #314 (ScrollView)
+            if (Platform.GetRenderer(view) == null || Platform.GetRenderer(view)?.Tracker == null)
 				Platform.SetRenderer(view, Platform.CreateRenderer(view));
+            
 			var vRenderer = Platform.GetRenderer(view);
             
             var viewGroup = vRenderer.View;
 
-            vRenderer.Tracker.UpdateLayout ();
+            vRenderer.Tracker?.UpdateLayout ();
             var layoutParams = new ViewGroup.LayoutParams (ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent);
             viewGroup.LayoutParameters = layoutParams;
             view.Layout (size);

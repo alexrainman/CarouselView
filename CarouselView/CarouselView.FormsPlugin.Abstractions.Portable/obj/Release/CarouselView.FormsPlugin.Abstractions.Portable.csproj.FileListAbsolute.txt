@@ -8,6 +8,5 @@
 /Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Xaml.pdb
 /Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Xaml.dll.mdb
 /Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Xaml.xml
-/Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/obj/Release/CarouselView.FormsPlugin.Abstractions.Portable.csprojResolveAssemblyReference.cache
 /Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/obj/Release/CarouselView.FormsPlugin.Abstractions.Portable.csproj.CoreCompileInputs.cache
 /Users/areyes27/Projects/CarouselView/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/obj/Release/CarouselView.FormsPlugin.Abstractions.dll

@@ -7988,6 +7988,13 @@ namespace FormsGallery
             <value>To be added.</value>
             <remarks>To be added.</remarks>
         </member>
+        <member name="M:Xamarin.Forms.IListProxy.TryGetValue(System.Int32,System.Object@)">
+            <param name="index">To be added.</param>
+            <param name="value">To be added.</param>
+            <summary>To be added.</summary>
+            <returns>To be added.</returns>
+            <remarks>To be added.</remarks>
+        </member>
         <member name="T:Xamarin.Forms.IListViewController">
             <summary>For internal use by platform renderers.</summary>
             <remarks>To be added.</remarks>
