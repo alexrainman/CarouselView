@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using System.Diagnostics;
+using Windows.UI.Xaml;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
 
