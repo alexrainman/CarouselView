@@ -238,6 +238,15 @@ namespace CarouselView.FormsPlugin.Android
         {
             base.OnElementPropertyChanged(sender, e);
 
+            switch (e.PropertyName)
+            {
+                case "Width":
+                case "Height":
+                case "Y":
+                    canSetLayout = true;
+                    break;
+            }
+
             if (Element == null || viewPager == null) return;
 
             var rect = this.Element.Bounds;
