@@ -110,6 +110,11 @@ namespace CarouselView.FormsPlugin.Android
                 Xamarin.Forms.Application.Current.MainPage.SizeChanged += MainPage_SizeChanged;
                 keyboardService.VisibilityChanged += KeyboardService_VisibilityChanged;
             }
+
+            if (e.NewElement?.ItemsSource != e.OldElement?.ItemsSource)
+            {
+                ItemsSource_CollectionChanged(Element, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            }
         }
 
         async void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
