@@ -100,6 +100,11 @@ namespace CarouselView.FormsPlugin.iOS
 				if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
 					((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
 			}
+
+            if (e.NewElement?.ItemsSource != e.OldElement?.ItemsSource)
+            {
+                ItemsSource_CollectionChanged(Element, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            }
 		}
 
 		async void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
