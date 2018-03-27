@@ -511,7 +511,7 @@ namespace CarouselView.FormsPlugin.iOS
                 pageController.View.AddSubview(prevBtn);
 
                 nextBtn = new UIButton();
-                nextBtn.Hidden = Element.Position == Element.ItemsSource.GetCount() - 1 || Element.ItemsSource.GetCount() == 0;
+                nextBtn.Hidden = Element.ItemsSource == null || Element.Position == Element.ItemsSource.GetCount() - 1 || Element.ItemsSource.GetCount() == 0;
                 nextBtn.BackgroundColor = Element.ArrowsBackgroundColor.ToUIColor();
                 nextBtn.Alpha = Element.ArrowsTransparency;
                 nextBtn.TranslatesAutoresizingMaskIntoConstraints = false;

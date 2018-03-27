@@ -521,7 +521,7 @@ namespace CarouselView.FormsPlugin.Android
         {
             if (prevBtn == null || nextBtn == null) return;
             prevBtn.Visibility = Element.Position == 0 || Element.ItemsSource.GetCount() == 0 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
-            nextBtn.Visibility = Element.Position == Element.ItemsSource.GetCount() - 1 || Element.ItemsSource.GetCount() == 0 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
+            nextBtn.Visibility = Element.ItemsSource == null || Element.Position == Element.ItemsSource.GetCount() - 1 || Element.ItemsSource.GetCount() == 0 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
         }
 
         void SetIndicators()
