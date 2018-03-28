@@ -6,6 +6,8 @@ CarouselView/CarouselView.FormsPlugin.iOS/bin
 CarouselView/CarouselView.FormsPlugin.iOS/obj
 CarouselView/CarouselView.FormsPlugin.UWP/bin
 CarouselView/CarouselView.FormsPlugin.UWP/obj
+CarouselView/CarouselView.FormsPlugin.Tizen/bin
+CarouselView/CarouselView.FormsPlugin.Tizen/obj
 Demo/bin
 Demo/obj
 Droid/bin
@@ -14,5 +16,7 @@ iOS/bin
 iOS/obj
 UWP/bin
 UWP/obj
+Tizen/bin
+Tizen/obj
 packages
 *.userprefs

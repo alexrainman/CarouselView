@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarouselView.FormsPlugin.Ab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarouselView.FormsPlugin.Abstractions.Portable", "CarouselView\CarouselView.FormsPlugin.Abstractions.Portable\CarouselView.FormsPlugin.Abstractions.Portable.csproj", "{B624A99C-4A92-4308-A197-8C43CF08118B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarouselView.FormsPlugin.Tizen", "CarouselView\CarouselView.FormsPlugin.Tizen\CarouselView.FormsPlugin.Tizen.csproj", "{7AAB29EC-078D-4BF5-BC2A-BE7DCFC36570}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Tizen", "Tizen\Demo.Tizen.csproj", "{6208344E-6D54-48E4-AE9E-5E3643998478}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		AppStore|Any CPU = AppStore|Any CPU
