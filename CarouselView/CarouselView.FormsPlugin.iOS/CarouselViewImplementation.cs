@@ -291,6 +291,7 @@ namespace CarouselView.FormsPlugin.iOS
 
         double percentCompleted;
         nfloat prevPoint;
+        int settledPosition;
 
         void Scroller_Scrolled(object sender, EventArgs e)
         {
@@ -302,17 +303,20 @@ namespace CarouselView.FormsPlugin.iOS
 
             if (Element.Orientation == CarouselViewOrientation.Horizontal)
             {
-                currentPercentCompleted = Math.Floor((Math.Abs(point.X - pageController.View.Frame.Size.Width) / pageController.View.Frame.Size.Width) * 100);
+                var percentage = (point.X - pageController.View.Frame.Size.Width) / pageController.View.Frame.Size.Width;
+                currentPercentCompleted = Math.Floor((Math.Abs(percentage) * 100));
                 direction = prevPoint > point.X ? ScrollDirection.Left : ScrollDirection.Right;
                 prevPoint = point.X;
+                Element.SendScrolledOffset(settledPosition + percentage);
             }
             else
             {
-                currentPercentCompleted = Math.Floor((Math.Abs(point.Y - pageController.View.Frame.Size.Height) / pageController.View.Frame.Size.Height) * 100);
+                var percentage = (point.Y - pageController.View.Frame.Size.Height) / pageController.View.Frame.Size.Height;
+                currentPercentCompleted = Math.Floor((Math.Abs(percentage) * 100));
                 direction = prevPoint > point.Y ? ScrollDirection.Up : ScrollDirection.Down;
                 prevPoint = point.Y;
+                Element.SendScrolledOffset(settledPosition + percentage);
             }
-
 
             if (currentPercentCompleted <= 100 && currentPercentCompleted > percentCompleted)
             {
@@ -333,6 +337,7 @@ namespace CarouselView.FormsPlugin.iOS
 				var position = Source.IndexOf(controller.Tag);
                 isChangingPosition = true;
 				Element.Position = position;
+                settledPosition = position;
 				prevPosition = position;
                 isChangingPosition = false;
                 SetArrowsVisibility();
@@ -788,6 +793,7 @@ namespace CarouselView.FormsPlugin.iOS
 					SetIndicatorsCurrentPage();
 
 					// Invoke PositionSelected as DidFinishAnimating is only called when touch to swipe
+                    settledPosition = Element.Position;
 					Element.SendPositionSelected();
                     Element.PositionSelectedCommand?.Execute(null);
 				});
