@@ -355,6 +355,8 @@ namespace CarouselView.FormsPlugin.Android
                 setCurrentPageCalled = false;
                 pageScrolledCount = 0;
             }
+
+            Element.SendScrolledOffset(e.Position + e.PositionOffset);
         }
 
         // To assign position when page selected

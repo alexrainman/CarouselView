@@ -160,6 +160,14 @@ namespace CarouselView.FormsPlugin.Abstractions
         {
             Scrolled?.Invoke(this, new ScrolledEventArgs { NewValue = percent, Direction = direction });
         }
+
+        public event EventHandler<ScrolledOffsetEventArgs> ScrolledOffset;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public void SendScrolledOffset(double offset)
+        {
+            ScrolledOffset?.Invoke(this, new ScrolledOffsetEventArgs { Offset = offset });
+        }
     }
 
 	public class PositionSelectedEventArgs : EventArgs
@@ -171,5 +179,10 @@ namespace CarouselView.FormsPlugin.Abstractions
     {
         public double NewValue { get; set; }
         public ScrollDirection Direction { get; set; }
+    }
+
+    public class ScrolledOffsetEventArgs : EventArgs
+    {
+        public double Offset { get; set; }
     }
 }
