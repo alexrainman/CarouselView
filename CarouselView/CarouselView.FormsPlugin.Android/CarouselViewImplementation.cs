@@ -95,7 +95,7 @@ namespace CarouselView.FormsPlugin.Android
 
                 // KeyboardService code
                 Xamarin.Forms.Application.Current.MainPage.SizeChanged -= MainPage_SizeChanged;
-                keyboardService.VisibilityChanged -= KeyboardService_VisibilityChanged;
+                if (keyboardService != null) { keyboardService.VisibilityChanged -= KeyboardService_VisibilityChanged; }
             }
 
             if (e.NewElement != null)
@@ -108,7 +108,7 @@ namespace CarouselView.FormsPlugin.Android
 
                 // KeyboardService code
                 Xamarin.Forms.Application.Current.MainPage.SizeChanged += MainPage_SizeChanged;
-                keyboardService.VisibilityChanged += KeyboardService_VisibilityChanged;
+                if (keyboardService != null) { keyboardService.VisibilityChanged += KeyboardService_VisibilityChanged; }
             }
         }
 
