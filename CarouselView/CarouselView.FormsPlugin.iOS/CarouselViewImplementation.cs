@@ -53,7 +53,7 @@ namespace CarouselView.FormsPlugin.iOS
 		// A local copy of ItemsSource so we can use CollectionChanged events
 		List<object> Source;
 
-        // Used only when ItemsSource is a List<View>
+        // Used only when ItemsSource is a List<View> or an unknown type such as a ViewModel
         List<ViewContainer> ChildViewControllers;
 
 		int Count
@@ -824,20 +824,20 @@ namespace CarouselView.FormsPlugin.iOS
 			}
 			else
 			{
+                if (ChildViewControllers == null)
+                    ChildViewControllers = new List<ViewContainer>();
+                
+                // Return from the local copy of controllers
+                foreach(ViewContainer controller in ChildViewControllers)
+                {
+                    if (controller.Tag == view)
+                    {
+                        return controller;
+                    }
+                }
+
                 if (view != null)
                 {
-                    if (ChildViewControllers == null)
-                        ChildViewControllers = new List<ViewContainer>();
-
-                    // Return from the local copy of controllers
-                    foreach(ViewContainer controller in ChildViewControllers)
-                    {
-                        if (controller.Tag == view)
-                        {
-                            return controller;
-                        }
-                    }
-
                     formsView = view;
                 }
                 else

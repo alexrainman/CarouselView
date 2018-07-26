@@ -1,17 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
-    <metadata>
-        <id>CarouselView.FormsPlugin</id>
-        <version>5.2.0</version>
-        <title>CarouselView Control for Xamarin Forms</title>
-        <authors>Alex Rainman</authors>
-        <owners>Alex Rainman</owners>
-        <licenseUrl>https://github.com/alexrainman/CarouselView/blob/master/README.md</licenseUrl>
-        <projectUrl>https://github.com/alexrainman/CarouselView</projectUrl>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Create Horizontal and Vertical carousels, add page indicators, navigation arrows and much more. “How to” at Github repository.</description>
-        <summary>CarouselView Control for Xamarin Forms</summary>
-        <releaseNotes>
+  <metadata>
+    <id>CarouselView.FormsPlugin.AllowViewModels</id>
+    <version>5.2.1-beta</version>
+    <title>CarouselView Control for Xamarin Forms</title>
+    <authors>Alex Rainman, Steve Higgins</authors>
+    <owners>Alex Rainman</owners>
+    <licenseUrl>https://github.com/SteHiggins/CarouselView/blob/master/README.md</licenseUrl>
+    <projectUrl>https://github.com/SteHiggins/CarouselView</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Create Horizontal and Vertical carousels, add page indicators, navigation arrows and much more. “How to” at Github repository.</description>
+    <summary>CarouselView Control for Xamarin Forms - fork that allows ItemsSource to be ViewModels</summary>
+    <releaseNotes>
+5.2.1-beta
+[Update] Allow ItemsSource to be ViewModels in iOS
 5.2.0
 [Android] NullReferenceException during swiping bug #314
 [Update] Adding scroll direction property to Scrolled event callback
@@ -152,7 +154,7 @@
 [Update] Horizontal StackLayout is working
 2.4.0
 [Android] Fixing exception when including ListView in a page
-[Update] Adding compatibility for Forms > 2.3.0.107
+[Update] Adding compatibility for Forms &gt; 2.3.0.107
 2.3.2
 [Bug] Fixing exception on ItemsSourceChanged when Element is null.
 [Android] Circle page indicators attributes names incompatibility with other libraries (Fixed).
@@ -166,42 +168,38 @@
 [bug fix] Fix NullReferenceException in PageAdapter.get_Count when ItemSource is null.
 [bug fix] Other bug fixes and enhancements.
         </releaseNotes>
-        <tags>carouselview carousel pageslider slider viewpager uipageviewcontroller flipview ios android uwp xamarin forms monotouch monodroid</tags>
-        <dependencies>
-			 <group targetFramework="MonoAndroid10">
-			    <dependency id="Xamarin.Forms" version="2.5.0.121934"/>
-	            <dependency id="Xamarin.Android.Support.v4" version="25.4.0.2"/>
-                <dependency id="Xamarin.Android.CirclePageIndicator" version="1.0.2"/>
-                <dependency id="Xamarin.Android.VerticalViewPager" version="1.0.1"/>
-	        </group>
-	        <group targetFramework="Xamarin.iOS10">
-	            <dependency id="Xamarin.Forms" version="2.5.0.121934"/>
-	        </group>
-	        <group targetFramework="UAP10">
-	            <dependency id="Xamarin.Forms" version="2.5.0.121934"/>
-	        </group>
-		</dependencies>
-    </metadata>
-    <files>
-        <!-- NetStandard -->
-        <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/netstandard2.0/CarouselView.FormsPlugin.Abstractions.dll" />
-
-        <!-- PCL -->
-        <file src="lib/Portable/CarouselView.FormsPlugin.Abstractions.dll" target="lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid10+Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll" />
-
-        <!-- Xamarin.iOS (Unified)-->
-        <file src="lib/CarouselView.FormsPlugin.iOS.dll" target="lib/Xamarin.iOS10/CarouselView.FormsPlugin.iOS.dll" />
-        <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll" />
-
-        <!-- Xamarin.Android -->
-        <file src="lib/CarouselView.FormsPlugin.Android.dll" target="lib/MonoAndroid/CarouselView.FormsPlugin.Android.dll" />
-        <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/MonoAndroid/CarouselView.FormsPlugin.Abstractions.dll" />
-
-        <!-- UWP -->
-        <file src="lib/CarouselView.FormsPlugin.UWP.dll" target="lib/UAP10/CarouselView.FormsPlugin.UWP.dll" />
-        <file src="lib/CarouselView.FormsPlugin.UWP.pri" target="lib/UAP10/CarouselView.FormsPlugin.UWP.pri" />
-        <file src="lib/CarouselView.FormsPlugin.UWP.xr.xml" target="lib/UAP10/CarouselView.FormsPlugin.UWP/CarouselView.FormsPlugin.UWP.xr.xml" />
-        <file src="lib/FlipViewControl.xbf" target="lib/UAP10/FlipViewControl.xbf" />
-        <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/UAP10/CarouselView.FormsPlugin.Abstractions.dll" />
-    </files>
+    <tags>carouselview carousel pageslider slider viewpager uipageviewcontroller flipview ios android uwp xamarin forms monotouch monodroid</tags>
+    <dependencies>
+      <group targetFramework="MonoAndroid10">
+        <dependency id="Xamarin.Forms" version="2.5.0.121934" />
+        <dependency id="Xamarin.Android.Support.v4" version="25.4.0.2" />
+        <dependency id="Xamarin.Android.CirclePageIndicator" version="1.0.2" />
+        <dependency id="Xamarin.Android.VerticalViewPager" version="1.0.1" />
+      </group>
+      <group targetFramework="Xamarin.iOS10">
+        <dependency id="Xamarin.Forms" version="2.5.0.121934" />
+      </group>
+      <group targetFramework="UAP10">
+        <dependency id="Xamarin.Forms" version="2.5.0.121934" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <!-- NetStandard -->
+    <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/netstandard2.0/CarouselView.FormsPlugin.Abstractions.dll" />
+    <!-- PCL -->
+    <file src="lib/Portable/CarouselView.FormsPlugin.Abstractions.dll" target="lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid10+Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll" />
+    <!-- Xamarin.iOS (Unified)-->
+    <file src="lib/CarouselView.FormsPlugin.iOS.dll" target="lib/Xamarin.iOS10/CarouselView.FormsPlugin.iOS.dll" />
+    <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll" />
+    <!-- Xamarin.Android -->
+    <file src="lib/CarouselView.FormsPlugin.Android.dll" target="lib/MonoAndroid/CarouselView.FormsPlugin.Android.dll" />
+    <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/MonoAndroid/CarouselView.FormsPlugin.Abstractions.dll" />
+    <!-- UWP -->
+    <file src="lib/CarouselView.FormsPlugin.UWP.dll" target="lib/UAP10/CarouselView.FormsPlugin.UWP.dll" />
+    <file src="lib/CarouselView.FormsPlugin.UWP.pri" target="lib/UAP10/CarouselView.FormsPlugin.UWP.pri" />
+    <file src="lib/CarouselView.FormsPlugin.UWP.xr.xml" target="lib/UAP10/CarouselView.FormsPlugin.UWP/CarouselView.FormsPlugin.UWP.xr.xml" />
+    <file src="lib/FlipViewControl.xbf" target="lib/UAP10/FlipViewControl.xbf" />
+    <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/UAP10/CarouselView.FormsPlugin.Abstractions.dll" />
+  </files>
 </package>
