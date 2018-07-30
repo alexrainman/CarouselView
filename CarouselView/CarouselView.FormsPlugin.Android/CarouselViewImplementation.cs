@@ -57,6 +57,8 @@ namespace CarouselView.FormsPlugin.Android
         // To avoid triggering Position changed more than once
         bool isChangingPosition;
 
+        private INotifyCollectionChanged _collectionListenerSource = null;
+
         // KeyboardService code
         bool isKeyboardVisible;
         bool canSetLayout;
@@ -90,8 +92,10 @@ namespace CarouselView.FormsPlugin.Android
                 if (Element == null) return;
                     
                 Element.SizeChanged -= Element_SizeChanged;
-                if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-                    ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
+                if (_collectionListenerSource != null) {
+                    _collectionListenerSource.CollectionChanged -= ItemsSource_CollectionChanged;
+                    _collectionListenerSource = null;
+                }
 
                 // KeyboardService code
                 Xamarin.Forms.Application.Current.MainPage.SizeChanged -= MainPage_SizeChanged;
@@ -103,8 +107,10 @@ namespace CarouselView.FormsPlugin.Android
                 Element.SizeChanged += Element_SizeChanged;
 
                 // Configure the control and subscribe to event handlers
-                if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-                    ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+                if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged) {
+                    _collectionListenerSource = ((INotifyCollectionChanged)Element.ItemsSource);
+                    _collectionListenerSource.CollectionChanged += ItemsSource_CollectionChanged;
+                }
 
                 // KeyboardService code
                 Xamarin.Forms.Application.Current.MainPage.SizeChanged += MainPage_SizeChanged;
@@ -276,8 +282,14 @@ namespace CarouselView.FormsPlugin.Android
                     indicators?.SetViewPager(viewPager);
                     Element.SendPositionSelected();
                     Element.PositionSelectedCommand?.Execute(null);
-                    if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-                        ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+                    if (_collectionListenerSource != null) {
+                        _collectionListenerSource.CollectionChanged -= ItemsSource_CollectionChanged;
+                        _collectionListenerSource = null;
+                    }
+                    if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged) {
+                        _collectionListenerSource = ((INotifyCollectionChanged)Element.ItemsSource);
+                        _collectionListenerSource.CollectionChanged += ItemsSource_CollectionChanged;
+                    }
                     break;
                 case "ItemTemplate":
                     viewPager.Adapter = new PageAdapter(Element);
@@ -802,12 +814,13 @@ namespace CarouselView.FormsPlugin.Android
 					viewPager = null;
 				}
 
-                if (Element != null)
-                {
-                    Element.SizeChanged -= Element_SizeChanged;
-                    if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-                        ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
+                if (_collectionListenerSource != null) {
+                    _collectionListenerSource.CollectionChanged -= ItemsSource_CollectionChanged;
+                    _collectionListenerSource = null;
                 }
+
+                if (Element != null)
+                    Element.SizeChanged -= Element_SizeChanged;
 
                 _disposed = true;
             }

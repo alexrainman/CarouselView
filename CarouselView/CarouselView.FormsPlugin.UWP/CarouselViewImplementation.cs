@@ -49,6 +49,8 @@ namespace CarouselView.FormsPlugin.UWP
         // To avoid triggering Position changed more than once
         bool isChangingPosition;
 
+        private INotifyCollectionChanged _collectionListenerSource = null;
+
         ScrollViewer ScrollingHost;
         Windows.UI.Xaml.Controls.Button prevBtn;
         Windows.UI.Xaml.Controls.Button nextBtn;
@@ -75,17 +77,21 @@ namespace CarouselView.FormsPlugin.UWP
                 }*/
 
                 if (Element == null) return;
-                
-                if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-                    ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
+
+                if (_collectionListenerSource != null) {
+                    _collectionListenerSource.CollectionChanged -= ItemsSource_CollectionChanged;
+                    _collectionListenerSource = null;
+                }
             }
 
             if (e.NewElement != null)
             {
                 Element.SizeChanged += Element_SizeChanged;
                 // Configure the control and subscribe to event handlers
-                if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-                    ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+                if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged) {
+                    _collectionListenerSource = ((INotifyCollectionChanged)Element.ItemsSource);
+                    _collectionListenerSource.CollectionChanged += ItemsSource_CollectionChanged;
+                }
             }
         }
 
@@ -253,8 +259,14 @@ namespace CarouselView.FormsPlugin.UWP
 					SetNativeView();
                     SetArrowsVisibility();
                     Element.SendPositionSelected();
-					if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-						((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+                    if (_collectionListenerSource != null) {
+                        _collectionListenerSource.CollectionChanged -= ItemsSource_CollectionChanged;
+                        _collectionListenerSource = null;
+                    }
+                    if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged) {
+                        _collectionListenerSource = ((INotifyCollectionChanged)Element.ItemsSource);
+                        _collectionListenerSource.CollectionChanged += ItemsSource_CollectionChanged;
+                    }
                     break;
                 case "ItemTemplate":
 					SetNativeView();
@@ -707,10 +719,9 @@ namespace CarouselView.FormsPlugin.UWP
                     flipView = null;
                 }
 
-                if (Element != null)
-                {
-                    if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-                        ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
+                if (_collectionListenerSource != null) {
+                    _collectionListenerSource.CollectionChanged -= ItemsSource_CollectionChanged;
+                    _collectionListenerSource = null;
                 }
 
                 nativeView = null;

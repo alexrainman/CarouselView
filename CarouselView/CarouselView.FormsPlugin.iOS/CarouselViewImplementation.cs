@@ -70,6 +70,8 @@ namespace CarouselView.FormsPlugin.iOS
         // To avoid triggering Position changed more than once
         bool isChangingPosition;
 
+        private INotifyCollectionChanged _collectionListenerSource = null;
+
 		protected override void OnElementChanged(ElementChangedEventArgs<CarouselViewControl> e)
 		{
 			base.OnElementChanged(e);
@@ -88,17 +90,21 @@ namespace CarouselView.FormsPlugin.iOS
                 if (Element == null) return;
 				
                 Element.SizeChanged -= Element_SizeChanged;
-				if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-					((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
+                if (_collectionListenerSource != null) {
+                    _collectionListenerSource.CollectionChanged -= ItemsSource_CollectionChanged;
+                    _collectionListenerSource = null;
+                }
 			}
 
 			if (e.NewElement != null)
 			{
 				Element.SizeChanged += Element_SizeChanged;
 
-				// Configure the control and subscribe to event handlers
-				if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-					((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+                // Configure the control and subscribe to event handlers
+                if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged) {
+                    _collectionListenerSource = ((INotifyCollectionChanged)Element.ItemsSource);
+                    _collectionListenerSource.CollectionChanged += ItemsSource_CollectionChanged;
+                }
 			}
 		}
 
@@ -251,8 +257,14 @@ namespace CarouselView.FormsPlugin.iOS
 					SetNativeView();
 					Element.SendPositionSelected();
                     Element.PositionSelectedCommand?.Execute(null);
-					if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-						((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+                if(_collectionListenerSource != null) {
+                    _collectionListenerSource.CollectionChanged -= ItemsSource_CollectionChanged;
+                    _collectionListenerSource = null;
+                }
+                if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged) {
+                    _collectionListenerSource = ((INotifyCollectionChanged)Element.ItemsSource);
+                    _collectionListenerSource.CollectionChanged += ItemsSource_CollectionChanged;
+                }
 					break;
 				case "ItemTemplate":
 					SetNativeView();
@@ -964,12 +976,13 @@ namespace CarouselView.FormsPlugin.iOS
                     Console.Write(ex.Message);
 				}
 
-				if (Element != null)
-				{
+                if (_collectionListenerSource != null) {
+                    _collectionListenerSource.CollectionChanged -= ItemsSource_CollectionChanged;
+                    _collectionListenerSource = null;
+                }
+
+                if (Element != null)
 					Element.SizeChanged -= Element_SizeChanged;
-					if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-						((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
-				}
 
 				Source = null;
 
