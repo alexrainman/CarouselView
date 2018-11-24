@@ -1,4 +1,5 @@
 ﻿using System;
+using Android.Content;
 using Android.Views;
 using AViews = Android.Views;
 using Xamarin.Forms;
@@ -8,13 +9,13 @@ namespace CarouselView.FormsPlugin.Android
 {
     public static class ViewExtensions
     {
-        public static AViews.View ToAndroid(this Xamarin.Forms.View view, Rectangle size)
+        public static AViews.View ToAndroid(this Xamarin.Forms.View view, Rectangle size, Context context)
         {
 			//var vRenderer = RendererFactory.GetRenderer (view);
 
             // NullReferenceException during swiping #314 (ScrollView)
             if (Platform.GetRenderer(view) == null || Platform.GetRenderer(view)?.Tracker == null)
-				Platform.SetRenderer(view, Platform.CreateRenderer(view));
+				Platform.SetRenderer(view, Platform.CreateRendererWithContext(view, context));
             
 			var vRenderer = Platform.GetRenderer(view);
             
