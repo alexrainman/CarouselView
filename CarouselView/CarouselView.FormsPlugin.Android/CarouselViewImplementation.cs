@@ -10,11 +10,13 @@ using System.ComponentModel;
 
 using AViews = Android.Views;
 using AWidget = Android.Widget;
+using ARes = Android.Content.Res;
 using System.Collections.Specialized;
 using System.Collections.Generic;
 using Android.Content;
 using Android.App;
 using Com.ViewPagerIndicator;
+using Android.Views.InputMethods;
 
 /*
  * Save state in Android:
@@ -41,6 +43,7 @@ namespace CarouselView.FormsPlugin.Android
         Context _context;
 
         bool orientationChanged;
+        ARes.Orientation viewOrientation;
 
         AViews.View nativeView;
         ViewPager viewPager;
@@ -183,6 +186,13 @@ namespace CarouselView.FormsPlugin.Android
             canSetLayout = false;
         }
 
+        protected override void OnConfigurationChanged(ARes.Configuration newConfig)
+        {
+            base.OnConfigurationChanged(newConfig);
+            orientationChanged = true;
+            viewOrientation = newConfig.Orientation;
+        }
+
         // KeyboardService code
         private void KeyboardService_VisibilityChanged(object sender, SoftKeyboardEventArgs e)
         {
@@ -206,18 +216,27 @@ namespace CarouselView.FormsPlugin.Android
             // To avoid page recreation caused by entry focus #136 (fix)
             var rect = this.Element.Bounds;
 
+            if (rect.Width < rect.Height && viewOrientation == ARes.Orientation.Landscape ||
+                rect.Height < rect.Width && viewOrientation == ARes.Orientation.Portrait)
+                return;
+
             // KeyboardService code
             // To avoid page recreation caused by entry focus #136 (fix)
-            if (!canSetLayout)
+            if (!canSetLayout && !orientationChanged)
             {
                 canSetLayout = true;
                 return;
             }
-
+            var view = this.FocusedChild;
+            if (view != null)
+            {
+                var inputMethotManager = (InputMethodManager)Context.GetSystemService(Context.InputMethodService);
+                inputMethotManager.HideSoftInputFromWindow(WindowToken, HideSoftInputFlags.None);
+                SystemUiVisibility = AViews.StatusBarVisibility.Hidden;
+            }
             if (rect.Height > 0)
             {
-                //ElementWidth = rect.Width;
-                //ElementHeight = rect.Height;
+                orientationChanged = true;
                 SetNativeView();
                 Element.SendPositionSelected();
                 Element.PositionSelectedCommand?.Execute(null);
