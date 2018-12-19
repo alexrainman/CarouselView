@@ -137,9 +137,9 @@ namespace CarouselView.FormsPlugin.Android
                 var Source = ((PageAdapter)viewPager?.Adapter)?.Source;
 
                 if (Element == null || viewPager == null || viewPager?.Adapter == null || Source == null) return;
-                    
+
                 Source.RemoveAt(e.OldStartingIndex);
-                Source.Insert(e.NewStartingIndex, e.OldItems[e.OldStartingIndex]);
+                Source.InsertRange(e.NewStartingIndex, e.OldItems.Cast<object>());
                 viewPager.Adapter?.NotifyDataSetChanged();
 
                 SetArrowsVisibility();
