@@ -126,7 +126,7 @@ namespace CarouselView.FormsPlugin.iOS
                 if (Element == null && pageController == null && Source == null) return;
                     
 				Source.RemoveAt(e.OldStartingIndex);
-				Source.Insert(e.NewStartingIndex, e.OldItems[e.OldStartingIndex]);
+                Source.InsertRange(e.NewStartingIndex, e.OldItems.Cast<object>());
 
 				var firstViewController = CreateViewController(e.NewStartingIndex);
 
