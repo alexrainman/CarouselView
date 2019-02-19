@@ -88,7 +88,7 @@ namespace CarouselView.FormsPlugin.Android
                 // Unsubscribe from event handlers and cleanup any resources
 
                 if (Element == null) return;
-                    
+
                 Element.SizeChanged -= Element_SizeChanged;
                 if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
                     ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
@@ -104,7 +104,22 @@ namespace CarouselView.FormsPlugin.Android
 
                 // Configure the control and subscribe to event handlers
                 if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
+                {
                     ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+                    if (Element.ItemsSource != null && Element.ItemsSource.GetCount() > 0)
+                    {
+                        SetNativeView();
+                        var Source = ((PageAdapter)viewPager?.Adapter)?.Source;
+
+                        if (Source != null && Source.Count != Element.ItemsSource.GetCount())
+                        {
+                            for (int i = 0; i < Element.ItemsSource.GetCount(); i++)
+                            {
+                                InsertPage(Element?.ItemsSource.GetItem(i), i);
+                            }
+                        }
+                    }
+                }
 
                 // KeyboardService code
                 Xamarin.Forms.Application.Current.MainPage.SizeChanged += MainPage_SizeChanged;
@@ -137,7 +152,7 @@ namespace CarouselView.FormsPlugin.Android
                 var Source = ((PageAdapter)viewPager?.Adapter)?.Source;
 
                 if (Element == null || viewPager == null || viewPager?.Adapter == null || Source == null) return;
-                    
+
                 Source.RemoveAt(e.OldStartingIndex);
                 Source.Insert(e.NewStartingIndex, e.OldItems[e.OldStartingIndex]);
                 viewPager.Adapter?.NotifyDataSetChanged();
@@ -153,8 +168,8 @@ namespace CarouselView.FormsPlugin.Android
             // then they contain the index where the item was replaced.
             if (e.Action == NotifyCollectionChangedAction.Replace)
             {
-				// Fix for #168 Android NullReferenceException
-				var Source = ((PageAdapter)viewPager?.Adapter)?.Source;
+                // Fix for #168 Android NullReferenceException
+                var Source = ((PageAdapter)viewPager?.Adapter)?.Source;
 
                 if (Element == null || viewPager == null || viewPager?.Adapter == null || Source == null) return;
 
@@ -425,7 +440,7 @@ namespace CarouselView.FormsPlugin.Android
 
             // TapGestureRecognizer doesn't work when added to CarouselViewControl (Android) #66, #191, #200
             ((IViewPager)viewPager)?.SetElement(Element);
-            
+
             SetNativeControl(nativeView);
 
             // ARROWS
@@ -572,8 +587,8 @@ namespace CarouselView.FormsPlugin.Android
         // Android ViewPager is the most complicated piece of code ever :)
         async Task RemovePage(int position)
         {
-			// Fix for #168 Android NullReferenceException
-			var Source = ((PageAdapter)viewPager?.Adapter)?.Source;
+            // Fix for #168 Android NullReferenceException
+            var Source = ((PageAdapter)viewPager?.Adapter)?.Source;
 
             if (Element == null || viewPager == null || viewPager?.Adapter == null || Source == null) return;
 
@@ -621,7 +636,7 @@ namespace CarouselView.FormsPlugin.Android
             setCurrentPageCalled = true;
 
             if (Element == null || viewPager == null || Element.ItemsSource == null) return;
-            
+
             if (Element.ItemsSource?.GetCount() > 0)
             {
                 viewPager.SetCurrentItem(position, Element.AnimateTransition);
@@ -741,27 +756,27 @@ namespace CarouselView.FormsPlugin.Android
             }
 
             /*public override IParcelable SaveState()
-			{
-				var count = mViewPager.ChildCount;
-				for (int i = 0; i < count; i++)
-				{
-					var c = mViewPager.GetChildAt(i);
-					if (c.SaveFromParentEnabled)
-					{
-						c.SaveHierarchyState(mViewStates);
-					}
-				}
-				var bundle = new Bundle();
-				bundle.PutSparseParcelableArray(TAG_VIEWS, mViewStates);
-				return bundle;
-			}
+            {
+                var count = mViewPager.ChildCount;
+                for (int i = 0; i < count; i++)
+                {
+                    var c = mViewPager.GetChildAt(i);
+                    if (c.SaveFromParentEnabled)
+                    {
+                        c.SaveHierarchyState(mViewStates);
+                    }
+                }
+                var bundle = new Bundle();
+                bundle.PutSparseParcelableArray(TAG_VIEWS, mViewStates);
+                return bundle;
+            }
 
-			public override void RestoreState(IParcelable state, Java.Lang.ClassLoader loader)
-			{
-				var bundle = (Bundle)state;
-				bundle.SetClassLoader(loader);
-				mViewStates = (SparseArray<Parcelable>)bundle.GetSparseParcelableArray(TAG_VIEWS);
-			}*/
+            public override void RestoreState(IParcelable state, Java.Lang.ClassLoader loader)
+            {
+                var bundle = (Bundle)state;
+                bundle.SetClassLoader(loader);
+                mViewStates = (SparseArray<Parcelable>)bundle.GetSparseParcelableArray(TAG_VIEWS);
+            }*/
         }
 
         #endregion
@@ -784,23 +799,23 @@ namespace CarouselView.FormsPlugin.Android
                     nextBtn = null;
                 }
 
-				if (indicators != null)
-				{
-					indicators.Dispose();
-					indicators = null;
-				}
+                if (indicators != null)
+                {
+                    indicators.Dispose();
+                    indicators = null;
+                }
 
-				if (viewPager != null)
-				{
-					viewPager.PageSelected -= ViewPager_PageSelected;
-					viewPager.PageScrollStateChanged -= ViewPager_PageScrollStateChanged;
+                if (viewPager != null)
+                {
+                    viewPager.PageSelected -= ViewPager_PageSelected;
+                    viewPager.PageScrollStateChanged -= ViewPager_PageScrollStateChanged;
 
-					if (viewPager.Adapter != null)
-						viewPager.Adapter.Dispose();
+                    if (viewPager.Adapter != null)
+                        viewPager.Adapter.Dispose();
 
-					viewPager.Dispose();
-					viewPager = null;
-				}
+                    viewPager.Dispose();
+                    viewPager = null;
+                }
 
                 if (Element != null)
                 {
