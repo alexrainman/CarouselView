@@ -150,18 +150,8 @@ namespace CarouselView.FormsPlugin.iOS
 			if (e.Action == NotifyCollectionChangedAction.Replace)
 			{
                 if (Element == null && pageController == null && Source == null) return;
-
-				// Remove controller from ChildViewControllers
-				if (ChildViewControllers != null)
-					ChildViewControllers.RemoveAll(c => c.Tag == Source[e.OldStartingIndex]);
                 
-				Source[e.OldStartingIndex] = e.NewItems[e.NewStartingIndex];
-
-				var firstViewController = CreateViewController(Element.Position);
-
-				pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
-				{
-				});
+				Source[e.OldStartingIndex] = e.NewItems[0];
 			}
 
 			// No other properties are valid.

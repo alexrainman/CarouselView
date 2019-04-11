@@ -16,3 +16,6 @@ UWP/bin
 UWP/obj
 packages
 *.userprefs
+CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/
+.vs/
+CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/obj/

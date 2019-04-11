@@ -158,7 +158,7 @@ namespace CarouselView.FormsPlugin.Android
 
                 if (Element == null || viewPager == null || viewPager?.Adapter == null || Source == null) return;
 
-                Source[e.OldStartingIndex] = e.NewItems[e.NewStartingIndex];
+                Source[e.OldStartingIndex] = e.NewItems[0];
                 viewPager.Adapter?.NotifyDataSetChanged();
             }
 
