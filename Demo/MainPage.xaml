@@ -12,7 +12,9 @@
         PositionSelectedCommand="{Binding MyCommand}"
         PositionSelected="Handle_PositionSelected"
         Scrolled="Handle_Scrolled"
-        Orientation="Horizontal">
+        Orientation="Horizontal"
+        ButtonsBackgroundColor="White"
+        ShowButtons="true">
 
         <!--<cv:CarouselViewControl.ItemsSource>
            <x:Array Type="{x:Type View}">

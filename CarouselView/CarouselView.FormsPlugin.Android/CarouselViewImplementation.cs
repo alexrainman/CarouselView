@@ -48,6 +48,8 @@ namespace CarouselView.FormsPlugin.Android
 
         AWidget.LinearLayout prevBtn;
         AWidget.LinearLayout nextBtn;
+        AWidget.Button prevTextBtn;
+        AWidget.Button nextTextBtn;
 
         bool _disposed;
 
@@ -88,7 +90,7 @@ namespace CarouselView.FormsPlugin.Android
                 // Unsubscribe from event handlers and cleanup any resources
 
                 if (Element == null) return;
-                    
+
                 Element.SizeChanged -= Element_SizeChanged;
                 if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
                     ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
@@ -137,12 +139,12 @@ namespace CarouselView.FormsPlugin.Android
                 var Source = ((PageAdapter)viewPager?.Adapter)?.Source;
 
                 if (Element == null || viewPager == null || viewPager?.Adapter == null || Source == null) return;
-                    
+
                 Source.RemoveAt(e.OldStartingIndex);
                 Source.Insert(e.NewStartingIndex, e.OldItems[e.OldStartingIndex]);
                 viewPager.Adapter?.NotifyDataSetChanged();
 
-                SetArrowsVisibility();
+                SetCommandsVisibility();
 
                 Element.SendPositionSelected();
                 Element.PositionSelectedCommand?.Execute(null);
@@ -153,8 +155,8 @@ namespace CarouselView.FormsPlugin.Android
             // then they contain the index where the item was replaced.
             if (e.Action == NotifyCollectionChangedAction.Replace)
             {
-				// Fix for #168 Android NullReferenceException
-				var Source = ((PageAdapter)viewPager?.Adapter)?.Source;
+                // Fix for #168 Android NullReferenceException
+                var Source = ((PageAdapter)viewPager?.Adapter)?.Source;
 
                 if (Element == null || viewPager == null || viewPager?.Adapter == null || Source == null) return;
 
@@ -170,7 +172,7 @@ namespace CarouselView.FormsPlugin.Android
                 SetPosition();
                 viewPager.Adapter = new PageAdapter(Element);
                 viewPager.SetCurrentItem(Element.Position, false);
-                SetArrowsVisibility();
+                SetCommandsVisibility();
                 indicators?.SetViewPager(viewPager);
                 Element.SendPositionSelected();
                 Element.PositionSelectedCommand?.Execute(null);
@@ -272,7 +274,7 @@ namespace CarouselView.FormsPlugin.Android
                     SetPosition();
                     viewPager.Adapter = new PageAdapter(Element);
                     viewPager.SetCurrentItem(Element.Position, false);
-                    SetArrowsVisibility();
+                    SetCommandsVisibility();
                     indicators?.SetViewPager(viewPager);
                     Element.SendPositionSelected();
                     Element.PositionSelectedCommand?.Execute(null);
@@ -310,6 +312,27 @@ namespace CarouselView.FormsPlugin.Android
                     if (prevBtn == null || nextBtn == null) return;
                     prevBtn.Alpha = Element.ArrowsTransparency;
                     nextBtn.Alpha = Element.ArrowsTransparency;
+                    break;
+                case "ShowButtons":
+                    SetButtons();
+                    break;
+                case "ButtonPrevText":
+                    if (prevTextBtn == null) return;
+                    prevTextBtn.SetText(Element.ButtonNextText, AWidget.TextView.BufferType.Normal);
+                    break;
+                case "ButtonNextText":
+                    if (nextTextBtn == null) return;
+                    nextTextBtn.SetText(Element.ButtonNextText, AWidget.TextView.BufferType.Normal);
+                    break;
+                case "ButtonsBackgroundColor":
+                    if (prevTextBtn == null || nextTextBtn == null) return;
+                    prevTextBtn.SetBackgroundColor(Element.ButtonsBackgroundColor.ToAndroid());
+                    nextTextBtn.SetBackgroundColor(Element.ButtonsBackgroundColor.ToAndroid());
+                    break;
+                case "ButtonsTextColor":
+                    if (prevTextBtn == null || nextTextBtn == null) return;
+                    prevTextBtn.SetTextColor(Element.ButtonsTextColor.ToAndroid());
+                    nextTextBtn.SetTextColor(Element.ButtonsTextColor.ToAndroid());
                     break;
             }
         }
@@ -380,7 +403,7 @@ namespace CarouselView.FormsPlugin.Android
             // Call PositionSelected when scroll finish, after swiping finished and position > 0
             if (e.State == ViewPager.ScrollStateIdle)
             {
-                SetArrowsVisibility();
+                SetCommandsVisibility();
                 Element.SendPositionSelected();
                 Element.PositionSelectedCommand?.Execute(null);
             }
@@ -425,7 +448,7 @@ namespace CarouselView.FormsPlugin.Android
 
             // TapGestureRecognizer doesn't work when added to CarouselViewControl (Android) #66, #191, #200
             ((IViewPager)viewPager)?.SetElement(Element);
-            
+
             SetNativeControl(nativeView);
 
             // ARROWS
@@ -434,6 +457,9 @@ namespace CarouselView.FormsPlugin.Android
             // INDICATORS
             indicators = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
             SetIndicators();
+
+            // BUTTONS
+            SetButtons();
         }
 
         void SetIsSwipeEnabled()
@@ -499,6 +525,53 @@ namespace CarouselView.FormsPlugin.Android
             }
         }
 
+        void SetButtons()
+        {
+            if (Element.Orientation == CarouselViewOrientation.Vertical)
+                return;
+
+            if (Element.ShowButtons)
+            {
+                if (prevTextBtn == null)
+                {
+                    prevTextBtn = nativeView.FindViewById<AWidget.Button>(Resource.Id.prevTextButton);
+                    prevTextBtn.SetText(Element.ButtonPrevText, AWidget.TextView.BufferType.Normal);
+                    prevTextBtn.SetBackgroundColor(Element.ButtonsBackgroundColor.ToAndroid());
+                    prevTextBtn.SetTextColor(Element.ButtonsTextColor.ToAndroid());
+
+                    prevTextBtn.Click += PrevBtn_Click;
+                }
+
+                if (nextTextBtn == null)
+                {
+                    nextTextBtn = nativeView.FindViewById<AWidget.Button>(Resource.Id.nextTextButton);
+                    nextTextBtn.SetText(Element.ButtonNextText, AWidget.TextView.BufferType.Normal);
+                    nextTextBtn.SetBackgroundColor(Element.ButtonsBackgroundColor.ToAndroid());
+                    nextTextBtn.SetTextColor(Element.ButtonsTextColor.ToAndroid());
+
+                    nextTextBtn.Click += NextBtn_Click;
+                }
+
+                SetButtonsVisibility();
+
+                if (indicators != null)
+                {
+                    indicators.SetPadding(indicators.PaddingLeft, indicators.PaddingTop, indicators.PaddingRight, 0);
+                }
+            }
+            else
+            {
+                if (indicators != null)
+                {
+                    indicators.SetPadding(indicators.PaddingLeft, indicators.PaddingTop, indicators.PaddingRight, 15);
+                }
+
+                if (prevTextBtn == null || nextTextBtn == null) return;
+                prevTextBtn.Visibility = AViews.ViewStates.Gone;
+                nextTextBtn.Visibility = AViews.ViewStates.Gone;
+            }
+        }
+
         void PrevBtn_Click(object sender, EventArgs e)
         {
             if (Element.Position > 0)
@@ -517,11 +590,27 @@ namespace CarouselView.FormsPlugin.Android
             }
         }
 
+        void SetCommandsVisibility()
+        {
+            SetArrowsVisibility();
+            SetButtonsVisibility();
+        }
+
         void SetArrowsVisibility()
         {
             if (prevBtn == null || nextBtn == null) return;
             prevBtn.Visibility = Element.Position == 0 || Element.ItemsSource.GetCount() == 0 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
             nextBtn.Visibility = Element.Position == Element.ItemsSource.GetCount() - 1 || Element.ItemsSource.GetCount() == 0 ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
+        }
+
+        void SetButtonsVisibility()
+        {
+            if (prevTextBtn == null || nextTextBtn == null) return;
+            bool hidePrevElement = Element.Position == 0 || Element.ItemsSource.GetCount() == 0;
+            bool hideNextElement = Element.Position == Element.ItemsSource.GetCount() - 1 || Element.ItemsSource.GetCount() == 0;
+            prevTextBtn.Visibility = hidePrevElement ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
+            nextTextBtn.Visibility = hideNextElement ? AViews.ViewStates.Gone : AViews.ViewStates.Visible;
+            nativeView.FindViewById<AWidget.LinearLayout>(Resource.Id.buttons).SetGravity(hideNextElement ? AViews.GravityFlags.Left : (hidePrevElement ? AViews.GravityFlags.Right : AViews.GravityFlags.Center));
         }
 
         void SetIndicators()
@@ -562,7 +651,7 @@ namespace CarouselView.FormsPlugin.Android
 
             viewPager.Adapter.NotifyDataSetChanged();
 
-            SetArrowsVisibility();
+            SetCommandsVisibility();
             indicators?.SetViewPager(viewPager);
 
             Element.SendPositionSelected();
@@ -572,8 +661,8 @@ namespace CarouselView.FormsPlugin.Android
         // Android ViewPager is the most complicated piece of code ever :)
         async Task RemovePage(int position)
         {
-			// Fix for #168 Android NullReferenceException
-			var Source = ((PageAdapter)viewPager?.Adapter)?.Source;
+            // Fix for #168 Android NullReferenceException
+            var Source = ((PageAdapter)viewPager?.Adapter)?.Source;
 
             if (Element == null || viewPager == null || viewPager?.Adapter == null || Source == null) return;
 
@@ -606,7 +695,7 @@ namespace CarouselView.FormsPlugin.Android
 
                 viewPager.Adapter.NotifyDataSetChanged();
 
-                SetArrowsVisibility();
+                SetCommandsVisibility();
                 indicators?.SetViewPager(viewPager);
 
                 isChangingPosition = false;
@@ -621,12 +710,12 @@ namespace CarouselView.FormsPlugin.Android
             setCurrentPageCalled = true;
 
             if (Element == null || viewPager == null || Element.ItemsSource == null) return;
-            
+
             if (Element.ItemsSource?.GetCount() > 0)
             {
                 viewPager.SetCurrentItem(position, Element.AnimateTransition);
 
-                SetArrowsVisibility();
+                SetCommandsVisibility();
 
                 // Invoke PositionSelected when AnimateTransition is disabled
                 if (!Element.AnimateTransition)
@@ -784,23 +873,23 @@ namespace CarouselView.FormsPlugin.Android
                     nextBtn = null;
                 }
 
-				if (indicators != null)
-				{
-					indicators.Dispose();
-					indicators = null;
-				}
+                if (indicators != null)
+                {
+                    indicators.Dispose();
+                    indicators = null;
+                }
 
-				if (viewPager != null)
-				{
-					viewPager.PageSelected -= ViewPager_PageSelected;
-					viewPager.PageScrollStateChanged -= ViewPager_PageScrollStateChanged;
+                if (viewPager != null)
+                {
+                    viewPager.PageSelected -= ViewPager_PageSelected;
+                    viewPager.PageScrollStateChanged -= ViewPager_PageScrollStateChanged;
 
-					if (viewPager.Adapter != null)
-						viewPager.Adapter.Dispose();
+                    if (viewPager.Adapter != null)
+                        viewPager.Adapter.Dispose();
 
-					viewPager.Dispose();
-					viewPager = null;
-				}
+                    viewPager.Dispose();
+                    viewPager = null;
+                }
 
                 if (Element != null)
                 {

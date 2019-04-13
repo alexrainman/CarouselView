@@ -134,6 +134,46 @@ namespace CarouselView.FormsPlugin.Abstractions
             set { SetValue(ArrowsTransparencyProperty, value); }
         }
 
+        public static readonly BindableProperty ShowButtonsProperty = BindableProperty.Create("ShowButtons", typeof(bool), typeof(CarouselViewControl), false);
+
+        public bool ShowButtons
+        {
+            get { return (bool)GetValue(ShowButtonsProperty); }
+            set { SetValue(ShowButtonsProperty, value); }
+        }
+
+        public static readonly BindableProperty ButtonPrevTextProperty = BindableProperty.Create("ButtonPrevText", typeof(string), typeof(CarouselViewControl), "Back");
+
+        public string ButtonPrevText
+        {
+            get { return (string)GetValue(ButtonPrevTextProperty); }
+            set { SetValue(ButtonPrevTextProperty, value); }
+        }
+
+        public static readonly BindableProperty ButtonNextTextProperty = BindableProperty.Create("ButtonNextText", typeof(string), typeof(CarouselViewControl), "Next");
+
+        public string ButtonNextText
+        {
+            get { return (string)GetValue(ButtonNextTextProperty); }
+            set { SetValue(ButtonNextTextProperty, value); }
+        }
+
+        public static readonly BindableProperty ButtonsBackgroundColorProperty = BindableProperty.Create("ButtonsBackgroundColor", typeof(Color), typeof(CarouselViewControl), Color.Transparent);
+
+        public Color ButtonsBackgroundColor
+        {
+            get { return (Color)GetValue(ButtonsBackgroundColorProperty); }
+            set { SetValue(ButtonsBackgroundColorProperty, value); }
+        }
+
+        public static readonly BindableProperty ButtonsTextColorProperty = BindableProperty.Create("ButtonsTextColor", typeof(Color), typeof(CarouselViewControl), Color.Black);
+
+        public Color ButtonsTextColor
+        {
+            get { return (Color)GetValue(ButtonsTextColorProperty); }
+            set { SetValue(ButtonsTextColorProperty, value); }
+        }
+
         public static readonly BindableProperty PositionSelectedCommandProperty = BindableProperty.Create("PositionSelectedCommand", typeof(Command), typeof(CarouselViewControl), null, BindingMode.Default, (bindable, value) =>
         {
             return true;
