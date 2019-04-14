@@ -150,8 +150,21 @@ namespace CarouselView.FormsPlugin.iOS
 			if (e.Action == NotifyCollectionChangedAction.Replace)
 			{
                 if (Element == null && pageController == null && Source == null) return;
+
+                if (e.NewItems.Count == 0)
+                    return;
+
+                // Remove controller from ChildViewControllers
+                if (ChildViewControllers != null)
+                    ChildViewControllers.RemoveAll(c => c.Tag == Source[e.OldStartingIndex]);
                 
-				Source[e.OldStartingIndex] = e.NewItems[0];
+                Source[e.OldStartingIndex] = e.NewItems[0];
+
+                var firstViewController = CreateViewController(Element.Position);
+
+                pageController.SetViewControllers(new[] { firstViewController }, UIPageViewControllerNavigationDirection.Forward, false, s =>
+                {
+                });
 			}
 
 			// No other properties are valid.
@@ -369,7 +382,7 @@ namespace CarouselView.FormsPlugin.iOS
 					var position = Source.IndexOf(controller.Tag);
 
 					// Determine if we are on the first page
-					if (position == 0)
+					if (position <= 0)
 					{
 						// We are on the first page, so there is no need for a controller before that
 						return null;
@@ -787,7 +800,7 @@ namespace CarouselView.FormsPlugin.iOS
 		#region adapter
 
 		UIViewController CreateViewController(int index)
-		{
+        {
 			// Significant Memory Leak for iOS when using custom layout for page content #125
 			var newTag = Source[index];
 			foreach (ViewContainer child in pageController.ChildViewControllers)
