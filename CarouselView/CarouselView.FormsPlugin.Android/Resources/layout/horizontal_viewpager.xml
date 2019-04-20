@@ -3,40 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <CarouselView.FormsPlugin.Android.HorizontalViewPager
-        android:id="@+id/pager"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
-    <LinearLayout
-        android:id="@+id/prev"
-        android:layout_width="20dip"
-        android:layout_height="36dip"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:alpha="0.5"
-        android:visibility="gone"
-        android:gravity="center">
-        <ImageView
-            android:id="@+id/prevArrow"
-            android:layout_width="17dip"
-            android:layout_height="17dip"
-            android:src="@drawable/Prev" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/next"
-        android:layout_width="20dip"
-        android:layout_height="36dip"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:alpha="0.5"
-        android:visibility="gone"
-        android:gravity="center">
-        <ImageView
-            android:id="@+id/nextArrow"
-            android:layout_width="17dip"
-            android:layout_height="17dip"
-            android:src="@drawable/Next" />
-    </LinearLayout>
+  <CarouselView.FormsPlugin.Android.HorizontalViewPager
+      android:id="@+id/pager"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent" />
+  <LinearLayout
+      android:id="@+id/prev"
+      android:layout_width="20dip"
+      android:layout_height="36dip"
+      android:layout_alignParentLeft="true"
+      android:layout_centerVertical="true"
+      android:alpha="0.5"
+      android:visibility="gone"
+      android:gravity="center">
+    <ImageView
+        android:id="@+id/prevArrow"
+        android:layout_width="17dip"
+        android:layout_height="17dip"
+        android:src="@drawable/Prev" />
+  </LinearLayout>
+  <LinearLayout
+      android:id="@+id/next"
+      android:layout_width="20dip"
+      android:layout_height="36dip"
+      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true"
+      android:alpha="0.5"
+      android:visibility="gone"
+      android:gravity="center">
+    <ImageView
+        android:id="@+id/nextArrow"
+        android:layout_width="17dip"
+        android:layout_height="17dip"
+        android:src="@drawable/Next" />
+  </LinearLayout>
+  <LinearLayout
+      android:layout_height="wrap_content"
+      android:layout_width="fill_parent"
+      android:orientation="vertical"
+      android:layout_alignParentBottom="true"
+      >
     <Com.ViewPagerIndicator.CirclePageIndicator
         android:id="@+id/indicator"
         android:paddingLeft="20dip"
@@ -47,10 +53,43 @@
         android:layout_width="fill_parent"
         android:background="@android:color/transparent"
         android:visibility="gone"
-        android:layout_alignParentBottom="true"
         app:vpiPageColor="#c0c0c0"
         app:vpiSnap="true"
         app:vpiRadius="3dp"
         app:vpiFillColor="#808080"
         app:vpiStrokeWidth="0dp" />
+    <LinearLayout
+       android:id="@+id/buttons"
+       android:layout_height="wrap_content"
+       android:layout_width="fill_parent"
+       android:orientation="horizontal"
+       android:weightSum="2"
+       android:gravity="center"
+    >
+      <Button
+             android:id="@+id/prevTextButton"
+             style="@style/Widget.AppCompat.Button.Borderless.Colored"
+             android:visibility="gone"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_margin="5dp"
+             android:layout_marginTop="10dp"
+             android:layout_gravity="center"
+             android:layout_weight="1"
+             android:text="Back" />
+
+      <Button
+          android:id="@+id/nextTextButton"
+          style="@style/Widget.AppCompat.Button.Borderless.Colored"
+         android:visibility="gone"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_margin="5dp"
+          android:layout_marginTop="10dp"
+          android:layout_gravity="center"
+          android:layout_weight="1"
+          app:colorButtonNormal="@android:color/white"
+          android:text="Next" />
+    </LinearLayout>
+  </LinearLayout>
 </RelativeLayout>
