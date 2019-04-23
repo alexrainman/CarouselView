@@ -592,12 +592,10 @@ namespace CarouselView.FormsPlugin.iOS
 					pageController.View.AddConstraints(NSLayoutConstraint.FromVisualFormat("V:|[pageControl]|", NSLayoutFormatOptions.AlignAllTop, new NSDictionary(), viewsDictionary));
 				}
 
-                // Indicator Posistion By: Glen Vollmer
+                // Indicator Translation By: Glen Vollmer
                 if (Element.IndicatorXTranslation != 0 || Element.IndicatorYTranslation != 0)
-                {
                     pageControl.Transform = CGAffineTransform.MakeTranslation(
                         Element.IndicatorXTranslation, Element.IndicatorYTranslation);
-                }
 
 				pageControl.Pages = Count;
 				pageControl.PageIndicatorTintColor = Element.IndicatorsTintColor.ToUIColor();
