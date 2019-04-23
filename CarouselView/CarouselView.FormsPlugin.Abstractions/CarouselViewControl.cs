@@ -53,7 +53,7 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(CurrentPageIndicatorTintColorProperty, value); }
 		}
 
-        //Indicator Y and X translation by Glen Vollmer
+        //Indicator X and Y translation By: Glen Vollmer
         public static readonly BindableProperty IndicatorXTranslationProperty = BindableProperty.Create("IndicatorXTranslation", typeof(int), typeof(CarouselViewControl), 0);
 
         public int IndicatorXTranslation
