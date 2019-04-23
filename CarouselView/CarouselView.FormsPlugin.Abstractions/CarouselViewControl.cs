@@ -53,7 +53,24 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(CurrentPageIndicatorTintColorProperty, value); }
 		}
 
-		public static readonly BindableProperty IndicatorsShapeProperty = BindableProperty.Create("IndicatorsShape", typeof(IndicatorsShape), typeof(CarouselViewControl), IndicatorsShape.Circle);
+        //Indicator Y and X translation by Glen Vollmer
+        public static readonly BindableProperty IndicatorXTranslationProperty = BindableProperty.Create("IndicatorXTranslation", typeof(int), typeof(CarouselViewControl), 0);
+
+        public int IndicatorXTranslation
+        {
+            get { return (int)GetValue(IndicatorXTranslationProperty); }
+            set { SetValue(IndicatorXTranslationProperty, value); }
+        }
+
+        public static readonly BindableProperty IndicatorYTranslationProperty = BindableProperty.Create("IndicatorYTranslation", typeof(int), typeof(CarouselViewControl), 0);
+
+        public int IndicatorYTranslation
+        {
+            get { return (int)GetValue(IndicatorYTranslationProperty); }
+            set { SetValue(IndicatorYTranslationProperty, value); }
+        }
+
+        public static readonly BindableProperty IndicatorsShapeProperty = BindableProperty.Create("IndicatorsShape", typeof(IndicatorsShape), typeof(CarouselViewControl), IndicatorsShape.Circle);
 
 		public IndicatorsShape IndicatorsShape
 		{
