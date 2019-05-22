@@ -4,6 +4,7 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace CarouselView.FormsPlugin.Abstractions
 {
@@ -134,14 +135,14 @@ namespace CarouselView.FormsPlugin.Abstractions
             set { SetValue(ArrowsTransparencyProperty, value); }
         }
 
-        public static readonly BindableProperty PositionSelectedCommandProperty = BindableProperty.Create("PositionSelectedCommand", typeof(Command), typeof(CarouselViewControl), null, BindingMode.Default, (bindable, value) =>
+        public static readonly BindableProperty PositionSelectedCommandProperty = BindableProperty.Create("PositionSelectedCommand", typeof(ICommand), typeof(CarouselViewControl), null, BindingMode.Default, (bindable, value) =>
         {
             return true;
         });
 
-        public Command PositionSelectedCommand
+        public ICommand PositionSelectedCommand
         {
-            get { return (Command)GetValue(PositionSelectedCommandProperty); }
+            get { return (ICommand)GetValue(PositionSelectedCommandProperty); }
             set { SetValue(PositionSelectedCommandProperty, value); }
         }
 

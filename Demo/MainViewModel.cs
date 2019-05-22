@@ -38,7 +38,7 @@ namespace Demo
             }
         }
 
-        public Command MyCommand { protected set; get; }
+        public ICommand MyCommand { protected set; get; }
 
         protected virtual void OnPropertyChanged(string propertyName)
         {

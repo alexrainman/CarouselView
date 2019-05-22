@@ -16,3 +16,7 @@ UWP/bin
 UWP/obj
 packages
 *.userprefs
+/.vs/CarouselView
+/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Debug
+/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/obj/Debug
+/Droid/Demo.Droid.csproj.user
