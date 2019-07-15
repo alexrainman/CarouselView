@@ -7,7 +7,7 @@ using CarouselView.FormsPlugin.Android;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using System.ComponentModel;
-
+ 
 using AViews = Android.Views;
 using AWidget = Android.Widget;
 using System.Collections.Specialized;
