@@ -836,7 +836,7 @@ namespace CarouselView.FormsPlugin.Android
                 Console.WriteLine(ex.Message);
                 return;
             }
-        }
+        } 
 
         /// <summary>
         /// Used for registration with dependency service
