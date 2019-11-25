@@ -182,8 +182,8 @@ namespace CarouselView.FormsPlugin.UWP
         // Reset timer as this is called multiple times
         private void FlipView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (e.NewSize.Width != ElementWidth || e.NewSize.Height != ElementHeight)
-            {
+			if (Math.Round(e.NewSize.Width) != Math.Round(ElementWidth) || Math.Round(e.NewSize.Height) != Math.Round(ElementHeight))
+			{
                 if (timer != null)
                     timer.Dispose();
                 timer = null;
