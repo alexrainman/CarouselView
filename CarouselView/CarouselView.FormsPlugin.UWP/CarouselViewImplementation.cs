@@ -176,7 +176,8 @@ namespace CarouselView.FormsPlugin.UWP
                 ElementHeight = ((Xamarin.Forms.Rectangle)rect).Height;
                 SetNativeView();
                 Element.SendPositionSelected();
-            }
+				Element.PositionSelectedCommand?.Execute(null);
+			}
         }
 
         // Reset timer as this is called multiple times
@@ -227,7 +228,8 @@ namespace CarouselView.FormsPlugin.UWP
 					orientationChanged = true;
 					SetNativeView();
 					Element.SendPositionSelected();
-                    break;
+					Element.PositionSelectedCommand?.Execute(null);
+					break;
 				case "BackgroundColor":
 					flipView.Background = (SolidColorBrush)converter.Convert(Element.BackgroundColor, null, null, null);
                     break;
@@ -253,13 +255,15 @@ namespace CarouselView.FormsPlugin.UWP
 					SetNativeView();
                     SetArrowsVisibility();
                     Element.SendPositionSelected();
+					Element.PositionSelectedCommand?.Execute(null);
 					if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
 						((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
                     break;
                 case "ItemTemplate":
 					SetNativeView();
 					Element.SendPositionSelected();
-                    break;
+					Element.PositionSelectedCommand?.Execute(null);
+					break;
                 case "Position":
                     if (!isChangingPosition)
                     {
@@ -291,7 +295,8 @@ namespace CarouselView.FormsPlugin.UWP
                 UpdateIndicatorsTint();
 
                 Element.SendPositionSelected();
-            }
+				Element.PositionSelectedCommand?.Execute(null);
+			}
         }
 
         double lastOffset;
@@ -519,6 +524,7 @@ namespace CarouselView.FormsPlugin.UWP
 
             //if (position <= Element.Position)
                 Element.SendPositionSelected();
+			Element.PositionSelectedCommand?.Execute(null);
 		}
 
         public async Task RemovePage(int position)
