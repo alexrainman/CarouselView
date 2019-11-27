@@ -1,7 +1,7 @@
 # CarouselView control for Xamarin Forms
 
 #### Setup
-* Available on NuGet: https://www.nuget.org/packages/CarouselView.FormsPlugin/ [![NuGet](https://img.shields.io/nuget/v/CarouselView.FormsPlugin.svg?label=NuGet)](https://www.nuget.org/packages/CarouselView.FormsPlugin/)
+* Available on NuGet: https://www.nuget.org/packages/CarouselView.FormsPluginReloaded/ [![NuGet](https://img.shields.io/nuget/v/CarouselView.FormsPluginReloaded.svg?label=NuGet)](https://www.nuget.org/packages/CarouselView.FormsPluginReloaded/)
 * Install in your PCL/.Net Standard 2.0 and client projects.
 
 **Platform Support**
@@ -221,8 +221,14 @@ DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 
 #### Contributors
 * [alexrainman](https://github.com/alexrainman)
+* [Ruddy2007](https://github.com/Ruddy2007)
 
 #### Release Notes
+5.2.1
+
+[UWP] PositionSelectedCommand bound command not executing #2
+
+[UWP] Datatemplate rendering multiple times per page #1        
 
 5.2.0
 
