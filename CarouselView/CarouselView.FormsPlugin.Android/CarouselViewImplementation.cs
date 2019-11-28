@@ -275,9 +275,11 @@ namespace CarouselView.FormsPlugin.Android
                     SetArrowsVisibility();
                     indicators?.SetViewPager(viewPager);
                     Element.SendPositionSelected();
-                    Element.PositionSelectedCommand?.Execute(null);
-                    if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-                        ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+					if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
+					{
+						Element.PositionSelectedCommand?.Execute(null);
+						((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+					}
                     break;
                 case "ItemTemplate":
                     viewPager.Adapter = new PageAdapter(Element);
