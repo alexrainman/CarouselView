@@ -29,7 +29,8 @@
     <MtouchDebug>true</MtouchDebug>
     <CodesignKey>iPhone Developer: Alexander Reyes (T3VKUDC3C3)</CodesignKey>
     <MtouchProfiling>true</MtouchProfiling>
-    <CodesignProvision></CodesignProvision>
+    <CodesignProvision>
+    </CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
@@ -106,7 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json">
-      <InProject>false</InProject>
+      <Visible>false</Visible>
     </ImageAsset>
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +127,8 @@
     <ProjectReference Include="..\CarouselView\CarouselView.FormsPlugin.iOS\CarouselView.FormsPlugin.iOS.csproj">
       <Project>{D525F236-6A2D-4010-B1CC-4A4B8581C90B}</Project>
       <Name>CarouselView.FormsPlugin.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
     <ProjectReference Include="..\CarouselView\CarouselView.FormsPlugin.Abstractions\CarouselView.FormsPlugin.Abstractions.csproj">
       <Project>{36E4C107-3B10-4DC6-8E6A-BA251DC3BAF3}</Project>
