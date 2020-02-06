@@ -203,5 +203,9 @@
         <file src="lib/CarouselView.FormsPlugin.UWP.xr.xml" target="lib/UAP10/CarouselView.FormsPlugin.UWP/CarouselView.FormsPlugin.UWP.xr.xml" />
         <file src="lib/FlipViewControl.xbf" target="lib/UAP10/FlipViewControl.xbf" />
         <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/UAP10/CarouselView.FormsPlugin.Abstractions.dll" />
+
+        <!-- Tizen -->
+        <file src="lib/CarouselView.FormsPlugin.Tizen.dll" target="lib/tizen40/CarouselView.FormsPlugin.Tizen.dll" />
+        <file src="lib/CarouselView.FormsPlugin.Abstractions.dll" target="lib/tizen40/CarouselView.FormsPlugin.Abstractions.dll" />
     </files>
 </package>
