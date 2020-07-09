@@ -42,7 +42,14 @@ namespace CarouselView.FormsPlugin.Android
 
             if (this.isSwipeEnabled)
             {
-                return base.OnInterceptTouchEvent(ev);
+                try
+                {
+                    return base.OnInterceptTouchEvent(ev);
+                }
+                catch (Java.Lang.IllegalArgumentException e)
+                {
+                    Android.Util.Log.Debug("HorizontalViewPager", "IllegalArgumentException error: " + ex.Message);
+                }
             }
 
             return false;
