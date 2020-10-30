@@ -3,7 +3,7 @@ namespace CarouselView.FormsPlugin.Abstractions
 {
 	public enum IndicatorsShape
 	{
-		Circle,
-		Square
+		Circle = 1,
+		Square = 2
 	}
 }

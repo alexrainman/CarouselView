@@ -6,7 +6,7 @@ using Android.Views.InputMethods;
 using Object = Java.Lang.Object;
 
 // PR Fix for entry focus bug #242
-namespace CarouselView.FormsPlugin.Android
+namespace CarouselView.FormsPlugin.Droid
 {
     internal class GlobalLayoutListener : Object, ViewTreeObserver.IOnGlobalLayoutListener
     {

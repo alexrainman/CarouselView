@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CarouselView.FormsPlugin.Abstractions
 {
@@ -8,37 +9,56 @@ namespace CarouselView.FormsPlugin.Abstractions
 	{
 		public static object GetItem(this IEnumerable e, int index)
 		{
-			var enumerator = e.GetEnumerator();
-			int i = 0;
-			while (enumerator.MoveNext())
-			{
-				if (i == index)
-					return enumerator.Current;
-				i++;
+            try
+            {
+                var enumerator = e.GetEnumerator();
+                int i = 0;
+                while (enumerator.MoveNext())
+                {
+                    if (i == index)
+                        return enumerator.Current;
+                    i++;
+                }
+            }
+            catch (Exception ex) {
+                Debug.WriteLine(ex.Message);
 			}
-			return null;
-		}
+            return null;
+        }
 
 		public static int GetCount(this IEnumerable e)
 		{
-            var enumerator = e.GetEnumerator();
-			int i = 0;
-			while (enumerator.MoveNext())
-			{
-				i++;
-			}
-			return i;
-		}
+            int i = 0;
+            try
+            {
+                var enumerator = e.GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    i++;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            return i;
+        }
 
 		public static List<object> GetList(this IEnumerable e)
 		{
-			var enumerator = e.GetEnumerator();
-			var list = new List<object>();
-			while (enumerator.MoveNext())
-			{
-				list.Add(enumerator.Current);
-			}
-			return list;
-		}
+            var list = new List<object>();
+            try
+            {
+                var enumerator = e.GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    list.Add(enumerator.Current);
+                }
+            }
+            catch (Exception ex) {
+                Debug.WriteLine(ex.Message);
+            }
+            return list;
+        }
 	}
 }
