@@ -8,4 +8,10 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.122203" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="__CarouselViewControl.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="__CarouselViewControl.cs" />
+  </ItemGroup>
 </Project>

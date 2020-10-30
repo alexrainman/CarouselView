@@ -1,0 +1,34 @@
+﻿<Properties StartupConfiguration="{0948F97F-07E0-4DCB-8FDC-711EBDF1020A}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CarouselView/CarouselView.FormsPlugin.Android/CarouselViewImplementation.cs">
+    <Files>
+      <File FileName="CarouselView/CarouselView.FormsPlugin.Android/Implementation/HorizontalViewPager.cs" Line="1" Column="1" />
+      <File FileName="CarouselView/CarouselView.FormsPlugin.Android/Implementation/VerticalViewPager.cs" Line="157" Column="9" />
+      <File FileName="CarouselView/CarouselView.FormsPlugin.Android/CarouselViewImplementation.cs" Line="621" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="CarouselView" expanded="True" selected="True">
+            <Node name="CarouselView.FormsPlugin.Abstractions" expanded="True" />
+            <Node name="CarouselView.FormsPlugin.Android" expanded="True">
+              <Node name="Packages" expanded="True" />
+              <Node name="Implementation" expanded="True" />
+              <Node name="KeyboardService" expanded="True" />
+              <Node name="Resources" expanded="True" />
+            </Node>
+            <Node name="Demo" expanded="True" />
+            <Node name="Demo.Droid" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.CarouselView.FormsPlugin.Android AndroidDesignerPreferredDevice="Nexus 4" PreferredExecutionTarget="Android.api_29" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Demo.Droid PreferredExecutionTarget="Android.api_29" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

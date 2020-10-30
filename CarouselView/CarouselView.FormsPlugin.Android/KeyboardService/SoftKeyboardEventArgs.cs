@@ -1,7 +1,7 @@
 ﻿using System;
 
 // PR Fix for entry focus bug #242
-namespace CarouselView.FormsPlugin.Android
+namespace CarouselView.FormsPlugin.Droid
 {
     public class SoftKeyboardEventArgs : EventArgs
     {

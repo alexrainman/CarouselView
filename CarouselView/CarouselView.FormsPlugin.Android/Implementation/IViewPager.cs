@@ -1,7 +1,7 @@
 ﻿using System;
 using CarouselView.FormsPlugin.Abstractions;
 
-namespace CarouselView.FormsPlugin.Android
+namespace CarouselView.FormsPlugin.Droid
 {
     public interface IViewPager
     {

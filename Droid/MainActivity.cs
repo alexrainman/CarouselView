@@ -3,8 +3,8 @@ using Android.App;
 using Android.Content.PM;
 using Android.Views;
 using Android.OS;
-using CarouselView.FormsPlugin.Android;
 using FFImageLoading.Forms.Droid;
+using CarouselView.FormsPlugin.Droid;
 
 namespace Demo.Droid
 {
@@ -20,7 +20,7 @@ namespace Demo.Droid
 
 			global::Xamarin.Forms.Forms.Init (this, savedInstanceState);
 
-			CarouselViewRenderer.Init ();
+			CarouselViewRenderer.License = "";
             CachedImageRenderer.Init(true);
 
 			LoadApplication (new App ());

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace CarouselView.FormsPlugin.Android
+namespace CarouselView.FormsPlugin.Droid
 {
 	public class Tag : Java.Lang.Object
 	{
