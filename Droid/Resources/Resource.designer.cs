@@ -53,6 +53,10 @@ namespace Demo.Droid
 			global::CarouselView.FormsPlugin.Droid.Resource.Animation.design_bottom_sheet_slide_out = global::Demo.Droid.Resource.Animation.design_bottom_sheet_slide_out;
 			global::CarouselView.FormsPlugin.Droid.Resource.Animation.design_snackbar_in = global::Demo.Droid.Resource.Animation.design_snackbar_in;
 			global::CarouselView.FormsPlugin.Droid.Resource.Animation.design_snackbar_out = global::Demo.Droid.Resource.Animation.design_snackbar_out;
+			global::CarouselView.FormsPlugin.Droid.Resource.Animation.EnterFromLeft = global::Demo.Droid.Resource.Animation.EnterFromLeft;
+			global::CarouselView.FormsPlugin.Droid.Resource.Animation.EnterFromRight = global::Demo.Droid.Resource.Animation.EnterFromRight;
+			global::CarouselView.FormsPlugin.Droid.Resource.Animation.ExitToLeft = global::Demo.Droid.Resource.Animation.ExitToLeft;
+			global::CarouselView.FormsPlugin.Droid.Resource.Animation.ExitToRight = global::Demo.Droid.Resource.Animation.ExitToRight;
 			global::CarouselView.FormsPlugin.Droid.Resource.Animator.design_appbar_state_list_animator = global::Demo.Droid.Resource.Animator.design_appbar_state_list_animator;
 			global::CarouselView.FormsPlugin.Droid.Resource.Animator.design_fab_hide_motion_spec = global::Demo.Droid.Resource.Animator.design_fab_hide_motion_spec;
 			global::CarouselView.FormsPlugin.Droid.Resource.Animator.design_fab_show_motion_spec = global::Demo.Droid.Resource.Animator.design_fab_show_motion_spec;
@@ -1043,12 +1047,14 @@ namespace Demo.Droid
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.design_ic_visibility_off = global::Demo.Droid.Resource.Drawable.design_ic_visibility_off;
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.design_password_eye = global::Demo.Droid.Resource.Drawable.design_password_eye;
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.design_snackbar_background = global::Demo.Droid.Resource.Drawable.design_snackbar_background;
+			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.Down = global::Demo.Droid.Resource.Drawable.Down;
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.ic_mtrl_chip_checked_black = global::Demo.Droid.Resource.Drawable.ic_mtrl_chip_checked_black;
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.ic_mtrl_chip_checked_circle = global::Demo.Droid.Resource.Drawable.ic_mtrl_chip_checked_circle;
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.ic_mtrl_chip_close_circle = global::Demo.Droid.Resource.Drawable.ic_mtrl_chip_close_circle;
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.mtrl_snackbar_background = global::Demo.Droid.Resource.Drawable.mtrl_snackbar_background;
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.mtrl_tabs_default_indicator = global::Demo.Droid.Resource.Drawable.mtrl_tabs_default_indicator;
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.navigation_empty_icon = global::Demo.Droid.Resource.Drawable.navigation_empty_icon;
+			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.Next = global::Demo.Droid.Resource.Drawable.Next;
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.notification_action_background = global::Demo.Droid.Resource.Drawable.notification_action_background;
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.notification_bg = global::Demo.Droid.Resource.Drawable.notification_bg;
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.notification_bg_low = global::Demo.Droid.Resource.Drawable.notification_bg_low;
@@ -1061,8 +1067,10 @@ namespace Demo.Droid
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.notification_template_icon_low_bg = global::Demo.Droid.Resource.Drawable.notification_template_icon_low_bg;
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.notification_tile_bg = global::Demo.Droid.Resource.Drawable.notification_tile_bg;
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.notify_panel_notification_icon_bg = global::Demo.Droid.Resource.Drawable.notify_panel_notification_icon_bg;
+			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.Prev = global::Demo.Droid.Resource.Drawable.Prev;
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.tooltip_frame_dark = global::Demo.Droid.Resource.Drawable.tooltip_frame_dark;
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.tooltip_frame_light = global::Demo.Droid.Resource.Drawable.tooltip_frame_light;
+			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.Up = global::Demo.Droid.Resource.Drawable.Up;
 			global::CarouselView.FormsPlugin.Droid.Resource.Drawable.watermark = global::Demo.Droid.Resource.Drawable.watermark;
 			global::CarouselView.FormsPlugin.Droid.Resource.Id.accessibility_action_clickable_span = global::Demo.Droid.Resource.Id.accessibility_action_clickable_span;
 			global::CarouselView.FormsPlugin.Droid.Resource.Id.accessibility_custom_action_0 = global::Demo.Droid.Resource.Id.accessibility_custom_action_0;
@@ -1377,6 +1385,7 @@ namespace Demo.Droid
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.abc_search_view = global::Demo.Droid.Resource.Layout.abc_search_view;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.abc_select_dialog_material = global::Demo.Droid.Resource.Layout.abc_select_dialog_material;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.abc_tooltip = global::Demo.Droid.Resource.Layout.abc_tooltip;
+			global::CarouselView.FormsPlugin.Droid.Resource.Layout.BottomTabLayout = global::Demo.Droid.Resource.Layout.BottomTabLayout;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.browser_actions_context_menu_page = global::Demo.Droid.Resource.Layout.browser_actions_context_menu_page;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.browser_actions_context_menu_row = global::Demo.Droid.Resource.Layout.browser_actions_context_menu_row;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.custom_dialog = global::Demo.Droid.Resource.Layout.custom_dialog;
@@ -1394,6 +1403,9 @@ namespace Demo.Droid
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.design_navigation_menu = global::Demo.Droid.Resource.Layout.design_navigation_menu;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.design_navigation_menu_item = global::Demo.Droid.Resource.Layout.design_navigation_menu_item;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.design_text_input_password_icon = global::Demo.Droid.Resource.Layout.design_text_input_password_icon;
+			global::CarouselView.FormsPlugin.Droid.Resource.Layout.FallbackTabbarDoNotUse = global::Demo.Droid.Resource.Layout.FallbackTabbarDoNotUse;
+			global::CarouselView.FormsPlugin.Droid.Resource.Layout.FallbackToolbarDoNotUse = global::Demo.Droid.Resource.Layout.FallbackToolbarDoNotUse;
+			global::CarouselView.FormsPlugin.Droid.Resource.Layout.FlyoutContent = global::Demo.Droid.Resource.Layout.FlyoutContent;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.horizontal_viewpager = global::Demo.Droid.Resource.Layout.horizontal_viewpager;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.mtrl_layout_snackbar = global::Demo.Droid.Resource.Layout.mtrl_layout_snackbar;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.mtrl_layout_snackbar_include = global::Demo.Droid.Resource.Layout.mtrl_layout_snackbar_include;
@@ -1412,10 +1424,13 @@ namespace Demo.Droid
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.notification_template_media_custom = global::Demo.Droid.Resource.Layout.notification_template_media_custom;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.notification_template_part_chronometer = global::Demo.Droid.Resource.Layout.notification_template_part_chronometer;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.notification_template_part_time = global::Demo.Droid.Resource.Layout.notification_template_part_time;
+			global::CarouselView.FormsPlugin.Droid.Resource.Layout.RootLayout = global::Demo.Droid.Resource.Layout.RootLayout;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.select_dialog_item_material = global::Demo.Droid.Resource.Layout.select_dialog_item_material;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.select_dialog_multichoice_material = global::Demo.Droid.Resource.Layout.select_dialog_multichoice_material;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.select_dialog_singlechoice_material = global::Demo.Droid.Resource.Layout.select_dialog_singlechoice_material;
+			global::CarouselView.FormsPlugin.Droid.Resource.Layout.ShellContent = global::Demo.Droid.Resource.Layout.ShellContent;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.support_simple_spinner_dropdown_item = global::Demo.Droid.Resource.Layout.support_simple_spinner_dropdown_item;
+			global::CarouselView.FormsPlugin.Droid.Resource.Layout.Tabbar = global::Demo.Droid.Resource.Layout.Tabbar;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.Toolbar = global::Demo.Droid.Resource.Layout.Toolbar;
 			global::CarouselView.FormsPlugin.Droid.Resource.Layout.vertical_viewpager = global::Demo.Droid.Resource.Layout.vertical_viewpager;
 			global::CarouselView.FormsPlugin.Droid.Resource.String.abc_action_bar_home_description = global::Demo.Droid.Resource.String.abc_action_bar_home_description;
@@ -2761,6 +2776,178 @@ namespace Demo.Droid
 			global::CarouselView.FormsPlugin.Droid.Resource.Styleable.View_paddingEnd = global::Demo.Droid.Resource.Styleable.View_paddingEnd;
 			global::CarouselView.FormsPlugin.Droid.Resource.Styleable.View_paddingStart = global::Demo.Droid.Resource.Styleable.View_paddingStart;
 			global::CarouselView.FormsPlugin.Droid.Resource.Styleable.View_theme = global::Demo.Droid.Resource.Styleable.View_theme;
+			global::Com.Android.DeskClock.Resource.Attribute.alpha = global::Demo.Droid.Resource.Attribute.alpha;
+			global::Com.Android.DeskClock.Resource.Attribute.font = global::Demo.Droid.Resource.Attribute.font;
+			global::Com.Android.DeskClock.Resource.Attribute.fontProviderAuthority = global::Demo.Droid.Resource.Attribute.fontProviderAuthority;
+			global::Com.Android.DeskClock.Resource.Attribute.fontProviderCerts = global::Demo.Droid.Resource.Attribute.fontProviderCerts;
+			global::Com.Android.DeskClock.Resource.Attribute.fontProviderFetchStrategy = global::Demo.Droid.Resource.Attribute.fontProviderFetchStrategy;
+			global::Com.Android.DeskClock.Resource.Attribute.fontProviderFetchTimeout = global::Demo.Droid.Resource.Attribute.fontProviderFetchTimeout;
+			global::Com.Android.DeskClock.Resource.Attribute.fontProviderPackage = global::Demo.Droid.Resource.Attribute.fontProviderPackage;
+			global::Com.Android.DeskClock.Resource.Attribute.fontProviderQuery = global::Demo.Droid.Resource.Attribute.fontProviderQuery;
+			global::Com.Android.DeskClock.Resource.Attribute.fontStyle = global::Demo.Droid.Resource.Attribute.fontStyle;
+			global::Com.Android.DeskClock.Resource.Attribute.fontVariationSettings = global::Demo.Droid.Resource.Attribute.fontVariationSettings;
+			global::Com.Android.DeskClock.Resource.Attribute.fontWeight = global::Demo.Droid.Resource.Attribute.fontWeight;
+			global::Com.Android.DeskClock.Resource.Attribute.ttcIndex = global::Demo.Droid.Resource.Attribute.ttcIndex;
+			global::Com.Android.DeskClock.Resource.Color.notification_action_color_filter = global::Demo.Droid.Resource.Color.notification_action_color_filter;
+			global::Com.Android.DeskClock.Resource.Color.notification_icon_bg_color = global::Demo.Droid.Resource.Color.notification_icon_bg_color;
+			global::Com.Android.DeskClock.Resource.Color.ripple_material_light = global::Demo.Droid.Resource.Color.ripple_material_light;
+			global::Com.Android.DeskClock.Resource.Color.secondary_text_default_material_light = global::Demo.Droid.Resource.Color.secondary_text_default_material_light;
+			global::Com.Android.DeskClock.Resource.Dimension.compat_button_inset_horizontal_material = global::Demo.Droid.Resource.Dimension.compat_button_inset_horizontal_material;
+			global::Com.Android.DeskClock.Resource.Dimension.compat_button_inset_vertical_material = global::Demo.Droid.Resource.Dimension.compat_button_inset_vertical_material;
+			global::Com.Android.DeskClock.Resource.Dimension.compat_button_padding_horizontal_material = global::Demo.Droid.Resource.Dimension.compat_button_padding_horizontal_material;
+			global::Com.Android.DeskClock.Resource.Dimension.compat_button_padding_vertical_material = global::Demo.Droid.Resource.Dimension.compat_button_padding_vertical_material;
+			global::Com.Android.DeskClock.Resource.Dimension.compat_control_corner_material = global::Demo.Droid.Resource.Dimension.compat_control_corner_material;
+			global::Com.Android.DeskClock.Resource.Dimension.compat_notification_large_icon_max_height = global::Demo.Droid.Resource.Dimension.compat_notification_large_icon_max_height;
+			global::Com.Android.DeskClock.Resource.Dimension.compat_notification_large_icon_max_width = global::Demo.Droid.Resource.Dimension.compat_notification_large_icon_max_width;
+			global::Com.Android.DeskClock.Resource.Dimension.notification_action_icon_size = global::Demo.Droid.Resource.Dimension.notification_action_icon_size;
+			global::Com.Android.DeskClock.Resource.Dimension.notification_action_text_size = global::Demo.Droid.Resource.Dimension.notification_action_text_size;
+			global::Com.Android.DeskClock.Resource.Dimension.notification_big_circle_margin = global::Demo.Droid.Resource.Dimension.notification_big_circle_margin;
+			global::Com.Android.DeskClock.Resource.Dimension.notification_content_margin_start = global::Demo.Droid.Resource.Dimension.notification_content_margin_start;
+			global::Com.Android.DeskClock.Resource.Dimension.notification_large_icon_height = global::Demo.Droid.Resource.Dimension.notification_large_icon_height;
+			global::Com.Android.DeskClock.Resource.Dimension.notification_large_icon_width = global::Demo.Droid.Resource.Dimension.notification_large_icon_width;
+			global::Com.Android.DeskClock.Resource.Dimension.notification_main_column_padding_top = global::Demo.Droid.Resource.Dimension.notification_main_column_padding_top;
+			global::Com.Android.DeskClock.Resource.Dimension.notification_media_narrow_margin = global::Demo.Droid.Resource.Dimension.notification_media_narrow_margin;
+			global::Com.Android.DeskClock.Resource.Dimension.notification_right_icon_size = global::Demo.Droid.Resource.Dimension.notification_right_icon_size;
+			global::Com.Android.DeskClock.Resource.Dimension.notification_right_side_padding_top = global::Demo.Droid.Resource.Dimension.notification_right_side_padding_top;
+			global::Com.Android.DeskClock.Resource.Dimension.notification_small_icon_background_padding = global::Demo.Droid.Resource.Dimension.notification_small_icon_background_padding;
+			global::Com.Android.DeskClock.Resource.Dimension.notification_small_icon_size_as_large = global::Demo.Droid.Resource.Dimension.notification_small_icon_size_as_large;
+			global::Com.Android.DeskClock.Resource.Dimension.notification_subtext_size = global::Demo.Droid.Resource.Dimension.notification_subtext_size;
+			global::Com.Android.DeskClock.Resource.Dimension.notification_top_pad = global::Demo.Droid.Resource.Dimension.notification_top_pad;
+			global::Com.Android.DeskClock.Resource.Dimension.notification_top_pad_large_text = global::Demo.Droid.Resource.Dimension.notification_top_pad_large_text;
+			global::Com.Android.DeskClock.Resource.Drawable.notification_action_background = global::Demo.Droid.Resource.Drawable.notification_action_background;
+			global::Com.Android.DeskClock.Resource.Drawable.notification_bg = global::Demo.Droid.Resource.Drawable.notification_bg;
+			global::Com.Android.DeskClock.Resource.Drawable.notification_bg_low = global::Demo.Droid.Resource.Drawable.notification_bg_low;
+			global::Com.Android.DeskClock.Resource.Drawable.notification_bg_low_normal = global::Demo.Droid.Resource.Drawable.notification_bg_low_normal;
+			global::Com.Android.DeskClock.Resource.Drawable.notification_bg_low_pressed = global::Demo.Droid.Resource.Drawable.notification_bg_low_pressed;
+			global::Com.Android.DeskClock.Resource.Drawable.notification_bg_normal = global::Demo.Droid.Resource.Drawable.notification_bg_normal;
+			global::Com.Android.DeskClock.Resource.Drawable.notification_bg_normal_pressed = global::Demo.Droid.Resource.Drawable.notification_bg_normal_pressed;
+			global::Com.Android.DeskClock.Resource.Drawable.notification_icon_background = global::Demo.Droid.Resource.Drawable.notification_icon_background;
+			global::Com.Android.DeskClock.Resource.Drawable.notification_template_icon_bg = global::Demo.Droid.Resource.Drawable.notification_template_icon_bg;
+			global::Com.Android.DeskClock.Resource.Drawable.notification_template_icon_low_bg = global::Demo.Droid.Resource.Drawable.notification_template_icon_low_bg;
+			global::Com.Android.DeskClock.Resource.Drawable.notification_tile_bg = global::Demo.Droid.Resource.Drawable.notification_tile_bg;
+			global::Com.Android.DeskClock.Resource.Drawable.notify_panel_notification_icon_bg = global::Demo.Droid.Resource.Drawable.notify_panel_notification_icon_bg;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_action_clickable_span = global::Demo.Droid.Resource.Id.accessibility_action_clickable_span;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_0 = global::Demo.Droid.Resource.Id.accessibility_custom_action_0;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_1 = global::Demo.Droid.Resource.Id.accessibility_custom_action_1;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_10 = global::Demo.Droid.Resource.Id.accessibility_custom_action_10;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_11 = global::Demo.Droid.Resource.Id.accessibility_custom_action_11;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_12 = global::Demo.Droid.Resource.Id.accessibility_custom_action_12;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_13 = global::Demo.Droid.Resource.Id.accessibility_custom_action_13;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_14 = global::Demo.Droid.Resource.Id.accessibility_custom_action_14;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_15 = global::Demo.Droid.Resource.Id.accessibility_custom_action_15;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_16 = global::Demo.Droid.Resource.Id.accessibility_custom_action_16;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_17 = global::Demo.Droid.Resource.Id.accessibility_custom_action_17;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_18 = global::Demo.Droid.Resource.Id.accessibility_custom_action_18;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_19 = global::Demo.Droid.Resource.Id.accessibility_custom_action_19;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_2 = global::Demo.Droid.Resource.Id.accessibility_custom_action_2;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_20 = global::Demo.Droid.Resource.Id.accessibility_custom_action_20;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_21 = global::Demo.Droid.Resource.Id.accessibility_custom_action_21;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_22 = global::Demo.Droid.Resource.Id.accessibility_custom_action_22;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_23 = global::Demo.Droid.Resource.Id.accessibility_custom_action_23;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_24 = global::Demo.Droid.Resource.Id.accessibility_custom_action_24;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_25 = global::Demo.Droid.Resource.Id.accessibility_custom_action_25;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_26 = global::Demo.Droid.Resource.Id.accessibility_custom_action_26;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_27 = global::Demo.Droid.Resource.Id.accessibility_custom_action_27;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_28 = global::Demo.Droid.Resource.Id.accessibility_custom_action_28;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_29 = global::Demo.Droid.Resource.Id.accessibility_custom_action_29;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_3 = global::Demo.Droid.Resource.Id.accessibility_custom_action_3;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_30 = global::Demo.Droid.Resource.Id.accessibility_custom_action_30;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_31 = global::Demo.Droid.Resource.Id.accessibility_custom_action_31;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_4 = global::Demo.Droid.Resource.Id.accessibility_custom_action_4;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_5 = global::Demo.Droid.Resource.Id.accessibility_custom_action_5;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_6 = global::Demo.Droid.Resource.Id.accessibility_custom_action_6;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_7 = global::Demo.Droid.Resource.Id.accessibility_custom_action_7;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_8 = global::Demo.Droid.Resource.Id.accessibility_custom_action_8;
+			global::Com.Android.DeskClock.Resource.Id.accessibility_custom_action_9 = global::Demo.Droid.Resource.Id.accessibility_custom_action_9;
+			global::Com.Android.DeskClock.Resource.Id.actions = global::Demo.Droid.Resource.Id.actions;
+			global::Com.Android.DeskClock.Resource.Id.action_container = global::Demo.Droid.Resource.Id.action_container;
+			global::Com.Android.DeskClock.Resource.Id.action_divider = global::Demo.Droid.Resource.Id.action_divider;
+			global::Com.Android.DeskClock.Resource.Id.action_image = global::Demo.Droid.Resource.Id.action_image;
+			global::Com.Android.DeskClock.Resource.Id.action_text = global::Demo.Droid.Resource.Id.action_text;
+			global::Com.Android.DeskClock.Resource.Id.async = global::Demo.Droid.Resource.Id.async;
+			global::Com.Android.DeskClock.Resource.Id.blocking = global::Demo.Droid.Resource.Id.blocking;
+			global::Com.Android.DeskClock.Resource.Id.chronometer = global::Demo.Droid.Resource.Id.chronometer;
+			global::Com.Android.DeskClock.Resource.Id.dialog_button = global::Demo.Droid.Resource.Id.dialog_button;
+			global::Com.Android.DeskClock.Resource.Id.forever = global::Demo.Droid.Resource.Id.forever;
+			global::Com.Android.DeskClock.Resource.Id.icon = global::Demo.Droid.Resource.Id.icon;
+			global::Com.Android.DeskClock.Resource.Id.icon_group = global::Demo.Droid.Resource.Id.icon_group;
+			global::Com.Android.DeskClock.Resource.Id.info = global::Demo.Droid.Resource.Id.info;
+			global::Com.Android.DeskClock.Resource.Id.italic = global::Demo.Droid.Resource.Id.italic;
+			global::Com.Android.DeskClock.Resource.Id.line1 = global::Demo.Droid.Resource.Id.line1;
+			global::Com.Android.DeskClock.Resource.Id.line3 = global::Demo.Droid.Resource.Id.line3;
+			global::Com.Android.DeskClock.Resource.Id.normal = global::Demo.Droid.Resource.Id.normal;
+			global::Com.Android.DeskClock.Resource.Id.notification_background = global::Demo.Droid.Resource.Id.notification_background;
+			global::Com.Android.DeskClock.Resource.Id.notification_main_column = global::Demo.Droid.Resource.Id.notification_main_column;
+			global::Com.Android.DeskClock.Resource.Id.notification_main_column_container = global::Demo.Droid.Resource.Id.notification_main_column_container;
+			global::Com.Android.DeskClock.Resource.Id.right_icon = global::Demo.Droid.Resource.Id.right_icon;
+			global::Com.Android.DeskClock.Resource.Id.right_side = global::Demo.Droid.Resource.Id.right_side;
+			global::Com.Android.DeskClock.Resource.Id.tag_accessibility_actions = global::Demo.Droid.Resource.Id.tag_accessibility_actions;
+			global::Com.Android.DeskClock.Resource.Id.tag_accessibility_clickable_spans = global::Demo.Droid.Resource.Id.tag_accessibility_clickable_spans;
+			global::Com.Android.DeskClock.Resource.Id.tag_accessibility_heading = global::Demo.Droid.Resource.Id.tag_accessibility_heading;
+			global::Com.Android.DeskClock.Resource.Id.tag_accessibility_pane_title = global::Demo.Droid.Resource.Id.tag_accessibility_pane_title;
+			global::Com.Android.DeskClock.Resource.Id.tag_screen_reader_focusable = global::Demo.Droid.Resource.Id.tag_screen_reader_focusable;
+			global::Com.Android.DeskClock.Resource.Id.tag_transition_group = global::Demo.Droid.Resource.Id.tag_transition_group;
+			global::Com.Android.DeskClock.Resource.Id.tag_unhandled_key_event_manager = global::Demo.Droid.Resource.Id.tag_unhandled_key_event_manager;
+			global::Com.Android.DeskClock.Resource.Id.tag_unhandled_key_listeners = global::Demo.Droid.Resource.Id.tag_unhandled_key_listeners;
+			global::Com.Android.DeskClock.Resource.Id.text = global::Demo.Droid.Resource.Id.text;
+			global::Com.Android.DeskClock.Resource.Id.text2 = global::Demo.Droid.Resource.Id.text2;
+			global::Com.Android.DeskClock.Resource.Id.time = global::Demo.Droid.Resource.Id.time;
+			global::Com.Android.DeskClock.Resource.Id.title = global::Demo.Droid.Resource.Id.title;
+			global::Com.Android.DeskClock.Resource.Integer.status_bar_notification_info_maxnum = global::Demo.Droid.Resource.Integer.status_bar_notification_info_maxnum;
+			global::Com.Android.DeskClock.Resource.Layout.custom_dialog = global::Demo.Droid.Resource.Layout.custom_dialog;
+			global::Com.Android.DeskClock.Resource.Layout.notification_action = global::Demo.Droid.Resource.Layout.notification_action;
+			global::Com.Android.DeskClock.Resource.Layout.notification_action_tombstone = global::Demo.Droid.Resource.Layout.notification_action_tombstone;
+			global::Com.Android.DeskClock.Resource.Layout.notification_template_custom_big = global::Demo.Droid.Resource.Layout.notification_template_custom_big;
+			global::Com.Android.DeskClock.Resource.Layout.notification_template_icon_group = global::Demo.Droid.Resource.Layout.notification_template_icon_group;
+			global::Com.Android.DeskClock.Resource.Layout.notification_template_part_chronometer = global::Demo.Droid.Resource.Layout.notification_template_part_chronometer;
+			global::Com.Android.DeskClock.Resource.Layout.notification_template_part_time = global::Demo.Droid.Resource.Layout.notification_template_part_time;
+			global::Com.Android.DeskClock.Resource.String.library_name = global::Demo.Droid.Resource.String.library_name;
+			global::Com.Android.DeskClock.Resource.String.status_bar_notification_info_overflow = global::Demo.Droid.Resource.String.status_bar_notification_info_overflow;
+			global::Com.Android.DeskClock.Resource.Style.TextAppearance_Compat_Notification = global::Demo.Droid.Resource.Style.TextAppearance_Compat_Notification;
+			global::Com.Android.DeskClock.Resource.Style.TextAppearance_Compat_Notification_Info = global::Demo.Droid.Resource.Style.TextAppearance_Compat_Notification_Info;
+			global::Com.Android.DeskClock.Resource.Style.TextAppearance_Compat_Notification_Line2 = global::Demo.Droid.Resource.Style.TextAppearance_Compat_Notification_Line2;
+			global::Com.Android.DeskClock.Resource.Style.TextAppearance_Compat_Notification_Time = global::Demo.Droid.Resource.Style.TextAppearance_Compat_Notification_Time;
+			global::Com.Android.DeskClock.Resource.Style.TextAppearance_Compat_Notification_Title = global::Demo.Droid.Resource.Style.TextAppearance_Compat_Notification_Title;
+			global::Com.Android.DeskClock.Resource.Style.Widget_Compat_NotificationActionContainer = global::Demo.Droid.Resource.Style.Widget_Compat_NotificationActionContainer;
+			global::Com.Android.DeskClock.Resource.Style.Widget_Compat_NotificationActionText = global::Demo.Droid.Resource.Style.Widget_Compat_NotificationActionText;
+			global::Com.Android.DeskClock.Resource.Styleable.ColorStateListItem = global::Demo.Droid.Resource.Styleable.ColorStateListItem;
+			global::Com.Android.DeskClock.Resource.Styleable.ColorStateListItem_alpha = global::Demo.Droid.Resource.Styleable.ColorStateListItem_alpha;
+			global::Com.Android.DeskClock.Resource.Styleable.ColorStateListItem_android_alpha = global::Demo.Droid.Resource.Styleable.ColorStateListItem_android_alpha;
+			global::Com.Android.DeskClock.Resource.Styleable.ColorStateListItem_android_color = global::Demo.Droid.Resource.Styleable.ColorStateListItem_android_color;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamily = global::Demo.Droid.Resource.Styleable.FontFamily;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamilyFont = global::Demo.Droid.Resource.Styleable.FontFamilyFont;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamilyFont_android_font = global::Demo.Droid.Resource.Styleable.FontFamilyFont_android_font;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamilyFont_android_fontStyle = global::Demo.Droid.Resource.Styleable.FontFamilyFont_android_fontStyle;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamilyFont_android_fontVariationSettings = global::Demo.Droid.Resource.Styleable.FontFamilyFont_android_fontVariationSettings;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamilyFont_android_fontWeight = global::Demo.Droid.Resource.Styleable.FontFamilyFont_android_fontWeight;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamilyFont_android_ttcIndex = global::Demo.Droid.Resource.Styleable.FontFamilyFont_android_ttcIndex;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamilyFont_font = global::Demo.Droid.Resource.Styleable.FontFamilyFont_font;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamilyFont_fontStyle = global::Demo.Droid.Resource.Styleable.FontFamilyFont_fontStyle;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamilyFont_fontVariationSettings = global::Demo.Droid.Resource.Styleable.FontFamilyFont_fontVariationSettings;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamilyFont_fontWeight = global::Demo.Droid.Resource.Styleable.FontFamilyFont_fontWeight;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamilyFont_ttcIndex = global::Demo.Droid.Resource.Styleable.FontFamilyFont_ttcIndex;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamily_fontProviderAuthority = global::Demo.Droid.Resource.Styleable.FontFamily_fontProviderAuthority;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamily_fontProviderCerts = global::Demo.Droid.Resource.Styleable.FontFamily_fontProviderCerts;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamily_fontProviderFetchStrategy = global::Demo.Droid.Resource.Styleable.FontFamily_fontProviderFetchStrategy;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamily_fontProviderFetchTimeout = global::Demo.Droid.Resource.Styleable.FontFamily_fontProviderFetchTimeout;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamily_fontProviderPackage = global::Demo.Droid.Resource.Styleable.FontFamily_fontProviderPackage;
+			global::Com.Android.DeskClock.Resource.Styleable.FontFamily_fontProviderQuery = global::Demo.Droid.Resource.Styleable.FontFamily_fontProviderQuery;
+			global::Com.Android.DeskClock.Resource.Styleable.GradientColor = global::Demo.Droid.Resource.Styleable.GradientColor;
+			global::Com.Android.DeskClock.Resource.Styleable.GradientColorItem = global::Demo.Droid.Resource.Styleable.GradientColorItem;
+			global::Com.Android.DeskClock.Resource.Styleable.GradientColorItem_android_color = global::Demo.Droid.Resource.Styleable.GradientColorItem_android_color;
+			global::Com.Android.DeskClock.Resource.Styleable.GradientColorItem_android_offset = global::Demo.Droid.Resource.Styleable.GradientColorItem_android_offset;
+			global::Com.Android.DeskClock.Resource.Styleable.GradientColor_android_centerColor = global::Demo.Droid.Resource.Styleable.GradientColor_android_centerColor;
+			global::Com.Android.DeskClock.Resource.Styleable.GradientColor_android_centerX = global::Demo.Droid.Resource.Styleable.GradientColor_android_centerX;
+			global::Com.Android.DeskClock.Resource.Styleable.GradientColor_android_centerY = global::Demo.Droid.Resource.Styleable.GradientColor_android_centerY;
+			global::Com.Android.DeskClock.Resource.Styleable.GradientColor_android_endColor = global::Demo.Droid.Resource.Styleable.GradientColor_android_endColor;
+			global::Com.Android.DeskClock.Resource.Styleable.GradientColor_android_endX = global::Demo.Droid.Resource.Styleable.GradientColor_android_endX;
+			global::Com.Android.DeskClock.Resource.Styleable.GradientColor_android_endY = global::Demo.Droid.Resource.Styleable.GradientColor_android_endY;
+			global::Com.Android.DeskClock.Resource.Styleable.GradientColor_android_gradientRadius = global::Demo.Droid.Resource.Styleable.GradientColor_android_gradientRadius;
+			global::Com.Android.DeskClock.Resource.Styleable.GradientColor_android_startColor = global::Demo.Droid.Resource.Styleable.GradientColor_android_startColor;
+			global::Com.Android.DeskClock.Resource.Styleable.GradientColor_android_startX = global::Demo.Droid.Resource.Styleable.GradientColor_android_startX;
+			global::Com.Android.DeskClock.Resource.Styleable.GradientColor_android_startY = global::Demo.Droid.Resource.Styleable.GradientColor_android_startY;
+			global::Com.Android.DeskClock.Resource.Styleable.GradientColor_android_tileMode = global::Demo.Droid.Resource.Styleable.GradientColor_android_tileMode;
+			global::Com.Android.DeskClock.Resource.Styleable.GradientColor_android_type = global::Demo.Droid.Resource.Styleable.GradientColor_android_type;
 			global::Com.ViewPagerIndicator.Resource.Attribute.alpha = global::Demo.Droid.Resource.Attribute.alpha;
 			global::Com.ViewPagerIndicator.Resource.Attribute.coordinatorLayoutStyle = global::Demo.Droid.Resource.Attribute.coordinatorLayoutStyle;
 			global::Com.ViewPagerIndicator.Resource.Attribute.font = global::Demo.Droid.Resource.Attribute.font;
@@ -3038,228 +3225,6 @@ namespace Demo.Droid
 			global::Com.ViewPagerIndicator.Resource.Styleable.GradientColor_android_type = global::Demo.Droid.Resource.Styleable.GradientColor_android_type;
 			global::Com.ViewPagerIndicator.Resource.Styleable.ViewPagerIndicator = global::Demo.Droid.Resource.Styleable.ViewPagerIndicator;
 			global::Com.ViewPagerIndicator.Resource.Styleable.ViewPagerIndicator_vpiCirclePageIndicatorStyle = global::Demo.Droid.Resource.Styleable.ViewPagerIndicator_vpiCirclePageIndicatorStyle;
-			global::Xamarin.Essentials.Resource.Attribute.alpha = global::Demo.Droid.Resource.Attribute.alpha;
-			global::Xamarin.Essentials.Resource.Attribute.coordinatorLayoutStyle = global::Demo.Droid.Resource.Attribute.coordinatorLayoutStyle;
-			global::Xamarin.Essentials.Resource.Attribute.font = global::Demo.Droid.Resource.Attribute.font;
-			global::Xamarin.Essentials.Resource.Attribute.fontProviderAuthority = global::Demo.Droid.Resource.Attribute.fontProviderAuthority;
-			global::Xamarin.Essentials.Resource.Attribute.fontProviderCerts = global::Demo.Droid.Resource.Attribute.fontProviderCerts;
-			global::Xamarin.Essentials.Resource.Attribute.fontProviderFetchStrategy = global::Demo.Droid.Resource.Attribute.fontProviderFetchStrategy;
-			global::Xamarin.Essentials.Resource.Attribute.fontProviderFetchTimeout = global::Demo.Droid.Resource.Attribute.fontProviderFetchTimeout;
-			global::Xamarin.Essentials.Resource.Attribute.fontProviderPackage = global::Demo.Droid.Resource.Attribute.fontProviderPackage;
-			global::Xamarin.Essentials.Resource.Attribute.fontProviderQuery = global::Demo.Droid.Resource.Attribute.fontProviderQuery;
-			global::Xamarin.Essentials.Resource.Attribute.fontStyle = global::Demo.Droid.Resource.Attribute.fontStyle;
-			global::Xamarin.Essentials.Resource.Attribute.fontVariationSettings = global::Demo.Droid.Resource.Attribute.fontVariationSettings;
-			global::Xamarin.Essentials.Resource.Attribute.fontWeight = global::Demo.Droid.Resource.Attribute.fontWeight;
-			global::Xamarin.Essentials.Resource.Attribute.keylines = global::Demo.Droid.Resource.Attribute.keylines;
-			global::Xamarin.Essentials.Resource.Attribute.layout_anchor = global::Demo.Droid.Resource.Attribute.layout_anchor;
-			global::Xamarin.Essentials.Resource.Attribute.layout_anchorGravity = global::Demo.Droid.Resource.Attribute.layout_anchorGravity;
-			global::Xamarin.Essentials.Resource.Attribute.layout_behavior = global::Demo.Droid.Resource.Attribute.layout_behavior;
-			global::Xamarin.Essentials.Resource.Attribute.layout_dodgeInsetEdges = global::Demo.Droid.Resource.Attribute.layout_dodgeInsetEdges;
-			global::Xamarin.Essentials.Resource.Attribute.layout_insetEdge = global::Demo.Droid.Resource.Attribute.layout_insetEdge;
-			global::Xamarin.Essentials.Resource.Attribute.layout_keyline = global::Demo.Droid.Resource.Attribute.layout_keyline;
-			global::Xamarin.Essentials.Resource.Attribute.statusBarBackground = global::Demo.Droid.Resource.Attribute.statusBarBackground;
-			global::Xamarin.Essentials.Resource.Attribute.ttcIndex = global::Demo.Droid.Resource.Attribute.ttcIndex;
-			global::Xamarin.Essentials.Resource.Color.browser_actions_bg_grey = global::Demo.Droid.Resource.Color.browser_actions_bg_grey;
-			global::Xamarin.Essentials.Resource.Color.browser_actions_divider_color = global::Demo.Droid.Resource.Color.browser_actions_divider_color;
-			global::Xamarin.Essentials.Resource.Color.browser_actions_text_color = global::Demo.Droid.Resource.Color.browser_actions_text_color;
-			global::Xamarin.Essentials.Resource.Color.browser_actions_title_color = global::Demo.Droid.Resource.Color.browser_actions_title_color;
-			global::Xamarin.Essentials.Resource.Color.notification_action_color_filter = global::Demo.Droid.Resource.Color.notification_action_color_filter;
-			global::Xamarin.Essentials.Resource.Color.notification_icon_bg_color = global::Demo.Droid.Resource.Color.notification_icon_bg_color;
-			global::Xamarin.Essentials.Resource.Color.ripple_material_light = global::Demo.Droid.Resource.Color.ripple_material_light;
-			global::Xamarin.Essentials.Resource.Color.secondary_text_default_material_light = global::Demo.Droid.Resource.Color.secondary_text_default_material_light;
-			global::Xamarin.Essentials.Resource.Dimension.browser_actions_context_menu_max_width = global::Demo.Droid.Resource.Dimension.browser_actions_context_menu_max_width;
-			global::Xamarin.Essentials.Resource.Dimension.browser_actions_context_menu_min_padding = global::Demo.Droid.Resource.Dimension.browser_actions_context_menu_min_padding;
-			global::Xamarin.Essentials.Resource.Dimension.compat_button_inset_horizontal_material = global::Demo.Droid.Resource.Dimension.compat_button_inset_horizontal_material;
-			global::Xamarin.Essentials.Resource.Dimension.compat_button_inset_vertical_material = global::Demo.Droid.Resource.Dimension.compat_button_inset_vertical_material;
-			global::Xamarin.Essentials.Resource.Dimension.compat_button_padding_horizontal_material = global::Demo.Droid.Resource.Dimension.compat_button_padding_horizontal_material;
-			global::Xamarin.Essentials.Resource.Dimension.compat_button_padding_vertical_material = global::Demo.Droid.Resource.Dimension.compat_button_padding_vertical_material;
-			global::Xamarin.Essentials.Resource.Dimension.compat_control_corner_material = global::Demo.Droid.Resource.Dimension.compat_control_corner_material;
-			global::Xamarin.Essentials.Resource.Dimension.compat_notification_large_icon_max_height = global::Demo.Droid.Resource.Dimension.compat_notification_large_icon_max_height;
-			global::Xamarin.Essentials.Resource.Dimension.compat_notification_large_icon_max_width = global::Demo.Droid.Resource.Dimension.compat_notification_large_icon_max_width;
-			global::Xamarin.Essentials.Resource.Dimension.notification_action_icon_size = global::Demo.Droid.Resource.Dimension.notification_action_icon_size;
-			global::Xamarin.Essentials.Resource.Dimension.notification_action_text_size = global::Demo.Droid.Resource.Dimension.notification_action_text_size;
-			global::Xamarin.Essentials.Resource.Dimension.notification_big_circle_margin = global::Demo.Droid.Resource.Dimension.notification_big_circle_margin;
-			global::Xamarin.Essentials.Resource.Dimension.notification_content_margin_start = global::Demo.Droid.Resource.Dimension.notification_content_margin_start;
-			global::Xamarin.Essentials.Resource.Dimension.notification_large_icon_height = global::Demo.Droid.Resource.Dimension.notification_large_icon_height;
-			global::Xamarin.Essentials.Resource.Dimension.notification_large_icon_width = global::Demo.Droid.Resource.Dimension.notification_large_icon_width;
-			global::Xamarin.Essentials.Resource.Dimension.notification_main_column_padding_top = global::Demo.Droid.Resource.Dimension.notification_main_column_padding_top;
-			global::Xamarin.Essentials.Resource.Dimension.notification_media_narrow_margin = global::Demo.Droid.Resource.Dimension.notification_media_narrow_margin;
-			global::Xamarin.Essentials.Resource.Dimension.notification_right_icon_size = global::Demo.Droid.Resource.Dimension.notification_right_icon_size;
-			global::Xamarin.Essentials.Resource.Dimension.notification_right_side_padding_top = global::Demo.Droid.Resource.Dimension.notification_right_side_padding_top;
-			global::Xamarin.Essentials.Resource.Dimension.notification_small_icon_background_padding = global::Demo.Droid.Resource.Dimension.notification_small_icon_background_padding;
-			global::Xamarin.Essentials.Resource.Dimension.notification_small_icon_size_as_large = global::Demo.Droid.Resource.Dimension.notification_small_icon_size_as_large;
-			global::Xamarin.Essentials.Resource.Dimension.notification_subtext_size = global::Demo.Droid.Resource.Dimension.notification_subtext_size;
-			global::Xamarin.Essentials.Resource.Dimension.notification_top_pad = global::Demo.Droid.Resource.Dimension.notification_top_pad;
-			global::Xamarin.Essentials.Resource.Dimension.notification_top_pad_large_text = global::Demo.Droid.Resource.Dimension.notification_top_pad_large_text;
-			global::Xamarin.Essentials.Resource.Drawable.notification_action_background = global::Demo.Droid.Resource.Drawable.notification_action_background;
-			global::Xamarin.Essentials.Resource.Drawable.notification_bg = global::Demo.Droid.Resource.Drawable.notification_bg;
-			global::Xamarin.Essentials.Resource.Drawable.notification_bg_low = global::Demo.Droid.Resource.Drawable.notification_bg_low;
-			global::Xamarin.Essentials.Resource.Drawable.notification_bg_low_normal = global::Demo.Droid.Resource.Drawable.notification_bg_low_normal;
-			global::Xamarin.Essentials.Resource.Drawable.notification_bg_low_pressed = global::Demo.Droid.Resource.Drawable.notification_bg_low_pressed;
-			global::Xamarin.Essentials.Resource.Drawable.notification_bg_normal = global::Demo.Droid.Resource.Drawable.notification_bg_normal;
-			global::Xamarin.Essentials.Resource.Drawable.notification_bg_normal_pressed = global::Demo.Droid.Resource.Drawable.notification_bg_normal_pressed;
-			global::Xamarin.Essentials.Resource.Drawable.notification_icon_background = global::Demo.Droid.Resource.Drawable.notification_icon_background;
-			global::Xamarin.Essentials.Resource.Drawable.notification_template_icon_bg = global::Demo.Droid.Resource.Drawable.notification_template_icon_bg;
-			global::Xamarin.Essentials.Resource.Drawable.notification_template_icon_low_bg = global::Demo.Droid.Resource.Drawable.notification_template_icon_low_bg;
-			global::Xamarin.Essentials.Resource.Drawable.notification_tile_bg = global::Demo.Droid.Resource.Drawable.notification_tile_bg;
-			global::Xamarin.Essentials.Resource.Drawable.notify_panel_notification_icon_bg = global::Demo.Droid.Resource.Drawable.notify_panel_notification_icon_bg;
-			global::Xamarin.Essentials.Resource.Id.accessibility_action_clickable_span = global::Demo.Droid.Resource.Id.accessibility_action_clickable_span;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_0 = global::Demo.Droid.Resource.Id.accessibility_custom_action_0;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_1 = global::Demo.Droid.Resource.Id.accessibility_custom_action_1;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_10 = global::Demo.Droid.Resource.Id.accessibility_custom_action_10;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_11 = global::Demo.Droid.Resource.Id.accessibility_custom_action_11;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_12 = global::Demo.Droid.Resource.Id.accessibility_custom_action_12;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_13 = global::Demo.Droid.Resource.Id.accessibility_custom_action_13;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_14 = global::Demo.Droid.Resource.Id.accessibility_custom_action_14;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_15 = global::Demo.Droid.Resource.Id.accessibility_custom_action_15;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_16 = global::Demo.Droid.Resource.Id.accessibility_custom_action_16;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_17 = global::Demo.Droid.Resource.Id.accessibility_custom_action_17;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_18 = global::Demo.Droid.Resource.Id.accessibility_custom_action_18;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_19 = global::Demo.Droid.Resource.Id.accessibility_custom_action_19;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_2 = global::Demo.Droid.Resource.Id.accessibility_custom_action_2;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_20 = global::Demo.Droid.Resource.Id.accessibility_custom_action_20;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_21 = global::Demo.Droid.Resource.Id.accessibility_custom_action_21;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_22 = global::Demo.Droid.Resource.Id.accessibility_custom_action_22;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_23 = global::Demo.Droid.Resource.Id.accessibility_custom_action_23;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_24 = global::Demo.Droid.Resource.Id.accessibility_custom_action_24;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_25 = global::Demo.Droid.Resource.Id.accessibility_custom_action_25;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_26 = global::Demo.Droid.Resource.Id.accessibility_custom_action_26;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_27 = global::Demo.Droid.Resource.Id.accessibility_custom_action_27;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_28 = global::Demo.Droid.Resource.Id.accessibility_custom_action_28;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_29 = global::Demo.Droid.Resource.Id.accessibility_custom_action_29;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_3 = global::Demo.Droid.Resource.Id.accessibility_custom_action_3;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_30 = global::Demo.Droid.Resource.Id.accessibility_custom_action_30;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_31 = global::Demo.Droid.Resource.Id.accessibility_custom_action_31;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_4 = global::Demo.Droid.Resource.Id.accessibility_custom_action_4;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_5 = global::Demo.Droid.Resource.Id.accessibility_custom_action_5;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_6 = global::Demo.Droid.Resource.Id.accessibility_custom_action_6;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_7 = global::Demo.Droid.Resource.Id.accessibility_custom_action_7;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_8 = global::Demo.Droid.Resource.Id.accessibility_custom_action_8;
-			global::Xamarin.Essentials.Resource.Id.accessibility_custom_action_9 = global::Demo.Droid.Resource.Id.accessibility_custom_action_9;
-			global::Xamarin.Essentials.Resource.Id.actions = global::Demo.Droid.Resource.Id.actions;
-			global::Xamarin.Essentials.Resource.Id.action_container = global::Demo.Droid.Resource.Id.action_container;
-			global::Xamarin.Essentials.Resource.Id.action_divider = global::Demo.Droid.Resource.Id.action_divider;
-			global::Xamarin.Essentials.Resource.Id.action_image = global::Demo.Droid.Resource.Id.action_image;
-			global::Xamarin.Essentials.Resource.Id.action_text = global::Demo.Droid.Resource.Id.action_text;
-			global::Xamarin.Essentials.Resource.Id.all = global::Demo.Droid.Resource.Id.all;
-			global::Xamarin.Essentials.Resource.Id.async = global::Demo.Droid.Resource.Id.async;
-			global::Xamarin.Essentials.Resource.Id.blocking = global::Demo.Droid.Resource.Id.blocking;
-			global::Xamarin.Essentials.Resource.Id.bottom = global::Demo.Droid.Resource.Id.bottom;
-			global::Xamarin.Essentials.Resource.Id.browser_actions_header_text = global::Demo.Droid.Resource.Id.browser_actions_header_text;
-			global::Xamarin.Essentials.Resource.Id.browser_actions_menu_items = global::Demo.Droid.Resource.Id.browser_actions_menu_items;
-			global::Xamarin.Essentials.Resource.Id.browser_actions_menu_item_icon = global::Demo.Droid.Resource.Id.browser_actions_menu_item_icon;
-			global::Xamarin.Essentials.Resource.Id.browser_actions_menu_item_text = global::Demo.Droid.Resource.Id.browser_actions_menu_item_text;
-			global::Xamarin.Essentials.Resource.Id.browser_actions_menu_view = global::Demo.Droid.Resource.Id.browser_actions_menu_view;
-			global::Xamarin.Essentials.Resource.Id.center = global::Demo.Droid.Resource.Id.center;
-			global::Xamarin.Essentials.Resource.Id.center_horizontal = global::Demo.Droid.Resource.Id.center_horizontal;
-			global::Xamarin.Essentials.Resource.Id.center_vertical = global::Demo.Droid.Resource.Id.center_vertical;
-			global::Xamarin.Essentials.Resource.Id.chronometer = global::Demo.Droid.Resource.Id.chronometer;
-			global::Xamarin.Essentials.Resource.Id.clip_horizontal = global::Demo.Droid.Resource.Id.clip_horizontal;
-			global::Xamarin.Essentials.Resource.Id.clip_vertical = global::Demo.Droid.Resource.Id.clip_vertical;
-			global::Xamarin.Essentials.Resource.Id.dialog_button = global::Demo.Droid.Resource.Id.dialog_button;
-			global::Xamarin.Essentials.Resource.Id.end = global::Demo.Droid.Resource.Id.end;
-			global::Xamarin.Essentials.Resource.Id.fill = global::Demo.Droid.Resource.Id.fill;
-			global::Xamarin.Essentials.Resource.Id.fill_horizontal = global::Demo.Droid.Resource.Id.fill_horizontal;
-			global::Xamarin.Essentials.Resource.Id.fill_vertical = global::Demo.Droid.Resource.Id.fill_vertical;
-			global::Xamarin.Essentials.Resource.Id.forever = global::Demo.Droid.Resource.Id.forever;
-			global::Xamarin.Essentials.Resource.Id.icon = global::Demo.Droid.Resource.Id.icon;
-			global::Xamarin.Essentials.Resource.Id.icon_group = global::Demo.Droid.Resource.Id.icon_group;
-			global::Xamarin.Essentials.Resource.Id.info = global::Demo.Droid.Resource.Id.info;
-			global::Xamarin.Essentials.Resource.Id.italic = global::Demo.Droid.Resource.Id.italic;
-			global::Xamarin.Essentials.Resource.Id.left = global::Demo.Droid.Resource.Id.left;
-			global::Xamarin.Essentials.Resource.Id.line1 = global::Demo.Droid.Resource.Id.line1;
-			global::Xamarin.Essentials.Resource.Id.line3 = global::Demo.Droid.Resource.Id.line3;
-			global::Xamarin.Essentials.Resource.Id.none = global::Demo.Droid.Resource.Id.none;
-			global::Xamarin.Essentials.Resource.Id.normal = global::Demo.Droid.Resource.Id.normal;
-			global::Xamarin.Essentials.Resource.Id.notification_background = global::Demo.Droid.Resource.Id.notification_background;
-			global::Xamarin.Essentials.Resource.Id.notification_main_column = global::Demo.Droid.Resource.Id.notification_main_column;
-			global::Xamarin.Essentials.Resource.Id.notification_main_column_container = global::Demo.Droid.Resource.Id.notification_main_column_container;
-			global::Xamarin.Essentials.Resource.Id.right = global::Demo.Droid.Resource.Id.right;
-			global::Xamarin.Essentials.Resource.Id.right_icon = global::Demo.Droid.Resource.Id.right_icon;
-			global::Xamarin.Essentials.Resource.Id.right_side = global::Demo.Droid.Resource.Id.right_side;
-			global::Xamarin.Essentials.Resource.Id.start = global::Demo.Droid.Resource.Id.start;
-			global::Xamarin.Essentials.Resource.Id.tag_accessibility_actions = global::Demo.Droid.Resource.Id.tag_accessibility_actions;
-			global::Xamarin.Essentials.Resource.Id.tag_accessibility_clickable_spans = global::Demo.Droid.Resource.Id.tag_accessibility_clickable_spans;
-			global::Xamarin.Essentials.Resource.Id.tag_accessibility_heading = global::Demo.Droid.Resource.Id.tag_accessibility_heading;
-			global::Xamarin.Essentials.Resource.Id.tag_accessibility_pane_title = global::Demo.Droid.Resource.Id.tag_accessibility_pane_title;
-			global::Xamarin.Essentials.Resource.Id.tag_screen_reader_focusable = global::Demo.Droid.Resource.Id.tag_screen_reader_focusable;
-			global::Xamarin.Essentials.Resource.Id.tag_transition_group = global::Demo.Droid.Resource.Id.tag_transition_group;
-			global::Xamarin.Essentials.Resource.Id.tag_unhandled_key_event_manager = global::Demo.Droid.Resource.Id.tag_unhandled_key_event_manager;
-			global::Xamarin.Essentials.Resource.Id.tag_unhandled_key_listeners = global::Demo.Droid.Resource.Id.tag_unhandled_key_listeners;
-			global::Xamarin.Essentials.Resource.Id.text = global::Demo.Droid.Resource.Id.text;
-			global::Xamarin.Essentials.Resource.Id.text2 = global::Demo.Droid.Resource.Id.text2;
-			global::Xamarin.Essentials.Resource.Id.time = global::Demo.Droid.Resource.Id.time;
-			global::Xamarin.Essentials.Resource.Id.title = global::Demo.Droid.Resource.Id.title;
-			global::Xamarin.Essentials.Resource.Id.top = global::Demo.Droid.Resource.Id.top;
-			global::Xamarin.Essentials.Resource.Integer.status_bar_notification_info_maxnum = global::Demo.Droid.Resource.Integer.status_bar_notification_info_maxnum;
-			global::Xamarin.Essentials.Resource.Layout.browser_actions_context_menu_page = global::Demo.Droid.Resource.Layout.browser_actions_context_menu_page;
-			global::Xamarin.Essentials.Resource.Layout.browser_actions_context_menu_row = global::Demo.Droid.Resource.Layout.browser_actions_context_menu_row;
-			global::Xamarin.Essentials.Resource.Layout.custom_dialog = global::Demo.Droid.Resource.Layout.custom_dialog;
-			global::Xamarin.Essentials.Resource.Layout.notification_action = global::Demo.Droid.Resource.Layout.notification_action;
-			global::Xamarin.Essentials.Resource.Layout.notification_action_tombstone = global::Demo.Droid.Resource.Layout.notification_action_tombstone;
-			global::Xamarin.Essentials.Resource.Layout.notification_template_custom_big = global::Demo.Droid.Resource.Layout.notification_template_custom_big;
-			global::Xamarin.Essentials.Resource.Layout.notification_template_icon_group = global::Demo.Droid.Resource.Layout.notification_template_icon_group;
-			global::Xamarin.Essentials.Resource.Layout.notification_template_part_chronometer = global::Demo.Droid.Resource.Layout.notification_template_part_chronometer;
-			global::Xamarin.Essentials.Resource.Layout.notification_template_part_time = global::Demo.Droid.Resource.Layout.notification_template_part_time;
-			global::Xamarin.Essentials.Resource.String.status_bar_notification_info_overflow = global::Demo.Droid.Resource.String.status_bar_notification_info_overflow;
-			global::Xamarin.Essentials.Resource.Style.TextAppearance_Compat_Notification = global::Demo.Droid.Resource.Style.TextAppearance_Compat_Notification;
-			global::Xamarin.Essentials.Resource.Style.TextAppearance_Compat_Notification_Info = global::Demo.Droid.Resource.Style.TextAppearance_Compat_Notification_Info;
-			global::Xamarin.Essentials.Resource.Style.TextAppearance_Compat_Notification_Line2 = global::Demo.Droid.Resource.Style.TextAppearance_Compat_Notification_Line2;
-			global::Xamarin.Essentials.Resource.Style.TextAppearance_Compat_Notification_Time = global::Demo.Droid.Resource.Style.TextAppearance_Compat_Notification_Time;
-			global::Xamarin.Essentials.Resource.Style.TextAppearance_Compat_Notification_Title = global::Demo.Droid.Resource.Style.TextAppearance_Compat_Notification_Title;
-			global::Xamarin.Essentials.Resource.Style.Widget_Compat_NotificationActionContainer = global::Demo.Droid.Resource.Style.Widget_Compat_NotificationActionContainer;
-			global::Xamarin.Essentials.Resource.Style.Widget_Compat_NotificationActionText = global::Demo.Droid.Resource.Style.Widget_Compat_NotificationActionText;
-			global::Xamarin.Essentials.Resource.Style.Widget_Support_CoordinatorLayout = global::Demo.Droid.Resource.Style.Widget_Support_CoordinatorLayout;
-			global::Xamarin.Essentials.Resource.Styleable.ColorStateListItem = global::Demo.Droid.Resource.Styleable.ColorStateListItem;
-			global::Xamarin.Essentials.Resource.Styleable.ColorStateListItem_alpha = global::Demo.Droid.Resource.Styleable.ColorStateListItem_alpha;
-			global::Xamarin.Essentials.Resource.Styleable.ColorStateListItem_android_alpha = global::Demo.Droid.Resource.Styleable.ColorStateListItem_android_alpha;
-			global::Xamarin.Essentials.Resource.Styleable.ColorStateListItem_android_color = global::Demo.Droid.Resource.Styleable.ColorStateListItem_android_color;
-			global::Xamarin.Essentials.Resource.Styleable.CoordinatorLayout = global::Demo.Droid.Resource.Styleable.CoordinatorLayout;
-			global::Xamarin.Essentials.Resource.Styleable.CoordinatorLayout_keylines = global::Demo.Droid.Resource.Styleable.CoordinatorLayout_keylines;
-			global::Xamarin.Essentials.Resource.Styleable.CoordinatorLayout_Layout = global::Demo.Droid.Resource.Styleable.CoordinatorLayout_Layout;
-			global::Xamarin.Essentials.Resource.Styleable.CoordinatorLayout_Layout_android_layout_gravity = global::Demo.Droid.Resource.Styleable.CoordinatorLayout_Layout_android_layout_gravity;
-			global::Xamarin.Essentials.Resource.Styleable.CoordinatorLayout_Layout_layout_anchor = global::Demo.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_anchor;
-			global::Xamarin.Essentials.Resource.Styleable.CoordinatorLayout_Layout_layout_anchorGravity = global::Demo.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_anchorGravity;
-			global::Xamarin.Essentials.Resource.Styleable.CoordinatorLayout_Layout_layout_behavior = global::Demo.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_behavior;
-			global::Xamarin.Essentials.Resource.Styleable.CoordinatorLayout_Layout_layout_dodgeInsetEdges = global::Demo.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_dodgeInsetEdges;
-			global::Xamarin.Essentials.Resource.Styleable.CoordinatorLayout_Layout_layout_insetEdge = global::Demo.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_insetEdge;
-			global::Xamarin.Essentials.Resource.Styleable.CoordinatorLayout_Layout_layout_keyline = global::Demo.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_keyline;
-			global::Xamarin.Essentials.Resource.Styleable.CoordinatorLayout_statusBarBackground = global::Demo.Droid.Resource.Styleable.CoordinatorLayout_statusBarBackground;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamily = global::Demo.Droid.Resource.Styleable.FontFamily;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamilyFont = global::Demo.Droid.Resource.Styleable.FontFamilyFont;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamilyFont_android_font = global::Demo.Droid.Resource.Styleable.FontFamilyFont_android_font;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamilyFont_android_fontStyle = global::Demo.Droid.Resource.Styleable.FontFamilyFont_android_fontStyle;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamilyFont_android_fontVariationSettings = global::Demo.Droid.Resource.Styleable.FontFamilyFont_android_fontVariationSettings;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamilyFont_android_fontWeight = global::Demo.Droid.Resource.Styleable.FontFamilyFont_android_fontWeight;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamilyFont_android_ttcIndex = global::Demo.Droid.Resource.Styleable.FontFamilyFont_android_ttcIndex;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamilyFont_font = global::Demo.Droid.Resource.Styleable.FontFamilyFont_font;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamilyFont_fontStyle = global::Demo.Droid.Resource.Styleable.FontFamilyFont_fontStyle;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamilyFont_fontVariationSettings = global::Demo.Droid.Resource.Styleable.FontFamilyFont_fontVariationSettings;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamilyFont_fontWeight = global::Demo.Droid.Resource.Styleable.FontFamilyFont_fontWeight;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamilyFont_ttcIndex = global::Demo.Droid.Resource.Styleable.FontFamilyFont_ttcIndex;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamily_fontProviderAuthority = global::Demo.Droid.Resource.Styleable.FontFamily_fontProviderAuthority;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamily_fontProviderCerts = global::Demo.Droid.Resource.Styleable.FontFamily_fontProviderCerts;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamily_fontProviderFetchStrategy = global::Demo.Droid.Resource.Styleable.FontFamily_fontProviderFetchStrategy;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamily_fontProviderFetchTimeout = global::Demo.Droid.Resource.Styleable.FontFamily_fontProviderFetchTimeout;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamily_fontProviderPackage = global::Demo.Droid.Resource.Styleable.FontFamily_fontProviderPackage;
-			global::Xamarin.Essentials.Resource.Styleable.FontFamily_fontProviderQuery = global::Demo.Droid.Resource.Styleable.FontFamily_fontProviderQuery;
-			global::Xamarin.Essentials.Resource.Styleable.GradientColor = global::Demo.Droid.Resource.Styleable.GradientColor;
-			global::Xamarin.Essentials.Resource.Styleable.GradientColorItem = global::Demo.Droid.Resource.Styleable.GradientColorItem;
-			global::Xamarin.Essentials.Resource.Styleable.GradientColorItem_android_color = global::Demo.Droid.Resource.Styleable.GradientColorItem_android_color;
-			global::Xamarin.Essentials.Resource.Styleable.GradientColorItem_android_offset = global::Demo.Droid.Resource.Styleable.GradientColorItem_android_offset;
-			global::Xamarin.Essentials.Resource.Styleable.GradientColor_android_centerColor = global::Demo.Droid.Resource.Styleable.GradientColor_android_centerColor;
-			global::Xamarin.Essentials.Resource.Styleable.GradientColor_android_centerX = global::Demo.Droid.Resource.Styleable.GradientColor_android_centerX;
-			global::Xamarin.Essentials.Resource.Styleable.GradientColor_android_centerY = global::Demo.Droid.Resource.Styleable.GradientColor_android_centerY;
-			global::Xamarin.Essentials.Resource.Styleable.GradientColor_android_endColor = global::Demo.Droid.Resource.Styleable.GradientColor_android_endColor;
-			global::Xamarin.Essentials.Resource.Styleable.GradientColor_android_endX = global::Demo.Droid.Resource.Styleable.GradientColor_android_endX;
-			global::Xamarin.Essentials.Resource.Styleable.GradientColor_android_endY = global::Demo.Droid.Resource.Styleable.GradientColor_android_endY;
-			global::Xamarin.Essentials.Resource.Styleable.GradientColor_android_gradientRadius = global::Demo.Droid.Resource.Styleable.GradientColor_android_gradientRadius;
-			global::Xamarin.Essentials.Resource.Styleable.GradientColor_android_startColor = global::Demo.Droid.Resource.Styleable.GradientColor_android_startColor;
-			global::Xamarin.Essentials.Resource.Styleable.GradientColor_android_startX = global::Demo.Droid.Resource.Styleable.GradientColor_android_startX;
-			global::Xamarin.Essentials.Resource.Styleable.GradientColor_android_startY = global::Demo.Droid.Resource.Styleable.GradientColor_android_startY;
-			global::Xamarin.Essentials.Resource.Styleable.GradientColor_android_tileMode = global::Demo.Droid.Resource.Styleable.GradientColor_android_tileMode;
-			global::Xamarin.Essentials.Resource.Styleable.GradientColor_android_type = global::Demo.Droid.Resource.Styleable.GradientColor_android_type;
-			global::Xamarin.Essentials.Resource.Xml.xamarin_essentials_fileprovider_file_paths = global::Demo.Droid.Resource.Xml.xamarin_essentials_fileprovider_file_paths;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.abc_fade_in = global::Demo.Droid.Resource.Animation.abc_fade_in;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.abc_fade_out = global::Demo.Droid.Resource.Animation.abc_fade_out;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.abc_grow_fade_in_from_bottom = global::Demo.Droid.Resource.Animation.abc_grow_fade_in_from_bottom;
@@ -3288,6 +3253,10 @@ namespace Demo.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.design_bottom_sheet_slide_out = global::Demo.Droid.Resource.Animation.design_bottom_sheet_slide_out;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.design_snackbar_in = global::Demo.Droid.Resource.Animation.design_snackbar_in;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.design_snackbar_out = global::Demo.Droid.Resource.Animation.design_snackbar_out;
+			global::Xamarin.Forms.Platform.Android.Resource.Animation.EnterFromLeft = global::Demo.Droid.Resource.Animation.EnterFromLeft;
+			global::Xamarin.Forms.Platform.Android.Resource.Animation.EnterFromRight = global::Demo.Droid.Resource.Animation.EnterFromRight;
+			global::Xamarin.Forms.Platform.Android.Resource.Animation.ExitToLeft = global::Demo.Droid.Resource.Animation.ExitToLeft;
+			global::Xamarin.Forms.Platform.Android.Resource.Animation.ExitToRight = global::Demo.Droid.Resource.Animation.ExitToRight;
 			global::Xamarin.Forms.Platform.Android.Resource.Animator.design_appbar_state_list_animator = global::Demo.Droid.Resource.Animator.design_appbar_state_list_animator;
 			global::Xamarin.Forms.Platform.Android.Resource.Animator.design_fab_hide_motion_spec = global::Demo.Droid.Resource.Animator.design_fab_hide_motion_spec;
 			global::Xamarin.Forms.Platform.Android.Resource.Animator.design_fab_show_motion_spec = global::Demo.Droid.Resource.Animator.design_fab_show_motion_spec;
@@ -4567,6 +4536,7 @@ namespace Demo.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.abc_search_view = global::Demo.Droid.Resource.Layout.abc_search_view;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.abc_select_dialog_material = global::Demo.Droid.Resource.Layout.abc_select_dialog_material;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.abc_tooltip = global::Demo.Droid.Resource.Layout.abc_tooltip;
+			global::Xamarin.Forms.Platform.Android.Resource.Layout.BottomTabLayout = global::Demo.Droid.Resource.Layout.BottomTabLayout;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.custom_dialog = global::Demo.Droid.Resource.Layout.custom_dialog;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.design_bottom_navigation_item = global::Demo.Droid.Resource.Layout.design_bottom_navigation_item;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.design_bottom_sheet_dialog = global::Demo.Droid.Resource.Layout.design_bottom_sheet_dialog;
@@ -4582,6 +4552,9 @@ namespace Demo.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.design_navigation_menu = global::Demo.Droid.Resource.Layout.design_navigation_menu;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.design_navigation_menu_item = global::Demo.Droid.Resource.Layout.design_navigation_menu_item;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.design_text_input_password_icon = global::Demo.Droid.Resource.Layout.design_text_input_password_icon;
+			global::Xamarin.Forms.Platform.Android.Resource.Layout.FallbackTabbarDoNotUse = global::Demo.Droid.Resource.Layout.FallbackTabbarDoNotUse;
+			global::Xamarin.Forms.Platform.Android.Resource.Layout.FallbackToolbarDoNotUse = global::Demo.Droid.Resource.Layout.FallbackToolbarDoNotUse;
+			global::Xamarin.Forms.Platform.Android.Resource.Layout.FlyoutContent = global::Demo.Droid.Resource.Layout.FlyoutContent;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.mtrl_layout_snackbar = global::Demo.Droid.Resource.Layout.mtrl_layout_snackbar;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.mtrl_layout_snackbar_include = global::Demo.Droid.Resource.Layout.mtrl_layout_snackbar_include;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.notification_action = global::Demo.Droid.Resource.Layout.notification_action;
@@ -4599,10 +4572,13 @@ namespace Demo.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.notification_template_media_custom = global::Demo.Droid.Resource.Layout.notification_template_media_custom;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.notification_template_part_chronometer = global::Demo.Droid.Resource.Layout.notification_template_part_chronometer;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.notification_template_part_time = global::Demo.Droid.Resource.Layout.notification_template_part_time;
+			global::Xamarin.Forms.Platform.Android.Resource.Layout.RootLayout = global::Demo.Droid.Resource.Layout.RootLayout;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.select_dialog_item_material = global::Demo.Droid.Resource.Layout.select_dialog_item_material;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.select_dialog_multichoice_material = global::Demo.Droid.Resource.Layout.select_dialog_multichoice_material;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.select_dialog_singlechoice_material = global::Demo.Droid.Resource.Layout.select_dialog_singlechoice_material;
+			global::Xamarin.Forms.Platform.Android.Resource.Layout.ShellContent = global::Demo.Droid.Resource.Layout.ShellContent;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.support_simple_spinner_dropdown_item = global::Demo.Droid.Resource.Layout.support_simple_spinner_dropdown_item;
+			global::Xamarin.Forms.Platform.Android.Resource.Layout.Tabbar = global::Demo.Droid.Resource.Layout.Tabbar;
 			global::Xamarin.Forms.Platform.Android.Resource.Layout.Toolbar = global::Demo.Droid.Resource.Layout.Toolbar;
 			global::Xamarin.Forms.Platform.Android.Resource.String.abc_action_bar_home_description = global::Demo.Droid.Resource.String.abc_action_bar_home_description;
 			global::Xamarin.Forms.Platform.Android.Resource.String.abc_action_bar_up_description = global::Demo.Droid.Resource.String.abc_action_bar_up_description;
@@ -5960,6 +5936,10 @@ namespace Demo.Droid
 			global::Xamarin.Forms.Platform.Resource.Animation.design_bottom_sheet_slide_out = global::Demo.Droid.Resource.Animation.design_bottom_sheet_slide_out;
 			global::Xamarin.Forms.Platform.Resource.Animation.design_snackbar_in = global::Demo.Droid.Resource.Animation.design_snackbar_in;
 			global::Xamarin.Forms.Platform.Resource.Animation.design_snackbar_out = global::Demo.Droid.Resource.Animation.design_snackbar_out;
+			global::Xamarin.Forms.Platform.Resource.Animation.EnterFromLeft = global::Demo.Droid.Resource.Animation.EnterFromLeft;
+			global::Xamarin.Forms.Platform.Resource.Animation.EnterFromRight = global::Demo.Droid.Resource.Animation.EnterFromRight;
+			global::Xamarin.Forms.Platform.Resource.Animation.ExitToLeft = global::Demo.Droid.Resource.Animation.ExitToLeft;
+			global::Xamarin.Forms.Platform.Resource.Animation.ExitToRight = global::Demo.Droid.Resource.Animation.ExitToRight;
 			global::Xamarin.Forms.Platform.Resource.Animator.design_appbar_state_list_animator = global::Demo.Droid.Resource.Animator.design_appbar_state_list_animator;
 			global::Xamarin.Forms.Platform.Resource.Animator.design_fab_hide_motion_spec = global::Demo.Droid.Resource.Animator.design_fab_hide_motion_spec;
 			global::Xamarin.Forms.Platform.Resource.Animator.design_fab_show_motion_spec = global::Demo.Droid.Resource.Animator.design_fab_show_motion_spec;
@@ -7239,6 +7219,7 @@ namespace Demo.Droid
 			global::Xamarin.Forms.Platform.Resource.Layout.abc_search_view = global::Demo.Droid.Resource.Layout.abc_search_view;
 			global::Xamarin.Forms.Platform.Resource.Layout.abc_select_dialog_material = global::Demo.Droid.Resource.Layout.abc_select_dialog_material;
 			global::Xamarin.Forms.Platform.Resource.Layout.abc_tooltip = global::Demo.Droid.Resource.Layout.abc_tooltip;
+			global::Xamarin.Forms.Platform.Resource.Layout.BottomTabLayout = global::Demo.Droid.Resource.Layout.BottomTabLayout;
 			global::Xamarin.Forms.Platform.Resource.Layout.custom_dialog = global::Demo.Droid.Resource.Layout.custom_dialog;
 			global::Xamarin.Forms.Platform.Resource.Layout.design_bottom_navigation_item = global::Demo.Droid.Resource.Layout.design_bottom_navigation_item;
 			global::Xamarin.Forms.Platform.Resource.Layout.design_bottom_sheet_dialog = global::Demo.Droid.Resource.Layout.design_bottom_sheet_dialog;
@@ -7254,6 +7235,9 @@ namespace Demo.Droid
 			global::Xamarin.Forms.Platform.Resource.Layout.design_navigation_menu = global::Demo.Droid.Resource.Layout.design_navigation_menu;
 			global::Xamarin.Forms.Platform.Resource.Layout.design_navigation_menu_item = global::Demo.Droid.Resource.Layout.design_navigation_menu_item;
 			global::Xamarin.Forms.Platform.Resource.Layout.design_text_input_password_icon = global::Demo.Droid.Resource.Layout.design_text_input_password_icon;
+			global::Xamarin.Forms.Platform.Resource.Layout.FallbackTabbarDoNotUse = global::Demo.Droid.Resource.Layout.FallbackTabbarDoNotUse;
+			global::Xamarin.Forms.Platform.Resource.Layout.FallbackToolbarDoNotUse = global::Demo.Droid.Resource.Layout.FallbackToolbarDoNotUse;
+			global::Xamarin.Forms.Platform.Resource.Layout.FlyoutContent = global::Demo.Droid.Resource.Layout.FlyoutContent;
 			global::Xamarin.Forms.Platform.Resource.Layout.mtrl_layout_snackbar = global::Demo.Droid.Resource.Layout.mtrl_layout_snackbar;
 			global::Xamarin.Forms.Platform.Resource.Layout.mtrl_layout_snackbar_include = global::Demo.Droid.Resource.Layout.mtrl_layout_snackbar_include;
 			global::Xamarin.Forms.Platform.Resource.Layout.notification_action = global::Demo.Droid.Resource.Layout.notification_action;
@@ -7271,10 +7255,13 @@ namespace Demo.Droid
 			global::Xamarin.Forms.Platform.Resource.Layout.notification_template_media_custom = global::Demo.Droid.Resource.Layout.notification_template_media_custom;
 			global::Xamarin.Forms.Platform.Resource.Layout.notification_template_part_chronometer = global::Demo.Droid.Resource.Layout.notification_template_part_chronometer;
 			global::Xamarin.Forms.Platform.Resource.Layout.notification_template_part_time = global::Demo.Droid.Resource.Layout.notification_template_part_time;
+			global::Xamarin.Forms.Platform.Resource.Layout.RootLayout = global::Demo.Droid.Resource.Layout.RootLayout;
 			global::Xamarin.Forms.Platform.Resource.Layout.select_dialog_item_material = global::Demo.Droid.Resource.Layout.select_dialog_item_material;
 			global::Xamarin.Forms.Platform.Resource.Layout.select_dialog_multichoice_material = global::Demo.Droid.Resource.Layout.select_dialog_multichoice_material;
 			global::Xamarin.Forms.Platform.Resource.Layout.select_dialog_singlechoice_material = global::Demo.Droid.Resource.Layout.select_dialog_singlechoice_material;
+			global::Xamarin.Forms.Platform.Resource.Layout.ShellContent = global::Demo.Droid.Resource.Layout.ShellContent;
 			global::Xamarin.Forms.Platform.Resource.Layout.support_simple_spinner_dropdown_item = global::Demo.Droid.Resource.Layout.support_simple_spinner_dropdown_item;
+			global::Xamarin.Forms.Platform.Resource.Layout.Tabbar = global::Demo.Droid.Resource.Layout.Tabbar;
 			global::Xamarin.Forms.Platform.Resource.Layout.Toolbar = global::Demo.Droid.Resource.Layout.Toolbar;
 			global::Xamarin.Forms.Platform.Resource.String.abc_action_bar_home_description = global::Demo.Droid.Resource.String.abc_action_bar_home_description;
 			global::Xamarin.Forms.Platform.Resource.String.abc_action_bar_up_description = global::Demo.Droid.Resource.String.abc_action_bar_up_description;
@@ -8694,16 +8681,16 @@ namespace Demo.Droid
 			public const int design_snackbar_out = 2130771995;
 			
 			// aapt resource value: 0x7F01001C
-			public const int enterfromleft = 2130771996;
+			public const int EnterFromLeft = 2130771996;
 			
 			// aapt resource value: 0x7F01001D
-			public const int enterfromright = 2130771997;
+			public const int EnterFromRight = 2130771997;
 			
 			// aapt resource value: 0x7F01001E
-			public const int exittoleft = 2130771998;
+			public const int ExitToLeft = 2130771998;
 			
 			// aapt resource value: 0x7F01001F
-			public const int exittoright = 2130771999;
+			public const int ExitToRight = 2130771999;
 			
 			static Animation()
 			{
@@ -11763,7 +11750,7 @@ namespace Demo.Droid
 			public const int design_snackbar_background = 2131165294;
 			
 			// aapt resource value: 0x7F07006F
-			public const int down = 2131165295;
+			public const int Down = 2131165295;
 			
 			// aapt resource value: 0x7F070073
 			public const int icon = 2131165299;
@@ -11787,7 +11774,7 @@ namespace Demo.Droid
 			public const int navigation_empty_icon = 2131165302;
 			
 			// aapt resource value: 0x7F070077
-			public const int next = 2131165303;
+			public const int Next = 2131165303;
 			
 			// aapt resource value: 0x7F070078
 			public const int notification_action_background = 2131165304;
@@ -11826,7 +11813,7 @@ namespace Demo.Droid
 			public const int notify_panel_notification_icon_bg = 2131165315;
 			
 			// aapt resource value: 0x7F070084
-			public const int prev = 2131165316;
+			public const int Prev = 2131165316;
 			
 			// aapt resource value: 0x7F070085
 			public const int tooltip_frame_dark = 2131165317;
@@ -11835,7 +11822,7 @@ namespace Demo.Droid
 			public const int tooltip_frame_light = 2131165318;
 			
 			// aapt resource value: 0x7F070087
-			public const int up = 2131165319;
+			public const int Up = 2131165319;
 			
 			// aapt resource value: 0x7F070088
 			public const int watermark = 2131165320;
@@ -12832,7 +12819,7 @@ namespace Demo.Droid
 			public const int abc_tooltip = 2131427355;
 			
 			// aapt resource value: 0x7F0B001C
-			public const int bottomtablayout = 2131427356;
+			public const int BottomTabLayout = 2131427356;
 			
 			// aapt resource value: 0x7F0B001D
 			public const int browser_actions_context_menu_page = 2131427357;
@@ -12886,13 +12873,13 @@ namespace Demo.Droid
 			public const int design_text_input_password_icon = 2131427373;
 			
 			// aapt resource value: 0x7F0B002E
-			public const int fallbacktabbardonotuse = 2131427374;
+			public const int FallbackTabbarDoNotUse = 2131427374;
 			
 			// aapt resource value: 0x7F0B002F
-			public const int fallbacktoolbardonotuse = 2131427375;
+			public const int FallbackToolbarDoNotUse = 2131427375;
 			
 			// aapt resource value: 0x7F0B0030
-			public const int flyoutcontent = 2131427376;
+			public const int FlyoutContent = 2131427376;
 			
 			// aapt resource value: 0x7F0B0031
 			public const int horizontal_viewpager = 2131427377;
@@ -12949,7 +12936,7 @@ namespace Demo.Droid
 			public const int notification_template_part_time = 2131427394;
 			
 			// aapt resource value: 0x7F0B0043
-			public const int rootlayout = 2131427395;
+			public const int RootLayout = 2131427395;
 			
 			// aapt resource value: 0x7F0B0044
 			public const int select_dialog_item_material = 2131427396;
@@ -12961,13 +12948,13 @@ namespace Demo.Droid
 			public const int select_dialog_singlechoice_material = 2131427398;
 			
 			// aapt resource value: 0x7F0B0047
-			public const int shellcontent = 2131427399;
+			public const int ShellContent = 2131427399;
 			
 			// aapt resource value: 0x7F0B0048
 			public const int support_simple_spinner_dropdown_item = 2131427400;
 			
 			// aapt resource value: 0x7F0B0049
-			public const int tabbar = 2131427401;
+			public const int Tabbar = 2131427401;
 			
 			// aapt resource value: 0x7F0B004A
 			public const int TabLayout = 2131427402;
@@ -17768,22 +17755,6 @@ namespace Demo.Droid
 			}
 			
 			private Styleable()
-			{
-			}
-		}
-		
-		public partial class Xml
-		{
-			
-			// aapt resource value: 0x7F0F0000
-			public const int xamarin_essentials_fileprovider_file_paths = 2131689472;
-			
-			static Xml()
-			{
-				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
-			}
-			
-			private Xml()
 			{
 			}
 		}
