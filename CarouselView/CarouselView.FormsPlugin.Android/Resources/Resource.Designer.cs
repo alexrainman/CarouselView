@@ -111,16 +111,16 @@ namespace CarouselView.FormsPlugin.Droid
 			public static int design_snackbar_out = 2130771995;
 			
 			// aapt resource value: 0x7F01001C
-			public static int EnterFromLeft = 2130771996;
+			public static int enterfromleft = 2130771996;
 			
 			// aapt resource value: 0x7F01001D
-			public static int EnterFromRight = 2130771997;
+			public static int enterfromright = 2130771997;
 			
 			// aapt resource value: 0x7F01001E
-			public static int ExitToLeft = 2130771998;
+			public static int exittoleft = 2130771998;
 			
 			// aapt resource value: 0x7F01001F
-			public static int ExitToRight = 2130771999;
+			public static int exittoright = 2130771999;
 			
 			static Animation()
 			{
@@ -4237,7 +4237,7 @@ namespace CarouselView.FormsPlugin.Droid
 			public static int abc_tooltip = 2131427355;
 			
 			// aapt resource value: 0x7F0B001C
-			public static int BottomTabLayout = 2131427356;
+			public static int bottomtablayout = 2131427356;
 			
 			// aapt resource value: 0x7F0B001D
 			public static int browser_actions_context_menu_page = 2131427357;
@@ -4291,13 +4291,13 @@ namespace CarouselView.FormsPlugin.Droid
 			public static int design_text_input_password_icon = 2131427373;
 			
 			// aapt resource value: 0x7F0B002E
-			public static int FallbackTabbarDoNotUse = 2131427374;
+			public static int fallbacktabbardonotuse = 2131427374;
 			
 			// aapt resource value: 0x7F0B002F
-			public static int FallbackToolbarDoNotUse = 2131427375;
+			public static int fallbacktoolbardonotuse = 2131427375;
 			
 			// aapt resource value: 0x7F0B0030
-			public static int FlyoutContent = 2131427376;
+			public static int flyoutcontent = 2131427376;
 			
 			// aapt resource value: 0x7F0B0031
 			public static int horizontal_viewpager = 2131427377;
@@ -4354,7 +4354,7 @@ namespace CarouselView.FormsPlugin.Droid
 			public static int notification_template_part_time = 2131427394;
 			
 			// aapt resource value: 0x7F0B0043
-			public static int RootLayout = 2131427395;
+			public static int rootlayout = 2131427395;
 			
 			// aapt resource value: 0x7F0B0044
 			public static int select_dialog_item_material = 2131427396;
@@ -4366,16 +4366,16 @@ namespace CarouselView.FormsPlugin.Droid
 			public static int select_dialog_singlechoice_material = 2131427398;
 			
 			// aapt resource value: 0x7F0B0047
-			public static int ShellContent = 2131427399;
+			public static int shellcontent = 2131427399;
 			
 			// aapt resource value: 0x7F0B0048
 			public static int support_simple_spinner_dropdown_item = 2131427400;
 			
 			// aapt resource value: 0x7F0B0049
-			public static int Tabbar = 2131427401;
+			public static int tabbar = 2131427401;
 			
 			// aapt resource value: 0x7F0B004A
-			public static int Toolbar = 2131427402;
+			public static int toolbar = 2131427402;
 			
 			// aapt resource value: 0x7F0B004B
 			public static int vertical_viewpager = 2131427403;

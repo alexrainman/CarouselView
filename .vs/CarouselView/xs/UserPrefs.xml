@@ -1,0 +1,34 @@
+﻿<Properties StartupConfiguration="{AD2D2DB4-E781-4CF1-9B62-3AAD264F196D}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Demo/MainViewModel.cs">
+    <Files>
+      <File FileName="CarouselView/CarouselView.FormsPlugin.Abstractions/CarouselViewControl.cs" Line="212" Column="66" />
+      <File FileName="CarouselView/CarouselView.FormsPlugin.iOS/CarouselViewImplementation.cs" Line="1" Column="1" />
+      <File FileName="CarouselView/CarouselView.FormsPlugin.Abstractions/IndicatorsPosition.cs" Line="1" Column="1" />
+      <File FileName="CarouselView/CarouselView.FormsPlugin.Abstractions/ArrowsPosition.cs" Line="1" Column="1" />
+      <File FileName="Demo/MainPage.xaml.cs" Line="22" Column="10" />
+      <File FileName="Demo/MainPage.xaml" Line="5" Column="147" />
+      <File FileName="Demo/MainViewModel.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="CarouselView" expanded="True">
+            <Node name="CarouselView.FormsPlugin.Abstractions" expanded="True" />
+            <Node name="CarouselView.FormsPlugin.iOS" expanded="True" />
+            <Node name="Demo" expanded="True">
+              <Node name="MainPage.xaml" expanded="True" />
+              <Node name="MainViewModel.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.CarouselView.FormsPlugin.Android PreferredExecutionTarget="Android.pixel_2_q_10_0_-_api_29" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

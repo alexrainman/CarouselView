@@ -3,11 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Demo.MainPage"
     xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions" xmlns:demo="clr-namespace:Demo">
-    
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Clicked="Handle_Add"/>
-        <ToolbarItem Text="Remove" Clicked="Handle_Remove"/>
-    </ContentPage.ToolbarItems>
 
     <ScrollView>
         <cv:CarouselViewControl x:Name="carousel"
