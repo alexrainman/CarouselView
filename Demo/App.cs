@@ -1,7 +1,8 @@
-﻿using Xamarin.Forms;
+﻿
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+//[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Demo
 {
     public class App : Application

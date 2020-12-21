@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Windows.Input;
+using CarouselView.FormsPlugin.Abstractions;
 using FFImageLoading.Forms;
 using Xamarin.Forms;
 
@@ -14,16 +13,42 @@ namespace Demo
 
         public MainViewModel()
         {
+            IsVisible = true;
+
+            var image = new CachedImage() { DownsampleToViewSize = true, Source = "c1.jpg", Aspect = Aspect.Fill };
+
+            var tap = new SwipeGestureRecognizer();
+            tap.Command = LoadMoreCommand;
+
+            image.GestureRecognizers.Add(tap);
+
             MyItemsSource = new ObservableCollection<View>()
             {
-                new CachedImage() { Source = "c1.jpg", DownsampleToViewSize = true, Aspect = Aspect.AspectFill },
-                new CachedImage() { Source = "c2.jpg", DownsampleToViewSize = true, Aspect = Aspect.AspectFill },
-                new CachedImage() { Source = "c3.jpg", DownsampleToViewSize = true, Aspect = Aspect.AspectFill }
+                image,
+                new CachedImage() { DownsampleToViewSize = true, Source = "c2.jpg", Aspect = Aspect.Fill },
+                new CachedImage() { DownsampleToViewSize = true, Source = "c3.jpg", Aspect = Aspect.Fill }
             };
 
-            MyCommand = new Command(() =>
+            MySource = new ObservableCollection<int>()
             {
-                Debug.WriteLine("Position selected.");
+                1, 2, 3
+            };
+
+            PositionSelectedCommand = new Command<PositionSelectedEventArgs>((e) =>
+            {
+                Debug.WriteLine("Position " + e.NewValue + " selected.");
+                Debug.Write(this.SelectedItem);
+            });
+
+            ScrolledCommand = new Command<CarouselView.FormsPlugin.Abstractions.ScrolledEventArgs>((e) =>
+            {
+                Debug.WriteLine("Scrolled to " + e.NewValue + " percent.");
+                Debug.WriteLine("Direction = " + e.Direction);
+            });
+
+            LoadMoreCommand = new Command(() =>
+            {
+                Debug.WriteLine("pepe");
             });
         }
 
@@ -38,7 +63,51 @@ namespace Demo
             }
         }
 
-        public Command MyCommand { protected set; get; }
+        ObservableCollection<int> _mySource;
+        public ObservableCollection<int> MySource
+        {
+            set
+            {
+                _mySource = value;
+                OnPropertyChanged("MySource");
+            }
+            get
+            {
+                return _mySource;
+            }
+        }
+
+        bool _isVisible;
+        public bool IsVisible
+        {
+            set
+            {
+                _isVisible = value;
+                OnPropertyChanged("IsVisible");
+            }
+            get
+            {
+                return _isVisible;
+            }
+        }
+
+        object _selectedItem;
+        public object SelectedItem
+        {
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged("SelectedItem");
+            }
+            get
+            {
+                return _selectedItem;
+            }
+        }
+
+        public Command<PositionSelectedEventArgs> PositionSelectedCommand { protected set; get; }
+        public Command<CarouselView.FormsPlugin.Abstractions.ScrolledEventArgs> ScrolledCommand { protected set; get; }
+        public Command LoadMoreCommand { protected set; get; }
 
         protected virtual void OnPropertyChanged(string propertyName)
         {

@@ -3,7 +3,7 @@ using CarouselView.FormsPlugin.Abstractions;
 
 namespace CarouselView.FormsPlugin.Droid
 {
-    public interface IViewPager
+    internal interface IViewPager
     {
         void SetPagingEnabled(bool enabled);
         void SetElement(CarouselViewControl element);

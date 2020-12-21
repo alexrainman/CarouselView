@@ -6,15 +6,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.Runtime;
-using Android.Support.V4.View;
+using AndroidX.ViewPager.Widget;
 using CarouselView.FormsPlugin.Abstractions;
-using CarouselView.FormsPlugin.Android;
 using Com.ViewPagerIndicator;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using AV = Android.Views;
-using AG = Android.Widget;
-using AA = Android.App;
 
 /*
  * Save state in Android:
@@ -36,18 +32,18 @@ namespace CarouselView.FormsPlugin.Droid
     /// <summary>
     /// CarouselView Renderer
     /// </summary>
-    public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, AV.View>
+    public class CarouselViewRenderer : ViewRenderer<CarouselViewControl, Android.Views.View>
     {
         Context _context;
 
         bool carouselOrientationChanged;
 
-        AV.View nativeView;
+        Android.Views.View nativeView;
         ViewPager viewPager;
         CirclePageIndicator indicators;
 
-        AG.LinearLayout prevBtn;
-        AG.LinearLayout nextBtn;
+        Android.Widget.LinearLayout prevBtn;
+        Android.Widget.LinearLayout nextBtn;
 
         bool _disposed;
 
@@ -76,14 +72,14 @@ namespace CarouselView.FormsPlugin.Droid
             }
         }
 
-        private AA.Activity FindActivity(Context context)
+        private Android.App.Activity FindActivity(Context context)
         {
-            var activity = context as AA.Activity;
+            var activity = context as Android.App.Activity;
             if (activity != null)
             {
                 return activity;
             }
-            var contextThemeWrapper = _context as AV.ContextThemeWrapper;
+            var contextThemeWrapper = _context as Android.Views.ContextThemeWrapper;
             if (contextThemeWrapper != null)
             {
                 return FindActivity(contextThemeWrapper.BaseContext);
@@ -351,9 +347,9 @@ namespace CarouselView.FormsPlugin.Droid
 
         DeviceOrientation GetOrientation()
         {
-            var windowManager = AA.Application.Context.GetSystemService(Context.WindowService).JavaCast<AV.IWindowManager>();
+            var windowManager = Android.App.Application.Context.GetSystemService(Context.WindowService).JavaCast<Android.Views.IWindowManager>();
             var rotation = windowManager.DefaultDisplay.Rotation;
-            bool isLandscape = rotation == AV.SurfaceOrientation.Rotation90 || rotation == AV.SurfaceOrientation.Rotation270;
+            bool isLandscape = rotation == Android.Views.SurfaceOrientation.Rotation90 || rotation == Android.Views.SurfaceOrientation.Rotation270;
             return isLandscape ? DeviceOrientation.Landscape : DeviceOrientation.Portrait;
         }
 
@@ -385,7 +381,7 @@ namespace CarouselView.FormsPlugin.Droid
             switch (e.PropertyName)
             {
                 case "IsVisible":
-                    nativeView.Visibility = Element.IsVisible ? AV.ViewStates.Visible : AV.ViewStates.Invisible;
+                    nativeView.Visibility = Element.IsVisible ? Android.Views.ViewStates.Visible : Android.Views.ViewStates.Invisible;
                     break;
                 case "Y":
                     // fix for a scenario where the carousel does not show up in Android app #329
@@ -460,9 +456,9 @@ namespace CarouselView.FormsPlugin.Droid
                     break;
                 case "ArrowsTintColor":
                     if (prevBtn == null || nextBtn == null) return;
-                    var prevArrow = nativeView.FindViewById<AG.ImageView>(Android.Resource.Id.prevArrow);
+                    var prevArrow = nativeView.FindViewById<Android.Widget.ImageView>(Resource.Id.prevArrow);
                     prevArrow.SetColorFilter(Element.ArrowsTintColor.ToAndroid());
-                    var nextArrow = nativeView.FindViewById<AG.ImageView>(Android.Resource.Id.nextArrow);
+                    var nextArrow = nativeView.FindViewById<Android.Widget.ImageView>(Resource.Id.nextArrow);
                     nextArrow.SetColorFilter(Element.ArrowsTintColor.ToAndroid());
                     break;
                 case "ArrowsTransparency":
@@ -621,19 +617,19 @@ namespace CarouselView.FormsPlugin.Droid
 
             if (carouselOrientationChanged)
             {
-                var inflater = AV.LayoutInflater.From(activity);
+                var inflater = Android.Views.LayoutInflater.From(activity);
 
                 // Orientation BP
                 if (Element.Orientation == CarouselViewOrientation.Horizontal)
                 {
-                    nativeView = inflater.Inflate(Android.Resource.Layout.horizontal_viewpager, null);
+                    nativeView = inflater.Inflate(Resource.Layout.horizontal_viewpager, null);
                 }
                 else
                 {
-                    nativeView = inflater.Inflate(Android.Resource.Layout.vertical_viewpager, null);
+                    nativeView = inflater.Inflate(Resource.Layout.vertical_viewpager, null);
                 }
 
-                viewPager = nativeView.FindViewById<ViewPager>(Android.Resource.Id.pager);
+                viewPager = nativeView.FindViewById<ViewPager>(Resource.Id.pager);
 
                 // HACK to avoid last page to be blank while infinite scrolling
                 if (Element.InfiniteScrolling && Element.Orientation == CarouselViewOrientation.Vertical)
@@ -675,7 +671,7 @@ namespace CarouselView.FormsPlugin.Droid
             SetArrows();
 
             // INDICATORS
-            indicators = nativeView.FindViewById<CirclePageIndicator>(Android.Resource.Id.indicator);
+            indicators = nativeView.FindViewById<CirclePageIndicator>(Resource.Id.indicator);
 
             SetIndicators();
 
@@ -725,17 +721,17 @@ namespace CarouselView.FormsPlugin.Droid
 
                 if (prevBtn == null)
                 {
-                    prevBtn = nativeView.FindViewById<AG.LinearLayout>(Android.Resource.Id.prev);
+                    prevBtn = nativeView.FindViewById<Android.Widget.LinearLayout>(Resource.Id.prev);
                     prevBtn.Alpha = Element.ArrowsTransparency;
 
                     if (Element.PrevArrowTemplate == null)
                     {
                         prevBtn.SetBackgroundColor(Element.ArrowsBackgroundColor.ToAndroid());
                         
-                        var prevArrow = nativeView.FindViewById<AG.ImageView>(Android.Resource.Id.prevArrow);
+                        var prevArrow = nativeView.FindViewById<Android.Widget.ImageView>(Resource.Id.prevArrow);
                         prevArrow.SetColorFilter(Element.ArrowsTintColor.ToAndroid());
 
-                        var prevArrowLayoutParams = (AG.LinearLayout.LayoutParams)prevArrow.LayoutParameters;
+                        var prevArrowLayoutParams = (Android.Widget.LinearLayout.LayoutParams)prevArrow.LayoutParameters;
                         prevArrowLayoutParams.Width = (int)(Element.ArrowsSize * metrics.Density);
                         prevArrowLayoutParams.Height = (int)(Element.ArrowsSize * metrics.Density);
                         prevArrow.LayoutParameters = prevArrowLayoutParams;
@@ -754,7 +750,7 @@ namespace CarouselView.FormsPlugin.Droid
 
                         prevBtn.AddView(prevArrow);
 
-                        var prevArrowLayoutParams = (AG.LinearLayout.LayoutParams)prevArrow.LayoutParameters;
+                        var prevArrowLayoutParams = (Android.Widget.LinearLayout.LayoutParams)prevArrow.LayoutParameters;
                         prevArrowLayoutParams.Width = (int)(w * metrics.Density);
                         prevArrowLayoutParams.Height = (int)(h * metrics.Density);
                         prevArrow.LayoutParameters = prevArrowLayoutParams; 
@@ -762,7 +758,7 @@ namespace CarouselView.FormsPlugin.Droid
 
                     prevBtn.Click += PrevBtn_Click;
 
-                    var prevBtnLayoutParams = (AG.RelativeLayout.LayoutParams)prevBtn.LayoutParameters;
+                    var prevBtnLayoutParams = (Android.Widget.RelativeLayout.LayoutParams)prevBtn.LayoutParameters;
                     prevBtnLayoutParams.Width = (int)(w * metrics.Density);
                     prevBtnLayoutParams.Height = (int)(h * metrics.Density);
                     prevBtnLayoutParams.SetMargins(margin,margin,margin,margin);
@@ -772,13 +768,13 @@ namespace CarouselView.FormsPlugin.Droid
                         switch (Element.HorizontalArrowsPosition)
                         {
                             case HorizontalArrowsPosition.Center:
-                                prevBtnLayoutParams.AddRule(AG.LayoutRules.CenterVertical);
+                                prevBtnLayoutParams.AddRule(Android.Widget.LayoutRules.CenterVertical);
                                 break;
                             case HorizontalArrowsPosition.Bottom:
-                                prevBtnLayoutParams.AddRule(AG.LayoutRules.AlignParentBottom);
+                                prevBtnLayoutParams.AddRule(Android.Widget.LayoutRules.AlignParentBottom);
                                 break;
                             case HorizontalArrowsPosition.Top:
-                                prevBtnLayoutParams.AddRule(AG.LayoutRules.AlignParentTop);
+                                prevBtnLayoutParams.AddRule(Android.Widget.LayoutRules.AlignParentTop);
                                 break;
                         }
                     }
@@ -787,13 +783,13 @@ namespace CarouselView.FormsPlugin.Droid
                         switch (Element.VerticalArrowsPosition)
                         {
                             case VerticalArrowsPosition.Center:
-                                prevBtnLayoutParams.AddRule(AG.LayoutRules.CenterHorizontal);
+                                prevBtnLayoutParams.AddRule(Android.Widget.LayoutRules.CenterHorizontal);
                                 break;
                             case VerticalArrowsPosition.Left:
-                                prevBtnLayoutParams.AddRule(AG.LayoutRules.AlignParentLeft);
+                                prevBtnLayoutParams.AddRule(Android.Widget.LayoutRules.AlignParentLeft);
                                 break;
                             case VerticalArrowsPosition.Right:
-                                prevBtnLayoutParams.AddRule(AG.LayoutRules.AlignParentRight);
+                                prevBtnLayoutParams.AddRule(Android.Widget.LayoutRules.AlignParentRight);
                                 break;
                         }
                     }
@@ -803,17 +799,17 @@ namespace CarouselView.FormsPlugin.Droid
 
                 if (nextBtn == null)
                 {
-                    nextBtn = nativeView.FindViewById<AG.LinearLayout>(Android.Resource.Id.next);
+                    nextBtn = nativeView.FindViewById<Android.Widget.LinearLayout>(Resource.Id.next);
                     nextBtn.Alpha = Element.ArrowsTransparency;
 
                     if (Element.NextArrowTemplate == null)
                     {
                         nextBtn.SetBackgroundColor(Element.ArrowsBackgroundColor.ToAndroid());
                         
-                        var nextArrow = nativeView.FindViewById<AG.ImageView>(Android.Resource.Id.nextArrow);
+                        var nextArrow = nativeView.FindViewById<Android.Widget.ImageView>(Resource.Id.nextArrow);
                         nextArrow.SetColorFilter(Element.ArrowsTintColor.ToAndroid());
 
-                        var nextArrowLayoutParams = (AG.LinearLayout.LayoutParams)nextArrow.LayoutParameters;
+                        var nextArrowLayoutParams = (Android.Widget.LinearLayout.LayoutParams)nextArrow.LayoutParameters;
                         nextArrowLayoutParams.Width = (int)(Element.ArrowsSize * metrics.Density);
                         nextArrowLayoutParams.Height = (int)(Element.ArrowsSize * metrics.Density);
                         nextArrow.LayoutParameters = nextArrowLayoutParams;
@@ -832,7 +828,7 @@ namespace CarouselView.FormsPlugin.Droid
 
                         nextBtn.AddView(nextArrow);
 
-                        var nextArrowLayoutParams = (AG.LinearLayout.LayoutParams)nextArrow.LayoutParameters;
+                        var nextArrowLayoutParams = (Android.Widget.LinearLayout.LayoutParams)nextArrow.LayoutParameters;
                         nextArrowLayoutParams.Width = (int)(w * metrics.Density);
                         nextArrowLayoutParams.Height = (int)(h * metrics.Density);
                         nextArrow.LayoutParameters = nextArrowLayoutParams;
@@ -840,7 +836,7 @@ namespace CarouselView.FormsPlugin.Droid
 
                     nextBtn.Click += NextBtn_Click;
 
-                    var nextBtnLayoutParams = (AG.RelativeLayout.LayoutParams)nextBtn.LayoutParameters;
+                    var nextBtnLayoutParams = (Android.Widget.RelativeLayout.LayoutParams)nextBtn.LayoutParameters;
                     nextBtnLayoutParams.Width = (int)(w * metrics.Density);
                     nextBtnLayoutParams.Height = (int)(h * metrics.Density);
                     nextBtnLayoutParams.SetMargins(margin, margin, margin, margin);
@@ -850,13 +846,13 @@ namespace CarouselView.FormsPlugin.Droid
                         switch (Element.HorizontalArrowsPosition)
                         {
                             case HorizontalArrowsPosition.Center:
-                                nextBtnLayoutParams.AddRule(AG.LayoutRules.CenterVertical);
+                                nextBtnLayoutParams.AddRule(Android.Widget.LayoutRules.CenterVertical);
                                 break;
                             case HorizontalArrowsPosition.Bottom:
-                                nextBtnLayoutParams.AddRule(AG.LayoutRules.AlignParentBottom);
+                                nextBtnLayoutParams.AddRule(Android.Widget.LayoutRules.AlignParentBottom);
                                 break;
                             case HorizontalArrowsPosition.Top:
-                                nextBtnLayoutParams.AddRule(AG.LayoutRules.AlignParentTop);
+                                nextBtnLayoutParams.AddRule(Android.Widget.LayoutRules.AlignParentTop);
                                 break;
                         }
                     }
@@ -865,13 +861,13 @@ namespace CarouselView.FormsPlugin.Droid
                         switch (Element.VerticalArrowsPosition)
                         {
                             case VerticalArrowsPosition.Center:
-                                nextBtnLayoutParams.AddRule(AG.LayoutRules.CenterHorizontal);
+                                nextBtnLayoutParams.AddRule(Android.Widget.LayoutRules.CenterHorizontal);
                                 break;
                             case VerticalArrowsPosition.Left:
-                                nextBtnLayoutParams.AddRule(AG.LayoutRules.AlignParentLeft);
+                                nextBtnLayoutParams.AddRule(Android.Widget.LayoutRules.AlignParentLeft);
                                 break;
                             case VerticalArrowsPosition.Right:
-                                nextBtnLayoutParams.AddRule(AG.LayoutRules.AlignParentRight);
+                                nextBtnLayoutParams.AddRule(Android.Widget.LayoutRules.AlignParentRight);
                                 break;
                         }
                     }
@@ -884,8 +880,8 @@ namespace CarouselView.FormsPlugin.Droid
             else
             {
                 if (prevBtn == null || nextBtn == null) return;
-                prevBtn.Visibility = AV.ViewStates.Gone;
-                nextBtn.Visibility = AV.ViewStates.Gone;
+                prevBtn.Visibility = Android.Views.ViewStates.Gone;
+                nextBtn.Visibility = Android.Views.ViewStates.Gone;
             }
         }
 
@@ -928,43 +924,43 @@ namespace CarouselView.FormsPlugin.Droid
         void SetArrowsVisibility()
         {
             if (prevBtn == null || nextBtn == null) return;
-            prevBtn.Visibility = (Element.Position == 0 && !Element.InfiniteScrolling) || (Element.InfiniteScrolling && Element.ItemsSource?.GetCount() < 2) || Element.ItemsSource?.GetCount() == 0 || Element.ItemsSource == null || !Element.ShowArrows ? AV.ViewStates.Gone : AV.ViewStates.Visible;
-            nextBtn.Visibility = (Element.Position == Element.ItemsSource?.GetCount() - 1 && !Element.InfiniteScrolling) || (Element.InfiniteScrolling && Element.ItemsSource?.GetCount() < 2) || Element.ItemsSource?.GetCount() == 0 || Element.ItemsSource == null || !Element.ShowArrows ? AV.ViewStates.Gone : AV.ViewStates.Visible;
+            prevBtn.Visibility = (Element.Position == 0 && !Element.InfiniteScrolling) || (Element.InfiniteScrolling && Element.ItemsSource?.GetCount() < 2) || Element.ItemsSource?.GetCount() == 0 || Element.ItemsSource == null || !Element.ShowArrows ? Android.Views.ViewStates.Gone : Android.Views.ViewStates.Visible;
+            nextBtn.Visibility = (Element.Position == Element.ItemsSource?.GetCount() - 1 && !Element.InfiniteScrolling) || (Element.InfiniteScrolling && Element.ItemsSource?.GetCount() < 2) || Element.ItemsSource?.GetCount() == 0 || Element.ItemsSource == null || !Element.ShowArrows ? Android.Views.ViewStates.Gone : Android.Views.ViewStates.Visible;
         }
 
         void SetIndicators()
         {
-            var lp = (AG.RelativeLayout.LayoutParams)indicators.LayoutParameters;
+            var lp = (Android.Widget.RelativeLayout.LayoutParams)indicators.LayoutParameters;
 
             if (Element.Orientation == CarouselViewOrientation.Horizontal)
             {
-                lp.AddRule(AG.LayoutRules.CenterHorizontal);
-                lp.Width = AG.RelativeLayout.LayoutParams.MatchParent;
+                lp.AddRule(Android.Widget.LayoutRules.CenterHorizontal);
+                lp.Width = Android.Widget.RelativeLayout.LayoutParams.MatchParent;
 
                 switch (Element.HorizontalIndicatorsPosition)
                 {
                     case HorizontalIndicatorsPosition.Top:
-                        lp.AddRule(AG.LayoutRules.AlignTop, Android.Resource.Id.pager);
+                        lp.AddRule(Android.Widget.LayoutRules.AlignTop, Resource.Id.pager);
                         break;
                     case HorizontalIndicatorsPosition.Bottom:
-                        lp.AddRule(AG.LayoutRules.AlignBottom, Android.Resource.Id.pager);
+                        lp.AddRule(Android.Widget.LayoutRules.AlignBottom, Resource.Id.pager);
                         break;
                 }
             }
 
             if (Element.Orientation == CarouselViewOrientation.Vertical)
             {
-                //indicators.SetOrientation(1);
-                lp.AddRule(AG.LayoutRules.CenterVertical);
-                lp.Height = AG.RelativeLayout.LayoutParams.MatchParent;
+                indicators.SetOrientation(1);
+                lp.AddRule(Android.Widget.LayoutRules.CenterVertical);
+                lp.Height = Android.Widget.RelativeLayout.LayoutParams.MatchParent;
 
                 switch (Element.VerticalIndicatorsPosition)
                 {
                     case VerticalIndicatorsPosition.Left:
-                        lp.AddRule(AG.LayoutRules.AlignLeft, Android.Resource.Id.pager);
+                        lp.AddRule(Android.Widget.LayoutRules.AlignLeft, Resource.Id.pager);
                         break;
                     case VerticalIndicatorsPosition.Right:
-                        lp.AddRule(AG.LayoutRules.AlignRight, Android.Resource.Id.pager);
+                        lp.AddRule(Android.Widget.LayoutRules.AlignRight, Resource.Id.pager);
                         break;
                 }
             }
@@ -980,14 +976,14 @@ namespace CarouselView.FormsPlugin.Droid
             // IndicatorsShape BP
             indicators?.SetStyle((int)Element.IndicatorsShape); // Rounded or Squared
 
-            //indicators.SetInfiniteScrolling(Element.InfiniteScrolling);
+            indicators.SetInfiniteScrolling(Element.InfiniteScrolling);
 
-            indicators.Visibility = AV.ViewStates.Visible;
+            indicators.Visibility = Android.Views.ViewStates.Visible;
         }
 
         void SetIndicatorsVisibility()
         {
-            indicators.Visibility = Element.ShowIndicators ? AV.ViewStates.Visible : AV.ViewStates.Gone;
+            indicators.Visibility = Element.ShowIndicators ? Android.Views.ViewStates.Visible : Android.Views.ViewStates.Gone;
         }
 
         void InsertPage(object item, int position)
@@ -1159,12 +1155,12 @@ namespace CarouselView.FormsPlugin.Droid
                 }
             }
 
-            public override bool IsViewFromObject(AV.View view, Java.Lang.Object @object)
+            public override bool IsViewFromObject(Android.Views.View view, Java.Lang.Object @object)
             {
                 return view == @object;
             }
 
-            public override Java.Lang.Object InstantiateItem(AV.ViewGroup container, int position)
+            public override Java.Lang.Object InstantiateItem(Android.Views.ViewGroup container, int position)
             {
                 View formsView = null;
 
@@ -1236,29 +1232,8 @@ namespace CarouselView.FormsPlugin.Droid
 
                 // TODO: Add tap gesture if any in the forms view
 
-                //var inflater = AV.LayoutInflater.From(context);
-                //var framelayout = (AG.FrameLayout)inflater.Inflate(Android.Resource.Layout.ViewContainer, null);
-
-                /*var licenser = new Licenser();
-                var isLicenseValid = licenser.Validate(License);
-
-                if (!isLicenseValid)
-                {
-                    //Initializing frame layout
-                    var framelayout = new AG.FrameLayout(context);
-                    framelayout.LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
-                    framelayout.AddView(nativeConverted);
-                    var imageview = new AG.ImageView(context);
-                    imageview.SetImageResource(Android.Resource.Drawable.watermark);
-                    imageview.SetAdjustViewBounds(true);
-                    imageview.SetScaleType(AG.ImageView.ScaleType.CenterCrop);
-                    framelayout.AddView(imageview);
-
-                    var vPager = (ViewPager)container;
-                    vPager.AddView(framelayout);
-
-                    return framelayout;
-                }*/
+                //var inflater = Android.Views.LayoutInflater.From(context);
+                //var framelayout = (Android.Widget.FrameLayout)inflater.Inflate(Resource.Layout.ViewContainer, null);
 
                 //nativeConverted.SaveEnabled = true;
                 //nativeConverted.RestoreHierarchyState(mViewStates);
@@ -1274,10 +1249,10 @@ namespace CarouselView.FormsPlugin.Droid
                 return nativeConverted;
             }
 
-            public override void DestroyItem(AV.ViewGroup container, int position, Java.Lang.Object @object)
+            public override void DestroyItem(Android.Views.ViewGroup container, int position, Java.Lang.Object @object)
             {
                 var pager = (ViewPager)container;
-                var view = (AV.View)@object;
+                var view = (Android.Views.View)@object;
                 //view.SaveEnabled = true;
                 //view.SaveHierarchyState(mViewStates);
                 pager.RemoveView(view);
@@ -1288,7 +1263,7 @@ namespace CarouselView.FormsPlugin.Droid
 
             public override int GetItemPosition(Java.Lang.Object @object)
             {
-                var tag = (Tag)((AV.View)@object).Tag;
+                var tag = (Tag)((Android.Views.View)@object).Tag;
                 var position = Source.IndexOf(tag.BindingContext);
                 return position != -1 ? position : PositionNone;
             }
@@ -1383,10 +1358,12 @@ namespace CarouselView.FormsPlugin.Droid
             }
         }
 
-        #region licensing
-
-        public static string License;
-
-        #endregion
+        /// <summary>
+		/// Used for registration with dependency service
+		/// </summary>
+		public static void Init()
+        {
+            var temp = DateTime.Now;
+        }
     }
 }

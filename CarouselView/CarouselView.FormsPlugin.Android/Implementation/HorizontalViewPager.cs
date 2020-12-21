@@ -2,23 +2,18 @@
 using System.Linq;
 using Android.Content;
 using Android.Runtime;
-using Android.Support.V4.View;
 using Android.Util;
 using Android.Views;
+using AndroidX.ViewPager.Widget;
 using CarouselView.FormsPlugin.Abstractions;
 using Xamarin.Forms;
 
 namespace CarouselView.FormsPlugin.Droid
 {
-    public class HorizontalViewPager : ViewPager, IViewPager
+    public sealed class HorizontalViewPager : ViewPager, IViewPager
 	{
-        private bool isSwipeEnabled = true;
+        private bool isSwipingEnabled = true;
         private CarouselViewControl Element;
-
-        // Fix for #171 System.MissingMethodException: No constructor found
-        public HorizontalViewPager(IntPtr intPtr, JniHandleOwnership jni) : base(intPtr, jni)
-        {
-        }
 
         public HorizontalViewPager(Context context) : base(context, null)
         {
@@ -28,21 +23,39 @@ namespace CarouselView.FormsPlugin.Droid
         {
         }
 
-        public override bool OnInterceptTouchEvent(MotionEvent ev)
+        // Fix for #171 System.MissingMethodException: No constructor found
+        public HorizontalViewPager(IntPtr intPtr, JniHandleOwnership jni) : base(intPtr, jni)
         {
-            if (ev.Action == MotionEventActions.Up)
+        }
+
+        float mStartDragX;
+        float mStartDragY;
+
+        public override bool OnInterceptTouchEvent(MotionEvent e)
+        {
+            if (e.Action == MotionEventActions.Down)
             {
-                if (Element?.GestureRecognizers.GetCount() > 0)
+                if (Element.Behaviors.FirstOrDefault((arg) => arg is AutoplayBehavior) is AutoplayBehavior autoplay)
                 {
-                    var gesture = Element.GestureRecognizers.First() as TapGestureRecognizer;
-                    if (gesture != null)
-                        gesture.Command?.Execute(gesture.CommandParameter);
+                    autoplay.StopTimer();
+                    Element.Behaviors.Remove(autoplay);
                 }
             }
 
-            if (this.isSwipeEnabled)
+            if (this.isSwipingEnabled)
             {
-                return base.OnInterceptTouchEvent(ev);
+                if (e.Action == MotionEventActions.Down)
+                {
+                    mStartDragX = e.GetX();
+                }
+
+                if (Element.GestureRecognizers.FirstOrDefault((arg) => arg is SwipeGestureRecognizer) is SwipeGestureRecognizer swipe)
+                {
+                    mStartDragY = e.GetY();
+                    return true;
+                }
+
+                return base.OnInterceptTouchEvent(e);
             }
 
             return false;
@@ -50,22 +63,74 @@ namespace CarouselView.FormsPlugin.Droid
 
         public override bool OnTouchEvent(MotionEvent e)
         {
-            if (this.isSwipeEnabled)
+            if (e.Action == MotionEventActions.Up)
             {
+                if (Element.InfiniteScrolling && Element.AutoplayInterval > 0 && Element.ItemsSource?.GetCount() > 1)
+                {
+                    Element.Behaviors.Add(new AutoplayBehavior() { Delay = Element.AutoplayInterval * 1000 });
+                }
+            }
+
+            if (e.Action == MotionEventActions.Up && Element?.GestureRecognizers.GetCount() > 0)
+            {
+                if (Element.GestureRecognizers.FirstOrDefault((arg) => arg is TapGestureRecognizer) is TapGestureRecognizer tap)
+                {
+                    tap.Command?.Execute(tap.CommandParameter);
+                } 
+            }
+
+            if (this.isSwipingEnabled)
+            {
+                if (e.Action == MotionEventActions.Up)
+                {
+                    string swipeDirection = "";
+
+                    var CumulativeX = e.GetX() - mStartDragX;
+                    var CumulativeY = e.GetY() - mStartDragY;
+
+                    if (Math.Abs(CumulativeX) < Math.Abs(CumulativeY))
+                    {
+                        if (CumulativeY > 0)
+                        {
+                            swipeDirection = ScrollDirection.Down.ToString();
+                        }
+                        else
+                        {
+                            swipeDirection = ScrollDirection.Up.ToString();
+                        }
+                    }
+
+                    if (Element.GestureRecognizers.FirstOrDefault((arg) => arg is SwipeGestureRecognizer) is SwipeGestureRecognizer swipe && mStartDragY > 0)
+                    {
+                        if (swipe.Direction.ToString().Contains(swipeDirection))
+                        {
+                            swipe.Command?.Execute(swipe.CommandParameter);
+                        }
+                    }
+
+                    float x = e.GetX();
+
+                    if (CurrentItem == Element.ItemsSource.GetCount() - 1 && x < mStartDragX)
+                    {
+                        Element.SendLoadMore();
+                        Element.LoadMoreCommand?.Execute(null);
+                    }
+                }
+
                 return base.OnTouchEvent(e);
             }
 
             return false;
         }
 
-        public void SetPagingEnabled(bool enabled)
-        {
-            this.isSwipeEnabled = enabled;
-        }
-
         public void SetElement(CarouselViewControl element)
         {
             this.Element = element;
         }
-	}
+
+        public void SetPagingEnabled(bool enabled)
+        {
+            this.isSwipingEnabled = enabled;
+        }
+    }
 }

@@ -1,0 +1,15 @@
+Xamarin.AndroidX.Annotation
+Xamarin.AndroidX.Arch.Core.Common
+Xamarin.AndroidX.Collection
+Xamarin.AndroidX.Core
+Xamarin.AndroidX.CustomView
+Xamarin.AndroidX.Lifecycle.Common
+Xamarin.AndroidX.Lifecycle.Runtime
+Xamarin.AndroidX.MultiDex
+Xamarin.AndroidX.VersionedParcelable
+Xamarin.AndroidX.ViewPager
+androidx.lifecycle.lifecycle-runtime
+androidx.versionedparcelable.versionedparcelable
+androidx.core.core
+androidx.customview.customview
+androidx.viewpager.viewpager

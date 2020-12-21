@@ -21,7 +21,6 @@ using System;
 using System.Linq;
 using Android.Content;
 using Android.Runtime;
-using Android.Support.V4.View;
 using Android.Util;
 using Android.Views;
 using CarouselView.FormsPlugin.Abstractions;
@@ -30,9 +29,8 @@ using Xamarin.Forms;
 namespace CarouselView.FormsPlugin.Droid
 {
 
-	public class VerticalViewPager : ViewPager, IViewPager
+	public class VerticalViewPager : Com.Android.DeskClock.VerticalViewPager, IViewPager
 	{
-		private bool isSwipeEnabled = true;
 		private CarouselViewControl Element;
 
 		float mStartDragY;
@@ -44,36 +42,6 @@ namespace CarouselView.FormsPlugin.Droid
 
 		public VerticalViewPager(Context context, IAttributeSet attrs) : base(context, attrs)
 		{
-			Init();
-		}
-
-		// Fix for #171 System.MissingMethodException: No constructor found
-		public VerticalViewPager(IntPtr intPtr, JniHandleOwnership jni) : base(intPtr, jni)
-		{
-		}
-
-		/**
-		 * @return {@code false} since a vertical view pager can never be scrolled horizontally
-		 */
-		public override bool CanScrollHorizontally(int direction)
-		{
-			return false;
-		}
-
-		/**
-		 * @return {@code true} iff a normal view pager would support horizontal scrolling at this time
-		 */
-		public override bool CanScrollVertically(int direction)
-		{
-			return base.CanScrollHorizontally(direction);
-		}
-
-		public void Init()
-		{
-			// Make page transit vertical
-			SetPageTransformer(true, new VerticalPageTransformer());
-			// Get rid of the overscroll drawing that happens on the left and right (the ripple)
-			OverScrollMode = OverScrollMode.Never;
 		}
 
 		public override bool OnInterceptTouchEvent(MotionEvent e)
@@ -87,23 +55,20 @@ namespace CarouselView.FormsPlugin.Droid
 				}
 			}
 
-			if (this.isSwipeEnabled)
+			if (this.isSwipingEnabled)
 			{
 				if (e.Action == MotionEventActions.Down)
 				{
 					mStartDragY = e.GetY();
 				}
 
-				/*if (Element.GestureRecognizers.FirstOrDefault((arg) => arg is SwipeGestureRecognizer) is SwipeGestureRecognizer swipe)
+				if (Element.GestureRecognizers.FirstOrDefault((arg) => arg is SwipeGestureRecognizer) is SwipeGestureRecognizer swipe)
 				{
 					mStartDragX = e.GetX();
 					return true;
-				}*/
+				}
 
-				var toIntercept = base.OnInterceptTouchEvent(flipXY(e));
-				// Return MotionEvent to normal
-				flipXY(e);
-				return toIntercept;
+				return base.OnInterceptTouchEvent(e);
 			}
 
 			return false;
@@ -127,7 +92,7 @@ namespace CarouselView.FormsPlugin.Droid
 				}
 			}
 
-			if (this.isSwipeEnabled)
+			if (this.isSwipingEnabled)
 			{
 				if (e.Action == MotionEventActions.Up)
 				{
@@ -148,13 +113,13 @@ namespace CarouselView.FormsPlugin.Droid
 						}
 					}
 
-					/*if (Element.GestureRecognizers.FirstOrDefault((arg) => arg is SwipeGestureRecognizer) is SwipeGestureRecognizer swipe && mStartDragX > 0)
+					if (Element.GestureRecognizers.FirstOrDefault((arg) => arg is SwipeGestureRecognizer) is SwipeGestureRecognizer swipe && mStartDragX > 0)
 					{
 						if (swipe.Direction.ToString().Contains(swipeDirection))
 						{
 							swipe.Command?.Execute(swipe.CommandParameter);
 						}
-					}*/
+					}
 
 					float y = e.GetY();
 
@@ -175,62 +140,15 @@ namespace CarouselView.FormsPlugin.Droid
 					}*/
 				}
 
-				var toHandle = base.OnTouchEvent(flipXY(e));
-				//Return MotionEvent to normal
-				flipXY(e);
-				return toHandle;
+				return base.OnTouchEvent(e);
 			}
 
 			return false;
-		}
-
-		public void SetPagingEnabled(bool enabled)
-		{
-			this.isSwipeEnabled = enabled;
 		}
 
 		public void SetElement(CarouselViewControl element)
 		{
 			this.Element = element;
 		}
-
-		private MotionEvent flipXY(MotionEvent ev)
-		{
-			var width = Width;
-			var height = Height;
-			var x = (ev.GetY() / height) * width;
-			var y = (ev.GetX() / width) * height;
-			ev.SetLocation(x, y);
-			return ev;
-		}
-
-		private class VerticalPageTransformer : Java.Lang.Object, IPageTransformer
-		{
-            public void TransformPage(global::Android.Views.View page, float position)
-            {
-				var pageWidth = page.Width;
-				var pageHeight = page.Height;
-
-				if (position < -1)
-				{
-					// This page is way off-screen to the left.
-					page.Alpha = 0;
-				}
-				else if (position <= 1)
-				{
-					page.Alpha = 1;
-					// Counteract the default slide transition
-					page.TranslationX = pageWidth * -position;
-					// set Y position to swipe in from top
-					float yPosition = position * pageHeight;
-					page.TranslationY = yPosition;
-				}
-				else
-				{
-					// This page is way off-screen to the right.
-					page.Alpha = 0;
-				}
-			}
-        }
 	}
 }

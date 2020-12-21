@@ -1,0 +1,11 @@
+/Users/__alexrainman/Projects/carouselviewpro/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/CarouselView.FormsPlugin.Abstractions.dll
+/Users/__alexrainman/Projects/carouselviewpro/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Core.dll
+/Users/__alexrainman/Projects/carouselviewpro/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Platform.dll
+/Users/__alexrainman/Projects/carouselviewpro/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Xaml.dll
+/Users/__alexrainman/Projects/carouselviewpro/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Core.pdb
+/Users/__alexrainman/Projects/carouselviewpro/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Core.xml
+/Users/__alexrainman/Projects/carouselviewpro/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Xaml.pdb
+/Users/__alexrainman/Projects/carouselviewpro/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/bin/Release/Xamarin.Forms.Xaml.xml
+/Users/__alexrainman/Projects/carouselviewpro/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/obj/Release/CarouselView.FormsPlugin.Abstractions.Portable.csproj.CoreCompileInputs.cache
+/Users/__alexrainman/Projects/carouselviewpro/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/obj/Release/CarouselView.FormsPlugin.Abstractions.Portable.csproj.CopyComplete
+/Users/__alexrainman/Projects/carouselviewpro/CarouselView/CarouselView.FormsPlugin.Abstractions.Portable/obj/Release/CarouselView.FormsPlugin.Abstractions.dll

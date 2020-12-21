@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    <CarouselView.FormsPlugin.Android.VerticalViewPager
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <CarouselView.FormsPlugin.Droid.VerticalViewPager
         android:id="@+id/pager"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
     <LinearLayout
         android:id="@+id/prev"
         android:layout_width="36dip"
         android:layout_height="20dip"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:alpha="0.5"
         android:visibility="gone"
         android:gravity="center">
@@ -20,14 +19,14 @@
             android:id="@+id/prevArrow"
             android:layout_width="17dip"
             android:layout_height="17dip"
-            android:src="@drawable/Up" />
+            android:src="@drawable/Up"
+            android:contentDescription=""/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/next"
         android:layout_width="36dip"
         android:layout_height="20dip"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:alpha="0.5"
         android:visibility="gone"
         android:orientation="horizontal"
@@ -36,21 +35,16 @@
             android:id="@+id/nextArrow"
             android:layout_width="17dip"
             android:layout_height="17dip"
-            android:src="@drawable/Down" />
+            android:src="@drawable/Down"
+            android:contentDescription=""/>
     </LinearLayout>
     <Com.ViewPagerIndicator.CirclePageIndicator
         android:id="@+id/indicator"
-        android:paddingLeft="15dip"
-        android:paddingTop="15dip"
-        android:paddingRight="15dip"
-        android:paddingBottom="15dip"
-        android:layout_height="fill_parent"
+        android:padding="15dip"
+        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:background="@android:color/transparent"
-        android:visibility="gone"
-        android:layout_alignParentRight="true"
         app:vpiPageColor="#c0c0c0"
-        app:vpiOrientation="vertical"
         app:vpiSnap="true"
         app:vpiRadius="3dp"
         app:vpiFillColor="#808080"

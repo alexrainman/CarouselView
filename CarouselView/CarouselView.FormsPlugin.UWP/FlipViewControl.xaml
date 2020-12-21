@@ -9,11 +9,11 @@
 
     <UserControl.Resources>
         <ItemsPanelTemplate x:Key="HPanel" >
-            <VirtualizingStackPanel Orientation="Horizontal" PointerWheelChanged="VirtualizingStackPanel_PointerWheelChanged"/>
+            <VirtualizingStackPanel Orientation="Horizontal"/>
         </ItemsPanelTemplate>
 
         <ItemsPanelTemplate x:Key="VPanel">
-            <VirtualizingStackPanel Orientation="Vertical" PointerWheelChanged="VirtualizingStackPanel_PointerWheelChanged"/>
+            <VirtualizingStackPanel Orientation="Vertical"/>
         </ItemsPanelTemplate>
 
         <ItemsPanelTemplate x:Key="dotsHPanel">
@@ -27,9 +27,49 @@
     </UserControl.Resources>
 
     <Grid>
-        <FlipView x:Name="flipView"/>
-        <StackPanel x:Name="indicators" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="32">
-            <ItemsControl x:Name="dotsPanel" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+        <FlipView x:Name="flipView" Background="Transparent" />
+        <RelativePanel x:Name="prevBtnH" Width="20" Height="36" HorizontalAlignment="Left" Background="Black" Opacity="0.5" Visibility="Collapsed">
+            <Path x:Name="prevArrowH" Stretch="Uniform" Fill="White"
+                  Data="M 50 120, 80 90, 85 90, 55 120, 85 150, 80 150 Z"
+                  Width="17" Height="17"
+                  RelativePanel.AlignHorizontalCenterWithPanel="False"
+                  RelativePanel.AlignVerticalCenterWithPanel="True">
+            </Path>
+        </RelativePanel>
+        <RelativePanel x:Name="nextBtnH" Width="20" Height="36" HorizontalAlignment="Right" Background="Black" Opacity="0.5" Visibility="Collapsed">
+            <Path x:Name="nextArrowH" Stretch="Uniform" Fill="White"
+                  Data="M 80 120, 50 90, 55 90, 85 120, 55 150, 50 150 Z"
+                  Width="17" Height="17"
+                  RelativePanel.AlignHorizontalCenterWithPanel="True"
+                  RelativePanel.AlignVerticalCenterWithPanel="True">
+            </Path>
+        </RelativePanel>
+        <RelativePanel x:Name="prevBtnV" Width="36" Height="20" VerticalAlignment="Top" Background="Black" Opacity="0.5" Visibility="Collapsed">
+            <Path x:Name="prevArrowV" Stretch="Uniform" Fill="White"
+                  Data="M 50 120, 80 90, 85 90, 55 120, 85 150, 80 150 Z"
+                  Width="17" Height="17"
+                  RelativePanel.AlignHorizontalCenterWithPanel="True"
+                  RelativePanel.AlignVerticalCenterWithPanel="True"
+                  RenderTransformOrigin=".5,.5">
+                <Path.RenderTransform>
+                    <RotateTransform Angle="90" />
+                </Path.RenderTransform>
+            </Path>
+        </RelativePanel>
+        <RelativePanel x:Name="nextBtnV" Width="36" Height="20" VerticalAlignment="Bottom" Background="Black" Opacity="0.5" Visibility="Collapsed">
+            <Path x:Name="nextArrowV" Stretch="Uniform" Fill="White"
+                  Data="M 80 120, 50 90, 55 90, 85 120, 55 150, 50 150 Z"
+                  Width="17" Height="17"
+                  RelativePanel.AlignHorizontalCenterWithPanel="True"
+                  RelativePanel.AlignVerticalCenterWithPanel="True"
+                  RenderTransformOrigin=".5,.5">
+                <Path.RenderTransform>
+                    <RotateTransform Angle="90" />
+                </Path.RenderTransform>
+            </Path>
+        </RelativePanel>
+        <StackPanel x:Name="indicators">
+            <ItemsControl x:Name="dotsPanel" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </UserControl>

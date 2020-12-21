@@ -10,8 +10,6 @@ namespace CarouselView.FormsPlugin.UWP
     {
         public static FrameworkElement ToWindows(this Xamarin.Forms.View view, Rectangle size)
         {
-            //var vRenderer = RendererFactory.GetRenderer (view);
-
             if (Platform.GetRenderer(view) == null)
                 Platform.SetRenderer(view, Platform.CreateRenderer(view));
 
