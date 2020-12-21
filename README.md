@@ -12,6 +12,10 @@
 |Xamarin.Android|Yes|API 15+|ViewPager|
 |UWP|Yes|10.0.16299.0|FlipView|
 
+**Known Issue **
+
+Vertical swiping not working in Android after updating to AndroidX.
+
 #### Usage
 
 In your iOS and Android projects call:
@@ -83,6 +87,32 @@ Or, template selector in your ViewModel:
 ```
 
 **Bindable Properties**
+
+```InfiniteScrolling```: scroll pages in a loop (default false).
+
+```AutoplayInterval```: swicth between pages at a set interval (works only when InfiniteScrolling is set to true).
+
+```LoadMore```: load more items when dragging at the end of the last page (works only when InfiniteScrolling is set to false).
+
+```LoadMoreCommand```: load more items when dragging at the end of the last page (works only when InfiniteScrolling is set to false).
+
+```SelectedItem``: the current visible page instance.
+
+```HorizontalIndicatorsPosition```: bottom or top (works only on a horizontal carousel).
+
+```VerticalIndicatorsPosition```: left or right (works only on a vertical carousel).
+
+```ArrowsSize```: set the size of the navigation arrows (default 17).
+
+```PrevArrowTemplate```: use a custom view to personalize prev navigation arrow (DataTemplate).
+
+```NextArrowTemplate```: use a custom view to personalize next navigation arrow (DataTemplate).
+
+```ArrowsParentMargin```: give some margin to arrows from its parent.
+
+```HorizontalArrowsPosition```: center, bottom or top (works only on a horizontal carousel).
+
+```VerticalArrowsPosition```: center, left or right (works only on a vertical carousel).
 
 ```Orientation```: Vertical or Horizontal swipe/scroll (default horizontal).
 
@@ -212,17 +242,50 @@ public async void OnPrev(object sender, TappedEventArgs e)
 DownsampleToViewSize="true" DownsampleWidth="WIDTH"
 ```
 
-#### Roadmap
-
-* Infinite scrolling
-* Indicators UI position and size
-* Indicators tap event
-* Load more event
-
 #### Contributors
 * [alexrainman](https://github.com/alexrainman)
 
 #### Release Notes
+
+6.0.0
+
+[New] Adding InfiniteScrolling property
+
+[New] Adding AutoplayInterval property
+
+[New] Adding LoadMore event
+
+[New] Adding LoadMore command
+
+[New] Adding SelectedItem property
+
+[New] Adding SelectedItem to PositionSelected EventArgs
+
+[New] Adding HorizontalIndicatorsPosition property
+
+[New] Adding VerticalIndicatorsPosition property
+
+[New] Adding ArrowsSize property
+
+[New] Arrows templates
+
+[New] Adding ArrowsParentMargin property
+
+[New] Adding HorizontalArrowsPosition property
+
+[New] Adding VerticalArrowsPosition property
+
+[New] Adding PrevArrowTemplate property
+
+[New] Adding NextArrowTemplate property
+
+[New] SwipeGestureRecognizer will work on the opposite direction as the carousel orientation
+
+[New] TapGestureRecognizer will work as soon a Command is used
+
+[Update] Bug fixes and performance improvements
+
+[Android] Adding support for AndroidX
 
 5.2.0
 
