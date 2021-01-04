@@ -30,7 +30,7 @@ namespace CarouselView.FormsPlugin.Droid
 
         float mStartDragX;
         float mStartDragY;
-
+        
         public override bool OnInterceptTouchEvent(MotionEvent e)
         {
             if (e.Action == MotionEventActions.Down)
@@ -55,7 +55,14 @@ namespace CarouselView.FormsPlugin.Droid
                     return true;
                 }
 
-                return base.OnInterceptTouchEvent(e);
+				try
+                {
+					return base.OnInterceptTouchEvent(e);
+                }
+                catch (Java.Lang.IllegalArgumentException ex)
+                {
+                    Android.Util.Log.Debug("CarouselView.FormsPlugin.Droid.HorizontalViewPager", "IllegalArgumentException error: " + ex.Message);
+                }
             }
 
             return false;
