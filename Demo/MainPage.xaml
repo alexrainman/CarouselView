@@ -1,36 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Demo.MainPage"
-    xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
-    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
+    xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions" xmlns:demo="clr-namespace:Demo">
 
-    <cv:CarouselViewControl x:Name="carousel"
-        ItemsSource="{Binding MyItemsSource}"
-        ShowArrows="true"
-        ShowIndicators="true"
-        PositionSelectedCommand="{Binding MyCommand}"
-        PositionSelected="Handle_PositionSelected"
-        Scrolled="Handle_Scrolled"
-        Orientation="Horizontal">
-
-        <!--<cv:CarouselViewControl.ItemsSource>
-           <x:Array Type="{x:Type View}">
-
-                <ScrollView>
-                    <StackLayout>
-                        <ffimageloading:CachedImage DownsampleToViewSize="true" Source = "c1.jpg" Aspect="AspectFill" />
-                        <ffimageloading:CachedImage DownsampleToViewSize="true" Source = "c2.jpg" Aspect="AspectFill" />
-                        <ffimageloading:CachedImage DownsampleToViewSize="true" Source = "c3.jpg" Aspect="AspectFill" />
-                    </StackLayout>
-                </ScrollView>
-                <ffimageloading:CachedImage DownsampleToViewSize="true" Source = "c1.jpg" Aspect="AspectFill" />
-                <ffimageloading:CachedImage DownsampleToViewSize="true" Source = "c2.jpg" Aspect="AspectFill" />
-                <ffimageloading:CachedImage DownsampleToViewSize="true" Source = "c3.jpg" Aspect="AspectFill" />
-
-           </x:Array>
-        </cv:CarouselViewControl.ItemsSource>-->
-
-    </cv:CarouselViewControl>
+    <ScrollView>
+        <cv:CarouselViewControl x:Name="carousel"
+                                ItemsSource="{Binding MyItemsSource}"
+                                ShowArrows="True"
+                                ShowIndicators="True"
+                                PositionSelectedCommand="{Binding PositionSelectedCommand}"
+                                ScrolledCommand="{Binding ScrolledCommand}"
+                                Orientation="Horizontal"
+                                InfiniteScrolling="True"
+                                AutoplayInterval="0"
+                                IsSwipeEnabled="True"
+                                SelectedItem="{Binding SelectedItem}">
+        </cv:CarouselViewControl>
+    </ScrollView>
 
 </ContentPage>

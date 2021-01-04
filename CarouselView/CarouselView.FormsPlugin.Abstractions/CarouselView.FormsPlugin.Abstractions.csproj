@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.122203" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1821" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="IndicatorsAlignment.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="IndicatorsAlignment.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
   </ItemGroup>
 </Project>

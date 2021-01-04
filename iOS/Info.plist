@@ -4,8 +4,6 @@
 <dict>
 	<key>CFBundleDisplayName</key>
 	<string>Demo</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.slbdev.demo.ios</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -42,5 +40,7 @@
 	<string>Resources/Images.xcassets/AppIcons.appiconset</string>
 	<key>CFBundleName</key>
 	<string>Demo</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.softprize.demo</string>
 </dict>
 </plist>

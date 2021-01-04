@@ -1,5 +1,5 @@
 ﻿using CarouselView.FormsPlugin.UWP;
-using FFImageLoading.Forms.WinUWP;
+using FFImageLoading.Forms.Platform;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -42,12 +42,13 @@ namespace Demo.UWP
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                this.DebugSettings.EnableFrameRateCounter = true;
-            }
-#endif
+            List<Assembly> assembliesToInclude = new List<Assembly>();
+            assembliesToInclude.Add(typeof(CarouselViewRenderer).GetTypeInfo().Assembly);
+            assembliesToInclude.Add(typeof(CachedImageRenderer).GetTypeInfo().Assembly);
+            CarouselViewRenderer.Init();
+            CachedImageRenderer.Init();
+            Xamarin.Forms.Forms.Init(e, assembliesToInclude);
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -58,11 +59,6 @@ namespace Demo.UWP
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
-
-				List<Assembly> assembliesToInclude = new List<Assembly>();
-				assembliesToInclude.Add(typeof(CarouselViewRenderer).GetTypeInfo().Assembly);
-                assembliesToInclude.Add(typeof(CachedImageRenderer).GetTypeInfo().Assembly);
-                Xamarin.Forms.Forms.Init(e, assembliesToInclude);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {

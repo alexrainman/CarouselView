@@ -1,13 +1,21 @@
 ﻿
+using System;
+using System.Linq;
+using CarouselView.FormsPlugin.Abstractions;
+using Foundation;
 using UIKit;
 using Xamarin.Forms;
 
 namespace CarouselView.FormsPlugin.iOS
 {
-	public class ViewContainer : UIViewController
+	internal sealed class ViewContainer : UIViewController
 	{
 		// To save current position
 		public object Tag { get; set; }
+
+        public ViewContainer()
+        {
+        }
 
 		protected override void Dispose(bool disposing)
 		{
@@ -32,6 +40,6 @@ namespace CarouselView.FormsPlugin.iOS
 
 			base.Dispose(disposing);
 		}
-	}
+    }
 }
 

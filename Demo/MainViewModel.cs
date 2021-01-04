@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Windows.Input;
+using CarouselView.FormsPlugin.Abstractions;
 using FFImageLoading.Forms;
 using Xamarin.Forms;
 
@@ -16,14 +15,21 @@ namespace Demo
         {
             MyItemsSource = new ObservableCollection<View>()
             {
-                new CachedImage() { Source = "c1.jpg", DownsampleToViewSize = true, Aspect = Aspect.AspectFill },
-                new CachedImage() { Source = "c2.jpg", DownsampleToViewSize = true, Aspect = Aspect.AspectFill },
-                new CachedImage() { Source = "c3.jpg", DownsampleToViewSize = true, Aspect = Aspect.AspectFill }
+                new CachedImage() { DownsampleToViewSize = true, Source = "c1.jpg", Aspect = Aspect.Fill },
+                new CachedImage() { DownsampleToViewSize = true, Source = "c2.jpg", Aspect = Aspect.Fill },
+                new CachedImage() { DownsampleToViewSize = true, Source = "c3.jpg", Aspect = Aspect.Fill }
             };
 
-            MyCommand = new Command(() =>
+            PositionSelectedCommand = new Command<PositionSelectedEventArgs>((e) =>
             {
-                Debug.WriteLine("Position selected.");
+                Debug.WriteLine("Position " + e.NewValue + " selected.");
+                Debug.Write(this.SelectedItem);
+            });
+
+            ScrolledCommand = new Command<CarouselView.FormsPlugin.Abstractions.ScrolledEventArgs>((e) =>
+            {
+                Debug.WriteLine("Scrolled to " + e.NewValue + " percent.");
+                Debug.WriteLine("Direction = " + e.Direction);
             });
         }
 
@@ -38,7 +44,23 @@ namespace Demo
             }
         }
 
-        public Command MyCommand { protected set; get; }
+        object _selectedItem;
+        public object SelectedItem
+        {
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged("SelectedItem");
+            }
+            get
+            {
+                return _selectedItem;
+            }
+        }
+
+        public Command<PositionSelectedEventArgs> PositionSelectedCommand { protected set; get; }
+
+        public Command<CarouselView.FormsPlugin.Abstractions.ScrolledEventArgs> ScrolledCommand { protected set; get; }
 
         protected virtual void OnPropertyChanged(string propertyName)
         {

@@ -1,15 +1,13 @@
 ﻿using System;
-using Xamarin.Forms;
 using System.Collections;
-using System.Linq;
-using System.Collections.Generic;
 using System.ComponentModel;
+using Xamarin.Forms;
 
 namespace CarouselView.FormsPlugin.Abstractions
 {
-	/// <summary>
-	/// CarouselView Interface
-	/// </summary>
+    /// <summary>
+    /// CarouselView Interface
+    /// </summary>
     public class CarouselViewControl : View
 	{
         public static readonly BindableProperty OrientationProperty = BindableProperty.Create("Orientation", typeof(CarouselViewOrientation), typeof(CarouselViewControl), CarouselViewOrientation.Horizontal);
@@ -18,55 +16,6 @@ namespace CarouselView.FormsPlugin.Abstractions
 		{
 			get { return (CarouselViewOrientation)GetValue(OrientationProperty); }
 			set { SetValue(OrientationProperty, value); }
-		}
-
-		// Android and iOS only
-		public static readonly BindableProperty InterPageSpacingProperty = BindableProperty.Create("InterPageSpacing", typeof(int), typeof(CarouselViewControl), 0);
-
-		public int InterPageSpacing
-		{
-			get { return (int)GetValue(InterPageSpacingProperty); }
-			set { SetValue(InterPageSpacingProperty, value); }
-		}
-
-		public static readonly BindableProperty IsSwipeEnabledProperty = BindableProperty.Create("IsSwipeEnabled", typeof(bool), typeof(CarouselViewControl), true);
-
-		public bool IsSwipeEnabled
-		{
-			get { return (bool)GetValue(IsSwipeEnabledProperty); }
-			set { SetValue(IsSwipeEnabledProperty, value); }
-		}
-
-		public static readonly BindableProperty IndicatorsTintColorProperty = BindableProperty.Create("IndicatorsTintColor", typeof(Color), typeof(CarouselViewControl), Color.Silver);
-
-		public Color IndicatorsTintColor
-		{
-			get { return (Color)GetValue(IndicatorsTintColorProperty); }
-			set { SetValue(IndicatorsTintColorProperty, value); }
-		}
-
-		public static readonly BindableProperty CurrentPageIndicatorTintColorProperty = BindableProperty.Create("CurrentPageIndicatorTintColor", typeof(Color), typeof(CarouselViewControl), Color.Gray);
-
-		public Color CurrentPageIndicatorTintColor
-		{
-			get { return (Color)GetValue(CurrentPageIndicatorTintColorProperty); }
-			set { SetValue(CurrentPageIndicatorTintColorProperty, value); }
-		}
-
-		public static readonly BindableProperty IndicatorsShapeProperty = BindableProperty.Create("IndicatorsShape", typeof(IndicatorsShape), typeof(CarouselViewControl), IndicatorsShape.Circle);
-
-		public IndicatorsShape IndicatorsShape
-		{
-			get { return (IndicatorsShape)GetValue(IndicatorsShapeProperty); }
-			set { SetValue(IndicatorsShapeProperty, value); }
-		}
-
-		public static readonly BindableProperty ShowIndicatorsProperty = BindableProperty.Create("ShowIndicators", typeof(bool), typeof(CarouselViewControl), false);
-
-		public bool ShowIndicators
-		{
-			get { return (bool)GetValue(ShowIndicatorsProperty); }
-			set { SetValue(ShowIndicatorsProperty, value); }
 		}
 
 		public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create("ItemsSource", typeof(IEnumerable), typeof(CarouselViewControl), null);
@@ -93,7 +42,32 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(PositionProperty, value); }
 		}
 
-		public static readonly BindableProperty AnimateTransitionProperty = BindableProperty.Create("AnimateTransition", typeof(bool), typeof(CarouselViewControl), true);
+        public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create("SelectedItem", typeof(object), typeof(CarouselViewControl), null, BindingMode.TwoWay);
+
+        public object SelectedItem
+        {
+            get { return (object)GetValue(SelectedItemProperty); }
+            set { SetValue(SelectedItemProperty, value); }
+        }
+
+        // Android and iOS only
+        public static readonly BindableProperty InterPageSpacingProperty = BindableProperty.Create("InterPageSpacing", typeof(int), typeof(CarouselViewControl), 0);
+
+        public int InterPageSpacing
+        {
+            get { return (int)GetValue(InterPageSpacingProperty); }
+            set { SetValue(InterPageSpacingProperty, value); }
+        }
+
+        public static readonly BindableProperty IsSwipeEnabledProperty = BindableProperty.Create("IsSwipeEnabled", typeof(bool), typeof(CarouselViewControl), true);
+
+        public bool IsSwipeEnabled
+        {
+            get { return (bool)GetValue(IsSwipeEnabledProperty); }
+            set { SetValue(IsSwipeEnabledProperty, value); }
+        }
+
+        public static readonly BindableProperty AnimateTransitionProperty = BindableProperty.Create("AnimateTransition", typeof(bool), typeof(CarouselViewControl), true);
 
 		public bool AnimateTransition
 		{
@@ -101,13 +75,83 @@ namespace CarouselView.FormsPlugin.Abstractions
 			set { SetValue(AnimateTransitionProperty, value); }
 		}
 
-		public static readonly BindableProperty ShowArrowsProperty = BindableProperty.Create("ShowArrows", typeof(bool), typeof(CarouselViewControl), false);
+        public static readonly BindableProperty InfiniteScrollingProperty = BindableProperty.Create("InfiniteScrolling", typeof(bool), typeof(CarouselViewControl), false);
 
-		public bool ShowArrows
-		{
-			get { return (bool)GetValue(ShowArrowsProperty); }
-			set { SetValue(ShowArrowsProperty, value); }
-		}
+        public bool InfiniteScrolling
+        {
+            get { return (bool)GetValue(InfiniteScrollingProperty); }
+            set { SetValue(InfiniteScrollingProperty, value); }
+        }
+
+        public static readonly BindableProperty AutoplayIntervalProperty = BindableProperty.Create("AutoplayInterval", typeof(int), typeof(CarouselViewControl), 0);
+
+        public int AutoplayInterval
+        {
+            get { return (int)GetValue(AutoplayIntervalProperty); }
+            set { SetValue(AutoplayIntervalProperty, value); }
+        }
+
+        #region Indicators
+
+        public static readonly BindableProperty IndicatorsTintColorProperty = BindableProperty.Create("IndicatorsTintColor", typeof(Color), typeof(CarouselViewControl), Color.Silver);
+
+        public Color IndicatorsTintColor
+        {
+            get { return (Color)GetValue(IndicatorsTintColorProperty); }
+            set { SetValue(IndicatorsTintColorProperty, value); }
+        }
+
+        public static readonly BindableProperty CurrentPageIndicatorTintColorProperty = BindableProperty.Create("CurrentPageIndicatorTintColor", typeof(Color), typeof(CarouselViewControl), Color.Gray);
+
+        public Color CurrentPageIndicatorTintColor
+        {
+            get { return (Color)GetValue(CurrentPageIndicatorTintColorProperty); }
+            set { SetValue(CurrentPageIndicatorTintColorProperty, value); }
+        }
+
+        public static readonly BindableProperty IndicatorsShapeProperty = BindableProperty.Create("IndicatorsShape", typeof(IndicatorsShape), typeof(CarouselViewControl), IndicatorsShape.Circle);
+
+        public IndicatorsShape IndicatorsShape
+        {
+            get { return (IndicatorsShape)GetValue(IndicatorsShapeProperty); }
+            set { SetValue(IndicatorsShapeProperty, value); }
+        }
+
+        public static readonly BindableProperty ShowIndicatorsProperty = BindableProperty.Create("ShowIndicators", typeof(bool), typeof(CarouselViewControl), false);
+
+        public bool ShowIndicators
+        {
+            get { return (bool)GetValue(ShowIndicatorsProperty); }
+            set { SetValue(ShowIndicatorsProperty, value); }
+        }
+
+        public static readonly BindableProperty HorizontalIndicatorsPositionProperty = BindableProperty.Create("HorizontalIndicatorsPosition", typeof(HorizontalIndicatorsPosition), typeof(CarouselViewControl), HorizontalIndicatorsPosition.Bottom);
+
+        public HorizontalIndicatorsPosition HorizontalIndicatorsPosition
+        {
+            get { return (HorizontalIndicatorsPosition)GetValue(HorizontalIndicatorsPositionProperty); }
+            set { SetValue(HorizontalIndicatorsPositionProperty, value); }
+        }
+
+        public static readonly BindableProperty VerticalIndicatorsPositionProperty = BindableProperty.Create("VerticalIndicatorsPosition", typeof(VerticalIndicatorsPosition), typeof(CarouselViewControl), VerticalIndicatorsPosition.Left);
+
+        public VerticalIndicatorsPosition VerticalIndicatorsPosition
+        {
+            get { return (VerticalIndicatorsPosition)GetValue(VerticalIndicatorsPositionProperty); }
+            set { SetValue(VerticalIndicatorsPositionProperty, value); }
+        }
+
+        #endregion Indicators
+
+        #region Arrows
+
+        public static readonly BindableProperty ShowArrowsProperty = BindableProperty.Create("ShowArrows", typeof(bool), typeof(CarouselViewControl), false);
+
+        public bool ShowArrows
+        {
+            get { return (bool)GetValue(ShowArrowsProperty); }
+            set { SetValue(ShowArrowsProperty, value); }
+        }
 
         public static readonly BindableProperty ArrowsBackgroundColorProperty = BindableProperty.Create("ArrowsBackgroundColor", typeof(Color), typeof(CarouselViewControl), Color.Black);
 
@@ -125,7 +169,6 @@ namespace CarouselView.FormsPlugin.Abstractions
             set { SetValue(ArrowsTintColorProperty, value); }
         }
 
-        // Not working on UWP
         public static readonly BindableProperty ArrowsTransparencyProperty = BindableProperty.Create("ArrowsTransparency", typeof(float), typeof(CarouselViewControl), 0.5f);
 
         public float ArrowsTransparency
@@ -134,24 +177,76 @@ namespace CarouselView.FormsPlugin.Abstractions
             set { SetValue(ArrowsTransparencyProperty, value); }
         }
 
-        public static readonly BindableProperty PositionSelectedCommandProperty = BindableProperty.Create("PositionSelectedCommand", typeof(Command), typeof(CarouselViewControl), null, BindingMode.Default, (bindable, value) =>
+        public static readonly BindableProperty ArrowsSizeProperty = BindableProperty.Create("ArrowsSize", typeof(int), typeof(CarouselViewControl), 17);
+
+        public int ArrowsSize
+        {
+            get { return (int)GetValue(ArrowsSizeProperty); }
+            set { SetValue(ArrowsSizeProperty, value); }
+        }
+
+        public static readonly BindableProperty ArrowsParentMarginProperty = BindableProperty.Create("ArrowsParentMargin", typeof(int), typeof(CarouselViewControl), 0);
+
+        public int ArrowsParentMargin
+        {
+            get { return (int)GetValue(ArrowsParentMarginProperty); }
+            set { SetValue(ArrowsParentMarginProperty, value); }
+        }
+
+        public static readonly BindableProperty HorizontalArrowsPositionProperty = BindableProperty.Create("HorizontalArrowsPosition", typeof(HorizontalArrowsPosition), typeof(CarouselViewControl), HorizontalArrowsPosition.Center);
+
+        public HorizontalArrowsPosition HorizontalArrowsPosition
+        {
+            get { return (HorizontalArrowsPosition)GetValue(HorizontalArrowsPositionProperty); }
+            set { SetValue(HorizontalArrowsPositionProperty, value); }
+        }
+
+        public static readonly BindableProperty VerticalArrowsPositionProperty = BindableProperty.Create("VerticalArrowsPosition", typeof(VerticalArrowsPosition), typeof(CarouselViewControl), VerticalArrowsPosition.Center);
+
+        public VerticalArrowsPosition VerticalArrowsPosition
+        {
+            get { return (VerticalArrowsPosition)GetValue(VerticalArrowsPositionProperty); }
+            set { SetValue(VerticalArrowsPositionProperty, value); }
+        }
+
+        public static readonly BindableProperty PrevArrowTemplateProperty = BindableProperty.Create("PrevArrowTemplate", typeof(DataTemplate), typeof(CarouselViewControl), null);
+
+        public DataTemplate PrevArrowTemplate
+        {
+            get { return (DataTemplate)GetValue(PrevArrowTemplateProperty); }
+            set { SetValue(PrevArrowTemplateProperty, value); }
+        }
+
+        public static readonly BindableProperty NextArrowTemplateProperty = BindableProperty.Create("NextArrowTemplate", typeof(DataTemplate), typeof(CarouselViewControl), null);
+
+        public DataTemplate NextArrowTemplate
+        {
+            get { return (DataTemplate)GetValue(NextArrowTemplateProperty); }
+            set { SetValue(NextArrowTemplateProperty, value); }
+        }
+
+        #endregion Arrows
+
+        #region Events and Commands
+
+        public event EventHandler<PositionSelectedEventArgs> PositionSelected;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public void SendPositionSelected()
+        {
+            PositionSelected?.Invoke(this, new PositionSelectedEventArgs { NewValue = this.Position });
+        }
+
+        public static readonly BindableProperty PositionSelectedCommandProperty = BindableProperty.Create("PositionSelectedCommand", typeof(Command<PositionSelectedEventArgs>), typeof(CarouselViewControl), null, BindingMode.Default, (bindable, value) =>
         {
             return true;
         });
 
-        public Command PositionSelectedCommand
+        public Command<PositionSelectedEventArgs> PositionSelectedCommand
         {
-            get { return (Command)GetValue(PositionSelectedCommandProperty); }
+            get { return (Command<PositionSelectedEventArgs>)GetValue(PositionSelectedCommandProperty); }
             set { SetValue(PositionSelectedCommandProperty, value); }
         }
-
-		public event EventHandler<PositionSelectedEventArgs> PositionSelected;
-
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		public void SendPositionSelected()
-		{
-            PositionSelected?.Invoke(this, new PositionSelectedEventArgs { NewValue = this.Position });
-		}
 
         public event EventHandler<ScrolledEventArgs> Scrolled;
 
@@ -160,12 +255,44 @@ namespace CarouselView.FormsPlugin.Abstractions
         {
             Scrolled?.Invoke(this, new ScrolledEventArgs { NewValue = percent, Direction = direction });
         }
+
+        public static readonly BindableProperty ScrolledCommandProperty = BindableProperty.Create("ScrolledCommand", typeof(Command<ScrolledEventArgs>), typeof(CarouselViewControl), null, BindingMode.Default, (bindable, value) =>
+        {
+            return true;
+        });
+
+        public Command<ScrolledEventArgs> ScrolledCommand
+        {
+            get { return (Command<ScrolledEventArgs>)GetValue(ScrolledCommandProperty); }
+            set { SetValue(ScrolledCommandProperty, value); }
+        }
+
+        public event EventHandler<EventArgs> LoadMore;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public void SendLoadMore()
+        {
+            LoadMore?.Invoke(this, new EventArgs());
+        }
+
+        public static readonly BindableProperty LoadMoreCommandProperty = BindableProperty.Create("LoadMoreCommand", typeof(Command), typeof(CarouselViewControl), null, BindingMode.Default, (bindable, value) =>
+        {
+            return true;
+        });
+
+        public Command LoadMoreCommand
+        {
+            get { return (Command)GetValue(LoadMoreCommandProperty); }
+            set { SetValue(LoadMoreCommandProperty, value); }
+        }
+
+        #endregion
     }
 
-	public class PositionSelectedEventArgs : EventArgs
+    public class PositionSelectedEventArgs : EventArgs
 	{
 		public int NewValue { get; set; }
-	}
+    }
 
     public class ScrolledEventArgs : EventArgs
     {

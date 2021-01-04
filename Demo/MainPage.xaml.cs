@@ -1,7 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using CarouselView.FormsPlugin.Abstractions;
 using FFImageLoading.Forms;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace Demo
 {
@@ -16,17 +17,14 @@ namespace Demo
             Title = "CarouselView";
 
             BindingContext = _vm = new MainViewModel();
+
+            On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
         }
 
-        void Handle_PositionSelected(object sender, CarouselView.FormsPlugin.Abstractions.PositionSelectedEventArgs e)
+        void Handle_PositionSelected(object sender, PositionSelectedEventArgs e)
         {
-            Debug.WriteLine("Position " + e.NewValue + " selected.");
-        }
-
-        void Handle_Scrolled(object sender, CarouselView.FormsPlugin.Abstractions.ScrolledEventArgs e)
-        {
-            Debug.WriteLine("Scrolled to " + e.NewValue + " percent.");
-            Debug.WriteLine("Direction = " + e.Direction);
+            var control = (CarouselViewControl)sender;
+            Debug.WriteLine(control.SelectedItem);
         }
     }
 }

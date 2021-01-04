@@ -1,27 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿
+using CarouselView.FormsPlugin.iOS;
 using Foundation;
 using UIKit;
-using CarouselView.FormsPlugin.iOS;
-using FFImageLoading.Forms.Touch;
 
 namespace Demo.iOS
 {
-	[Register ("AppDelegate")]
+    [Register ("AppDelegate")]
 	public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
 	{
-		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
+		public override bool FinishedLaunching (UIApplication uiApplication, NSDictionary launchOptions)
 		{
 			global::Xamarin.Forms.Forms.Init ();
 
-			CarouselViewRenderer.Init ();
-            CachedImageRenderer.Init();
+			CarouselViewRenderer.Init();
 
-			LoadApplication (new App ());
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+            //UserDialogs.Init();
 
-			return base.FinishedLaunching (app, options);
+            LoadApplication (new App ());
+
+            return base.FinishedLaunching (uiApplication, launchOptions);
 		}
 	}
 }
