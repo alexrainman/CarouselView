@@ -869,7 +869,7 @@ namespace CarouselView.FormsPlugin.iOS
             }
         }
 
-        bool prevBtnClicked;
+        bool? prevBtnClicked;
 
         void PrevBtn_TouchUpInside(object sender, EventArgs e)
         {
@@ -1180,9 +1180,10 @@ namespace CarouselView.FormsPlugin.iOS
             if (Element.ItemsSource?.GetCount() > 0)
             {
                 // Transition direction based on prevPosition or if prevBtn has been clicked
-                var navdirection = position >= prevPosition || !prevBtnClicked ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
+                var navdirection = position >= prevPosition || (prevBtnClicked.HasValue ? !prevBtnClicked.Value : false) ? UIPageViewControllerNavigationDirection.Forward : UIPageViewControllerNavigationDirection.Reverse;
 
-                prevBtnClicked = false;
+                if(prevBtnClicked.HasValue)
+                    prevBtnClicked = false;
 
                 var firstViewController = CreateViewController(position);
 
