@@ -1,20 +1,18 @@
 ﻿using CarouselView.FormsPlugin.Abstractions;
-using CarouselView.FormsPlugin.UWP;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Xamarin.Forms.Platform.UWP;
-using System.ComponentModel;
-using System.Collections.Generic;
 using Windows.UI.Xaml.Media;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Shapes;
-using System.Collections.Specialized;
 using Xamarin.Forms;
-using System.Diagnostics;
+using Xamarin.Forms.Platform.UWP;
 
-[assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselViewRenderer))]
+[assembly: ExportRenderer(typeof(CarouselViewControl), typeof(CarouselView.FormsPlugin.UWP.CarouselViewRenderer))]
 namespace CarouselView.FormsPlugin.UWP
 {
     /// <summary>
@@ -29,14 +27,15 @@ namespace CarouselView.FormsPlugin.UWP
         StackPanel indicators;
 
         ColorConverter converter;
-        SolidColorBrush selectedColor;
-        SolidColorBrush fillColor;
+        Windows.UI.Xaml.Media.SolidColorBrush selectedColor;
+        Windows.UI.Xaml.Media.SolidColorBrush fillColor;
 
         double ElementWidth;
         double ElementHeight;
-        
+
         // To hold all the rendered views
         ObservableCollection<FrameworkElement> Source;
+        List<Xamarin.Forms.View> Views;
 
         // To hold the indicators dots
         ObservableCollection<Shape> Dots;
@@ -75,7 +74,7 @@ namespace CarouselView.FormsPlugin.UWP
                 }*/
 
                 if (Element == null) return;
-                
+
                 if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
                     ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged -= ItemsSource_CollectionChanged;
             }
@@ -92,55 +91,62 @@ namespace CarouselView.FormsPlugin.UWP
         async void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // NewItems contains the item that was added.
-			// If NewStartingIndex is not -1, then it contains the index where the new item was added.
+            // If NewStartingIndex is not -1, then it contains the index where the new item was added.
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
                 InsertPage(Element?.ItemsSource.GetItem(e.NewStartingIndex), e.NewStartingIndex);
             }
 
-			// OldItems contains the item that was removed.
-			// If OldStartingIndex is not -1, then it contains the index where the old item was removed.
+            // OldItems contains the item that was removed.
+            // If OldStartingIndex is not -1, then it contains the index where the old item was removed.
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
                 await RemovePage(e.OldStartingIndex);
             }
 
-			// OldItems contains the moved item.
-			// OldStartingIndex contains the index where the item was moved from.
-			// NewStartingIndex contains the index where the item was moved to.
-			if (e.Action == NotifyCollectionChangedAction.Move)
-			{
+            // OldItems contains the moved item.
+            // OldStartingIndex contains the index where the item was moved from.
+            // NewStartingIndex contains the index where the item was moved to.
+            if (e.Action == NotifyCollectionChangedAction.Move)
+            {
                 if (Element == null || flipView == null || Source == null) return;
-				
+
                 var obj = Source[e.OldStartingIndex];
+                var formsView = Views[e.OldStartingIndex];
+
                 Source.RemoveAt(e.OldStartingIndex);
-				Source.Insert(e.NewStartingIndex, obj);
+                Views.RemoveAt(e.OldStartingIndex);
+
+                Source.Insert(e.NewStartingIndex, obj);
+                Views.Insert(e.NewStartingIndex, formsView);
 
                 SetCurrentPage(Element.Position);
             }
 
-			// NewItems contains the replacement item.
-			// NewStartingIndex and OldStartingIndex are equal, and if they are not -1,
-			// then they contain the index where the item was replaced.
-			if (e.Action == NotifyCollectionChangedAction.Replace)
-			{
+            // NewItems contains the replacement item.
+            // NewStartingIndex and OldStartingIndex are equal, and if they are not -1,
+            // then they contain the index where the item was replaced.
+            if (e.Action == NotifyCollectionChangedAction.Replace)
+            {
                 if (Element == null || flipView == null || Source == null) return;
 
-				Source[e.OldStartingIndex] = CreateView(e.NewItems[e.NewStartingIndex]);
+                var list = CreateView(e.NewItems[0]);
+                Source[e.OldStartingIndex] = (FrameworkElement)list[0];
+                Views[e.OldStartingIndex] = (View)list[1];
             }
 
-			// No other properties are valid.
-			if (e.Action == NotifyCollectionChangedAction.Reset)
-			{
+            // No other properties are valid.
+            if (e.Action == NotifyCollectionChangedAction.Reset)
+            {
                 if (Element == null) return;
-				
+
                 SetPosition();
-				SetNativeView();
+                SetNativeView();
 
                 SetArrowsVisibility();
 
                 Element.SendPositionSelected();
-			}
+            }
         }
 
         // Arrows visibility
@@ -167,24 +173,36 @@ namespace CarouselView.FormsPlugin.UWP
         private void Element_SizeChanged(object sender, EventArgs e)
         {
             if (Element == null) return;
-            
+
             var rect = Element.Bounds;
+
+            ElementWidth = ((Xamarin.Forms.Rectangle)rect).Width;
+            ElementHeight = ((Xamarin.Forms.Rectangle)rect).Height;
 
             if (nativeView == null)
             {
-                ElementWidth = ((Xamarin.Forms.Rectangle)rect).Width;
-                ElementHeight = ((Xamarin.Forms.Rectangle)rect).Height;
                 SetNativeView();
                 Element.SendPositionSelected();
-				Element.PositionSelectedCommand?.Execute(null);
-			}
+                Element.PositionSelectedCommand?.Execute(null);
+            }
+            else
+            {
+                if (Views == null || Views.Count < 0)
+                    return;
+
+                for (var i = 0; i < Views.Count; i++)
+                {
+                    Source[i].Arrange(new Windows.Foundation.Rect(0, 0, ElementWidth, ElementHeight));
+                    Views[i].Layout(new Xamarin.Forms.Rectangle(0, 0, ElementWidth, ElementHeight));
+                }
+            }
         }
 
         // Reset timer as this is called multiple times
         private void FlipView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-			if (Math.Round(e.NewSize.Width) != Math.Round(ElementWidth) || Math.Round(e.NewSize.Height) != Math.Round(ElementHeight))
-			{
+            if (Math.Round(e.NewSize.Width) != Math.Round(ElementWidth) || Math.Round(e.NewSize.Height) != Math.Round(ElementHeight))
+            {
                 if (timer != null)
                     timer.Dispose();
                 timer = null;
@@ -202,16 +220,6 @@ namespace CarouselView.FormsPlugin.UWP
             var size = (Windows.Foundation.Size)args;
             ElementWidth = size.Width;
             ElementHeight = size.Height;
-
-            // Refresh UI
-            Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
-            {
-                if (Element != null)
-                {
-                    SetNativeView();
-                    Element.SendPositionSelected();
-                }
-            });
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -225,23 +233,23 @@ namespace CarouselView.FormsPlugin.UWP
             switch (e.PropertyName)
             {
                 case "Orientation":
-					orientationChanged = true;
-					SetNativeView();
-					Element.SendPositionSelected();
-					Element.PositionSelectedCommand?.Execute(null);
-					break;
-				case "BackgroundColor":
-					flipView.Background = (SolidColorBrush)converter.Convert(Element.BackgroundColor, null, null, null);
+                    orientationChanged = true;
+                    SetNativeView();
+                    Element.SendPositionSelected();
+                    Element.PositionSelectedCommand?.Execute(null);
+                    break;
+                case "BackgroundColor":
+                    flipView.Background = (Windows.UI.Xaml.Media.SolidColorBrush)converter.Convert(Element.BackgroundColor, null, null, null);
                     break;
                 case "IsSwipeEnabled":
                     nativeView.IsSwipeEnabled = Element.IsSwipeEnabled;
                     break;
                 case "IndicatorsTintColor":
-                    fillColor = (SolidColorBrush)converter.Convert(Element.IndicatorsTintColor, null, null, null);
+                    fillColor = (Windows.UI.Xaml.Media.SolidColorBrush)converter.Convert(Element.IndicatorsTintColor, null, null, null);
                     UpdateIndicatorsTint();
                     break;
                 case "CurrentPageIndicatorTintColor":
-                    selectedColor = (SolidColorBrush)converter.Convert(Element.CurrentPageIndicatorTintColor, null, null, null);
+                    selectedColor = (Windows.UI.Xaml.Media.SolidColorBrush)converter.Convert(Element.CurrentPageIndicatorTintColor, null, null, null);
                     UpdateIndicatorsTint();
                     break;
                 case "IndicatorsShape":
@@ -251,45 +259,45 @@ namespace CarouselView.FormsPlugin.UWP
                     SetIndicators();
                     break;
                 case "ItemsSource":
-					SetPosition();
-					SetNativeView();
+                    SetPosition();
+                    SetNativeView();
                     SetArrowsVisibility();
                     Element.SendPositionSelected();
-					if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
-					{
-						Element.PositionSelectedCommand?.Execute(null);
-						((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
-					}
+                    if (Element.ItemsSource != null && Element.ItemsSource is INotifyCollectionChanged)
+                    {
+                        Element.PositionSelectedCommand?.Execute(null);
+                        ((INotifyCollectionChanged)Element.ItemsSource).CollectionChanged += ItemsSource_CollectionChanged;
+                    }
                     break;
                 case "ItemTemplate":
-					SetNativeView();
-					Element.SendPositionSelected();
-					Element.PositionSelectedCommand?.Execute(null);
-					break;
+                    SetNativeView();
+                    Element.SendPositionSelected();
+                    Element.PositionSelectedCommand?.Execute(null);
+                    break;
                 case "Position":
                     if (!isChangingPosition)
                     {
                         SetCurrentPage(Element.Position);
                     }
-					break;
+                    break;
                 case "ShowArrows":
                     FlipView_Loaded(flipView, null);
                     break;
                 case "ArrowsBackgroundColor":
-                    
+
                     break;
                 case "ArrowsTintColor":
-                    
+
                     break;
                 case "ArrowsTransparency":
-                    
+
                     break;
             }
         }
 
         #region adapter callbacks
 
-        private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void FlipView_SelectionChanged(object sender, Windows.UI.Xaml.Controls.SelectionChangedEventArgs e)
         {
             if (Element != null && !isChangingPosition)
             {
@@ -297,8 +305,8 @@ namespace CarouselView.FormsPlugin.UWP
                 UpdateIndicatorsTint();
 
                 Element.SendPositionSelected();
-				Element.PositionSelectedCommand?.Execute(null);
-			}
+                Element.PositionSelectedCommand?.Execute(null);
+            }
         }
 
         double lastOffset;
@@ -316,7 +324,7 @@ namespace CarouselView.FormsPlugin.UWP
             // Scrolling to the right
             if (currentOffset > lastOffset)
             {
-                percentCompleted = Math.Floor((currentOffset - (int)currentOffset)*100);
+                percentCompleted = Math.Floor((currentOffset - (int)currentOffset) * 100);
                 direction = Element.Orientation == CarouselViewOrientation.Horizontal ? ScrollDirection.Right : ScrollDirection.Down;
             }
             else
@@ -348,6 +356,11 @@ namespace CarouselView.FormsPlugin.UWP
             {
                 nativeView = new FlipViewControl(Element.IsSwipeEnabled);
                 flipView = nativeView.FindName("flipView") as FlipView;
+
+                Element.DisposeEvent += (s, e) =>
+                {
+                    Dispose();
+                };
             }
 
             if (orientationChanged)
@@ -362,11 +375,14 @@ namespace CarouselView.FormsPlugin.UWP
             }
 
             var source = new List<FrameworkElement>();
+            Views = new List<View>();
             if (Element.ItemsSource != null && Element.ItemsSource?.GetCount() > 0)
             {
                 for (int j = 0; j <= Element.ItemsSource.GetCount() - 1; j++)
                 {
-                    source.Add(CreateView(Element.ItemsSource.GetItem(j)));
+                    var list = CreateView(Element.ItemsSource.GetItem(j));
+                    source.Add((FrameworkElement)list[0]);
+                    Views.Add((View)list[1]);
                 }
             }
 
@@ -379,13 +395,13 @@ namespace CarouselView.FormsPlugin.UWP
             converter = new ColorConverter();
 
             // BackgroundColor BP
-            flipView.Background = (SolidColorBrush)converter.Convert(Element.BackgroundColor, null, null, null);
+            flipView.Background = (Windows.UI.Xaml.Media.SolidColorBrush)converter.Convert(Element.BackgroundColor, null, null, null);
 
             // IndicatorsTintColor BP
-            fillColor = (SolidColorBrush)converter.Convert(Element.IndicatorsTintColor, null, null, null);
+            fillColor = (Windows.UI.Xaml.Media.SolidColorBrush)converter.Convert(Element.IndicatorsTintColor, null, null, null);
 
             // CurrentPageIndicatorTintColor BP
-            selectedColor = (SolidColorBrush)converter.Convert(Element.CurrentPageIndicatorTintColor, null, null, null);
+            selectedColor = (Windows.UI.Xaml.Media.SolidColorBrush)converter.Convert(Element.CurrentPageIndicatorTintColor, null, null, null);
 
             flipView.Loaded += FlipView_Loaded;
             flipView.SelectionChanged += FlipView_SelectionChanged;
@@ -404,7 +420,6 @@ namespace CarouselView.FormsPlugin.UWP
             indicators = nativeView.FindName("indicators") as StackPanel;
             SetIndicators();
         }
-
         void SetPosition()
         {
             isChangingPosition = true;
@@ -509,25 +524,26 @@ namespace CarouselView.FormsPlugin.UWP
         }
 
         void InsertPage(object item, int position)
-		{
+        {
             if (Element == null || flipView == null || Source == null) return;
-			
+
             if (position <= Element.Position)
             {
                 isChangingPosition = true;
                 Element.Position++;
                 isChangingPosition = false;
             }
-
-            Source.Insert(position, CreateView(item));
+            var list = CreateView(item);
+            Source.Insert(position, (FrameworkElement)list[0]);
+            Views.Insert(position, (View)list[1]);
             Dots?.Insert(position, CreateDot(position, Element.Position));
 
             flipView.SelectedIndex = Element.Position;
 
             //if (position <= Element.Position)
-                Element.SendPositionSelected();
-			Element.PositionSelectedCommand?.Execute(null);
-		}
+            Element.SendPositionSelected();
+            Element.PositionSelectedCommand?.Execute(null);
+        }
 
         public async Task RemovePage(int position)
         {
@@ -537,48 +553,50 @@ namespace CarouselView.FormsPlugin.UWP
             {
                 // To remove latest page, rebuild flipview or the page wont disappear
                 if (Source.Count == 1)
-				{
-					SetNativeView();
-				}
-				else {
+                {
+                    SetNativeView();
+                }
+                else
+                {
 
                     isChangingPosition = true;
 
                     // To remove current page
                     if (position == Element.Position)
-					{
+                    {
                         // Swipe animation at position 0 doesn't work :(
-						/*if (position == 0)
+                        /*if (position == 0)
 						{
 							flipView.SelectedIndex = 1;
 						}
 						else
 						{*/
-						if (position > 0)
-						{
-							var newPos = position - 1;
-							if (newPos == -1)
-								newPos = 0;
+                        if (position > 0)
+                        {
+                            var newPos = position - 1;
+                            if (newPos == -1)
+                                newPos = 0;
 
-							flipView.SelectedIndex = newPos;
-						}
+                            flipView.SelectedIndex = newPos;
+                        }
 
                         // With a swipe transition
                         if (Element.AnimateTransition)
                             await Task.Delay(100);
-					}
+                    }
 
                     Source.RemoveAt(position);
-                    
-					Element.Position = flipView.SelectedIndex;
+                    Views.RemoveAt(position);
 
-					Dots?.RemoveAt(position);
-					UpdateIndicatorsTint();
+                    Element.Position = flipView.SelectedIndex;
+
+                    Dots?.RemoveAt(position);
+                    UpdateIndicatorsTint();
 
                     isChangingPosition = false;
 
                     Element.SendPositionSelected();
-				}
+                }
             }
         }
 
@@ -595,21 +613,22 @@ namespace CarouselView.FormsPlugin.UWP
             }
         }
 
-        FrameworkElement CreateView(object item)
+        List<object> CreateView(object item)
         {
             Xamarin.Forms.View formsView = null;
             var bindingContext = item;
 
-			var dt = bindingContext as Xamarin.Forms.DataTemplate;
+            var dt = bindingContext as Xamarin.Forms.DataTemplate;
             var view = bindingContext as View;
 
             // Support for List<DataTemplate> as ItemsSource
             if (dt != null)
-			{
-				formsView = (Xamarin.Forms.View)dt.CreateContent();
-			}
-			else {
-                
+            {
+                formsView = (Xamarin.Forms.View)dt.CreateContent();
+            }
+            else
+            {
+
                 if (view != null)
                 {
                     formsView = view;
@@ -624,16 +643,16 @@ namespace CarouselView.FormsPlugin.UWP
 
                     formsView.BindingContext = bindingContext;
                 }
-			}
+            }
 
-			formsView.Parent = this.Element;
+            formsView.Parent = this.Element;
 
             var element = formsView.ToWindows(new Xamarin.Forms.Rectangle(0, 0, ElementWidth, ElementHeight));
 
             //if (dt == null && view == null)
-                //formsView.Parent = null;
+            //formsView.Parent = null;
 
-            return element;
+            return new List<object> { element, formsView };
         }
 
         Shape CreateDot(int i, int position)
@@ -663,11 +682,11 @@ namespace CarouselView.FormsPlugin.UWP
         private void ButtonHide(FlipView f, string name)
         {
             var b = FindVisualChild<Windows.UI.Xaml.Controls.Button>(f, name);
-			if (b != null)
-			{
-				b.Opacity = Element.ShowArrows ? 1.0 : 0.0;
-				b.IsHitTestVisible = Element.ShowArrows;
-			}
+            if (b != null)
+            {
+                b.Opacity = Element.ShowArrows ? 1.0 : 0.0;
+                b.IsHitTestVisible = Element.ShowArrows;
+            }
         }
 
         private childItemType FindVisualChild<childItemType>(DependencyObject obj, string name) where childItemType : FrameworkElement
@@ -695,7 +714,7 @@ namespace CarouselView.FormsPlugin.UWP
                 var _child = VisualTreeHelper.GetChild(parent, i);
                 if (_child is Control)
                     _list.Add(_child as Control);
-                _list.AddRange(AllChildren(_child));              
+                _list.AddRange(AllChildren(_child));
             }
             return _list;
         }
@@ -708,6 +727,9 @@ namespace CarouselView.FormsPlugin.UWP
                 nextBtn = null;
 
                 indicators = null;
+
+                Views.Clear();
+                Source.Clear();
 
                 if (flipView != null)
                 {
